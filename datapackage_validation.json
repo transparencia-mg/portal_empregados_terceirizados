@@ -1,0 +1,445 @@
+{
+  "version": "4.16.6",
+  "time": 21.165,
+  "errors": [],
+  "tasks": [
+    {
+      "resource": {
+        "description": "Insira a descrição/explicação detalhada deste recurso.",
+        "dialect": {
+          "delimiter": ";"
+        },
+        "encoding": "utf-8-sig",
+        "format": "csv",
+        "hashing": "md5",
+        "name": "terceirizados_2021",
+        "path": "data/terceirizados_2021.csv",
+        "profile": "tabular-data-resource",
+        "schema": {
+          "fields": [
+            {
+              "name": "matricula",
+              "type": "integer"
+            },
+            {
+              "name": "nome",
+              "type": "string"
+            },
+            {
+              "name": "orgao",
+              "type": "string"
+            },
+            {
+              "name": "cargo",
+              "type": "string"
+            },
+            {
+              "name": "empresa",
+              "type": "string"
+            },
+            {
+              "name": "cnpj_empresa",
+              "type": "string"
+            },
+            {
+              "name": "mes_referencia",
+              "type": "date"
+            }
+          ]
+        },
+        "scheme": "file",
+        "title": "Insira um título humanamente legível para este recurso.",
+        "stats": {
+          "hash": "6fd01c33ae9382a7bde0ade23d049f36",
+          "bytes": 18368163,
+          "fields": 7,
+          "rows": 140455
+        }
+      },
+      "time": 4.002,
+      "scope": [
+        "hash-count-error",
+        "byte-count-error",
+        "field-count-error",
+        "row-count-error",
+        "blank-header",
+        "extra-label",
+        "missing-label",
+        "blank-label",
+        "duplicate-label",
+        "incorrect-label",
+        "blank-row",
+        "primary-key-error",
+        "foreign-key-error",
+        "extra-cell",
+        "missing-cell",
+        "type-error",
+        "constraint-error",
+        "unique-error"
+      ],
+      "partial": false,
+      "errors": [],
+      "stats": {
+        "errors": 0
+      },
+      "valid": true
+    },
+    {
+      "resource": {
+        "description": "Insira a descrição/explicação detalhada deste recurso.",
+        "dialect": {
+          "delimiter": ";"
+        },
+        "encoding": "utf-8-sig",
+        "format": "csv",
+        "hashing": "md5",
+        "name": "terceirizados_2022",
+        "path": "data/terceirizados_2022.csv",
+        "profile": "tabular-data-resource",
+        "schema": {
+          "fields": [
+            {
+              "name": "matricula",
+              "type": "integer"
+            },
+            {
+              "name": "nome",
+              "type": "string"
+            },
+            {
+              "name": "orgao",
+              "type": "string"
+            },
+            {
+              "name": "cargo",
+              "type": "string"
+            },
+            {
+              "name": "empresa",
+              "type": "string"
+            },
+            {
+              "name": "cnpj_empresa",
+              "type": "string"
+            },
+            {
+              "name": "mes_referencia",
+              "type": "date"
+            }
+          ]
+        },
+        "scheme": "file",
+        "title": "Insira um título humanamente legível para este recurso.",
+        "stats": {
+          "hash": "4ea9514a9eaf4f02d7422bd666a81f0c",
+          "bytes": 17773804,
+          "fields": 7,
+          "rows": 135574
+        }
+      },
+      "time": 3.837,
+      "scope": [
+        "hash-count-error",
+        "byte-count-error",
+        "field-count-error",
+        "row-count-error",
+        "blank-header",
+        "extra-label",
+        "missing-label",
+        "blank-label",
+        "duplicate-label",
+        "incorrect-label",
+        "blank-row",
+        "primary-key-error",
+        "foreign-key-error",
+        "extra-cell",
+        "missing-cell",
+        "type-error",
+        "constraint-error",
+        "unique-error"
+      ],
+      "partial": false,
+      "errors": [],
+      "stats": {
+        "errors": 0
+      },
+      "valid": true
+    },
+    {
+      "resource": {
+        "description": "Insira a descrição/explicação detalhada deste recurso.",
+        "dialect": {
+          "delimiter": ";"
+        },
+        "encoding": "utf-8-sig",
+        "format": "csv",
+        "hashing": "md5",
+        "name": "terceirizados_2023",
+        "path": "data/terceirizados_2023.csv",
+        "profile": "tabular-data-resource",
+        "schema": {
+          "fields": [
+            {
+              "name": "matricula",
+              "type": "integer"
+            },
+            {
+              "name": "nome",
+              "type": "string"
+            },
+            {
+              "name": "orgao",
+              "type": "string"
+            },
+            {
+              "name": "cargo",
+              "type": "string"
+            },
+            {
+              "name": "empresa",
+              "type": "string"
+            },
+            {
+              "name": "cnpj_empresa",
+              "type": "string"
+            },
+            {
+              "name": "mes_referencia",
+              "type": "date"
+            }
+          ]
+        },
+        "scheme": "file",
+        "title": "Insira um título humanamente legível para este recurso.",
+        "stats": {
+          "hash": "f695cd5fa5968457ea97869efa3a4eed",
+          "bytes": 20051732,
+          "fields": 7,
+          "rows": 152938
+        }
+      },
+      "time": 4.399,
+      "scope": [
+        "hash-count-error",
+        "byte-count-error",
+        "field-count-error",
+        "row-count-error",
+        "blank-header",
+        "extra-label",
+        "missing-label",
+        "blank-label",
+        "duplicate-label",
+        "incorrect-label",
+        "blank-row",
+        "primary-key-error",
+        "foreign-key-error",
+        "extra-cell",
+        "missing-cell",
+        "type-error",
+        "constraint-error",
+        "unique-error"
+      ],
+      "partial": false,
+      "errors": [],
+      "stats": {
+        "errors": 0
+      },
+      "valid": true
+    },
+    {
+      "resource": {
+        "description": "Insira a descrição/explicação detalhada deste recurso.",
+        "dialect": {
+          "delimiter": ";"
+        },
+        "encoding": "utf-8-sig",
+        "format": "csv",
+        "hashing": "md5",
+        "name": "terceirizados_2024",
+        "path": "data/terceirizados_2024.csv",
+        "profile": "tabular-data-resource",
+        "schema": {
+          "fields": [
+            {
+              "name": "matricula",
+              "type": "integer"
+            },
+            {
+              "name": "nome",
+              "type": "string"
+            },
+            {
+              "name": "orgao",
+              "type": "string"
+            },
+            {
+              "name": "cargo",
+              "type": "string"
+            },
+            {
+              "name": "empresa",
+              "type": "string"
+            },
+            {
+              "name": "cnpj_empresa",
+              "type": "string"
+            },
+            {
+              "name": "mes_referencia",
+              "type": "date"
+            }
+          ]
+        },
+        "scheme": "file",
+        "title": "Insira um título humanamente legível para este recurso.",
+        "stats": {
+          "hash": "5a1fb6d2c4b100e3d4a875428db0d82b",
+          "bytes": 21017044,
+          "fields": 7,
+          "rows": 159967
+        }
+      },
+      "time": 4.499,
+      "scope": [
+        "hash-count-error",
+        "byte-count-error",
+        "field-count-error",
+        "row-count-error",
+        "blank-header",
+        "extra-label",
+        "missing-label",
+        "blank-label",
+        "duplicate-label",
+        "incorrect-label",
+        "blank-row",
+        "primary-key-error",
+        "foreign-key-error",
+        "extra-cell",
+        "missing-cell",
+        "type-error",
+        "constraint-error",
+        "unique-error"
+      ],
+      "partial": false,
+      "errors": [],
+      "stats": {
+        "errors": 0
+      },
+      "valid": true
+    },
+    {
+      "resource": {
+        "description": "Insira a descrição/explicação detalhada deste recurso.",
+        "dialect": {
+          "delimiter": ";"
+        },
+        "encoding": "utf-8-sig",
+        "format": "csv",
+        "hashing": "md5",
+        "name": "terceirizados_2025",
+        "path": "data/terceirizados_2025.csv",
+        "profile": "tabular-data-resource",
+        "schema": {
+          "fields": [
+            {
+              "name": "matricula",
+              "type": "integer"
+            },
+            {
+              "name": "nome",
+              "type": "string"
+            },
+            {
+              "name": "orgao",
+              "type": "string"
+            },
+            {
+              "name": "cargo",
+              "type": "string"
+            },
+            {
+              "name": "empresa",
+              "type": "string"
+            },
+            {
+              "name": "cnpj_empresa",
+              "type": "string"
+            },
+            {
+              "name": "mes_referencia",
+              "type": "date"
+            }
+          ]
+        },
+        "scheme": "file",
+        "title": "Insira um título humanamente legível para este recurso.",
+        "stats": {
+          "hash": "e0146406bbefbc2d7a0c41b322c10009",
+          "bytes": 19948786,
+          "fields": 7,
+          "rows": 152129
+        }
+      },
+      "time": 4.383,
+      "scope": [
+        "hash-count-error",
+        "byte-count-error",
+        "field-count-error",
+        "row-count-error",
+        "blank-header",
+        "extra-label",
+        "missing-label",
+        "blank-label",
+        "duplicate-label",
+        "incorrect-label",
+        "blank-row",
+        "primary-key-error",
+        "foreign-key-error",
+        "extra-cell",
+        "missing-cell",
+        "type-error",
+        "constraint-error",
+        "unique-error"
+      ],
+      "partial": false,
+      "errors": [
+        {
+          "cell": ".",
+          "fieldName": "matricula",
+          "fieldNumber": 1,
+          "fieldPosition": 1,
+          "cells": [
+            ".",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rowNumber": 152129,
+          "rowPosition": 152130,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"integer/default\"",
+          "message": "Type error in the cell \".\" in row \"152130\" and field \"matricula\" at position \"1\": type is \"integer/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        }
+      ],
+      "stats": {
+        "errors": 1
+      },
+      "valid": false
+    }
+  ],
+  "stats": {
+    "errors": 1,
+    "tasks": 5
+  },
+  "valid": false
+}

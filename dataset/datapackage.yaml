@@ -1,0 +1,140 @@
+name: empregados_terceirizados
+owner_org: ''
+profile: data-package
+resources:
+  - description: Insira a descrição/explicação detalhada deste recurso.
+    dialect:
+      delimiter: ;
+    encoding: utf-8-sig
+    format: csv
+    hashing: md5
+    name: terceirizados_2021
+    path: data/terceirizados_2021.csv
+    profile: tabular-data-resource
+    schema:
+      fields:
+        - name: matricula
+          type: integer
+        - name: nome
+          type: string
+        - name: orgao
+          type: string
+        - name: cargo
+          type: string
+        - name: empresa
+          type: string
+        - name: cnpj_empresa
+          type: string
+        - name: mes_referencia
+          type: date
+    scheme: file
+    title: Insira um título humanamente legível para este recurso.
+  - description: Insira a descrição/explicação detalhada deste recurso.
+    dialect:
+      delimiter: ;
+    encoding: utf-8-sig
+    format: csv
+    hashing: md5
+    name: terceirizados_2022
+    path: data/terceirizados_2022.csv
+    profile: tabular-data-resource
+    schema:
+      fields:
+        - name: matricula
+          type: integer
+        - name: nome
+          type: string
+        - name: orgao
+          type: string
+        - name: cargo
+          type: string
+        - name: empresa
+          type: string
+        - name: cnpj_empresa
+          type: string
+        - name: mes_referencia
+          type: date
+    scheme: file
+    title: Insira um título humanamente legível para este recurso.
+  - description: Insira a descrição/explicação detalhada deste recurso.
+    dialect:
+      delimiter: ;
+    encoding: utf-8-sig
+    format: csv
+    hashing: md5
+    name: terceirizados_2023
+    path: data/terceirizados_2023.csv
+    profile: tabular-data-resource
+    schema:
+      fields:
+        - name: matricula
+          type: integer
+        - name: nome
+          type: string
+        - name: orgao
+          type: string
+        - name: cargo
+          type: string
+        - name: empresa
+          type: string
+        - name: cnpj_empresa
+          type: string
+        - name: mes_referencia
+          type: date
+    scheme: file
+    title: Insira um título humanamente legível para este recurso.
+  - description: Insira a descrição/explicação detalhada deste recurso.
+    dialect:
+      delimiter: ;
+    encoding: utf-8-sig
+    format: csv
+    hashing: md5
+    name: terceirizados_2024
+    path: data/terceirizados_2024.csv
+    profile: tabular-data-resource
+    schema:
+      fields:
+        - name: matricula
+          type: integer
+        - name: nome
+          type: string
+        - name: orgao
+          type: string
+        - name: cargo
+          type: string
+        - name: empresa
+          type: string
+        - name: cnpj_empresa
+          type: string
+        - name: mes_referencia
+          type: date
+    scheme: file
+    title: Insira um título humanamente legível para este recurso.
+  - description: Insira a descrição/explicação detalhada deste recurso.
+    dialect:
+      delimiter: ;
+    encoding: utf-8-sig
+    format: csv
+    hashing: md5
+    name: terceirizados_2025
+    path: data/terceirizados_2025.csv
+    profile: tabular-data-resource
+    schema:
+      fields:
+        - name: matricula
+          type: integer
+        - name: nome
+          type: string
+        - name: orgao
+          type: string
+        - name: cargo
+          type: string
+        - name: empresa
+          type: string
+        - name: cnpj_empresa
+          type: string
+        - name: mes_referencia
+          type: date
+    scheme: file
+    title: Insira um título humanamente legível para este recurso.
+title: Empregados_terceirizados

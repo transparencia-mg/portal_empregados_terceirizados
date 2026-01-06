@@ -47,7 +47,7 @@
         ]
       },
       "scheme": "file",
-      "title": "Estagiários 2021."
+      "title": "Terceirizados 2021"
     },
     {
       "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2022.",
@@ -93,7 +93,7 @@
         ]
       },
       "scheme": "file",
-      "title": "Estagiários 2022"
+      "title": "Terceirizados 2022"
     },
     {
       "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2023.",
@@ -139,7 +139,7 @@
         ]
       },
       "scheme": "file",
-      "title": "Estagiários 2023"
+      "title": "Terceirizados 2023"
     },
     {
       "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2024.",
@@ -185,7 +185,7 @@
         ]
       },
       "scheme": "file",
-      "title": "Estagiários 2024"
+      "title": "Terceirizados 2024"
     },
     {
       "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2025.",
@@ -231,7 +231,7 @@
         ]
       },
       "scheme": "file",
-      "title": "Estagiários 2025"
+      "title": "Terceirizados 2025"
     }
   ],
   "title": "Empregados Terceirizados"

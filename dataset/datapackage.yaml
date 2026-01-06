@@ -1,8 +1,8 @@
 name: empregados_terceirizados
-owner_org: ''
+owner_org: secretaria-de-estado-de-planejamento-e-gestao-seplag
 profile: data-package
 resources:
-  - description: Insira a descrição/explicação detalhada deste recurso.
+  - description: Dados sbore empregados terceirizados do Governo do Estado de Minas Gerais de 2021.
     dialect:
       delimiter: ;
     encoding: utf-8-sig
@@ -28,8 +28,8 @@ resources:
         - name: mes_referencia
           type: date
     scheme: file
-    title: Insira um título humanamente legível para este recurso.
-  - description: Insira a descrição/explicação detalhada deste recurso.
+    title: Estagiários 2021.
+  - description: Dados sbore empregados terceirizados do Governo do Estado de Minas Gerais de 2022.
     dialect:
       delimiter: ;
     encoding: utf-8-sig
@@ -55,8 +55,8 @@ resources:
         - name: mes_referencia
           type: date
     scheme: file
-    title: Insira um título humanamente legível para este recurso.
-  - description: Insira a descrição/explicação detalhada deste recurso.
+    title: Estagiários 2022
+  - description: Dados sbore empregados terceirizados do Governo do Estado de Minas Gerais de 2023.
     dialect:
       delimiter: ;
     encoding: utf-8-sig
@@ -82,8 +82,8 @@ resources:
         - name: mes_referencia
           type: date
     scheme: file
-    title: Insira um título humanamente legível para este recurso.
-  - description: Insira a descrição/explicação detalhada deste recurso.
+    title: Estagiários 2023
+  - description: Dados sbore empregados terceirizados do Governo do Estado de Minas Gerais de 2024.
     dialect:
       delimiter: ;
     encoding: utf-8-sig
@@ -109,8 +109,8 @@ resources:
         - name: mes_referencia
           type: date
     scheme: file
-    title: Insira um título humanamente legível para este recurso.
-  - description: Insira a descrição/explicação detalhada deste recurso.
+    title: Estagiários 2024
+  - description: Dados sbore empregados terceirizados do Governo do Estado de Minas Gerais de 2025.
     dialect:
       delimiter: ;
     encoding: utf-8-sig
@@ -136,5 +136,5 @@ resources:
         - name: mes_referencia
           type: date
     scheme: file
-    title: Insira um título humanamente legível para este recurso.
+    title: Estagiários 2025
 title: Empregados_terceirizados

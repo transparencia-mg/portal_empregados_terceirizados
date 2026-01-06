@@ -1,0 +1,3394 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terceirizados - Governo de Minas Gerais</title>
+    
+    <!-- ==================== ESTILOS E BIBLIOTECAS ==================== -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* ==================== VARIÁVEIS DE CORES ==================== */
+        :root {
+            --primary-dark: #29435A;
+            --primary-darker: #132837;
+            --accent-red: #B93C42;
+            --accent-bright: #DB233F;
+            --background-light: #EEEFF5;
+            --success-green: #28a745;
+            --warning-yellow: #ffc107;
+            --info-blue: #17a2b8;
+            --secondary-blue: #3F704D;
+            --secondary-brown: #8B7355;
+            --secondary-teal: #20B2AA;
+        }
+        
+        /* ==================== ESTILOS GERAIS ==================== */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-light);
+            padding-bottom: 30px;
+        }
+        
+        /* ==================== HEADER PRINCIPAL ==================== */
+        .main-header {
+            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-bottom: 4px solid var(--accent-red);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-bright) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            box-shadow: 0 3px 8px rgba(219, 35, 63, 0.25);
+        }
+        
+        .header-title {
+            font-weight: 700;
+            font-size: 22px;
+            margin: 0;
+            line-height: 1.2;
+        }
+        
+        .header-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin: 5px 0 0 0;
+        }
+
+        .header-info {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .link-legislacao {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.3s;
+        }
+        
+        .link-legislacao:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .badge-atualizacao-header {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 11px;
+        }
+        
+        /* ==================== FILTROS ==================== */
+        .filter-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent-red);
+        }
+        
+        .filter-label {
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            height: 42px;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-red);
+            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
+        }
+        
+        /* ==================== CARDS DE MÉTRICAS ==================== */
+        .metric-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px 15px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            border-top: 4px solid var(--accent-red);
+            transition: all 0.3s ease;
+            height: 100%;
+            position: relative;
+            cursor: default;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metric-card.primary {
+            border-top-color: var(--primary-dark);
+        }
+        
+        .metric-card.success {
+            border-top-color: var(--success-green);
+        }
+        
+        .metric-card.warning {
+            border-top-color: var(--warning-yellow);
+        }
+        
+        .metric-card.info {
+            border-top-color: var(--info-blue);
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 8px 0;
+            line-height: 1;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: var(--primary-darker);
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .metric-change {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+        
+        .metric-change.positive {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success-green);
+        }
+        
+        /* ==================== CONTAINER DE GRÁFICOS ==================== */
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            height: 100%;
+            min-height: 280px;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--background-light);
+        }
+        
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 220px;
+            width: 100%;
+        }
+        
+        /* ==================== TABELAS ==================== */
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+        }
+        
+        .table-header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .table-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .table-badge {
+            background: var(--accent-red);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* Container para tabela com cabeçalho fixo */
+        .table-fixed-header-container {
+            position: relative;
+            max-height: 500px;
+            overflow: auto;
+            padding: 0;
+        }
+        
+        /* Cabeçalho fixo para todas as tabelas */
+        .table-fixed-header-container table thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #f8f9fa !important;
+        }
+        
+        .table-fixed-header-container table thead th {
+            background-color: #f8f9fa !important;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+        
+        .table-responsive {
+            padding: 0;
+            overflow-x: auto;
+        }
+        
+        .table {
+            margin: 0;
+            width: 100%;
+            font-size: 13px;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .table thead th {
+            background-color: #f8f9fa !important;
+            color: var(--primary-dark);
+            font-weight: 600;
+            border: none;
+            padding: 12px 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s ease;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            white-space: nowrap;
+        }
+        
+        .sort-icon {
+            opacity: 0.5;
+            margin-left: 4px;
+            font-size: 9px;
+            transition: opacity 0.2s ease;
+        }
+        
+        .table thead th:hover {
+            background-color: #f1f3f5 !important;
+        }
+        
+        .table thead th:hover .sort-icon {
+            opacity: 1;
+        }
+        
+        .table thead th.sorted-asc .sort-icon,
+        .table thead th.sorted-desc .sort-icon {
+            opacity: 1;
+        }
+        
+        .table thead th.sorted-asc .sort-icon::after {
+            content: "↑";
+        }
+        
+        .table thead th.sorted-desc .sort-icon::after {
+            content: "↓";
+        }
+        
+        .table tbody tr {
+            transition: background-color 0.2s ease;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(41, 67, 90, 0.04);
+        }
+        
+        .table tbody td {
+            padding: 12px 10px;
+            vertical-align: middle;
+            font-size: 13px;
+        }
+        
+        /* Coluna de ações na tabela */
+        .actions-column {
+            width: 100px;
+            text-align: center;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+        
+        .btn-action {
+            padding: 4px 8px;
+            font-size: 11px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        .btn-history {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+        
+        .btn-history:hover {
+            background-color: var(--primary-darker);
+            transform: translateY(-1px);
+        }
+        
+        /* ==================== BOTÕES ==================== */
+        .btn-primary-custom {
+            background: linear-gradient(to right, var(--accent-red), var(--accent-bright));
+            border: none;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            color: white;
+        }
+        
+        .btn-primary-custom:hover {
+            background: linear-gradient(to right, var(--accent-bright), var(--accent-red));
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(219, 35, 63, 0.2);
+            color: white;
+        }
+        
+        .btn-secondary-custom {
+            background: white;
+            border: 2px solid var(--primary-dark);
+            color: var(--primary-dark);
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 13px;
+        }
+        
+        .btn-secondary-custom:hover {
+            background-color: var(--primary-dark);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(41, 67, 90, 0.15);
+        }
+        
+        .btn-export {
+            background: white;
+            border: 2px solid var(--primary-dark);
+            color: var(--primary-dark);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        
+        .btn-export:hover {
+            background: var(--primary-dark);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        /* ==================== MENU DE NAVEGAÇÃO ==================== */
+        .nav-tabs-container {
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+        }
+        
+        .nav-tabs {
+            border: none;
+            gap: 4px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            transition: all 0.3s ease;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            background-color: rgba(41, 67, 90, 0.05);
+            color: var(--accent-red);
+        }
+        
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
+            color: white;
+        }
+        
+        /* ==================== AÇÕES ==================== */
+        .actions-container {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        /* ==================== LOADING OVERLAY ==================== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(41, 67, 90, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--accent-red);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* ==================== RODAPÉ DA TABELA ==================== */
+        .table-total-row {
+            background-color: #f8f9fa !important;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .table-total-row td {
+            border-top: 2px solid #dee2e6 !important;
+        }
+
+        /* ==================== LINK CLICÁVEL ==================== */
+        .orgao-link {
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-block;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .orgao-link:hover {
+            color: var(--accent-red);
+            background-color: rgba(185, 60, 66, 0.05);
+        }
+        
+        /* ==================== PAGINAÇÃO ==================== */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-top: 1px solid #dee2e6;
+            background-color: #f8f9fa;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .pagination-info {
+            font-size: 12px;
+            color: var(--primary-darker);
+            font-weight: 600;
+        }
+        
+        .pagination .page-link {
+            border: 1px solid #dee2e6;
+            color: var(--primary-dark);
+            padding: 6px 10px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            color: white;
+        }
+        
+        .pagination .page-link:hover {
+            background-color: var(--background-light);
+            color: var(--primary-dark);
+        }
+        
+        /* Itens por página */
+        .items-per-page {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .items-per-page select {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 12px;
+            width: auto;
+            min-width: 70px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .items-per-page select option {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+        
+        /* ==================== CARDS ==================== */
+        .card-stats {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card-stats .value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-red);
+            margin: 8px 0;
+        }
+
+        .card-stats .label {
+            font-size: 12px;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .card-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            color: var(--primary-dark);
+            font-size: 0.85rem;
+            border-top: 1px solid #dee2e6;
+            margin-top: 30px;
+        }
+        
+        /* ==================== BUSCA RÁPIDA ==================== */
+        .search-box-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .search-box-container label {
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        
+        .search-box-container input {
+            border: 2px solid var(--primary-dark) !important;
+            border-radius: 6px !important;
+            padding: 8px 12px !important;
+            font-size: 13px !important;
+            transition: all 0.3s ease !important;
+            width: 100% !important;
+            max-width: 300px !important;
+        }
+        
+        .search-box-container input:focus {
+            border-color: var(--accent-red) !important;
+            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15) !important;
+            outline: none !important;
+        }
+        
+        /* ==================== MODAL DE HISTÓRICO ==================== */
+        .modal-historic {
+            max-width: 900px;
+        }
+        
+        .modal-historic .modal-header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
+            color: white;
+            border-bottom: 4px solid var(--accent-red);
+        }
+        
+        .modal-historic .modal-body {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .employee-info {
+            background-color: rgba(41, 67, 90, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .employee-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+        
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-darker);
+        }
+        
+        .historic-table-container {
+            margin-top: 20px;
+        }
+        
+        .historic-table {
+            font-size: 12px;
+            margin-bottom: 0;
+        }
+        
+        .historic-table thead th {
+            background-color: var(--primary-dark) !important;
+            color: white;
+            font-weight: 600;
+            padding: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            position: sticky;
+            top: 0;
+        }
+        
+        .historic-table tbody tr:hover {
+            background-color: rgba(41, 67, 90, 0.04);
+        }
+        
+        .historic-table tbody td {
+            padding: 8px 10px;
+            vertical-align: middle;
+        }
+        
+        /* ==================== RESPONSIVIDADE ==================== */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 15px 0;
+                margin-bottom: 20px;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .header-title {
+                font-size: 18px;
+            }
+            
+            .header-subtitle {
+                font-size: 12px;
+            }
+            
+            .header-info {
+                justify-content: center;
+            }
+            
+            .metric-value {
+                font-size: 20px;
+            }
+            
+            .actions-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .export-buttons {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .nav-tabs .nav-link {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            .chart-wrapper {
+                height: 200px;
+            }
+            
+            .table-responsive {
+                font-size: 12px;
+            }
+            
+            .table thead th,
+            .table tbody td {
+                padding: 8px 6px;
+                font-size: 11px;
+            }
+            
+            .actions-column {
+                width: 80px;
+            }
+            
+            .btn-action {
+                padding: 3px 6px;
+                font-size: 10px;
+            }
+            
+            .pagination-container {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+            
+            .btn-primary-custom,
+            .btn-secondary-custom {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+            
+            .search-box-container {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .employee-info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .historic-table {
+                font-size: 11px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .filter-container .row > div {
+                margin-bottom: 10px;
+            }
+            
+            .chart-container {
+                min-height: 240px;
+            }
+            
+            .chart-wrapper {
+                height: 180px;
+            }
+            
+            .actions-column {
+                width: 70px;
+            }
+            
+            .btn-action {
+                padding: 2px 4px;
+                font-size: 9px;
+            }
+            
+            .btn-action span {
+                display: none;
+            }
+        }
+
+        /* ==================== LINK CLICÁVEL ==================== */
+    .orgao-link {
+    color: var(--primary-dark);
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 13px;
+    border-bottom: 1px dashed rgba(41, 67, 90, 0.3);
+    }
+
+    .orgao-link:hover {
+    color: var(--accent-red);
+    background-color: rgba(185, 60, 66, 0.05);
+    border-bottom: 1px solid var(--accent-red);
+    transform: translateY(-1px);
+    }
+
+    .orgao-link:active {
+    transform: translateY(0);
+    }
+
+    /* Para a tabela específica da visão geral */
+    #visaoGeralTable .orgao-link {
+    padding: 4px 8px;
+    margin: -4px -8px;
+    }
+    </style>
+</head>
+<body>
+
+
+    <!-- ==================== HEADER PRINCIPAL ==================== -->
+    <header class="main-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="logo-container">
+                    <div class="logo">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div>
+                        <h1 class="header-title">Empregados Terceirizados</h1>
+                        <p class="header-subtitle">Governo do Estado de Minas Gerais - Dados de Empregados Terceirizados</p>
+                        <div class="header-info">
+                            <a href="https://dados.mg.gov.br/dataset/empregados-terceirizados-mg" target="_blank" class="link-legislacao">
+                                <i class="fas fa-external-link-alt"></i> Portal de Dados Abertos MG
+                            </a>
+                            <a href="https://github.com/transparencia-mg/empregados_terceirizados_mg" target="_blank" class="link-legislacao">
+                                <i class="fab fa-github"></i> Repositório GitHub
+                            </a>
+                            <span class="badge-atualizacao-header">
+                                <i class="fas fa-sync-alt"></i> Última atualização: <span id="data-atualizacao-header">Carregando...</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Informação de Fonte de Dados -->
+                <div class="text-end">
+                    <div class="btn-export" style="background: rgba(255, 255, 255, 0.2); color: white; border-color: white;">
+                        <i class="fas fa-database me-2"></i> Fonte: GitHub
+                    </div>
+                    <small class="text-white d-block mt-1" style="font-size: 10px;">Atualização automática</small>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+    <div class="container">
+        <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
+        <div class="nav-tabs-container">
+            <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="dashboard1-tab" data-bs-toggle="tab" data-bs-target="#dashboard1" type="button" role="tab">
+                        <i class="fas fa-chart-bar me-2"></i>Visão Geral
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="dashboard2-tab" data-bs-toggle="tab" data-bs-target="#dashboard2" type="button" role="tab">
+                        <i class="fas fa-user-tie me-2"></i>Consulta Individual
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="dashboard3-tab" data-bs-toggle="tab" data-bs-target="#dashboard3" type="button" role="tab">
+                        <i class="fas fa-download me-2"></i>Downloads
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ==================== CONTEÚDO DAS ABAS ==================== -->
+        <div class="tab-content" id="dashboardTabsContent">
+            
+            <!-- ==================== DASHBOARD 1: VISÃO GERAL ==================== -->
+            <div class="tab-pane fade show active" id="dashboard1" role="tabpanel">
+                
+                <!-- Filtros Dashboard 1 -->
+                <div class="filter-container">
+                    <div class="row">
+                        <div class="col-md-3 col-6">
+                            <div class="mb-3">
+                                <label for="anoDashboard1" class="form-label filter-label">Ano</label>
+                                <select class="form-select" id="anoDashboard1">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="mb-3">
+                                <label for="mesDashboard1" class="form-label filter-label">Mês</label>
+                                <select class="form-select" id="mesDashboard1">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="mb-3">
+                                <label for="orgaoDashboard1" class="form-label filter-label">Órgão</label>
+                                <input type="text" class="form-control" list="orgaosListDashboard1" id="orgaoDashboard1" placeholder="Digite ou selecione...">
+                                <datalist id="orgaosListDashboard1">
+                                    <option value="all">Todos os Órgãos</option>
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex gap-3 flex-wrap">
+                                <button class="btn-primary-custom" id="aplicarFiltros">
+                                    <i class="fas fa-filter me-2"></i>Pesquisar
+                                </button>
+                                <button class="btn-secondary-custom" id="limparFiltros">
+                                    <i class="fas fa-redo me-2"></i>Limpar Filtros
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cards de Estatísticas Dashboard 1 -->
+                <div class="row mb-4" id="summaryCards">
+                    <!-- Cards serão carregados aqui -->
+                </div>
+
+                <!-- Gráficos Dashboard 1 -->
+                <div class="row mb-4">
+                    <div class="col-md-4 col-12">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h4 class="chart-title">Empregados por Órgão</h4>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="chartOrgao"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h4 class="chart-title">Empregados por Cargo</h4>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="chartCargo"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h4 class="chart-title">Empregados por Empresa</h4>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="chartEmpresa"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ações Dashboard 1 -->
+                <div class="actions-container mb-4">
+                    <div class="export-buttons">
+                        <button class="btn-export" id="exportCSVDashboard1">
+                            <i class="fas fa-file-csv me-2"></i> Exportar CSV
+                        </button>
+                        <button class="btn-export" id="printDashboard1">
+                            <i class="fas fa-print me-2"></i> Imprimir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tabela Dashboard 1 - AGORA APENAS POR ÓRGÃO -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Visão Geral</h3>
+                        <div class="d-flex align-items-center gap-3 ms-auto">
+                            <div class="items-per-page">
+                                <span>Itens por página:</span>
+                                <select id="itemsPerPageDashboard1">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50" selected>50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            <span class="table-badge" id="resumoCountDashboard1">0 registros</span>
+                        </div>
+                    </div>
+                    <div class="table-fixed-header-container">
+                        <table class="table table-hover" id="visaoGeralTable">
+                            <thead>
+                                <tr>
+                                    <th data-sort="orgao_nome" data-order="asc" onclick="sortTable('visaoGeral', 'orgao_nome')">
+                                        Órgão <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th data-sort="orgao_sigla" data-order="asc" onclick="sortTable('visaoGeral', 'orgao_sigla')">
+                                        Sigla <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th data-sort="quantidade" data-order="desc" onclick="sortTable('visaoGeral', 'quantidade')">
+                                        Quantidade de Empregados <span class="sort-icon">▼</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="resumoTableBody">
+                                <!-- Dados serão carregados aqui -->
+                            </tbody>
+                            <tfoot id="resumoTableFooter">
+                                <!-- Total geral será carregado aqui -->
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- Paginação Dashboard 1 -->
+                    <div class="pagination-container">
+                        <div class="pagination-info" id="paginationInfoDashboard1">
+                            Mostrando 0-0 de 0 registros
+                        </div>
+                        <nav aria-label="Paginação">
+                            <ul class="pagination mb-0" id="paginationDashboard1">
+                                <!-- Paginação será gerada aqui -->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                
+            </div> <!-- Fim Dashboard 1 -->
+
+            <!-- ==================== DASHBOARD 2: CONSULTA INDIVIDUAL ==================== -->
+            <div class="tab-pane fade" id="dashboard2" role="tabpanel">
+                
+                <!-- Filtros Dashboard 2 -->
+                <div class="filter-container">
+                    <div class="row">
+                        <div class="col-md-3 col-6">
+                            <div class="mb-3">
+                                <label for="anoDashboard2" class="form-label filter-label">Ano</label>
+                                <select class="form-select" id="anoDashboard2">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="mb-3">
+                                <label for="mesDashboard2" class="form-label filter-label">Mês Referência</label>
+                                <select class="form-select" id="mesDashboard2">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="mb-3">
+                                <label for="nomeEmpregado" class="form-label filter-label">Nome do Empregado</label>
+                                <input type="text" class="form-control" id="nomeEmpregado" placeholder="Digite o nome...">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="mb-3">
+                                <label for="cargoDashboard2" class="form-label filter-label">Cargo</label>
+                                <input type="text" class="form-control" list="cargosListDashboard2" id="cargoDashboard2" placeholder="Digite ou selecione...">
+                                <datalist id="cargosListDashboard2">
+                                    <option value="all">Todos os Cargos</option>
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-12">
+                            <div class="mb-3">
+                                <label for="empresaDashboard2" class="form-label filter-label">Empresa</label>
+                                <input type="text" class="form-control" list="empresasListDashboard2" id="empresaDashboard2" placeholder="Digite ou selecione...">
+                                <datalist id="empresasListDashboard2">
+                                    <option value="all">Todas as Empresas</option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="mb-3">
+                                <label for="orgaoDashboard2" class="form-label filter-label">Órgão</label>
+                                <input type="text" class="form-control" list="orgaosListDashboard2" id="orgaoDashboard2" placeholder="Digite ou selecione...">
+                                <datalist id="orgaosListDashboard2">
+                                    <option value="all">Todos os Órgãos</option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="mb-3">
+                                <label for="matriculaDashboard2" class="form-label filter-label">Matrícula</label>
+                                <input type="text" class="form-control" id="matriculaDashboard2" placeholder="Digite a matrícula...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex gap-3 flex-wrap">
+                                <button class="btn-primary-custom" id="pesquisarEmpregados">
+                                    <i class="fas fa-search me-2"></i>Pesquisar
+                                </button>
+                                <button class="btn-secondary-custom" id="limparFiltrosDashboard2">
+                                    <i class="fas fa-times me-2"></i>Limpar Filtros
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campo de Busca de Registros Dashboard 2 -->
+                <div class="actions-container mb-4">
+                    <div class="export-buttons">
+                        <button class="btn-export" id="exportCSVDashboard2">
+                            <i class="fas fa-file-csv"></i> Exportar CSV
+                        </button>
+                        <button class="btn-export" id="printDashboard2">
+                            <i class="fas fa-print"></i> Imprimir
+                        </button>
+                    </div>
+
+                    <div class="search-box-container">
+                        <label for="searchEmpregados">Buscar registros:</label>
+                        <input type="text" id="searchEmpregados" placeholder="Buscar por nome, cargo, empresa ou órgão...">
+                    </div>
+                </div>
+
+                <!-- Tabela de Empregados Dashboard 2 -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Consulta Individual de Empregados</h3>
+                        <div class="d-flex align-items-center gap-3 ms-auto">
+                            <div class="items-per-page">
+                                <span>Itens por página:</span>
+                                <select id="itemsPerPageDashboard2">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50" selected>50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            <span class="table-badge" id="resumoCountDashboard2">0 empregados</span>
+                        </div>
+                    </div>
+                    <div class="table-fixed-header-container">
+                        <table class="table table-hover" id="empregadosTable">
+                            <thead>
+                                <tr>
+                                    <th data-sort="matricula" data-order="asc" onclick="sortTable('empregados', 'matricula')">Matrícula <span class="sort-icon">▼</span></th>
+                                    <th data-sort="nome" data-order="asc" onclick="sortTable('empregados', 'nome')">Nome <span class="sort-icon">▼</span></th>
+                                    <th data-sort="orgao" data-order="asc" onclick="sortTable('empregados', 'orgao')">Órgão <span class="sort-icon">▼</span></th>
+                                    <th data-sort="cargo" data-order="asc" onclick="sortTable('empregados', 'cargo')">Cargo <span class="sort-icon">▼</span></th>
+                                    <th data-sort="empresa" data-order="asc" onclick="sortTable('empregados', 'empresa')">Empresa <span class="sort-icon">▼</span></th>
+                                    <th data-sort="cnpj_empresa" data-order="asc" onclick="sortTable('empregados', 'cnpj_empresa')">CNPJ Empresa <span class="sort-icon">▼</span></th>
+                                    <th class="actions-column">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="empregadosTableBody">
+                                <!-- Dados serão carregados aqui -->
+                            </tbody>
+                            <tfoot id="empregadosTableFooter">
+                                <!-- Total geral será carregado aqui -->
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <!-- Paginação Dashboard 2 -->
+                    <div class="pagination-container">
+                        <div class="pagination-info" id="paginationInfoDashboard2">
+                            Mostrando 0-0 de 0 registros
+                        </div>
+                        <nav aria-label="Paginação">
+                            <ul class="pagination mb-0" id="paginationDashboard2">
+                                <!-- Paginação será gerada aqui -->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                
+            </div> <!-- Fim Dashboard 2 -->
+
+            <!-- ==================== DASHBOARD 3: DOWNLOADS ==================== -->
+            <div class="tab-pane fade" id="dashboard3" role="tabpanel">
+                
+                <!-- Filtro de Download -->
+                <div class="filter-container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="anoDownload" class="form-label filter-label">Selecione o Ano para Download</label>
+                                <select class="form-select" id="anoDownload">
+                                    <option value="">Selecione um ano...</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-end">
+                            <button class="btn-primary-custom w-100" id="downloadAnoCSV">
+                                <i class="fas fa-download me-2"></i>Baixar CSV do Ano Selecionado
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informações sobre os dados -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Informações sobre os Dados</h3>
+                    </div>
+                    <div class="p-4">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="card-stats">
+                                    <i class="fas fa-database fa-3x mb-3" style="color: var(--primary-dark);"></i>
+                                    <h4>Fonte dos Dados</h4>
+                                    <p class="text-muted" style="font-size: 13px;">Dados atualizados automaticamente do GitHub</p>
+                                    <div class="mt-3">
+                                        <a href="https://github.com/transparencia-mg/empregados_terceirizados_mg" 
+                                           target="_blank" 
+                                           class="btn-export w-100 d-block text-decoration-none">
+                                            <i class="fab fa-github me-2"></i>Acessar Repositório
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="card-stats">
+                                    <i class="fas fa-external-link-alt fa-3x mb-3" style="color: var(--primary-dark);"></i>
+                                    <h4>Portal de Dados Abertos</h4>
+                                    <p class="text-muted" style="font-size: 13px;">Acesse o conjunto de dados de empregados terceirzaos do Estado de Minas Gerais</p>
+                                    <div class="mt-3">
+                                        <a href="https://dados.mg.gov.br/dataset/empregados-terceirizados-mg" 
+                                           target="_blank" 
+                                           class="btn-export w-100 d-block text-decoration-none">
+                                            <i class="fas fa-external-link-alt me-2"></i>Acessar Portal
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <h5 class="mb-3">Metadados - Estrutura dos Dados</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Campo</th>
+                                            <th>Descrição</th>
+                                            <th>Tipo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>matricula</td>
+                                            <td>Matrícula do empregado terceirizado</td>
+                                            <td>Texto/Número</td>
+                                        </tr>
+                                        <tr>
+                                            <td>nome</td>
+                                            <td>Nome completo do empregado terceirizado</td>
+                                            <td>Texto</td>
+                                        </tr>
+                                        <tr>
+                                            <td>orgao</td>
+                                            <td>Órgão de trabalho do empregado</td>
+                                            <td>Texto</td>
+                                        </tr>
+                                        <tr>
+                                            <td>cargo</td>
+                                            <td>Cargo exercido pelo empregado</td>
+                                            <td>Texto</td>
+                                        </tr>
+                                        <tr>
+                                            <td>empresa</td>
+                                            <td>Nome da empresa terceirizada</td>
+                                            <td>Texto</td>
+                                        </tr>
+                                        <tr>
+                                            <td>cnpj_empresa</td>
+                                            <td>CNPJ da empresa terceirizada</td>
+                                            <td>Texto (14 dígitos)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>mes_referencia</td>
+                                            <td>Mês do contrato de trabalho (formato abreviado)</td>
+                                            <td>Texto</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="alert alert-info mt-3">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Fonte dos Dados:</strong> Os dados são carregados automaticamente do repositório GitHub 
+                                <a href="https://github.com/transparencia-mg/empregados_terceirizados_mg" target="_blank">transparencia-mg/empregados_terceirizados_mg</a>
+                            </div>
+                            
+                            <div class="alert alert-success mt-2">
+                                <i class="fas fa-sync-alt me-2"></i>
+                                <strong>Atualização Automática:</strong> Os dados são atualizados automaticamente quando novos arquivos são adicionados ao repositório GitHub.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div> <!-- Fim Dashboard 3 -->
+        </div>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer mt-4 pt-4 border-top">
+        <div class="container text-center text-muted">
+            <p class="mb-1">
+                <i class="fas fa-sync-alt me-2"></i> 
+                Data de Atualização — 
+                <span id="footer-atualizacao">Carregando...</span>
+            </p>
+            <p class="mb-0" style="font-size: 0.85rem;">
+                © 2025 Empregados Terceirizados - Governo do Estado de Minas Gerais
+            </p>
+            <p class="mt-2 mb-0 small">
+                <a href="https://dados.mg.gov.br" style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">
+                    <i class="fas fa-external-link-alt"></i> dados.mg.gov.br
+                </a>
+                | 
+                <a href="https://github.com/transparencia-mg/empregados_terceirizados_mg" 
+                   style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ==================== MODAL DE HISTÓRICO ==================== -->
+    <div class="modal fade" id="historicModal" tabindex="-1" aria-labelledby="historicModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-historic">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="historicModalLabel">
+                        <i class="fas fa-history me-2"></i>Histórico do Empregado
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="employee-info" id="employeeInfo">
+                        <!-- Informações do empregado serão carregadas aqui -->
+                    </div>
+                    
+                    <div class="historic-table-container">
+                        <h6 class="mb-3">Histórico por Mês</h6>
+                        <div class="table-responsive">
+                            <table class="table table-hover historic-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mês Referência</th>
+                                        <th>Órgão</th>
+                                        <th>Cargo</th>
+                                        <th>Empresa</th>
+                                        <th>CNPJ Empresa</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historicTableBody">
+                                    <!-- Histórico será carregado aqui -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== LOADING OVERLAY ==================== -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+
+    <!-- PapaParse (TEM QUE VIR PRIMEIRO) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    
+    <!-- jQuery e DataTables -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // ============================================
+        // VARIÁVEIS GLOBAIS
+        // ============================================
+        let terceirizadosData = [];
+        let filteredData = [];
+        let allData = {}; // Para armazenar dados por ano
+        let currentPageDashboard1 = 1;
+        let currentPageDashboard2 = 1;
+        let itemsPerPageDashboard1 = 50;
+        let itemsPerPageDashboard2 = 50;
+        let charts = {};
+        let currentYear = '';
+        let currentMonth = '';
+        let currentSortDashboard1 = { column: 'orgao_nome', order: 'asc' };
+        let currentSortDashboard2 = { column: 'nome', order: 'asc' };
+        let currentSearchTerm = '';
+        let lastGitHubCheck = null;
+        let lastDataHash = null;
+        
+        const chartColors = {
+            primary: '#29435A',
+            accent: '#B93C42',
+            bright: '#DB233F',
+            dark: '#132837',
+            secondaryBlue: '#3F704D',
+            secondaryBrown: '#8B7355',
+            secondaryTeal: '#20B2AA'
+        };
+
+        // URLs dos CSVs no GitHub
+        const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/transparencia-mg/empregados_terceirizados_mg/main/data/';
+        const GITHUB_API_URL = 'https://api.github.com/repos/transparencia-mg/empregados_terceirizados_mg/commits?path=data&per_page=1';
+
+        // LISTA CSV - AGORA CARREGADOS SOB DEMANDA
+        const CSV_FILES_BY_YEAR = {
+            '2021': 'terceirizados_2021.csv',
+            '2022': 'terceirizados_2022.csv',
+            '2023': 'terceirizados_2023.csv',
+            '2024': 'terceirizados_2024.csv',
+            '2025': 'terceirizados_2025.csv'
+        };
+
+        // Mapeamento de meses abreviados para números
+        const mesesAbreviados = {
+            'jan': '01', 'fev': '02', 'mar': '03', 'abr': '04', 'mai': '05', 'jun': '06',
+            'jul': '07', 'ago': '08', 'set': '09', 'out': '10', 'nov': '11', 'dez': '12'
+        };
+
+        const monthNames = {
+            '01': 'Janeiro', '02': 'Fevereiro', '03': 'Março',
+            '04': 'Abril', '05': 'Maio', '06': 'Junho',
+            '07': 'Julho', '08': 'Agosto', '09': 'Setembro',
+            '10': 'Outubro', '11': 'Novembro', '12': 'Dezembro'
+        };
+
+        // Mapeamento de siglas para nomes completos de órgãos
+        const orgaosExtenso = {
+            'AGE': 'Assembleia Geral do Estado',
+            'ARMVA': 'Administração Regional do Médio Vale do Aço',
+            'ARSAE': 'Agência Reguladora de Serviços de Abastecimento de Água e de Esgotamento Sanitário do Estado de Minas Gerais',
+            'ARTEMIG': 'Agência Reguladora de Transportes do Estado de Minas Gerais',
+            'CBMMG': 'Corpo de Bombeiros Militar de Minas Gerais',
+            'CGE': 'Controladoria-Geral do Estado',
+            'CODEMGE': 'Companhia de Desenvolvimento de Minas Gerais',
+            'COHAB': 'Companhia de Habitação do Estado de Minas Gerais',
+            'DEER': 'Departamento de Edificações e Estradas de Rodagem',
+            'DPMG': 'Defensoria Pública do Estado de Minas Gerais',
+            'EPAMIG': 'Empresa de Pesquisa Agropecuária de Minas Gerais',
+            'ESP': 'Escola de Saúde Pública do Estado de Minas Gerais',
+            'FAOP': 'Fundação de Arte de Ouro Preto',
+            'FAPEMIG': 'Fundação de Amparo à Pesquisa do Estado de Minas Gerais',
+            'FCS': 'Fundação Clóvis Salgado',
+            'FEAM': 'Fundação Estadual do Meio Ambiente',
+            'FHEMIG': 'Fundação Hospitalar do Estado de Minas Gerais',
+            'FJP': 'Fundação João Pinheiro',
+            'FUCAM': 'Fundação Caio Martins',
+            'FUND. HELENA ANTIPOFF': 'Fundação Helena Antipoff',
+            'FUNED': 'Fundação Ezequiel Dias',
+            'GMG': 'Gabinete Militar do Governador',
+            'HEMOMINAS': 'Fundação Centro de Hematologia e Hemoterapia de Minas Gerais',
+            'HPM': 'Hospital da Polícia Militar',
+            'IDENE': 'Instituto de Desenvolvimento do Norte e Nordeste de Minas Gerais',
+            'IEF': 'Instituto Estadual de Florestas',
+            'IEPHA': 'Instituto Estadual do Patrimônio Histórico e Artístico de Minas Gerais',
+            'IGAM': 'Instituto Mineiro de Gestão das Águas',
+            'IMA': 'Instituto Mineiro de Agropecuária',
+            'INVESTE MINAS': 'Agência de Promoção de Investimentos e Comércio Exterior de Minas Gerais',
+            'IPEM': 'Instituto de Pesos e Medidas',
+            'IPSEMG': 'Instituto de Previdência dos Servidores',
+            'IPSM': 'Instituto de Previdência dos Servidores Militares',
+            'JUCEMG/UBERLÂNDIA': 'Junta Comercial do Estado de Minas Gerais',
+            'LEMG': 'Loteria Mineira',
+            'OGE': 'Ouvidoria-Geral do Estado',
+            'PCMG': 'Polícia Civil',
+            'PRODEMGE': 'Empresa de Tecnologia da Informação do Estado de Minas Gerais S.A.',
+            'SCC': 'Secretaria de Estado da Casa Civil',
+            'SEAPA': 'Secretaria de Estado de Agricultura, Pecuária e Abastecimento',
+            'SEC': 'Secretaria de Estado de Cultura',
+            'SECOM': 'Secretaria de Estado de Comunicação Social',
+            'SEDE': 'Secretaria de Estado de Desenvolvimento Econômico',
+            'SEDESE': 'Secretaria de Estado de Desenvolvimento Social',
+            'SEE': 'Secretaria de Estado de Educação',
+            'SEF': 'Secretaria de Estado de Fazenda',
+            'SEGOV': 'Secretaria de Estado de Governo',
+            'SEINFRA': 'Secretaria de Estado de Infraestrutura e Mobilidade',
+            'SEJUSP': 'Secretaria de Estado de Justiça e Segurança Pública',
+            'SEMAD': 'Secretaria de Estado de Meio Ambiente e Desenvolvimento Sustentável',
+            'SEPLAG': 'Secretaria de Estado de Planejamento e Gestão',
+            'SEPLAG UAI': 'Secretaria de Estado de Planejamento e Gestão',
+            'SES': 'Secretaria de Estado de Saúde',
+            'SG': 'Secretaria Geral do Estado',
+            'TJMG': 'Tribunal de Justiça de Minas Gerais',
+            'TV MINAS': 'Empresa Mineira de Comunicação',
+            'UEMG': 'Universidade do Estado de Minas Gerais',
+            'UNIMONTES': 'Universidade Estadual de Montes Claros',
+            'UTRAMIG': 'Fundação de Educação para o Trabalho de Minas Gerais'
+        };
+
+        // ==================== FUNÇÕES DE INICIALIZAÇÃO ====================
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('=== INICIANDO DASHBOARD TERCEIRIZADOS ===');
+            console.log('Verificando atualizações no GitHub...');
+
+            showLoading(true);
+            
+            try {
+                // Verificar se há atualizações no GitHub
+                const hasUpdates = await checkGitHubUpdates();
+                
+                if (hasUpdates || !lastDataHash) {
+                    console.log('Carregando dados mais recentes...');
+                    await loadYearData('2025');
+                    
+                    // Determinar o mês mais recente de 2025
+                    await determineLatestMonth();
+                    
+                    // Salvar hash dos dados
+                    lastDataHash = await calculateDataHash(allData['2025']);
+                    
+                    // Atualizar interface
+                    updateDataAtualizacao();
+                    updateFilterOptions();
+                    updateDashboard1();
+                    initializeDashboard2();
+                    updateDashboard3();
+                    setupEventListeners();
+                    
+                    console.log('Dashboard atualizado com sucesso!');
+                } else {
+                    console.log('Usando dados em cache - sem atualizações no GitHub');
+                    
+                    // Usar dados já carregados
+                    terceirizadosData = allData['2025'] || [];
+                    await determineLatestMonth();
+                    
+                    updateDataAtualizacao();
+                    updateFilterOptions();
+                    updateDashboard1();
+                    initializeDashboard2();
+                    updateDashboard3();
+                    setupEventListeners();
+                }
+                
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                showError('Erro ao carregar dados do GitHub. Por favor, tente novamente.');
+            } finally {
+                showLoading(false);
+            }
+        });
+
+        // ==================== VERIFICAR ATUALIZAÇÕES NO GITHUB ====================
+        async function checkGitHubUpdates() {
+            try {
+                const response = await fetch(GITHUB_API_URL);
+                if (!response.ok) throw new Error('Erro ao verificar GitHub');
+                
+                const commits = await response.json();
+                if (commits && commits.length > 0) {
+                    const latestCommit = commits[0];
+                    const commitDate = new Date(latestCommit.commit.author.date);
+                    
+                    // Verificar se é a primeira vez ou se houve atualização
+                    if (!lastGitHubCheck || commitDate > lastGitHubCheck) {
+                        lastGitHubCheck = commitDate;
+                        return true; // Há atualizações
+                    }
+                }
+                return false; // Sem atualizações
+            } catch (error) {
+                console.error('Erro ao verificar atualizações:', error);
+                return true; // Em caso de erro, carregar dados
+            }
+        }
+
+        // ==================== CALCULAR HASH DOS DADOS ====================
+    async function calculateDataHash(data) {
+    if (!data || data.length === 0) return null;
+
+    const dataString = data.slice(0, 100).map(item =>
+        `${item.matricula}|${item.nome}|${item.orgao}|${item.empresa}`
+    ).join('|');
+
+    // 🔑 Conversão UTF-8 → Latin1 antes do btoa
+    return btoa(unescape(encodeURIComponent(
+        dataString.length + dataString.substring(0, 50)
+    )));
+    }
+
+
+        // ==================== CARREGAR DADOS DO GITHUB ====================
+        async function loadYearData(year) {
+            if (allData[year] && lastDataHash) {
+                console.log(`Dados de ${year} já carregados.`);
+                terceirizadosData = allData[year];
+                return;
+            }
+
+            const filename = CSV_FILES_BY_YEAR[year];
+            if (!filename) {
+                console.error(`Arquivo para o ano ${year} não encontrado.`);
+                return;
+            }
+
+            const url = `${GITHUB_BASE_URL}${filename}`;
+            console.log(`Carregando dados de ${year}: ${url}`);
+
+            const MESES = {
+                jan: '01', fev: '02', mar: '03', abr: '04',
+                mai: '05', jun: '06', jul: '07', ago: '08',
+                set: '09', out: '10', nov: '11', dez: '12'
+            };
+
+            return new Promise((resolve, reject) => {
+                Papa.parse(url, {
+                    download: true,
+                    header: true,
+                    skipEmptyLines: true,
+                    encoding: 'UTF-8',
+                    complete: function (results) {
+                        const data = results.data.map(row => {
+                            // Normalizar nomes de colunas
+                            const matricula = row.matricula || row['MAT.'] || row['MAT'] || '';
+                            const nome = row.nome || row['NOME'] || '';
+                            const orgao = row.orgao || row['ÓRGÃO'] || '';
+                            const cargo = row.cargo || row['CARGO'] || '';
+                            let empresa = row.empresa || row['EMPRESA'] || '';
+                            const cnpj_empresa = row.cnpj_empresa || row['CNPJ EMPRESA'] || '';
+                            const mes_referencia = row.mes_referencia || row['MÊS REFERÊNCIA'] || '';
+
+                            // CORREÇÃO DA EMPRESA "MINAS GERAIS ADMINISTRA��O E SERVI�OS S.A"
+                            if (empresa.includes('MINAS GERAIS ADMINISTRA')) {
+                                empresa = 'MINAS GERAIS ADMINISTRACAO E SERVICOS S.A';
+                            }
+
+                            const empregado = {
+                                matricula: matricula,
+                                nome: nome,
+                                orgao: orgao,
+                                cargo: cargo,
+                                empresa: empresa,
+                                cnpj_empresa: cnpj_empresa,
+                                mes_referencia: mes_referencia
+                            };
+
+                            // === NORMALIZAÇÃO DO MÊS ===
+                            const ref = mes_referencia
+                                .toLowerCase()
+                                .replace(/\u00a0/g, '')
+                                .replace(/\s+/g, '')
+                                .trim();
+
+                            // aceita: jan/25 | jan-25 | jan/2025 | jan-2025
+                            const m = ref.match(/^([a-z]{3})[\/\-](\d{2}|\d{4})$/);
+
+                            if (m && MESES[m[1]]) {
+                                const mes = MESES[m[1]];
+                                const ano = m[2].length === 2 ? `20${m[2]}` : m[2];
+
+                                empregado.COMPETENCIA = `${ano}-${mes}`;
+                                empregado.ANO = ano;
+                                empregado.MES_NUM = mes;
+                            } else {
+                                empregado.COMPETENCIA = null;
+                                empregado.ANO = '';
+                                empregado.MES_NUM = '';
+                            }
+
+                            return empregado;
+                        }).filter(e => e.COMPETENCIA); // só registros válidos
+
+                        allData[year] = data;
+                        terceirizadosData = data;
+
+                        console.log(`Dados de ${year} carregados: ${data.length} registros`);
+                        resolve();
+                    },
+                    error: function (err) {
+                        console.error(`Erro ao carregar dados de ${year}:`, err);
+                        reject(err);
+                    }
+                });
+            });
+        }
+
+        // ==================== DETERMINAR MÊS MAIS RECENTE ====================
+        async function determineLatestMonth() {
+            if (!terceirizadosData || terceirizadosData.length === 0) {
+                console.warn('Dados ainda não carregados.');
+                filteredData = [];
+                return;
+            }
+
+            // Encontrar competências únicas
+            const competencias = [...new Set(
+                terceirizadosData
+                    .map(e => e.COMPETENCIA)
+                    .filter(Boolean)
+            )].sort().reverse();
+
+            if (competencias.length === 0) {
+                console.warn('Nenhuma competência encontrada.');
+                filteredData = terceirizadosData;
+                return;
+            }
+
+            const [ano, mes] = competencias[0].split('-');
+
+            currentYear = ano;
+            currentMonth = mes;
+
+            // Filtrar dados do mês mais recente
+            filteredData = terceirizadosData.filter(
+                e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
+            );
+
+            console.log(`Mês mais recente encontrado: ${mes}/${ano} - ${filteredData.length} registros`);
+        }
+
+        // ==================== CONFIGURAR EVENT LISTENERS ====================
+        function setupEventListeners() {
+            // Filtros Dashboard 1
+            document.getElementById('aplicarFiltros').addEventListener('click', function() {
+                applyFilters('dashboard1');
+            });
+            document.getElementById('limparFiltros').addEventListener('click', function() {
+                clearAllFilters();
+            });
+            
+            // Dashboard 2
+            document.getElementById('pesquisarEmpregados').addEventListener('click', function() {
+                applyFilters('dashboard2');
+            });
+            document.getElementById('limparFiltrosDashboard2').addEventListener('click', function() {
+                clearDashboard2Filters();
+            });
+            
+            // Exportação
+            document.getElementById('exportCSVDashboard1').addEventListener('click', () => exportToCSV('dashboard1'));
+            document.getElementById('printDashboard1').addEventListener('click', () => printDashboard('dashboard1'));
+           
+            document.getElementById('exportCSVDashboard2').addEventListener('click', () => exportToCSV('dashboard2'));
+            document.getElementById('printDashboard2').addEventListener('click', () => printDashboard('dashboard2'));
+            
+            // Download por ano na aba Downloads
+            document.getElementById('downloadAnoCSV').addEventListener('click', downloadYearCSV);
+            
+            // Campo de busca na Consulta Individual
+            document.getElementById('searchEmpregados').addEventListener('input', function(e) {
+                currentSearchTerm = e.target.value.toLowerCase();
+                filterEmpregadosTable(currentSearchTerm);
+            });
+            
+            // Troca de abas
+            document.getElementById('dashboard1-tab').addEventListener('click', function() {
+                setTimeout(updateDashboard1, 100);
+            });
+            document.getElementById('dashboard2-tab').addEventListener('click', function() {
+                setTimeout(updateDashboard2, 100);
+            });
+            
+            // Itens por página
+            document.getElementById('itemsPerPageDashboard1').addEventListener('change', function() {
+                itemsPerPageDashboard1 = parseInt(this.value);
+                currentPageDashboard1 = 1;
+                updateResumoTable();
+            });
+            
+            document.getElementById('itemsPerPageDashboard2').addEventListener('change', function() {
+                itemsPerPageDashboard2 = parseInt(this.value);
+                currentPageDashboard2 = 1;
+                updateEmpregadosTable();
+            });
+            
+            // Mudança de ano nos selects
+            document.getElementById('anoDashboard1').addEventListener('change', async function() {
+                const selectedYear = this.value;
+                if (selectedYear !== currentYear) {
+                    await switchYearData(selectedYear);
+                }
+            });
+            
+            document.getElementById('anoDashboard2').addEventListener('change', async function() {
+                const selectedYear = this.value;
+                if (selectedYear !== currentYear) {
+                    await switchYearData(selectedYear);
+                }
+            });
+        }
+
+        // ==================== FUNÇÕES DE UTILIDADE ====================
+        function showLoading(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.style.display = show ? 'flex' : 'none';
+        }
+
+        function showError(message) {
+            const container = document.querySelector('.container');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'alert alert-danger alert-dismissible fade show';
+            errorDiv.innerHTML = `
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            container.prepend(errorDiv);
+        }
+
+        function updateDataAtualizacao() {
+            const now = new Date();
+            const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
+            document.getElementById('data-atualizacao-header').textContent = dataFormatada;
+            document.getElementById('footer-atualizacao').textContent = dataFormatada;
+        }
+
+        // Função para converter sigla em nome completo do órgão
+        function getOrgaoExtenso(orgaoSigla) {
+            if (!orgaoSigla) return '';
+            
+            // Verificar se é uma sigla conhecida
+            for (const [sigla, nome] of Object.entries(orgaosExtenso)) {
+                if (orgaoSigla.toUpperCase().includes(sigla)) {
+                    return nome;
+                }
+            }
+            
+            // Se não encontrar, retorna o próprio nome
+            return orgaoSigla;
+        }
+
+        // ==================== FUNÇÕES DE ANO E MES ====================
+        async function switchYearData(year) {
+            showLoading(true);
+            try {
+                await loadYearData(year);
+                currentYear = year;
+                await determineLatestMonth();
+                updateFilterOptions();
+                updateDashboard1();
+                updateDashboard2();
+            } catch (error) {
+                console.error('Erro ao trocar ano:', error);
+                showError('Erro ao carregar dados do ano selecionado.');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // ==================== FUNÇÕES DE FILTRO ====================
+        function updateFilterOptions() {
+            // Dashboard 1 - Ano
+            const anoSelect1 = document.getElementById('anoDashboard1');
+            if (anoSelect1) {
+                anoSelect1.innerHTML = '';
+                Object.keys(CSV_FILES_BY_YEAR).forEach(ano => {
+                    const option = document.createElement('option');
+                    option.value = ano;
+                    option.textContent = ano;
+                    if (ano === currentYear) option.selected = true;
+                    anoSelect1.appendChild(option);
+                });
+            }
+            
+            // Dashboard 1 - Mês
+            const mesSelect1 = document.getElementById('mesDashboard1');
+            if (mesSelect1 && currentYear) {
+                const mesesDoAno = [...new Set(
+                    (allData[currentYear] || [])
+                        .map(e => e.MES_NUM)
+                        .filter(Boolean)
+                )].sort((a, b) => parseInt(b) - parseInt(a));
+                
+                mesSelect1.innerHTML = '';
+                mesesDoAno.forEach(mesNum => {
+                    const option = document.createElement('option');
+                    option.value = mesNum;
+                    option.textContent = monthNames[mesNum] || mesNum;
+                    if (mesNum === currentMonth) option.selected = true;
+                    mesSelect1.appendChild(option);
+                });
+            }
+            
+            // Dashboard 2 - Ano
+            const anoSelect2 = document.getElementById('anoDashboard2');
+            if (anoSelect2) {
+                anoSelect2.innerHTML = '';
+                Object.keys(CSV_FILES_BY_YEAR).forEach(ano => {
+                    const option = document.createElement('option');
+                    option.value = ano;
+                    option.textContent = ano;
+                    if (ano === currentYear) option.selected = true;
+                    anoSelect2.appendChild(option);
+                });
+            }
+            
+            // Dashboard 2 - Mês
+            const mesSelect2 = document.getElementById('mesDashboard2');
+            if (mesSelect2 && currentYear) {
+                const mesesDoAno = [...new Set(
+                    (allData[currentYear] || [])
+                        .map(e => e.MES_NUM)
+                        .filter(Boolean)
+                )].sort((a, b) => parseInt(b) - parseInt(a));
+                
+                mesSelect2.innerHTML = '';
+                mesesDoAno.forEach(mesNum => {
+                    const option = document.createElement('option');
+                    option.value = mesNum;
+                    option.textContent = monthNames[mesNum] || mesNum;
+                    if (mesNum === currentMonth) option.selected = true;
+                    mesSelect2.appendChild(option);
+                });
+            }
+            
+            // Obter todos os órgãos únicos do período atual
+            const orgaosUnicos = [...new Set(filteredData.map(e => e.orgao))].sort();
+            
+            // Dashboard 1 - datalist de órgãos
+            const orgaoDatalist1 = document.getElementById('orgaosListDashboard1');
+            if (orgaoDatalist1) {
+                orgaoDatalist1.innerHTML = '<option value="all">Todos os Órgãos</option>';
+                orgaosUnicos.forEach(orgao => {
+                    if (orgao) {
+                        const option = document.createElement('option');
+                        option.value = orgao;
+                        orgaoDatalist1.appendChild(option);
+                    }
+                });
+            }
+            
+            // Dashboard 2 - datalist de órgãos
+            const orgaoDatalist2 = document.getElementById('orgaosListDashboard2');
+            if (orgaoDatalist2) {
+                orgaoDatalist2.innerHTML = '<option value="all">Todos os Órgãos</option>';
+                orgaosUnicos.forEach(orgao => {
+                    if (orgao) {
+                        const option = document.createElement('option');
+                        option.value = orgao;
+                        orgaoDatalist2.appendChild(option);
+                    }
+                });
+            }
+            
+            // Obter todos os cargos únicos do período atual
+            const cargosUnicos = [...new Set(filteredData.map(e => e.cargo))].sort();
+            
+            // Dashboard 2 - datalist de cargos
+            const cargoDatalist2 = document.getElementById('cargosListDashboard2');
+            if (cargoDatalist2) {
+                cargoDatalist2.innerHTML = '<option value="all">Todos os Cargos</option>';
+                cargosUnicos.forEach(cargo => {
+                    if (cargo) {
+                        const option = document.createElement('option');
+                        option.value = cargo;
+                        cargoDatalist2.appendChild(option);
+                    }
+                });
+            }
+            
+            // Obter todas as empresas únicas do período atual
+            const empresasUnicas = [...new Set(filteredData.map(e => e.empresa))].sort();
+            
+            // Dashboard 2 - datalist de empresas
+            const empresaDatalist2 = document.getElementById('empresasListDashboard2');
+            if (empresaDatalist2) {
+                empresaDatalist2.innerHTML = '<option value="all">Todas as Empresas</option>';
+                empresasUnicas.forEach(empresa => {
+                    if (empresa) {
+                        const option = document.createElement('option');
+                        option.value = empresa;
+                        empresaDatalist2.appendChild(option);
+                    }
+                });
+            }
+        }
+
+        function applyFilters(dashboard) {
+            showLoading(true);
+            
+            if (dashboard === 'dashboard1') {
+                const ano = document.getElementById('anoDashboard1').value;
+                const mes = document.getElementById('mesDashboard1').value;
+                const orgaoInput = document.getElementById('orgaoDashboard1').value;
+                
+                const orgao = orgaoInput === 'all' || orgaoInput === '' ? 'all' : orgaoInput;
+                
+                // Se o ano mudou, carregar os dados do ano
+                if (ano !== currentYear) {
+                    switchYearData(ano).then(() => {
+                        // Após carregar o ano, aplicar os filtros
+                        applyFiltersAfterYearLoad(dashboard, mes, orgao);
+                    });
+                    return;
+                }
+                
+                currentMonth = mes;
+                
+                filteredData = (allData[currentYear] || []).filter(empregado => {
+                    // Filtrar por ano e mês selecionados
+                    if (empregado.ANO !== currentYear || empregado.MES_NUM !== currentMonth) {
+                        return false;
+                    }
+                    
+                    // Filtro por órgão
+                    if (orgao !== 'all' && empregado.orgao !== orgao) {
+                        return false;
+                    }
+                    
+                    return true;
+                });
+                
+                updateDashboard1();
+                
+            } else if (dashboard === 'dashboard2') {
+                const ano = document.getElementById('anoDashboard2').value;
+                const mes = document.getElementById('mesDashboard2').value;
+                const nome = document.getElementById('nomeEmpregado').value.toLowerCase();
+                const cargoInput = document.getElementById('cargoDashboard2').value;
+                const empresaInput = document.getElementById('empresaDashboard2').value;
+                const orgaoInput = document.getElementById('orgaoDashboard2').value;
+                const matricula = document.getElementById('matriculaDashboard2').value;
+                
+                const cargo = cargoInput === 'all' || cargoInput === '' ? 'all' : cargoInput;
+                const empresa = empresaInput === 'all' || empresaInput === '' ? 'all' : empresaInput;
+                const orgao = orgaoInput === 'all' || orgaoInput === '' ? 'all' : orgaoInput;
+                
+                // Se o ano mudou, carregar os dados do ano
+                if (ano !== currentYear) {
+                    switchYearData(ano).then(() => {
+                        // Após carregar o ano, aplicar os filtros
+                        applyFiltersAfterYearLoad(dashboard, mes, nome, cargo, empresa, orgao, matricula);
+                    });
+                    return;
+                }
+                
+                currentMonth = mes;
+                
+                filteredData = (allData[currentYear] || []).filter(empregado => {
+                    // Filtrar por ano e mês selecionados
+                    if (empregado.ANO !== currentYear || empregado.MES_NUM !== currentMonth) {
+                        return false;
+                    }
+                    
+                    // Filtro por nome
+                    if (nome && !empregado.nome.toLowerCase().includes(nome)) {
+                        return false;
+                    }
+                    
+                    // Filtro por cargo
+                    if (cargo !== 'all' && empregado.cargo !== cargo) {
+                        return false;
+                    }
+                    
+                    // Filtro por empresa
+                    if (empresa !== 'all' && empregado.empresa !== empresa) {
+                        return false;
+                    }
+                    
+                    // Filtro por órgão
+                    if (orgao !== 'all' && empregado.orgao !== orgao) {
+                        return false;
+                    }
+                    
+                    // Filtro por matrícula
+                    if (matricula && !empregado.matricula.toString().includes(matricula)) {
+                        return false;
+                    }
+                    
+                    return true;
+                });
+                
+                updateDashboard2();
+            }
+            
+            showLoading(false);
+        }
+
+        async function applyFiltersAfterYearLoad(dashboard, mes, ...otherFilters) {
+            currentMonth = mes;
+            
+            if (dashboard === 'dashboard1') {
+                const [orgao] = otherFilters;
+                
+                filteredData = (allData[currentYear] || []).filter(empregado => {
+                    if (empregado.ANO !== currentYear || empregado.MES_NUM !== currentMonth) {
+                        return false;
+                    }
+                    
+                    if (orgao !== 'all' && empregado.orgao !== orgao) {
+                        return false;
+                    }
+                    
+                    return true;
+                });
+                
+                updateDashboard1();
+            } else if (dashboard === 'dashboard2') {
+                const [nome, cargo, empresa, orgao, matricula] = otherFilters;
+                
+                filteredData = (allData[currentYear] || []).filter(empregado => {
+                    if (empregado.ANO !== currentYear || empregado.MES_NUM !== currentMonth) {
+                        return false;
+                    }
+                    
+                    if (nome && !empregado.nome.toLowerCase().includes(nome)) {
+                        return false;
+                    }
+                    
+                    if (cargo !== 'all' && empregado.cargo !== cargo) {
+                        return false;
+                    }
+                    
+                    if (empresa !== 'all' && empregado.empresa !== empresa) {
+                        return false;
+                    }
+                    
+                    if (orgao !== 'all' && empregado.orgao !== orgao) {
+                        return false;
+                    }
+                    
+                    if (matricula && !empregado.matricula.toString().includes(matricula)) {
+                        return false;
+                    }
+                    
+                    return true;
+                });
+                
+                updateDashboard2();
+            }
+            
+            showLoading(false);
+        }
+
+        function filterEmpregadosTable(searchTerm) {
+            const searchLower = searchTerm.toLowerCase();
+            
+            // Se não há termo de busca, mostrar todos os registros
+            if (!searchTerm.trim()) {
+                updateEmpregadosTable();
+                return;
+            }
+            
+            // Filtrar os dados
+            const filtered = filteredData.filter(empregado => {
+                return (
+                    empregado.nome.toLowerCase().includes(searchLower) ||
+                    empregado.cargo.toLowerCase().includes(searchLower) ||
+                    empregado.empresa.toLowerCase().includes(searchLower) ||
+                    empregado.orgao.toLowerCase().includes(searchLower) ||
+                    empregado.matricula.toString().toLowerCase().includes(searchLower)
+                );
+            });
+            
+            // Se encontrou resultados, ir para a página 1 e mostrar
+            if (filtered.length > 0) {
+                // Encontrar o índice do primeiro resultado na lista completa
+                const firstMatchIndex = filteredData.findIndex(empregado => 
+                    empregado.nome.toLowerCase().includes(searchLower)
+                );
+                
+                if (firstMatchIndex >= 0) {
+                    // Calcular em qual página está o primeiro resultado
+                    const pageForFirstResult = Math.floor(firstMatchIndex / itemsPerPageDashboard2) + 1;
+                    currentPageDashboard2 = pageForFirstResult;
+                }
+                
+                // Mostrar apenas os resultados filtrados
+                const tempFilteredData = filteredData;
+                filteredData = filtered;
+                updateEmpregadosTable();
+                filteredData = tempFilteredData; // Restaurar dados originais
+            } else {
+                // Se não encontrou resultados, mostrar mensagem
+                const tbody = document.getElementById('empregadosTableBody');
+                const tfoot = document.getElementById('empregadosTableFooter');
+                const countElement = document.getElementById('resumoCountDashboard2');
+                const paginationInfo = document.getElementById('paginationInfoDashboard2');
+                
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">Nenhum empregado encontrado com o termo de busca.</td></tr>';
+                if (tfoot) tfoot.innerHTML = '';
+                if (countElement) countElement.textContent = '0 empregados';
+                if (paginationInfo) paginationInfo.textContent = 'Mostrando 0-0 de 0 registros';
+                
+                updatePaginationDashboard2(1, 1);
+            }
+        }
+
+        function clearAllFilters() {
+            // Resetar filtros do Dashboard 1
+            document.getElementById('orgaoDashboard1').value = '';
+            
+            // Voltar para o mês mais recente do ano atual
+            const mesesDoAno = [...new Set(
+                (allData[currentYear] || [])
+                    .map(e => e.MES_NUM)
+                    .filter(Boolean)
+            )].sort((a, b) => parseInt(b) - parseInt(a));
+            
+            if (mesesDoAno.length > 0) {
+                currentMonth = mesesDoAno[0];
+            }
+            
+            filteredData = (allData[currentYear] || []).filter(empregado => {
+                return empregado.ANO === currentYear && 
+                       empregado.MES_NUM === currentMonth;
+            });
+            
+            updateFilterOptions();
+            updateDashboard1();
+        }
+
+        function clearDashboard2Filters() {
+            document.getElementById('nomeEmpregado').value = '';
+            document.getElementById('cargoDashboard2').value = '';
+            document.getElementById('empresaDashboard2').value = '';
+            document.getElementById('orgaoDashboard2').value = '';
+            document.getElementById('matriculaDashboard2').value = '';
+            document.getElementById('searchEmpregados').value = '';
+            currentSearchTerm = '';
+            
+            // Voltar para o mês mais recente do ano atual
+            const mesesDoAno = [...new Set(
+                (allData[currentYear] || [])
+                    .map(e => e.MES_NUM)
+                    .filter(Boolean)
+            )].sort((a, b) => parseInt(b) - parseInt(a));
+            
+            if (mesesDoAno.length > 0) {
+                currentMonth = mesesDoAno[0];
+            }
+            
+            filteredData = (allData[currentYear] || []).filter(empregado => {
+                return empregado.ANO === currentYear && 
+                       empregado.MES_NUM === currentMonth;
+            });
+            
+            updateFilterOptions();
+            updateDashboard2();
+        }
+
+       // ==================== DASHBOARD 1: VISÃO GERAL ====================
+        function updateDashboard1() {
+            updateSummaryCards();
+            updateResumoTable();
+            updateCharts1();
+        }
+
+        function updateSummaryCards() {
+            const container = document.getElementById('summaryCards');
+            
+            if (filteredData.length === 0) {
+                container.innerHTML = '<div class="col-12 text-center"><p class="text-muted">Nenhum dado encontrado para o período atual.</p></div>';
+                return;
+            }
+            
+            // Calcular métricas
+            const totalEmpregados = filteredData.length;
+            const orgaosUnicos = [...new Set(filteredData.map(e => e.orgao))].length;
+            const empresasUnicas = [...new Set(filteredData.map(e => e.empresa))].length;
+            const cargosUnicos = [...new Set(filteredData.map(e => e.cargo))].length;
+            
+            const cardsHTML = `
+                <div class="col-md-3 col-6">
+                    <div class="metric-card">
+                        <div class="metric-label">Total de Empregados</div>
+                        <div class="metric-value">${totalEmpregados.toLocaleString('pt-BR')}</div>
+                        <div class="update-info">
+                            <i class="fas fa-calendar-alt"></i> ${monthNames[currentMonth] || currentMonth}/${currentYear}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="metric-card success">
+                        <div class="metric-label">Órgãos</div>
+                        <div class="metric-value">${orgaosUnicos}</div>
+                        <div class="metric-change positive">
+                            <i class="fas fa-building me-1"></i> Com empregados
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="metric-card primary">
+                        <div class="metric-label">Empresas Terceirizadas</div>
+                        <div class="metric-value">${empresasUnicas}</div>
+                        <div class="update-info">
+                            <i class="fas fa-industry"></i> Contratantes
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="metric-card info">
+                        <div class="metric-label">Cargos Diferentes</div>
+                        <div class="metric-value">${cargosUnicos}</div>
+                        <div class="d-flex justify-content-center mt-2">
+                            <span class="badge bg-secondary" style="font-size: 10px;">${((cargosUnicos/totalEmpregados)*100).toFixed(1)}% variedade</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = cardsHTML;
+        }
+
+        function updateResumoTable() {
+            const tbody = document.getElementById('resumoTableBody');
+            const tfoot = document.getElementById('resumoTableFooter');
+            const countElement = document.getElementById('resumoCountDashboard1');
+            const paginationInfo = document.getElementById('paginationInfoDashboard1');
+            
+            if (filteredData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">Nenhum dado encontrado para o período atual.</td></tr>';
+                tfoot.innerHTML = '';
+                if (countElement) countElement.textContent = '0 registros';
+                if (paginationInfo) paginationInfo.textContent = 'Mostrando 0-0 de 0 registros';
+                updatePaginationDashboard1(1, 1);
+                return;
+            }
+            
+            // Agrupar por órgão
+            const grupos = {};
+            filteredData.forEach(empregado => {
+                const orgao = empregado.orgao;
+                if (!grupos[orgao]) {
+                    grupos[orgao] = {
+                        orgao_nome: getOrgaoExtenso(orgao),
+                        orgao_sigla: orgao,
+                        count: 0
+                    };
+                }
+                grupos[orgao].count++;
+            });
+            
+            // Converter para array
+            let resumoArray = Object.values(grupos);
+            
+            // Ordenar de acordo com a coluna selecionada
+            resumoArray.sort((a, b) => {
+                const order = currentSortDashboard1.order === 'asc' ? 1 : -1;
+                
+                if (currentSortDashboard1.column === 'orgao_nome') {
+                    return order * a.orgao_nome.localeCompare(b.orgao_nome);
+                } else if (currentSortDashboard1.column === 'orgao_sigla') {
+                    return order * a.orgao_sigla.localeCompare(b.orgao_sigla);
+                } else if (currentSortDashboard1.column === 'quantidade') {
+                    return order * (a.count - b.count);
+                }
+                return 0;
+            });
+            
+            // Calcular totais
+            const totalOrgaos = resumoArray.length;
+            const totalEmpregados = resumoArray.reduce((sum, item) => sum + item.count, 0);
+            
+            // Paginação
+            const itemsPerPage = itemsPerPageDashboard1;
+            const totalPages = Math.ceil(resumoArray.length / itemsPerPage);
+            const startIndex = (currentPageDashboard1 - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, resumoArray.length);
+            const currentData = resumoArray.slice(startIndex, endIndex);
+            
+            // Gerar HTML da tabela
+            const rowsHTML = currentData.map(item => {
+                return `
+                <tr>
+                    <td>
+                        <a href="#" onclick="filtrarPorOrgao('${item.orgao_sigla}')" class="orgao-link" title="Clique para filtrar por este órgão">
+                            ${item.orgao_nome}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" onclick="filtrarPorOrgao('${item.orgao_sigla}')" class="orgao-link" title="Clique para filtrar por este órgão">
+                            ${item.orgao_sigla}
+                        </a>
+                    </td>
+                    <td>${item.count.toLocaleString('pt-BR')}</td>
+                </tr>
+            `}).join('');
+            
+            // Gerar rodapé
+            const footerHTML = `
+                <tr class="table-total-row">
+                    <td><strong>TOTAL GERAL (${totalOrgaos} órgãos)</strong></td>
+                    <td><strong>-</strong></td>
+                    <td><strong>${totalEmpregados.toLocaleString('pt-BR')}</strong></td>
+                </tr>
+            `;
+            
+            tbody.innerHTML = rowsHTML;
+            tfoot.innerHTML = footerHTML;
+            if (countElement) countElement.textContent = `${totalOrgaos.toLocaleString()} órgãos`;
+            if (paginationInfo) paginationInfo.textContent = `Mostrando ${startIndex + 1}-${endIndex} de ${resumoArray.length.toLocaleString()} registros`;
+            
+            updatePaginationDashboard1(totalPages, currentPageDashboard1);
+            
+            // Atualizar ícones de ordenação
+            updateSortIconsDashboard1();
+        }
+
+        function updateSortIconsDashboard1() {
+            const headers = document.querySelectorAll('#visaoGeralTable thead th');
+            headers.forEach(header => {
+                const sortIcon = header.querySelector('.sort-icon');
+                const column = header.getAttribute('data-sort');
+                
+                if (column === currentSortDashboard1.column) {
+                    header.classList.add('sorted-' + currentSortDashboard1.order);
+                    if (sortIcon) {
+                        sortIcon.innerHTML = currentSortDashboard1.order === 'asc' ? '↑' : '↓';
+                    }
+                } else {
+                    header.classList.remove('sorted-asc', 'sorted-desc');
+                    if (sortIcon) {
+                        sortIcon.innerHTML = '▼';
+                    }
+                }
+            });
+        }
+
+        function updatePaginationDashboard1(totalPages, currentPage = 1) {
+            const pagination = document.getElementById('paginationDashboard1');
+            if (!pagination) return;
+            
+            let paginationHTML = '';
+            
+            // Botão anterior
+            paginationHTML += `
+                <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePageDashboard1(${currentPage - 1})" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            `;
+            
+            // Páginas
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            // Ajustar se estiver no final
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                paginationHTML += `
+                    <li class="page-item ${i === currentPage ? 'active' : ''}">
+                        <a class="page-link" href="#" onclick="changePageDashboard1(${i})">${i}</a>
+                    </li>
+                `;
+            }
+            
+            // Botão próximo
+            paginationHTML += `
+                <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePageDashboard1(${currentPage + 1})" aria-label="Próximo">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            `;
+            
+            pagination.innerHTML = paginationHTML;
+        }
+
+        window.changePageDashboard1 = function(page) {
+            const grupos = {};
+            filteredData.forEach(empregado => {
+                const orgao = empregado.orgao;
+                if (!grupos[orgao]) {
+                    grupos[orgao] = { empregados: [] };
+                }
+                grupos[orgao].empregados.push(empregado);
+            });
+            
+            const totalItems = Object.keys(grupos).length;
+            const totalPages = Math.ceil(totalItems / itemsPerPageDashboard1);
+            
+            if (page < 1 || page > totalPages) return;
+            
+            currentPageDashboard1 = page;
+            updateResumoTable();
+            
+            const tableContainer = document.querySelector('#dashboard1 .table-container');
+            if (tableContainer) {
+                tableContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        function updateCharts1() {
+            if (filteredData.length === 0) return;
+            
+            updateOrgaoChart();
+            updateCargoChart();
+            updateEmpresaChart();
+        }
+
+        function updateOrgaoChart() {
+            const ctx = document.getElementById('chartOrgao')?.getContext('2d');
+            if (!ctx) return;
+            
+            // Agrupar por órgão e pegar top 8
+            const grupos = {};
+            filteredData.forEach(empregado => {
+                if (!grupos[empregado.orgao]) {
+                    grupos[empregado.orgao] = 0;
+                }
+                grupos[empregado.orgao]++;
+            });
+            
+            const orgaosArray = Object.entries(grupos)
+                .map(([orgao, count]) => ({ orgao, count }))
+                .sort((a, b) => b.count - a.count)
+                .slice(0, 8);
+            
+            // Cores para o gráfico
+            const pieColors = [
+                chartColors.primary, chartColors.secondaryBlue, chartColors.accent,
+                chartColors.secondaryBrown, chartColors.secondaryTeal, chartColors.bright,
+                '#4ECDC4', '#FF6B6B'
+            ];
+            
+            if (charts.orgao) {
+                charts.orgao.destroy();
+            }
+            
+            charts.orgao = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: orgaosArray.map(item => {
+                        const orgaoNome = getOrgaoExtenso(item.orgao);
+                        return orgaoNome.length > 15 ? orgaoNome.substring(0, 15) + '...' : orgaoNome;
+                    }),
+                    datasets: [{
+                        data: orgaosArray.map(item => item.count),
+                        backgroundColor: pieColors,
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true,
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: ${value} empregados (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCargoChart() {
+            const ctx = document.getElementById('chartCargo')?.getContext('2d');
+            if (!ctx) return;
+            
+            // Agrupar por cargo e pegar top 8
+            const grupos = {};
+            filteredData.forEach(empregado => {
+                if (!grupos[empregado.cargo]) {
+                    grupos[empregado.cargo] = 0;
+                }
+                grupos[empregado.cargo]++;
+            });
+            
+            const cargosArray = Object.entries(grupos)
+                .map(([cargo, count]) => ({ cargo, count }))
+                .sort((a, b) => b.count - a.count)
+                .slice(0, 8);
+            
+            if (charts.cargo) {
+                charts.cargo.destroy();
+            }
+            
+            charts.cargo = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: cargosArray.map(item => {
+                        return item.cargo.length > 20 ? item.cargo.substring(0, 20) + '...' : item.cargo;
+                    }),
+                    datasets: [{
+                        label: 'Quantidade de Empregados',
+                        data: cargosArray.map(item => item.count),
+                        backgroundColor: chartColors.accent,
+                        borderColor: chartColors.primary,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateEmpresaChart() {
+            const ctx = document.getElementById('chartEmpresa')?.getContext('2d');
+            if (!ctx) return;
+            
+            // Agrupar por empresa e pegar top 8
+            const grupos = {};
+            filteredData.forEach(empregado => {
+                if (!grupos[empregado.empresa]) {
+                    grupos[empregado.empresa] = 0;
+                }
+                grupos[empregado.empresa]++;
+            });
+            
+            const empresasArray = Object.entries(grupos)
+                .map(([empresa, count]) => ({ empresa, count }))
+                .sort((a, b) => b.count - a.count)
+                .slice(0, 8);
+            
+            if (charts.empresa) {
+                charts.empresa.destroy();
+            }
+            
+            charts.empresa = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: empresasArray.map(item => {
+                        return item.empresa.length > 20 ? item.empresa.substring(0, 20) + '...' : item.empresa;
+                    }),
+                    datasets: [{
+                        data: empresasArray.map(item => item.count),
+                        backgroundColor: [
+                            '#29435A', '#B93C42', '#DB233F', '#3F704D',
+                            '#8B7355', '#20B2AA', '#4ECDC4', '#FF6B6B'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true,
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: ${value} empregados (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ==================== DASHBOARD 2: CONSULTA INDIVIDUAL ====================
+        function initializeDashboard2() {
+            updateDashboard2();
+        }
+
+        function updateDashboard2() {
+            updateEmpregadosTable();
+        }
+
+        function updateEmpregadosTable() {
+            const tbody = document.getElementById('empregadosTableBody');
+            const tfoot = document.getElementById('empregadosTableFooter');
+            const countElement = document.getElementById('resumoCountDashboard2');
+            const paginationInfo = document.getElementById('paginationInfoDashboard2');
+            
+            if (!tbody) return;
+            
+            if (filteredData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">Nenhum empregado encontrado para o período atual.</td></tr>';
+                if (tfoot) tfoot.innerHTML = '';
+                if (countElement) countElement.textContent = '0 empregados';
+                if (paginationInfo) paginationInfo.textContent = 'Mostrando 0-0 de 0 registros';
+                updatePaginationDashboard2(1, 1);
+                return;
+            }
+            
+            // Ordenar de acordo com a coluna selecionada
+            let empregadosArray = [...filteredData];
+            empregadosArray.sort((a, b) => {
+                const order = currentSortDashboard2.order === 'asc' ? 1 : -1;
+                
+                if (currentSortDashboard2.column === 'matricula') {
+                    return order * a.matricula.localeCompare(b.matricula);
+                } else if (currentSortDashboard2.column === 'nome') {
+                    return order * a.nome.localeCompare(b.nome);
+                } else if (currentSortDashboard2.column === 'orgao') {
+                    return order * a.orgao.localeCompare(b.orgao);
+                } else if (currentSortDashboard2.column === 'cargo') {
+                    return order * a.cargo.localeCompare(b.cargo);
+                } else if (currentSortDashboard2.column === 'empresa') {
+                    return order * a.empresa.localeCompare(b.empresa);
+                } else if (currentSortDashboard2.column === 'cnpj_empresa') {
+                    return order * a.cnpj_empresa.localeCompare(b.cnpj_empresa);
+                }
+                return 0;
+            });
+            
+            // Calcular totais
+            const totalEmpregados = empregadosArray.length;
+            const orgaosUnicos = [...new Set(empregadosArray.map(e => e.orgao))].length;
+            const empresasUnicas = [...new Set(empregadosArray.map(e => e.empresa))].length;
+            
+            // Paginação
+            const itemsPerPage = itemsPerPageDashboard2;
+            const totalPages = Math.ceil(empregadosArray.length / itemsPerPage);
+            const startIndex = (currentPageDashboard2 - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, empregadosArray.length);
+            const currentData = empregadosArray.slice(startIndex, endIndex);
+            
+            // Gerar HTML da tabela
+            const rowsHTML = currentData.map(empregado => `
+                <tr>
+                    <td>${empregado.matricula}</td>
+                    <td><strong>${empregado.nome}</strong></td>
+                    <td>${getOrgaoExtenso(empregado.orgao)}<br><small class="text-muted">${empregado.orgao}</small></td>
+                    <td>${empregado.cargo}</td>
+                    <td>${empregado.empresa}</td>
+                    <td>${empregado.cnpj_empresa}</td>
+                    <td class="actions-column">
+                        <div class="action-buttons">
+                            <button class="btn-action btn-history" onclick="showEmployeeHistory('${empregado.matricula}', '${empregado.nome.replace(/'/g, "\\'")}')" title="Ver Histórico">
+                                <i class="fas fa-history"></i><span>Histórico</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            
+            // Gerar rodapé
+            const footerHTML = `
+                <tr class="table-total-row">
+                    <td colspan="2"><strong>TOTAL GERAL: ${totalEmpregados.toLocaleString('pt-BR')} empregados</strong></td>
+                    <td><strong>${orgaosUnicos} órgãos</strong></td>
+                    <td colspan="2"><strong>${empresasUnicas} empresas</strong></td>
+                    <td colspan="2"></td>
+                </tr>
+            `;
+            
+            tbody.innerHTML = rowsHTML;
+            if (tfoot) tfoot.innerHTML = footerHTML;
+            if (countElement) countElement.textContent = `${totalEmpregados.toLocaleString('pt-BR')} empregados`;
+            if (paginationInfo) paginationInfo.textContent = `Mostrando ${startIndex + 1}-${endIndex} de ${empregadosArray.length.toLocaleString('pt-BR')} registros`;
+            
+            updatePaginationDashboard2(totalPages, currentPageDashboard2);
+            
+            // Atualizar ícones de ordenação
+            updateSortIconsDashboard2();
+        }
+
+        function updateSortIconsDashboard2() {
+            const headers = document.querySelectorAll('#empregadosTable thead th');
+            headers.forEach(header => {
+                const sortIcon = header.querySelector('.sort-icon');
+                const column = header.getAttribute('data-sort');
+                
+                if (column === currentSortDashboard2.column) {
+                    header.classList.add('sorted-' + currentSortDashboard2.order);
+                    if (sortIcon) {
+                        sortIcon.innerHTML = currentSortDashboard2.order === 'asc' ? '↑' : '↓';
+                    }
+                } else {
+                    header.classList.remove('sorted-asc', 'sorted-desc');
+                    if (sortIcon) {
+                        sortIcon.innerHTML = '▼';
+                    }
+                }
+            });
+        }
+
+        function updatePaginationDashboard2(totalPages, currentPage = 1) {
+            const pagination = document.getElementById('paginationDashboard2');
+            if (!pagination) return;
+            
+            let paginationHTML = '';
+            
+            // Botão anterior
+            paginationHTML += `
+                <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePageDashboard2(${currentPage - 1})" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            `;
+            
+            // Páginas
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                paginationHTML += `
+                    <li class="page-item ${i === currentPage ? 'active' : ''}">
+                        <a class="page-link" href="#" onclick="changePageDashboard2(${i})">${i}</a>
+                    </li>
+                `;
+            }
+            
+            // Botão próximo
+            paginationHTML += `
+                <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePageDashboard2(${currentPage + 1})" aria-label="Próximo">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            `;
+            
+            pagination.innerHTML = paginationHTML;
+        }
+
+        window.changePageDashboard2 = function(page) {
+            const totalPages = Math.ceil(filteredData.length / itemsPerPageDashboard2);
+            
+            if (page < 1 || page > totalPages) return;
+            
+            currentPageDashboard2 = page;
+            updateEmpregadosTable();
+            
+            const tableContainer = document.querySelector('#dashboard2 .table-container');
+            if (tableContainer) {
+                tableContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        // ==================== FUNÇÃO PARA MOSTRAR HISTÓRICO ====================
+        window.showEmployeeHistory = function(matricula, nome) {
+            showLoading(true);
+            
+            try {
+                // Encontrar todos os registros do empregado em todos os anos
+                const historico = [];
+                let ultimoRegistro = null;
+                
+                // Primeiro, garantir que todos os anos estão carregados
+                const loadAllYears = async () => {
+                    const years = Object.keys(CSV_FILES_BY_YEAR);
+                    for (const year of years) {
+                        if (!allData[year]) {
+                            await loadYearData(year);
+                        }
+                    }
+                };
+                
+                // Carregar todos os anos se necessário
+                loadAllYears().then(() => {
+                    // Procurar em todos os anos carregados
+                    Object.keys(allData).forEach(ano => {
+                        const dadosAno = allData[ano];
+                        const registrosAno = dadosAno.filter(e => 
+                            e.matricula === matricula || e.nome === nome
+                        );
+                        
+                        registrosAno.forEach(registro => {
+                            historico.push(registro);
+                            if (!ultimoRegistro || 
+                                (registro.ANO > ultimoRegistro.ANO) ||
+                                (registro.ANO === ultimoRegistro.ANO && 
+                                 registro.MES_NUM > ultimoRegistro.MES_NUM)) {
+                                ultimoRegistro = registro;
+                            }
+                        });
+                    });
+                    
+                    // Ordenar histórico por data (mais recente primeiro)
+                    historico.sort((a, b) => {
+                        if (a.ANO !== b.ANO) return parseInt(b.ANO) - parseInt(a.ANO);
+                        return parseInt(b.MES_NUM) - parseInt(a.MES_NUM);
+                    });
+                    
+                    // Preparar informações do empregado
+                    const empregado = ultimoRegistro || historico[0];
+                    
+                    // Atualizar modal
+                    const modal = new bootstrap.Modal(document.getElementById('historicModal'));
+                    
+                    // Informações do empregado
+                    const infoHTML = `
+                        <div class="employee-info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Matrícula</span>
+                                <span class="info-value">${empregado.matricula}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Nome</span>
+                                <span class="info-value">${empregado.nome}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Órgão Atual</span>
+                                <span class="info-value">${getOrgaoExtenso(empregado.orgao)}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Cargo Atual</span>
+                                <span class="info-value">${empregado.cargo}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Empresa Atual</span>
+                                <span class="info-value">${empregado.empresa}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">CNPJ Empresa</span>
+                                <span class="info-value">${empregado.cnpj_empresa}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Total de Registros</span>
+                                <span class="info-value">${historico.length} meses</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Período</span>
+                                <span class="info-value">${historico.length > 0 ? 
+                                    `${historico[historico.length-1].mes_referencia} a ${historico[0].mes_referencia}` : 
+                                    'N/A'}</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.getElementById('employeeInfo').innerHTML = infoHTML;
+                    
+                    // Atualizar título do modal
+                    document.getElementById('historicModalLabel').innerHTML = `
+                        <i class="fas fa-history me-2"></i>Histórico de ${empregado.nome}
+                    `;
+                    
+                    // Tabela de histórico
+                    const historicHTML = historico.map(registro => `
+                        <tr>
+                            <td>${registro.mes_referencia}</td>
+                            <td>${getOrgaoExtenso(registro.orgao)}<br><small>${registro.orgao}</small></td>
+                            <td>${registro.cargo}</td>
+                            <td>${registro.empresa}</td>
+                            <td>${registro.cnpj_empresa}</td>
+                        </tr>
+                    `).join('');
+                    
+                    document.getElementById('historicTableBody').innerHTML = historicHTML || 
+                        '<tr><td colspan="5" class="text-center text-muted">Nenhum histórico encontrado</td></tr>';
+                    
+                    // Mostrar modal
+                    modal.show();
+                    showLoading(false);
+                }).catch(error => {
+                    console.error('Erro ao carregar histórico:', error);
+                    showError('Erro ao carregar histórico do empregado.');
+                    showLoading(false);
+                });
+                
+            } catch (error) {
+                console.error('Erro ao carregar histórico:', error);
+                showError('Erro ao carregar histórico do empregado.');
+                showLoading(false);
+            }
+        };
+
+        // ==================== DASHBOARD 3: DOWNLOADS ====================
+        function updateDashboard3() {
+            // Nada a fazer aqui
+        }
+
+        async function downloadYearCSV() {
+            const year = document.getElementById('anoDownload').value;
+            if (!year) {
+                alert('Por favor, selecione um ano para download.');
+                return;
+            }
+            
+            showLoading(true);
+            
+            try {
+                // Carregar os dados do ano selecionado se ainda não carregados
+                if (!allData[year]) {
+                    await loadYearData(year);
+                }
+                
+                const data = allData[year];
+                if (!data || data.length === 0) {
+                    alert(`Nenhum dado disponível para o ano ${year}.`);
+                    showLoading(false);
+                    return;
+                }
+                
+                // Preparar CSV
+                const headers = ['matricula', 'nome', 'orgao', 'cargo', 'empresa', 'cnpj_empresa', 'mes_referencia'];
+                const csvContent = [
+                    headers.join(';'),
+                    ...data.map(empregado => [
+                        empregado.matricula,
+                        empregado.nome,
+                        empregado.orgao,
+                        empregado.cargo,
+                        empregado.empresa,
+                        empregado.cnpj_empresa,
+                        empregado.mes_referencia
+                    ].map(cell => `"${cell}"`).join(';'))
+                ].join('\n');
+                
+                // Criar e baixar arquivo
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                
+                link.setAttribute('href', url);
+                link.setAttribute('download', `empregados_terceirizados_mg_${year}.csv`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                console.log(`Download do ano ${year} realizado: ${data.length} registros`);
+                
+            } catch (error) {
+                console.error(`Erro ao baixar dados de ${year}:`, error);
+                alert(`Erro ao baixar dados de ${year}. Por favor, tente novamente.`);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // ==================== FUNÇÕES GLOBAIS E UTILITÁRIOS ====================
+
+window.filtrarPorOrgao = function(orgao) {
+    console.log('Filtrando por órgão:', orgao);
+    
+    try {
+        // Mudar para a aba de Consulta Individual
+        const tabElement = document.getElementById('dashboard2-tab');
+        if (tabElement) {
+            // Usar Bootstrap Tab para mudar de aba
+            const tab = new bootstrap.Tab(tabElement);
+            tab.show();
+            
+            // Aguardar a transição da aba
+            setTimeout(() => {
+                // Preencher o campo do órgão no Dashboard 2
+                const orgaoElement = document.getElementById('orgaoDashboard2');
+                if (orgaoElement) {
+                    orgaoElement.value = orgao;
+                }
+                
+                // Limpar outros filtros
+                document.getElementById('nomeEmpregado').value = '';
+                document.getElementById('cargoDashboard2').value = '';
+                document.getElementById('empresaDashboard2').value = '';
+                document.getElementById('matriculaDashboard2').value = '';
+                document.getElementById('searchEmpregados').value = '';
+                
+                // Configurar o ano e mês atuais
+                document.getElementById('anoDashboard2').value = currentYear;
+                document.getElementById('mesDashboard2').value = currentMonth;
+                
+                // Aplicar o filtro
+                applyFilters('dashboard2');
+                
+                // Rolar para a tabela
+                const tableContainer = document.querySelector('#dashboard2 .table-container');
+                if (tableContainer) {
+                    tableContainer.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 350); // Tempo maior para garantir que a aba mudou
+        } else {
+            console.error('Elemento da aba não encontrado');
+        }
+    } catch (error) {
+        console.error('Erro ao filtrar por órgão:', error);
+        showError('Erro ao filtrar por órgão. Por favor, tente novamente.');
+    }
+};
+        // ==================== FUNÇÕES DE ORDENAÇÃO ====================
+        window.sortTable = function(tableType, column) {
+            if (tableType === 'visaoGeral') {
+                // Verificar se está ordenando a mesma coluna
+                if (currentSortDashboard1.column === column) {
+                    // Inverter a ordem
+                    currentSortDashboard1.order = currentSortDashboard1.order === 'asc' ? 'desc' : 'asc';
+                } else {
+                    // Nova coluna, ordem padrão asc
+                    currentSortDashboard1.column = column;
+                    currentSortDashboard1.order = 'asc';
+                }
+                currentPageDashboard1 = 1;
+                updateResumoTable();
+            } else if (tableType === 'empregados') {
+                // Verificar se está ordenando a mesma coluna
+                if (currentSortDashboard2.column === column) {
+                    // Inverter a ordem
+                    currentSortDashboard2.order = currentSortDashboard2.order === 'asc' ? 'desc' : 'asc';
+                } else {
+                    // Nova coluna, ordem padrão asc
+                    currentSortDashboard2.column = column;
+                    currentSortDashboard2.order = 'asc';
+                }
+                currentPageDashboard2 = 1;
+                updateEmpregadosTable();
+            }
+        };
+
+        // ==================== FUNÇÕES DE EXPORTAÇÃO ====================
+        function exportToCSV(source) {
+            if (source === 'dashboard1') {
+                exportResumoCSV();
+            } else if (source === 'dashboard2') {
+                exportEmpregadosCSV();
+            }
+        }
+
+        function printDashboard(source) {
+            window.print();
+        }
+
+        function exportResumoCSV() {
+            if (filteredData.length === 0) return;
+            
+            // Agrupar por órgão
+            const grupos = {};
+            filteredData.forEach(empregado => {
+                const orgao = empregado.orgao;
+                if (!grupos[orgao]) {
+                    grupos[orgao] = {
+                        orgao: orgao,
+                        orgao_extenso: getOrgaoExtenso(orgao),
+                        count: 0
+                    };
+                }
+                grupos[orgao].count++;
+            });
+            
+            const headers = ['Órgão (Sigla)', 'Órgão (Nome Completo)', 'Quantidade de Empregados'];
+            const data = Object.values(grupos).map(info => [
+                info.orgao,
+                info.orgao_extenso,
+                info.count
+            ]);
+            
+            const csvContent = [
+                headers.join(';'),
+                ...data.map(row => row.map(cell => `"${cell}"`).join(';'))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `visao_geral_orgaos_terceirizados_${currentYear}_${currentMonth}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function exportEmpregadosCSV() {
+            if (filteredData.length === 0) return;
+            
+            const headers = ['matricula', 'nome', 'orgao_sigla', 'orgao_nome_completo', 'cargo', 'empresa', 'cnpj_empresa', 'mes_referencia', 'ANO'];
+            const data = filteredData.map(empregado => [
+                empregado.matricula,
+                empregado.nome,
+                empregado.orgao,
+                getOrgaoExtenso(empregado.orgao),
+                empregado.cargo,
+                empregado.empresa,
+                empregado.cnpj_empresa,
+                empregado.mes_referencia,
+                empregado.ANO || ''
+            ]);
+            
+            const csvContent = [
+                headers.join(';'),
+                ...data.map(row => row.map(cell => `"${cell}"`).join(';'))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `empregados_terceirizados_mg_${currentYear}_${currentMonth}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
+
+
+

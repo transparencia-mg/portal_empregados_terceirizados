@@ -2,7 +2,7 @@ name: empregados_terceirizados
 owner_org: secretaria-de-estado-de-planejamento-e-gestao-seplag
 profile: data-package
 resources:
-  - description: Dados sbore empregados terceirizados do Governo do Estado de Minas Gerais de 2021.
+  - description: Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2021.
     dialect:
       delimiter: ;
     encoding: utf-8-sig
@@ -29,7 +29,7 @@ resources:
           type: date
     scheme: file
     title: Estagiários 2021.
-  - description: Dados sbore empregados terceirizados do Governo do Estado de Minas Gerais de 2022.
+  - description: Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2022.
     dialect:
       delimiter: ;
     encoding: utf-8-sig
@@ -56,7 +56,7 @@ resources:
           type: date
     scheme: file
     title: Estagiários 2022
-  - description: Dados sbore empregados terceirizados do Governo do Estado de Minas Gerais de 2023.
+  - description: Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2023.
     dialect:
       delimiter: ;
     encoding: utf-8-sig
@@ -83,7 +83,7 @@ resources:
           type: date
     scheme: file
     title: Estagiários 2023
-  - description: Dados sbore empregados terceirizados do Governo do Estado de Minas Gerais de 2024.
+  - description: Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2024.
     dialect:
       delimiter: ;
     encoding: utf-8-sig
@@ -110,7 +110,7 @@ resources:
           type: date
     scheme: file
     title: Estagiários 2024
-  - description: Dados sbore empregados terceirizados do Governo do Estado de Minas Gerais de 2025.
+  - description: Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2025.
     dialect:
       delimiter: ;
     encoding: utf-8-sig
@@ -137,4 +137,4 @@ resources:
           type: date
     scheme: file
     title: Estagiários 2025
-title: Empregados_terceirizados
+title: Empregados Terceirizados

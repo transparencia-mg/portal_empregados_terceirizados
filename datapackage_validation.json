@@ -1,6 +1,6 @@
 {
   "version": "4.16.6",
-  "time": 21.056,
+  "time": 20.958,
   "errors": [],
   "tasks": [
     {
@@ -48,7 +48,7 @@
           ]
         },
         "scheme": "file",
-        "title": "Estagiários 2021.",
+        "title": "Terceirizados 2021",
         "stats": {
           "hash": "6fd01c33ae9382a7bde0ade23d049f36",
           "bytes": 18368163,
@@ -56,7 +56,7 @@
           "rows": 140455
         }
       },
-      "time": 3.952,
+      "time": 3.922,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -129,7 +129,7 @@
           ]
         },
         "scheme": "file",
-        "title": "Estagiários 2022",
+        "title": "Terceirizados 2022",
         "stats": {
           "hash": "4ea9514a9eaf4f02d7422bd666a81f0c",
           "bytes": 17773804,
@@ -137,7 +137,7 @@
           "rows": 135574
         }
       },
-      "time": 3.872,
+      "time": 3.852,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -210,7 +210,7 @@
           ]
         },
         "scheme": "file",
-        "title": "Estagiários 2023",
+        "title": "Terceirizados 2023",
         "stats": {
           "hash": "f695cd5fa5968457ea97869efa3a4eed",
           "bytes": 20051732,
@@ -218,7 +218,7 @@
           "rows": 152938
         }
       },
-      "time": 4.357,
+      "time": 4.304,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -291,7 +291,7 @@
           ]
         },
         "scheme": "file",
-        "title": "Estagiários 2024",
+        "title": "Terceirizados 2024",
         "stats": {
           "hash": "5a1fb6d2c4b100e3d4a875428db0d82b",
           "bytes": 21017044,
@@ -299,7 +299,7 @@
           "rows": 159967
         }
       },
-      "time": 4.503,
+      "time": 4.526,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -372,7 +372,7 @@
           ]
         },
         "scheme": "file",
-        "title": "Estagiários 2025",
+        "title": "Terceirizados 2025",
         "stats": {
           "hash": "e0146406bbefbc2d7a0c41b322c10009",
           "bytes": 19948786,
@@ -380,7 +380,7 @@
           "rows": 152129
         }
       },
-      "time": 4.331,
+      "time": 4.311,
       "scope": [
         "hash-count-error",
         "byte-count-error",

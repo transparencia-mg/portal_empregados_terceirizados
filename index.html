@@ -1798,6 +1798,41 @@
                                 mes_referencia: mes_referencia
                             };
 
+                                // === NOVA LÓGICA PARA FORMATO ISO (2025-09-01) ===
+    if (mes_referencia && mes_referencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        // Formato: 2025-09-01
+        const partes = mes_referencia.split('-');
+        empregado.COMPETENCIA = `${partes[0]}-${partes[1]}`;  // "2025-09"
+        empregado.ANO = partes[0];  // "2025"
+        empregado.MES_NUM = partes[1];  // "09"
+        empregado.DIA = partes[2];  // "01" (opcional, se quiser guardar)
+    } else {
+        // Fallback para o formato antigo (jan/25) - se ainda existir em outros anos
+        const ref = mes_referencia
+            .toLowerCase()
+            .replace(/\u00a0/g, '')
+            .replace(/\s+/g, '')
+            .trim();
+        
+        const m = ref.match(/^([a-z]{3})[\/\-](\d{2}|\d{4})$/);
+        
+        if (m && MESES[m[1]]) {
+            const mes = MESES[m[1]];
+            const ano = m[2].length === 2 ? `20${m[2]}` : m[2];
+            
+            empregado.COMPETENCIA = `${ano}-${mes}`;
+            empregado.ANO = ano;
+            empregado.MES_NUM = mes;
+        } else {
+            empregado.COMPETENCIA = null;
+            empregado.ANO = '';
+            empregado.MES_NUM = '';
+        }
+    }
+
+    return empregado;
+}).filter(e => e.COMPETENCIA); // só registros válidos
+
                             // === NORMALIZAÇÃO DO MÊS ===
                             const ref = mes_referencia
                                 .toLowerCase()

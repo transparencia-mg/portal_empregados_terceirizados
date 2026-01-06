@@ -1561,11 +1561,11 @@
             secondaryTeal: '#20B2AA'
         };
 
-        // URLs dos CSVs no GitHub
+        // URLs dos CSVs no GitHub - CORRETAS
         const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/transparencia-mg/empregados_terceirizados/main/dataset/data/';
         const GITHUB_API_URL = 'https://api.github.com/repos/transparencia-mg/empregados_terceirizados/commits?path=dataset/data&per_page=1';
 
-        // LISTA CSV - AGORA CARREGADOS SOB DEMANDA
+        // LISTA CSV
         const CSV_FILES_BY_YEAR = {
             '2021': 'terceirizados_2021.csv',
             '2022': 'terceirizados_2022.csv',
@@ -1653,8 +1653,8 @@
         // ==================== FUNÇÕES DE INICIALIZAÇÃO ====================
         document.addEventListener('DOMContentLoaded', async function() {
             console.log('=== INICIANDO DASHBOARD TERCEIRIZADOS ===');
-            console.log('Verificando atualizações no GitHub...');
-
+            console.log('GitHub URL:', GITHUB_BASE_URL);
+            
             showLoading(true);
             
             try {
@@ -1664,6 +1664,13 @@
                 if (hasUpdates || !lastDataHash) {
                     console.log('Carregando dados mais recentes...');
                     await loadYearData('2025');
+                    
+                    // DEBUG: Verificar dados carregados
+                    console.log(`Total de dados carregados para 2025: ${terceirizadosData?.length || 0}`);
+                    if (terceirizadosData && terceirizadosData.length > 0) {
+                        console.log('Primeiro registro:', terceirizadosData[0]);
+                        console.log('Último registro:', terceirizadosData[terceirizadosData.length - 1]);
+                    }
                     
                     // Determinar o mês mais recente de 2025
                     await determineLatestMonth();
@@ -1679,7 +1686,7 @@
                     updateDashboard3();
                     setupEventListeners();
                     
-                    console.log('Dashboard atualizado com sucesso!');
+                    console.log(`Dashboard inicializado com ${filteredData.length} registros para ${currentMonth}/${currentYear}`);
                 } else {
                     console.log('Usando dados em cache - sem atualizações no GitHub');
                     
@@ -1728,19 +1735,17 @@
         }
 
         // ==================== CALCULAR HASH DOS DADOS ====================
-    async function calculateDataHash(data) {
-    if (!data || data.length === 0) return null;
+        async function calculateDataHash(data) {
+            if (!data || data.length === 0) return null;
 
-    const dataString = data.slice(0, 100).map(item =>
-        `${item.matricula}|${item.nome}|${item.orgao}|${item.empresa}`
-    ).join('|');
+            const dataString = data.slice(0, 100).map(item =>
+                `${item.matricula}|${item.nome}|${item.orgao}|${item.empresa}`
+            ).join('|');
 
-    // 🔑 Conversão UTF-8 → Latin1 antes do btoa
-    return btoa(unescape(encodeURIComponent(
-        dataString.length + dataString.substring(0, 50)
-    )));
-    }
-
+            return btoa(unescape(encodeURIComponent(
+                dataString.length + dataString.substring(0, 50)
+            )));
+        }
 
         // ==================== CARREGAR DADOS DO GITHUB ====================
         async function loadYearData(year) {
@@ -1759,20 +1764,16 @@
             const url = `${GITHUB_BASE_URL}${filename}`;
             console.log(`Carregando dados de ${year}: ${url}`);
 
-            const MESES = {
-                jan: '01', fev: '02', mar: '03', abr: '04',
-                mai: '05', jun: '06', jul: '07', ago: '08',
-                set: '09', out: '10', nov: '11', dez: '12'
-            };
-
             return new Promise((resolve, reject) => {
                 Papa.parse(url, {
                     download: true,
                     header: true,
                     skipEmptyLines: true,
                     encoding: 'UTF-8',
-                    delimiter: ";", 
+                    delimiter: ";",  // ← ESSENCIAL: delimitador ponto e vírgula
                     complete: function (results) {
+                        console.log(`Resultados brutos do Papa Parse para ${year}:`, results);
+                        
                         const data = results.data.map(row => {
                             // Normalizar nomes de colunas
                             const matricula = row.matricula || row['MAT.'] || row['MAT'] || '';
@@ -1788,81 +1789,48 @@
                                 empresa = 'MINAS GERAIS ADMINISTRACAO E SERVICOS S.A';
                             }
 
-                            const empregado = {
+                            // === LÓGICA SIMPLIFICADA PARA FORMATO ISO (2025-09-01) ===
+                            let COMPETENCIA = null;
+                            let ANO = '';
+                            let MES_NUM = '';
+                            
+                            if (mes_referencia && mes_referencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                                // Formato: 2025-09-01
+                                const [ano, mes, dia] = mes_referencia.split('-');
+                                COMPETENCIA = `${ano}-${mes}`;  // "2025-09"
+                                ANO = ano;
+                                MES_NUM = mes;
+                            }
+                            
+                            // DEBUG: Verificar primeiros registros
+                            if (results.data.indexOf(row) < 3) {
+                                console.log(`DEBUG: Linha ${results.data.indexOf(row) + 1}: mes_referencia="${mes_referencia}", COMPETENCIA=${COMPETENCIA}`);
+                            }
+
+                            return {
                                 matricula: matricula,
                                 nome: nome,
                                 orgao: orgao,
                                 cargo: cargo,
                                 empresa: empresa,
                                 cnpj_empresa: cnpj_empresa,
-                                mes_referencia: mes_referencia
+                                mes_referencia: mes_referencia,
+                                COMPETENCIA: COMPETENCIA,
+                                ANO: ANO,
+                                MES_NUM: MES_NUM
                             };
+                        }).filter(e => e.COMPETENCIA !== null); // só registros válidos
 
-                                // === NOVA LÓGICA PARA FORMATO ISO (2025-09-01) ===
-    if (mes_referencia && mes_referencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
-        // Formato: 2025-09-01
-        const partes = mes_referencia.split('-');
-        empregado.COMPETENCIA = `${partes[0]}-${partes[1]}`;  // "2025-09"
-        empregado.ANO = partes[0];  // "2025"
-        empregado.MES_NUM = partes[1];  // "09"
-        empregado.DIA = partes[2];  // "01" (opcional, se quiser guardar)
-    } else {
-        // Fallback para o formato antigo (jan/25) - se ainda existir em outros anos
-        const ref = mes_referencia
-            .toLowerCase()
-            .replace(/\u00a0/g, '')
-            .replace(/\s+/g, '')
-            .trim();
-        
-        const m = ref.match(/^([a-z]{3})[\/\-](\d{2}|\d{4})$/);
-        
-        if (m && MESES[m[1]]) {
-            const mes = MESES[m[1]];
-            const ano = m[2].length === 2 ? `20${m[2]}` : m[2];
-            
-            empregado.COMPETENCIA = `${ano}-${mes}`;
-            empregado.ANO = ano;
-            empregado.MES_NUM = mes;
-        } else {
-            empregado.COMPETENCIA = null;
-            empregado.ANO = '';
-            empregado.MES_NUM = '';
-        }
-    }
-
-    return empregado;
-}).filter(e => e.COMPETENCIA); // só registros válidos
-
-                            // === NORMALIZAÇÃO DO MÊS ===
-                            const ref = mes_referencia
-                                .toLowerCase()
-                                .replace(/\u00a0/g, '')
-                                .replace(/\s+/g, '')
-                                .trim();
-
-                            // aceita: jan/25 | jan-25 | jan/2025 | jan-2025
-                            const m = ref.match(/^([a-z]{3})[\/\-](\d{2}|\d{4})$/);
-
-                            if (m && MESES[m[1]]) {
-                                const mes = MESES[m[1]];
-                                const ano = m[2].length === 2 ? `20${m[2]}` : m[2];
-
-                                empregado.COMPETENCIA = `${ano}-${mes}`;
-                                empregado.ANO = ano;
-                                empregado.MES_NUM = mes;
-                            } else {
-                                empregado.COMPETENCIA = null;
-                                empregado.ANO = '';
-                                empregado.MES_NUM = '';
-                            }
-
-                            return empregado;
-                        }).filter(e => e.COMPETENCIA); // só registros válidos
+                        console.log(`Dados de ${year} processados: ${data.length} registros válidos de ${results.data.length} totais`);
+                        
+                        // DEBUG: Mostrar primeiros registros
+                        if (data.length > 0) {
+                            console.log('Primeiro registro:', data[0]);
+                        }
 
                         allData[year] = data;
                         terceirizadosData = data;
 
-                        console.log(`Dados de ${year} carregados: ${data.length} registros`);
                         resolve();
                     },
                     error: function (err) {
@@ -1881,12 +1849,19 @@
                 return;
             }
 
-            // Encontrar competências únicas
+            // Encontrar competências únicas usando o novo formato ISO
             const competencias = [...new Set(
                 terceirizadosData
-                    .map(e => e.COMPETENCIA)
+                    .map(e => e.COMPETENCIA)  // Já está no formato "2025-09"
                     .filter(Boolean)
-            )].sort().reverse();
+            )].sort((a, b) => {
+                // Ordenar por data (mais recente primeiro)
+                const [anoA, mesA] = a.split('-').map(Number);
+                const [anoB, mesB] = b.split('-').map(Number);
+                
+                if (anoB !== anoA) return anoB - anoA;
+                return mesB - mesA;
+            });
 
             if (competencias.length === 0) {
                 console.warn('Nenhuma competência encontrada.');
@@ -1904,7 +1879,7 @@
                 e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
             );
 
-            console.log(`Mês mais recente encontrado: ${mes}/${ano} - ${filteredData.length} registros`);
+            console.log(`Mês mais recente encontrado: ${currentMonth}/${currentYear} - ${filteredData.length} registros`);
         }
 
         // ==================== CONFIGURAR EVENT LISTENERS ====================
@@ -2054,23 +2029,26 @@
             // Dashboard 1 - Mês
             const mesSelect1 = document.getElementById('mesDashboard1');
             if (mesSelect1 && currentYear) {
+                // Obter meses do ano atual do formato ISO
                 const mesesDoAno = [...new Set(
                     (allData[currentYear] || [])
                         .map(e => e.MES_NUM)
                         .filter(Boolean)
-                )].sort((a, b) => parseInt(b) - parseInt(a));
+                        .map(mes => parseInt(mes))
+                )].sort((a, b) => b - a); // Mais recente primeiro
                 
                 mesSelect1.innerHTML = '';
                 mesesDoAno.forEach(mesNum => {
+                    const mesStr = mesNum.toString().padStart(2, '0');
                     const option = document.createElement('option');
-                    option.value = mesNum;
-                    option.textContent = monthNames[mesNum] || mesNum;
-                    if (mesNum === currentMonth) option.selected = true;
+                    option.value = mesStr;
+                    option.textContent = `${monthNames[mesStr] || mesStr}/${currentYear}`;
+                    if (mesStr === currentMonth) option.selected = true;
                     mesSelect1.appendChild(option);
                 });
             }
             
-            // Dashboard 2 - Ano
+            // Dashboard 2 - Ano (mesma lógica)
             const anoSelect2 = document.getElementById('anoDashboard2');
             if (anoSelect2) {
                 anoSelect2.innerHTML = '';
@@ -2083,21 +2061,23 @@
                 });
             }
             
-            // Dashboard 2 - Mês
+            // Dashboard 2 - Mês (mesma lógica)
             const mesSelect2 = document.getElementById('mesDashboard2');
             if (mesSelect2 && currentYear) {
                 const mesesDoAno = [...new Set(
                     (allData[currentYear] || [])
                         .map(e => e.MES_NUM)
                         .filter(Boolean)
-                )].sort((a, b) => parseInt(b) - parseInt(a));
+                        .map(mes => parseInt(mes))
+                )].sort((a, b) => b - a);
                 
                 mesSelect2.innerHTML = '';
                 mesesDoAno.forEach(mesNum => {
+                    const mesStr = mesNum.toString().padStart(2, '0');
                     const option = document.createElement('option');
-                    option.value = mesNum;
-                    option.textContent = monthNames[mesNum] || mesNum;
-                    if (mesNum === currentMonth) option.selected = true;
+                    option.value = mesStr;
+                    option.textContent = `${monthNames[mesStr] || mesStr}/${currentYear}`;
+                    if (mesStr === currentMonth) option.selected = true;
                     mesSelect2.appendChild(option);
                 });
             }
@@ -2199,6 +2179,7 @@
                     return true;
                 });
                 
+                console.log(`Dashboard 1 - Filtros aplicados: ${filteredData.length} registros para ${currentMonth}/${currentYear}`);
                 updateDashboard1();
                 
             } else if (dashboard === 'dashboard2') {
@@ -2259,6 +2240,7 @@
                     return true;
                 });
                 
+                console.log(`Dashboard 2 - Filtros aplicados: ${filteredData.length} registros para ${currentMonth}/${currentYear}`);
                 updateDashboard2();
             }
             
@@ -3260,53 +3242,54 @@
 
         // ==================== FUNÇÕES GLOBAIS E UTILITÁRIOS ====================
 
-window.filtrarPorOrgao = function(orgao) {
-    console.log('Filtrando por órgão:', orgao);
-    
-    try {
-        // Mudar para a aba de Consulta Individual
-        const tabElement = document.getElementById('dashboard2-tab');
-        if (tabElement) {
-            // Usar Bootstrap Tab para mudar de aba
-            const tab = new bootstrap.Tab(tabElement);
-            tab.show();
+        window.filtrarPorOrgao = function(orgao) {
+            console.log('Filtrando por órgão:', orgao);
             
-            // Aguardar a transição da aba
-            setTimeout(() => {
-                // Preencher o campo do órgão no Dashboard 2
-                const orgaoElement = document.getElementById('orgaoDashboard2');
-                if (orgaoElement) {
-                    orgaoElement.value = orgao;
+            try {
+                // Mudar para a aba de Consulta Individual
+                const tabElement = document.getElementById('dashboard2-tab');
+                if (tabElement) {
+                    // Usar Bootstrap Tab para mudar de aba
+                    const tab = new bootstrap.Tab(tabElement);
+                    tab.show();
+                    
+                    // Aguardar a transição da aba
+                    setTimeout(() => {
+                        // Preencher o campo do órgão no Dashboard 2
+                        const orgaoElement = document.getElementById('orgaoDashboard2');
+                        if (orgaoElement) {
+                            orgaoElement.value = orgao;
+                        }
+                        
+                        // Limpar outros filtros
+                        document.getElementById('nomeEmpregado').value = '';
+                        document.getElementById('cargoDashboard2').value = '';
+                        document.getElementById('empresaDashboard2').value = '';
+                        document.getElementById('matriculaDashboard2').value = '';
+                        document.getElementById('searchEmpregados').value = '';
+                        
+                        // Configurar o ano e mês atuais
+                        document.getElementById('anoDashboard2').value = currentYear;
+                        document.getElementById('mesDashboard2').value = currentMonth;
+                        
+                        // Aplicar o filtro
+                        applyFilters('dashboard2');
+                        
+                        // Rolar para a tabela
+                        const tableContainer = document.querySelector('#dashboard2 .table-container');
+                        if (tableContainer) {
+                            tableContainer.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }, 350); // Tempo maior para garantir que a aba mudou
+                } else {
+                    console.error('Elemento da aba não encontrado');
                 }
-                
-                // Limpar outros filtros
-                document.getElementById('nomeEmpregado').value = '';
-                document.getElementById('cargoDashboard2').value = '';
-                document.getElementById('empresaDashboard2').value = '';
-                document.getElementById('matriculaDashboard2').value = '';
-                document.getElementById('searchEmpregados').value = '';
-                
-                // Configurar o ano e mês atuais
-                document.getElementById('anoDashboard2').value = currentYear;
-                document.getElementById('mesDashboard2').value = currentMonth;
-                
-                // Aplicar o filtro
-                applyFilters('dashboard2');
-                
-                // Rolar para a tabela
-                const tableContainer = document.querySelector('#dashboard2 .table-container');
-                if (tableContainer) {
-                    tableContainer.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 350); // Tempo maior para garantir que a aba mudou
-        } else {
-            console.error('Elemento da aba não encontrado');
-        }
-    } catch (error) {
-        console.error('Erro ao filtrar por órgão:', error);
-        showError('Erro ao filtrar por órgão. Por favor, tente novamente.');
-    }
-};
+            } catch (error) {
+                console.error('Erro ao filtrar por órgão:', error);
+                showError('Erro ao filtrar por órgão. Por favor, tente novamente.');
+            }
+        };
+
         // ==================== FUNÇÕES DE ORDENAÇÃO ====================
         window.sortTable = function(tableType, column) {
             if (tableType === 'visaoGeral') {
@@ -3425,6 +3408,3 @@ window.filtrarPorOrgao = function(orgao) {
     </script>
 </body>
 </html>
-
-
-

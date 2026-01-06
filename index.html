@@ -33,7 +33,7 @@
         
         /* ==================== ESTILOS GERAIS ==================== */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
             padding-bottom: 30px;
         }
@@ -959,10 +959,10 @@
                         <h1 class="header-title">Empregados Terceirizados</h1>
                         <p class="header-subtitle">Governo do Estado de Minas Gerais - Dados de Empregados Terceirizados</p>
                         <div class="header-info">
-                            <a href="https://dados.mg.gov.br/dataset/empregados-terceirizados-mg" target="_blank" class="link-legislacao">
+                            <a href="https://dados.mg.gov.br/dataset/empregados-terceirizados" target="_blank" class="link-legislacao">
                                 <i class="fas fa-external-link-alt"></i> Portal de Dados Abertos MG
                             </a>
-                            <a href="https://github.com/transparencia-mg/empregados_terceirizados_mg" target="_blank" class="link-legislacao">
+                            <a href="https://github.com/transparencia-mg/empregados_terceirizados" target="_blank" class="link-legislacao">
                                 <i class="fab fa-github"></i> Repositório GitHub
                             </a>
                             <span class="badge-atualizacao-header">
@@ -1352,7 +1352,7 @@
                                     <h4>Fonte dos Dados</h4>
                                     <p class="text-muted" style="font-size: 13px;">Dados atualizados automaticamente do GitHub</p>
                                     <div class="mt-3">
-                                        <a href="https://github.com/transparencia-mg/empregados_terceirizados_mg" 
+                                        <a href="https://github.com/transparencia-mg/empregados_terceirizados" 
                                            target="_blank" 
                                            class="btn-export w-100 d-block text-decoration-none">
                                             <i class="fab fa-github me-2"></i>Acessar Repositório
@@ -1366,7 +1366,7 @@
                                     <h4>Portal de Dados Abertos</h4>
                                     <p class="text-muted" style="font-size: 13px;">Acesse o conjunto de dados de empregados terceirzaos do Estado de Minas Gerais</p>
                                     <div class="mt-3">
-                                        <a href="https://dados.mg.gov.br/dataset/empregados-terceirizados-mg" 
+                                        <a href="https://dados.mg.gov.br/dataset/empregados-terceirizados" 
                                            target="_blank" 
                                            class="btn-export w-100 d-block text-decoration-none">
                                             <i class="fas fa-external-link-alt me-2"></i>Acessar Portal
@@ -1430,7 +1430,7 @@
                             <div class="alert alert-info mt-3">
                                 <i class="fas fa-info-circle me-2"></i>
                                 <strong>Fonte dos Dados:</strong> Os dados são carregados automaticamente do repositório GitHub 
-                                <a href="https://github.com/transparencia-mg/empregados_terceirizados_mg" target="_blank">transparencia-mg/empregados_terceirizados_mg</a>
+                                <a href="https://github.com/transparencia-mg/empregados_terceirizados" target="_blank">transparencia-mg/empregados_terceirizados</a>
                             </div>
                             
                             <div class="alert alert-success mt-2">
@@ -1461,7 +1461,7 @@
                     <i class="fas fa-external-link-alt"></i> dados.mg.gov.br
                 </a>
                 | 
-                <a href="https://github.com/transparencia-mg/empregados_terceirizados_mg" 
+                <a href="https://github.com/transparencia-mg/empregados_terceirizados" 
                    style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">
                     <i class="fab fa-github"></i> GitHub
                 </a>
@@ -1562,8 +1562,8 @@
         };
 
         // URLs dos CSVs no GitHub
-        const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/transparencia-mg/empregados_terceirizados_mg/main/data/';
-        const GITHUB_API_URL = 'https://api.github.com/repos/transparencia-mg/empregados_terceirizados_mg/commits?path=data&per_page=1';
+        const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/transparencia-mg/empregados_terceirizados/main/data/';
+        const GITHUB_API_URL = 'https://api.github.com/repos/transparencia-mg/empregados_terceirizados/commits?path=data&per_page=1';
 
         // LISTA CSV - AGORA CARREGADOS SOB DEMANDA
         const CSV_FILES_BY_YEAR = {
@@ -3206,7 +3206,7 @@
                 const url = URL.createObjectURL(blob);
                 
                 link.setAttribute('href', url);
-                link.setAttribute('download', `empregados_terceirizados_mg_${year}.csv`);
+                link.setAttribute('download', `empregados_terceirizados_${year}.csv`);
                 link.style.visibility = 'hidden';
                 document.body.appendChild(link);
                 link.click();
@@ -3380,7 +3380,7 @@ window.filtrarPorOrgao = function(orgao) {
             const url = URL.createObjectURL(blob);
             
             link.setAttribute('href', url);
-            link.setAttribute('download', `empregados_terceirizados_mg_${currentYear}_${currentMonth}.csv`);
+            link.setAttribute('download', `empregados_terceirizados_${currentYear}_${currentMonth}.csv`);
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();

@@ -1614,30 +1614,46 @@
             'UTRAMIG': 'Fundação de Educação para o Trabalho de Minas Gerais'
         };
 
-        // ==================== FUNÇÕES DE INICIALIZAÇÃO ====================
+        // ==================== FUNÇÃO PARA ATUALIZAR ALTURA DO IFRAME ====================
+        function iframeUpdateHeight() { 
+            window.parent.postMessage({ iframeHeight: document.body.scrollHeight + 10 }, '*'); 
+        }
+
+        // ==================== INICIALIZAÇÃO ====================
         document.addEventListener('DOMContentLoaded', function() {
             console.log('=== INICIANDO DASHBOARD TERCEIRIZADOS ===');
             console.log('GitHub URL:', GITHUB_BASE_URL);
             
             setupEventListeners();
-            
             loadInitialData();
-            
             setupTooltips();
-            
             setupDescriptiveTooltips();
-            
             setupAtualizacaoData();
             
             console.log('Painel de Terceirizados carregado com sucesso!!!');
-            
             iframeUpdateHeight();
+            
+            // Event listeners para mudança de aba
+            const tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    const tabId = this.getAttribute('data-bs-target').replace('#', '');
+                    
+                    if (tabId === 'dashboard3') {
+                        // Se vem de outro dashboard, mostra botão voltar
+                        if (dashboardAnterior && dashboardAnterior !== 'dashboard3') {
+                            document.getElementById('botaoVoltarContainer').style.display = 'block';
+                        } else {
+                            document.getElementById('botaoVoltarContainer').style.display = 'none';
+                        }
+                    } else {
+                        dashboardAnterior = tabId;
+                    }
+                    
+                    iframeUpdateHeight();
+                });
+            });
         });
-
-        // ==================== FUNÇÃO PARA ATUALIZAR ALTURA DO IFRAME ====================
-        function iframeUpdateHeight() { 
-            window.parent.postMessage({ iframeHeight: document.body.scrollHeight+10 }, '*'); 
-        }
 
         // ==================== FUNÇÕES AUXILIARES DE INICIALIZAÇÃO ====================
         function loadInitialData() {
@@ -1922,33 +1938,7 @@
             });
             
             document.getElementById('dashboard3-tab').addEventListener('click', function() {
-                // Se vem de outro dashboard, mostra botão voltar
-                if (dashboardAnterior && dashboardAnterior !== 'dashboard3') {
-                    // Implementar lógica de botão voltar se necessário
-                } else {
-                    // Ocultar botão voltar
-                }
-                dashboardAnterior = 'dashboard3';
                 iframeUpdateHeight();
-            });
-            
-            // Event listeners para mudança de aba
-            const tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function(e) {
-                    const tabId = this.getAttribute('data-bs-target').replace('#', '');
-                    if (tabId === 'dashboard3') {
-                        // Se vem de outro dashboard, mostra botão voltar
-                        if (dashboardAnterior && dashboardAnterior !== 'dashboard3') {
-                            // Implementar lógica de botão voltar se necessário
-                        } else {
-                            // Ocultar botão voltar
-                        }
-                    } else {
-                        dashboardAnterior = tabId;
-                    }
-                    iframeUpdateHeight();
-                });
             });
             
             // Itens por página
@@ -2484,6 +2474,7 @@
             updateSummaryCards();
             updateResumoTable();
             updateCharts1();
+            iframeUpdateHeight();
         }
 
         function updateSummaryCards() {
@@ -2950,6 +2941,7 @@
 
         function updateDashboard2() {
             updateEmpregadosTable();
+            iframeUpdateHeight();
         }
 
         function updateEmpregadosTable() {

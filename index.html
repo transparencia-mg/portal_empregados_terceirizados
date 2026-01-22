@@ -271,11 +271,12 @@
             position: sticky;
             top: 0;
             z-index: 10;
-            background-color: #f8f9fa !important;
+            background-color: var(--primary-dark) !important;
         }
         
         .table-fixed-header-container table thead th {
-            background-color: #f8f9fa !important;
+            background-color: var(--primary-dark) !important;
+            color: white !important;
             position: sticky;
             top: 0;
             z-index: 20;
@@ -297,8 +298,8 @@
         
         /* Adicionar bordas verticais ao cabeçalho da tabela */
         .table thead th {
-            background-color: #f8f9fa !important;
-            color: var(--primary-dark);
+            background-color: var(--primary-dark) !important;
+            color: white !important;
             font-weight: 600;
             border: none;
             padding: 12px 10px;
@@ -312,8 +313,8 @@
             top: 0;
             z-index: 20;
             white-space: nowrap;
-            border-left: 1px solid #dee2e6 !important;
-            border-right: 1px solid #dee2e6 !important;
+            border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
         }
         
         .table thead th:first-child {
@@ -325,14 +326,15 @@
         }
         
         .sort-icon {
-            opacity: 0.5;
+            opacity: 0.8;
             margin-left: 4px;
             font-size: 9px;
             transition: opacity 0.2s ease;
+            color: white;
         }
         
         .table thead th:hover {
-            background-color: #f1f3f5 !important;
+            background-color: var(--primary-darker) !important;
         }
         
         .table thead th:hover .sort-icon {
@@ -546,6 +548,9 @@
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
         }
         
         /* ==================== LOADING OVERLAY ==================== */
@@ -632,7 +637,7 @@
             align-items: center;
             padding: 12px 15px;
             border-top: 1px solid #dee2e6;
-            background-color: #f8f9fa;
+            background-color: white;
             flex-wrap: wrap;
             gap: 10px;
         }
@@ -724,7 +729,10 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 0;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
         }
         
         .search-box-container label {
@@ -742,6 +750,7 @@
             transition: all 0.3s ease !important;
             width: 100% !important;
             max-width: 300px !important;
+            background: white;
         }
         
         .search-box-container input:focus {
@@ -1010,8 +1019,8 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="mb-3">
-                                <label for="orgaoDashboard1" class="form-label filter-label">Órgão</label>
-                                <input type="text" class="form-control" list="orgaosListDashboard1" id="orgaoDashboard1" placeholder="Digite ou selecione...">
+                                <label for="orgaoDashboard1" class="form-label filter-label">Órgão (Nome Completo)</label>
+                                <input type="text" class="form-control" list="orgaosListDashboard1" id="orgaoDashboard1" placeholder="Digite o nome completo do órgão...">
                                 <datalist id="orgaosListDashboard1">
                                     <option value="all">Todos os Órgãos</option>
                                 </datalist>
@@ -1083,10 +1092,10 @@
                     </div>
                 </div>
 
-                <!-- Tabela Dashboard 1 - AGORA APENAS POR ÓRGÃO -->
+                <!-- Tabela Dashboard 1 - VISÃO GERAL -->
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title">Visão Geral</h3>
+                        <h3 class="table-title">Visão Geral - Total de Servidores por Órgão</h3>
                         <div class="d-flex align-items-center gap-3 ms-auto">
                             <div class="items-per-page">
                                 <span>Itens por página:</span>
@@ -1105,7 +1114,7 @@
                             <thead>
                                 <tr>
                                     <th data-sort="orgao_nome" data-order="asc" onclick="sortTable('visaoGeral', 'orgao_nome')">
-                                        Órgão <span class="sort-icon">▼</span>
+                                        Órgão (Nome Completo) <span class="sort-icon">▼</span>
                                     </th>
                                     <th data-sort="orgao_sigla" data-order="asc" onclick="sortTable('visaoGeral', 'orgao_sigla')">
                                         Sigla <span class="sort-icon">▼</span>
@@ -1168,11 +1177,8 @@
                         </div>
                         <div class="col-md-3 col-6">
                             <div class="mb-3">
-                                <label for="cargoDashboard2" class="form-label filter-label">Cargo</label>
-                                <input type="text" class="form-control" list="cargosListDashboard2" id="cargoDashboard2" placeholder="Digite ou selecione...">
-                                <datalist id="cargosListDashboard2">
-                                    <option value="all">Todos os Cargos</option>
-                                </datalist>
+                                <label for="matriculaDashboard2" class="form-label filter-label">Matrícula (MASP)</label>
+                                <input type="text" class="form-control" id="matriculaDashboard2" placeholder="Digite a matrícula...">
                             </div>
                         </div>
                     </div>
@@ -1180,17 +1186,8 @@
                     <div class="row">
                         <div class="col-md-4 col-12">
                             <div class="mb-3">
-                                <label for="empresaDashboard2" class="form-label filter-label">Empresa</label>
-                                <input type="text" class="form-control" list="empresasListDashboard2" id="empresaDashboard2" placeholder="Digite ou selecione...">
-                                <datalist id="empresasListDashboard2">
-                                    <option value="all">Todas as Empresas</option>
-                                </datalist>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                            <div class="mb-3">
-                                <label for="orgaoDashboard2" class="form-label filter-label">Órgão</label>
-                                <input type="text" class="form-control" list="orgaosListDashboard2" id="orgaoDashboard2" placeholder="Digite ou selecione...">
+                                <label for="orgaoDashboard2" class="form-label filter-label">Órgão (Nome Completo)</label>
+                                <input type="text" class="form-control" list="orgaosListDashboard2" id="orgaoDashboard2" placeholder="Digite o nome completo do órgão...">
                                 <datalist id="orgaosListDashboard2">
                                     <option value="all">Todos os Órgãos</option>
                                 </datalist>
@@ -1198,8 +1195,20 @@
                         </div>
                         <div class="col-md-4 col-12">
                             <div class="mb-3">
-                                <label for="matriculaDashboard2" class="form-label filter-label">Matrícula</label>
-                                <input type="text" class="form-control" id="matriculaDashboard2" placeholder="Digite a matrícula...">
+                                <label for="cargoDashboard2" class="form-label filter-label">Cargo</label>
+                                <input type="text" class="form-control" list="cargosListDashboard2" id="cargoDashboard2" placeholder="Digite ou selecione...">
+                                <datalist id="cargosListDashboard2">
+                                    <option value="all">Todos os Cargos</option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="mb-3">
+                                <label for="empresaDashboard2" class="form-label filter-label">Empresa</label>
+                                <input type="text" class="form-control" list="empresasListDashboard2" id="empresaDashboard2" placeholder="Digite ou selecione...">
+                                <datalist id="empresasListDashboard2">
+                                    <option value="all">Todas as Empresas</option>
+                                </datalist>
                             </div>
                         </div>
                     </div>
@@ -1218,14 +1227,14 @@
                     </div>
                 </div>
 
-                <!-- Campo de Busca de Registros Dashboard 2 -->
+                <!-- Ações Dashboard 2 -->
                 <div class="actions-container mb-4">
                     <div class="export-buttons">
                         <button class="btn-export" id="exportCSVDashboard2">
-                            <i class="fas fa-file-csv"></i> Exportar CSV
+                            <i class="fas fa-file-csv me-2"></i> Exportar CSV
                         </button>
                         <button class="btn-export" id="printDashboard2">
-                            <i class="fas fa-print"></i> Imprimir
+                            <i class="fas fa-print me-2"></i> Imprimir
                         </button>
                     </div>
 
@@ -1238,7 +1247,7 @@
                 <!-- Tabela de Empregados Dashboard 2 -->
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title">Consulta Individual de Empregados</h3>
+                        <h3 class="table-title">Consulta Individual - Total de Servidores</h3>
                         <div class="d-flex align-items-center gap-3 ms-auto">
                             <div class="items-per-page">
                                 <span>Itens por página:</span>
@@ -1256,9 +1265,9 @@
                         <table class="table table-hover" id="empregadosTable">
                             <thead>
                                 <tr>
-                                    <th data-sort="matricula" data-order="asc" onclick="sortTable('empregados', 'matricula')">Matrícula <span class="sort-icon">▼</span></th>
                                     <th data-sort="nome" data-order="asc" onclick="sortTable('empregados', 'nome')">Nome <span class="sort-icon">▼</span></th>
-                                    <th data-sort="orgao" data-order="asc" onclick="sortTable('empregados', 'orgao')">Órgão <span class="sort-icon">▼</span></th>
+                                    <th data-sort="matricula" data-order="asc" onclick="sortTable('empregados', 'matricula')">Matrícula (MASP) <span class="sort-icon">▼</span></th>
+                                    <th data-sort="orgao" data-order="asc" onclick="sortTable('empregados', 'orgao')">Órgão (Nome Completo) <span class="sort-icon">▼</span></th>
                                     <th data-sort="cargo" data-order="asc" onclick="sortTable('empregados', 'cargo')">Cargo <span class="sort-icon">▼</span></th>
                                     <th data-sort="empresa" data-order="asc" onclick="sortTable('empregados', 'empresa')">Empresa <span class="sort-icon">▼</span></th>
                                     <th data-sort="cnpj_empresa" data-order="asc" onclick="sortTable('empregados', 'cnpj_empresa')">CNPJ Empresa <span class="sort-icon">▼</span></th>
@@ -1294,9 +1303,9 @@
                 
                 <!-- Filtro de Download -->
                 <div class="filter-container">
-                    <div class="row">
+                    <div class="row align-items-end">
                         <div class="col-md-6">
-                            <div class="mb-3">
+                            <div class="mb-0">
                                 <label for="anoDownload" class="form-label filter-label">Selecione o Ano para Download</label>
                                 <select class="form-select" id="anoDownload">
                                     <option value="">Selecione um ano...</option>
@@ -1308,8 +1317,8 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6 d-flex align-items-end">
-                            <button class="btn-primary-custom w-100" id="downloadAnoCSV">
+                        <div class="col-md-6 d-flex">
+                            <button class="btn-primary-custom w-100" id="downloadAnoCSV" style="height: 42px;">
                                 <i class="fas fa-download me-2"></i>Baixar CSV do Ano Selecionado
                             </button>
                         </div>
@@ -1770,7 +1779,8 @@
                                 mes_referencia: mes_referencia,
                                 COMPETENCIA: COMPETENCIA,
                                 ANO: ANO,
-                                MES_NUM: MES_NUM
+                                MES_NUM: MES_NUM,
+                                ORGAO_NOME_COMPLETO: getOrgaoExtenso(orgao) // Adicionar nome completo
                             };
                         }).filter(e => e.COMPETENCIA !== null); // só registros válidos
 
@@ -1945,6 +1955,21 @@
             return orgaoSigla;
         }
 
+        // Função para obter sigla a partir do nome completo
+        function getOrgaoSigla(orgaoNome) {
+            if (!orgaoNome) return '';
+            
+            // Verificar se o nome completo contém uma sigla conhecida
+            for (const [sigla, nome] of Object.entries(orgaosExtenso)) {
+                if (orgaoNome === nome) {
+                    return sigla;
+                }
+            }
+            
+            // Se não encontrar, retorna as primeiras letras
+            return orgaoNome.substring(0, 3).toUpperCase();
+        }
+
         // ==================== FUNÇÕES DE ANO E MES ====================
         async function switchYearData(year) {
             showLoading(true);
@@ -2034,30 +2059,34 @@
                 });
             }
             
-            // Obter todos os órgãos únicos do período atual
-            const orgaosUnicos = [...new Set(filteredData.map(e => e.orgao))].sort();
+            // Obter todos os nomes completos de órgãos únicos do período atual
+            const orgaosNomesUnicos = [...new Set(
+                filteredData
+                    .map(e => getOrgaoExtenso(e.orgao))
+                    .filter(Boolean)
+            )].sort();
             
-            // Dashboard 1 - datalist de órgãos
+            // Dashboard 1 - datalist de órgãos (NOMES COMPLETOS)
             const orgaoDatalist1 = document.getElementById('orgaosListDashboard1');
             if (orgaoDatalist1) {
                 orgaoDatalist1.innerHTML = '<option value="all">Todos os Órgãos</option>';
-                orgaosUnicos.forEach(orgao => {
-                    if (orgao) {
+                orgaosNomesUnicos.forEach(orgaoNome => {
+                    if (orgaoNome) {
                         const option = document.createElement('option');
-                        option.value = orgao;
+                        option.value = orgaoNome;
                         orgaoDatalist1.appendChild(option);
                     }
                 });
             }
             
-            // Dashboard 2 - datalist de órgãos
+            // Dashboard 2 - datalist de órgãos (NOMES COMPLETOS)
             const orgaoDatalist2 = document.getElementById('orgaosListDashboard2');
             if (orgaoDatalist2) {
                 orgaoDatalist2.innerHTML = '<option value="all">Todos os Órgãos</option>';
-                orgaosUnicos.forEach(orgao => {
-                    if (orgao) {
+                orgaosNomesUnicos.forEach(orgaoNome => {
+                    if (orgaoNome) {
                         const option = document.createElement('option');
-                        option.value = orgao;
+                        option.value = orgaoNome;
                         orgaoDatalist2.appendChild(option);
                     }
                 });
@@ -2104,13 +2133,13 @@
                 const mes = document.getElementById('mesDashboard1').value;
                 const orgaoInput = document.getElementById('orgaoDashboard1').value;
                 
-                const orgao = orgaoInput === 'all' || orgaoInput === '' ? 'all' : orgaoInput;
+                const orgaoNome = orgaoInput === 'all' || orgaoInput === '' ? 'all' : orgaoInput;
                 
                 // Se o ano mudou, carregar os dados do ano
                 if (ano !== currentYear) {
                     switchYearData(ano).then(() => {
                         // Após carregar o ano, aplicar os filtros
-                        applyFiltersAfterYearLoad(dashboard, mes, orgao);
+                        applyFiltersAfterYearLoad(dashboard, mes, orgaoNome);
                     });
                     return;
                 }
@@ -2123,9 +2152,12 @@
                         return false;
                     }
                     
-                    // Filtro por órgão
-                    if (orgao !== 'all' && empregado.orgao !== orgao) {
-                        return false;
+                    // Filtro por nome completo do órgão
+                    if (orgaoNome !== 'all') {
+                        const nomeCompletoOrgao = getOrgaoExtenso(empregado.orgao);
+                        if (nomeCompletoOrgao !== orgaoNome) {
+                            return false;
+                        }
                     }
                     
                     return true;
@@ -2145,13 +2177,13 @@
                 
                 const cargo = cargoInput === 'all' || cargoInput === '' ? 'all' : cargoInput;
                 const empresa = empresaInput === 'all' || empresaInput === '' ? 'all' : empresaInput;
-                const orgao = orgaoInput === 'all' || orgaoInput === '' ? 'all' : orgaoInput;
+                const orgaoNome = orgaoInput === 'all' || orgaoInput === '' ? 'all' : orgaoInput;
                 
                 // Se o ano mudou, carregar os dados do ano
                 if (ano !== currentYear) {
                     switchYearData(ano).then(() => {
                         // Após carregar o ano, aplicar os filtros
-                        applyFiltersAfterYearLoad(dashboard, mes, nome, cargo, empresa, orgao, matricula);
+                        applyFiltersAfterYearLoad(dashboard, mes, nome, cargo, empresa, orgaoNome, matricula);
                     });
                     return;
                 }
@@ -2179,9 +2211,12 @@
                         return false;
                     }
                     
-                    // Filtro por órgão
-                    if (orgao !== 'all' && empregado.orgao !== orgao) {
-                        return false;
+                    // Filtro por nome completo do órgão
+                    if (orgaoNome !== 'all') {
+                        const nomeCompletoOrgao = getOrgaoExtenso(empregado.orgao);
+                        if (nomeCompletoOrgao !== orgaoNome) {
+                            return false;
+                        }
                     }
                     
                     // Filtro por matrícula
@@ -2203,15 +2238,18 @@
             currentMonth = mes;
             
             if (dashboard === 'dashboard1') {
-                const [orgao] = otherFilters;
+                const [orgaoNome] = otherFilters;
                 
                 filteredData = (allData[currentYear] || []).filter(empregado => {
                     if (empregado.ANO !== currentYear || empregado.MES_NUM !== currentMonth) {
                         return false;
                     }
                     
-                    if (orgao !== 'all' && empregado.orgao !== orgao) {
-                        return false;
+                    if (orgaoNome !== 'all') {
+                        const nomeCompletoOrgao = getOrgaoExtenso(empregado.orgao);
+                        if (nomeCompletoOrgao !== orgaoNome) {
+                            return false;
+                        }
                     }
                     
                     return true;
@@ -2219,7 +2257,7 @@
                 
                 updateDashboard1();
             } else if (dashboard === 'dashboard2') {
-                const [nome, cargo, empresa, orgao, matricula] = otherFilters;
+                const [nome, cargo, empresa, orgaoNome, matricula] = otherFilters;
                 
                 filteredData = (allData[currentYear] || []).filter(empregado => {
                     if (empregado.ANO !== currentYear || empregado.MES_NUM !== currentMonth) {
@@ -2238,8 +2276,11 @@
                         return false;
                     }
                     
-                    if (orgao !== 'all' && empregado.orgao !== orgao) {
-                        return false;
+                    if (orgaoNome !== 'all') {
+                        const nomeCompletoOrgao = getOrgaoExtenso(empregado.orgao);
+                        if (nomeCompletoOrgao !== orgaoNome) {
+                            return false;
+                        }
                     }
                     
                     if (matricula && !empregado.matricula.toString().includes(matricula)) {
@@ -2270,7 +2311,7 @@
                     empregado.nome.toLowerCase().includes(searchLower) ||
                     empregado.cargo.toLowerCase().includes(searchLower) ||
                     empregado.empresa.toLowerCase().includes(searchLower) ||
-                    empregado.orgao.toLowerCase().includes(searchLower) ||
+                    getOrgaoExtenso(empregado.orgao).toLowerCase().includes(searchLower) ||
                     empregado.matricula.toString().toLowerCase().includes(searchLower)
                 );
             });
@@ -2362,7 +2403,7 @@
             updateDashboard2();
         }
 
-       // ==================== DASHBOARD 1: VISÃO GERAL ====================
+        // ==================== DASHBOARD 1: VISÃO GERAL ====================
         function updateDashboard1() {
             updateSummaryCards();
             updateResumoTable();
@@ -2444,9 +2485,10 @@
             const grupos = {};
             filteredData.forEach(empregado => {
                 const orgao = empregado.orgao;
+                const orgaoNome = getOrgaoExtenso(orgao);
                 if (!grupos[orgao]) {
                     grupos[orgao] = {
-                        orgao_nome: getOrgaoExtenso(orgao),
+                        orgao_nome: orgaoNome,
                         orgao_sigla: orgao,
                         count: 0
                     };
@@ -2482,7 +2524,7 @@
             const endIndex = Math.min(startIndex + itemsPerPage, resumoArray.length);
             const currentData = resumoArray.slice(startIndex, endIndex);
             
-            // Gerar HTML da tabela - ATUALIZADO: Sem sublinhado, texto normal
+            // Gerar HTML da tabela
             const rowsHTML = currentData.map(item => {
                 return `
                 <tr>
@@ -2882,11 +2924,11 @@
             const endIndex = Math.min(startIndex + itemsPerPage, empregadosArray.length);
             const currentData = empregadosArray.slice(startIndex, endIndex);
             
-            // Gerar HTML da tabela - ATUALIZADO: Apenas nome completo do órgão como link
+            // Gerar HTML da tabela - Ordem corrigida: Nome primeiro, depois Matrícula
             const rowsHTML = currentData.map(empregado => `
                 <tr>
-                    <td>${empregado.matricula}</td>
                     <td><strong>${empregado.nome}</strong></td>
+                    <td>${empregado.matricula}</td>
                     <td>
                         <a href="#" onclick="filtrarPorOrgao('${empregado.orgao}')" class="orgao-link" title="Clique para filtrar por este órgão">
                             ${getOrgaoExtenso(empregado.orgao)}
@@ -3160,13 +3202,14 @@
                 }
                 
                 // Preparar CSV
-                const headers = ['matricula', 'nome', 'orgao', 'cargo', 'empresa', 'cnpj_empresa', 'mes_referencia'];
+                const headers = ['matricula', 'nome', 'orgao_sigla', 'orgao_nome_completo', 'cargo', 'empresa', 'cnpj_empresa', 'mes_referencia'];
                 const csvContent = [
                     headers.join(';'),
                     ...data.map(empregado => [
                         empregado.matricula,
                         empregado.nome,
                         empregado.orgao,
+                        getOrgaoExtenso(empregado.orgao),
                         empregado.cargo,
                         empregado.empresa,
                         empregado.cnpj_empresa,
@@ -3211,10 +3254,10 @@
                     
                     // Aguardar a transição da aba
                     setTimeout(() => {
-                        // Preencher o campo do órgão no Dashboard 2
+                        // Preencher o campo do órgão no Dashboard 2 com o NOME COMPLETO
                         const orgaoElement = document.getElementById('orgaoDashboard2');
                         if (orgaoElement) {
-                            orgaoElement.value = orgao;
+                            orgaoElement.value = getOrgaoExtenso(orgao);
                         }
                         
                         // Limpar outros filtros

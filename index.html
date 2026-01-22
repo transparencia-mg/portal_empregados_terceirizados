@@ -500,6 +500,7 @@
             padding: 12px;
             margin-bottom: 20px;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-top: 10px; /* Espaço antes do menu principal */
         }
         
         .nav-tabs {
@@ -1512,6 +1513,7 @@
         let currentSearchTerm = '';
         let lastGitHubCheck = null;
         let lastDataHash = null;
+        let dashboardAnterior = null;
         
         const chartColors = {
             primary: '#29435A',
@@ -1613,64 +1615,93 @@
         };
 
         // ==================== FUNÇÕES DE INICIALIZAÇÃO ====================
-        document.addEventListener('DOMContentLoaded', async function() {
+        document.addEventListener('DOMContentLoaded', function() {
             console.log('=== INICIANDO DASHBOARD TERCEIRIZADOS ===');
             console.log('GitHub URL:', GITHUB_BASE_URL);
             
+            setupEventListeners();
+            
+            loadInitialData();
+            
+            setupTooltips();
+            
+            setupDescriptiveTooltips();
+            
+            setupAtualizacaoData();
+            
+            console.log('Painel de Terceirizados carregado com sucesso!!!');
+            
+            iframeUpdateHeight();
+        });
+
+        // ==================== FUNÇÃO PARA ATUALIZAR ALTURA DO IFRAME ====================
+        function iframeUpdateHeight() { 
+            window.parent.postMessage({ iframeHeight: document.body.scrollHeight+10 }, '*'); 
+        }
+
+        // ==================== FUNÇÕES AUXILIARES DE INICIALIZAÇÃO ====================
+        function loadInitialData() {
             showLoading(true);
             
             try {
-                // Verificar se há atualizações no GitHub
-                const hasUpdates = await checkGitHubUpdates();
-                
-                if (hasUpdates || !lastDataHash) {
-                    console.log('Carregando dados mais recentes...');
-                    await loadYearData('2025');
-                    
-                    // DEBUG: Verificar dados carregados
-                    console.log(`Total de dados carregados para 2025: ${terceirizadosData?.length || 0}`);
-                    if (terceirizadosData && terceirizadosData.length > 0) {
-                        console.log('Primeiro registro:', terceirizadosData[0]);
-                        console.log('Último registro:', terceirizadosData[terceirizadosData.length - 1]);
-                    }
-                    
-                    // Determinar o mês mais recente de 2025
-                    await determineLatestMonth();
-                    
-                    // Salvar hash dos dados
-                    lastDataHash = await calculateDataHash(allData['2025']);
-                    
-                    // Atualizar interface
+                // Carregar dados iniciais
+                loadYearData('2025').then(() => {
+                    determineLatestMonth();
                     updateDataAtualizacao();
                     updateFilterOptions();
                     updateDashboard1();
                     initializeDashboard2();
                     updateDashboard3();
-                    setupEventListeners();
+                    showLoading(false);
                     
-                    console.log(`Dashboard inicializado com ${filteredData.length} registros para ${currentMonth}/${currentYear}`);
-                } else {
-                    console.log('Usando dados em cache - sem atualizações no GitHub');
-                    
-                    // Usar dados já carregados
-                    terceirizadosData = allData['2025'] || [];
-                    await determineLatestMonth();
-                    
-                    updateDataAtualizacao();
-                    updateFilterOptions();
-                    updateDashboard1();
-                    initializeDashboard2();
-                    updateDashboard3();
-                    setupEventListeners();
-                }
+                    iframeUpdateHeight();
+                }).catch(error => {
+                    console.error('Erro ao carregar dados:', error);
+                    showError('Erro ao carregar dados do GitHub. Por favor, tente novamente.');
+                    showLoading(false);
+                });
                 
             } catch (error) {
                 console.error('Erro ao carregar dados:', error);
                 showError('Erro ao carregar dados do GitHub. Por favor, tente novamente.');
-            } finally {
                 showLoading(false);
             }
-        });
+        }
+
+        function setupTooltips() {
+            // Inicializar tooltips do Bootstrap
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        }
+
+        function setupDescriptiveTooltips() {
+            // Adicionar tooltips descritivos
+            const tooltips = {
+                'aplicarFiltros': 'Aplicar filtros selecionados',
+                'limparFiltros': 'Limpar todos os filtros',
+                'pesquisarEmpregados': 'Pesquisar empregados com os filtros selecionados',
+                'exportCSVDashboard1': 'Exportar dados da visão geral para CSV',
+                'exportCSVDashboard2': 'Exportar dados da consulta individual para CSV'
+            };
+            
+            Object.keys(tooltips).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.setAttribute('title', tooltips[id]);
+                    element.setAttribute('data-bs-toggle', 'tooltip');
+                }
+            });
+            
+            // Re-inicializar tooltips
+            setupTooltips();
+        }
+
+        function setupAtualizacaoData() {
+            // Atualizar a data de atualização periodicamente
+            setInterval(updateDataAtualizacao, 60000); // Atualizar a cada minuto
+        }
 
         // ==================== VERIFICAR ATUALIZAÇÕES NO GITHUB ====================
         async function checkGitHubUpdates() {
@@ -1882,9 +1913,42 @@
             // Troca de abas
             document.getElementById('dashboard1-tab').addEventListener('click', function() {
                 setTimeout(updateDashboard1, 100);
+                iframeUpdateHeight();
             });
+            
             document.getElementById('dashboard2-tab').addEventListener('click', function() {
                 setTimeout(updateDashboard2, 100);
+                iframeUpdateHeight();
+            });
+            
+            document.getElementById('dashboard3-tab').addEventListener('click', function() {
+                // Se vem de outro dashboard, mostra botão voltar
+                if (dashboardAnterior && dashboardAnterior !== 'dashboard3') {
+                    // Implementar lógica de botão voltar se necessário
+                } else {
+                    // Ocultar botão voltar
+                }
+                dashboardAnterior = 'dashboard3';
+                iframeUpdateHeight();
+            });
+            
+            // Event listeners para mudança de aba
+            const tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    const tabId = this.getAttribute('data-bs-target').replace('#', '');
+                    if (tabId === 'dashboard3') {
+                        // Se vem de outro dashboard, mostra botão voltar
+                        if (dashboardAnterior && dashboardAnterior !== 'dashboard3') {
+                            // Implementar lógica de botão voltar se necessário
+                        } else {
+                            // Ocultar botão voltar
+                        }
+                    } else {
+                        dashboardAnterior = tabId;
+                    }
+                    iframeUpdateHeight();
+                });
             });
             
             // Itens por página
@@ -1892,12 +1956,14 @@
                 itemsPerPageDashboard1 = parseInt(this.value);
                 currentPageDashboard1 = 1;
                 updateResumoTable();
+                iframeUpdateHeight();
             });
             
             document.getElementById('itemsPerPageDashboard2').addEventListener('change', function() {
                 itemsPerPageDashboard2 = parseInt(this.value);
                 currentPageDashboard2 = 1;
                 updateEmpregadosTable();
+                iframeUpdateHeight();
             });
             
             // Mudança de ano nos selects
@@ -1905,6 +1971,7 @@
                 const selectedYear = this.value;
                 if (selectedYear !== currentYear) {
                     await switchYearData(selectedYear);
+                    iframeUpdateHeight();
                 }
             });
             
@@ -1912,6 +1979,7 @@
                 const selectedYear = this.value;
                 if (selectedYear !== currentYear) {
                     await switchYearData(selectedYear);
+                    iframeUpdateHeight();
                 }
             });
         }
@@ -1932,6 +2000,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             `;
             container.prepend(errorDiv);
+            
+            iframeUpdateHeight();
         }
 
         function updateDataAtualizacao() {
@@ -2232,6 +2302,7 @@
             }
             
             showLoading(false);
+            iframeUpdateHeight();
         }
 
         async function applyFiltersAfterYearLoad(dashboard, mes, ...otherFilters) {
@@ -2294,6 +2365,7 @@
             }
             
             showLoading(false);
+            iframeUpdateHeight();
         }
 
         function filterEmpregadosTable(searchTerm) {
@@ -2348,6 +2420,8 @@
                 
                 updatePaginationDashboard2(1, 1);
             }
+            
+            iframeUpdateHeight();
         }
 
         function clearAllFilters() {
@@ -2372,6 +2446,7 @@
             
             updateFilterOptions();
             updateDashboard1();
+            iframeUpdateHeight();
         }
 
         function clearDashboard2Filters() {
@@ -2401,6 +2476,7 @@
             
             updateFilterOptions();
             updateDashboard2();
+            iframeUpdateHeight();
         }
 
         // ==================== DASHBOARD 1: VISÃO GERAL ====================
@@ -2649,6 +2725,8 @@
             if (tableContainer) {
                 tableContainer.scrollIntoView({ behavior: 'smooth' });
             }
+            
+            iframeUpdateHeight();
         };
 
         function updateCharts1() {
@@ -3044,6 +3122,8 @@
             if (tableContainer) {
                 tableContainer.scrollIntoView({ behavior: 'smooth' });
             }
+            
+            iframeUpdateHeight();
         };
 
         // ==================== FUNÇÃO PARA MOSTRAR HISTÓRICO ====================
@@ -3161,6 +3241,8 @@
                     // Mostrar modal
                     modal.show();
                     showLoading(false);
+                    
+                    iframeUpdateHeight();
                 }).catch(error => {
                     console.error('Erro ao carregar histórico:', error);
                     showError('Erro ao carregar histórico do empregado.');
@@ -3279,6 +3361,8 @@
                         if (tableContainer) {
                             tableContainer.scrollIntoView({ behavior: 'smooth' });
                         }
+                        
+                        iframeUpdateHeight();
                     }, 350); // Tempo maior para garantir que a aba mudou
                 } else {
                     console.error('Elemento da aba não encontrado');
@@ -3316,6 +3400,8 @@
                 currentPageDashboard2 = 1;
                 updateEmpregadosTable();
             }
+            
+            iframeUpdateHeight();
         };
 
         // ==================== FUNÇÕES DE EXPORTAÇÃO ====================

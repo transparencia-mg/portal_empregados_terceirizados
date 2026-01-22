@@ -222,13 +222,14 @@
             width: 100%;
         }
         
-        /* ==================== TABELAS ==================== */
+        /* ==================== TABELAS COM BORDAS ==================== */
         .table-container {
             background: white;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
             margin-bottom: 20px;
+            border: 1px solid #dee2e6;
         }
         
         .table-header {
@@ -291,8 +292,10 @@
             font-size: 13px;
             border-collapse: separate;
             border-spacing: 0;
+            border: 1px solid #dee2e6;
         }
         
+        /* Adicionar bordas verticais ao cabeçalho da tabela */
         .table thead th {
             background-color: #f8f9fa !important;
             color: var(--primary-dark);
@@ -309,6 +312,16 @@
             top: 0;
             z-index: 20;
             white-space: nowrap;
+            border-left: 1px solid #dee2e6 !important;
+            border-right: 1px solid #dee2e6 !important;
+        }
+        
+        .table thead th:first-child {
+            border-left: none !important;
+        }
+        
+        .table thead th:last-child {
+            border-right: none !important;
         }
         
         .sort-icon {
@@ -339,9 +352,35 @@
             content: "↓";
         }
         
+        /* Aplicar bordas verticais a TODAS as tabelas */
+        .table-container table th, 
+        .table-container table td {
+            border-left: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            vertical-align: middle;
+        }
+        
+        .table-container table th:first-child,
+        .table-container table td:first-child {
+            border-left: none;
+        }
+        
+        .table-container table th:last-child,
+        .table-container table td:last-child {
+            border-right: none;
+        }
+        
+        /* Borda inferior para linhas */
+        .table-container table tbody tr {
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        .table-container table tbody tr:last-child {
+            border-bottom: none;
+        }
+        
         .table tbody tr {
             transition: background-color 0.2s ease;
-            border-bottom: 1px solid #f1f1f1;
         }
         
         .table tbody tr:hover {
@@ -352,6 +391,12 @@
             padding: 12px 10px;
             vertical-align: middle;
             font-size: 13px;
+        }
+        
+        /* Coluna de quantidade centralizada */
+        .table tbody td.quantidade {
+            text-align: center;
+            font-weight: 600;
         }
         
         /* Coluna de ações na tabela */
@@ -541,10 +586,14 @@
         .table-total-row td {
             border-top: 2px solid #dee2e6 !important;
         }
+        
+        .table-total-row td.quantidade {
+            text-align: center;
+        }
 
-        /* ==================== LINK CLICÁVEL ==================== */
+        /* ==================== LINK CLICÁVEL ATUALIZADO ==================== */
         .orgao-link {
-            color: var(--primary-dark);
+            color: var(--primary-darker);
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
@@ -553,11 +602,27 @@
             padding: 2px 4px;
             border-radius: 4px;
             font-size: 13px;
+            border-bottom: none !important;
+            text-transform: none;
         }
-        
+
         .orgao-link:hover {
-            color: var(--accent-red);
+            color: var(--accent-red) !important;
             background-color: rgba(185, 60, 66, 0.05);
+            transform: translateY(-1px);
+            text-decoration: none !important;
+        }
+
+        .orgao-link:active {
+            transform: translateY(0);
+        }
+
+        /* Para a tabela específica da visão geral - TEXT TRANSFORM REMOVIDO */
+        #visaoGeralTable .orgao-link {
+            padding: 4px 8px;
+            margin: -4px -8px;
+            text-transform: none;
+            font-weight: 600;
         }
         
         /* ==================== PAGINAÇÃO ==================== */
@@ -886,37 +951,6 @@
             .btn-action span {
                 display: none;
             }
-        }
-
-        /* ==================== LINK CLICÁVEL ==================== */
-        .orgao-link {
-            color: var(--primary-dark);
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-block;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-size: 13px;
-            border-bottom: 1px dashed rgba(41, 67, 90, 0.3);
-        }
-
-        .orgao-link:hover {
-            color: var(--accent-red);
-            background-color: rgba(185, 60, 66, 0.05);
-            border-bottom: 1px solid var(--accent-red);
-            transform: translateY(-1px);
-        }
-
-        .orgao-link:active {
-            transform: translateY(0);
-        }
-
-        /* Para a tabela específica da visão geral */
-        #visaoGeralTable .orgao-link {
-            padding: 4px 8px;
-            margin: -4px -8px;
         }
     </style>
 </head>
@@ -1944,7 +1978,7 @@
                 });
             }
             
-            // Dashboard 1 - Mês
+            // Dashboard 1 - Mês (SOMENTE O NOME DO MÊS)
             const mesSelect1 = document.getElementById('mesDashboard1');
             if (mesSelect1 && currentYear) {
                 // Obter meses do ano atual do formato ISO
@@ -1960,7 +1994,7 @@
                     const mesStr = mesNum.toString().padStart(2, '0');
                     const option = document.createElement('option');
                     option.value = mesStr;
-                    option.textContent = `${monthNames[mesStr] || mesStr}/${currentYear}`;
+                    option.textContent = monthNames[mesStr] || mesStr; // APENAS O NOME DO MÊS
                     if (mesStr === currentMonth) option.selected = true;
                     mesSelect1.appendChild(option);
                 });
@@ -1979,7 +2013,7 @@
                 });
             }
             
-            // Dashboard 2 - Mês (mesma lógica)
+            // Dashboard 2 - Mês (SOMENTE O NOME DO MÊS)
             const mesSelect2 = document.getElementById('mesDashboard2');
             if (mesSelect2 && currentYear) {
                 const mesesDoAno = [...new Set(
@@ -1994,7 +2028,7 @@
                     const mesStr = mesNum.toString().padStart(2, '0');
                     const option = document.createElement('option');
                     option.value = mesStr;
-                    option.textContent = `${monthNames[mesStr] || mesStr}/${currentYear}`;
+                    option.textContent = monthNames[mesStr] || mesStr; // APENAS O NOME DO MÊS
                     if (mesStr === currentMonth) option.selected = true;
                     mesSelect2.appendChild(option);
                 });
@@ -2448,7 +2482,7 @@
             const endIndex = Math.min(startIndex + itemsPerPage, resumoArray.length);
             const currentData = resumoArray.slice(startIndex, endIndex);
             
-            // Gerar HTML da tabela
+            // Gerar HTML da tabela - ATUALIZADO: Sem sublinhado, texto normal
             const rowsHTML = currentData.map(item => {
                 return `
                 <tr>
@@ -2462,7 +2496,7 @@
                             ${item.orgao_sigla}
                         </a>
                     </td>
-                    <td>${item.count.toLocaleString('pt-BR')}</td>
+                    <td class="quantidade">${item.count.toLocaleString('pt-BR')}</td>
                 </tr>
             `}).join('');
             
@@ -2471,7 +2505,7 @@
                 <tr class="table-total-row">
                     <td><strong>TOTAL GERAL (${totalOrgaos} órgãos)</strong></td>
                     <td><strong>-</strong></td>
-                    <td><strong>${totalEmpregados.toLocaleString('pt-BR')}</strong></td>
+                    <td class="quantidade"><strong>${totalEmpregados.toLocaleString('pt-BR')}</strong></td>
                 </tr>
             `;
             
@@ -2848,12 +2882,16 @@
             const endIndex = Math.min(startIndex + itemsPerPage, empregadosArray.length);
             const currentData = empregadosArray.slice(startIndex, endIndex);
             
-            // Gerar HTML da tabela
+            // Gerar HTML da tabela - ATUALIZADO: Apenas nome completo do órgão como link
             const rowsHTML = currentData.map(empregado => `
                 <tr>
                     <td>${empregado.matricula}</td>
                     <td><strong>${empregado.nome}</strong></td>
-                    <td>${getOrgaoExtenso(empregado.orgao)}<br><small class="text-muted">${empregado.orgao}</small></td>
+                    <td>
+                        <a href="#" onclick="filtrarPorOrgao('${empregado.orgao}')" class="orgao-link" title="Clique para filtrar por este órgão">
+                            ${getOrgaoExtenso(empregado.orgao)}
+                        </a>
+                    </td>
                     <td>${empregado.cargo}</td>
                     <td>${empregado.empresa}</td>
                     <td>${empregado.cnpj_empresa}</td>
@@ -3068,7 +3106,7 @@
                     const historicHTML = historico.map(registro => `
                         <tr>
                             <td>${registro.mes_referencia}</td>
-                            <td>${getOrgaoExtenso(registro.orgao)}<br><small>${registro.orgao}</small></td>
+                            <td>${getOrgaoExtenso(registro.orgao)}</td>
                             <td>${registro.cargo}</td>
                             <td>${registro.empresa}</td>
                             <td>${registro.cnpj_empresa}</td>

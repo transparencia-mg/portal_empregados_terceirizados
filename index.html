@@ -35,28 +35,28 @@
         body {
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
-            padding-bottom: 30px;
+            padding-bottom: 15px;
         }
         
-        /* ==================== HEADER PRINCIPAL ==================== */
+        /* ==================== HEADER MINIMALISTA ==================== */
         .main-header {
             background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 20px 0;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            border-bottom: 4px solid var(--accent-red);
+            padding: 12px 0;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid var(--accent-red);
         }
         
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
         
         .logo {
-            width: 60px;
-            height: 60px;
+            width: 45px;
+            height: 45px;
             background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-bright) 100%);
             border-radius: 50%;
             display: flex;
@@ -64,51 +64,31 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 20px;
-            box-shadow: 0 3px 8px rgba(219, 35, 63, 0.25);
+            font-size: 16px;
         }
         
         .header-title {
             font-weight: 700;
-            font-size: 22px;
+            font-size: 18px;
             margin: 0;
             line-height: 1.2;
         }
         
-        .header-subtitle {
-            font-size: 14px;
-            opacity: 0.9;
-            margin: 5px 0 0 0;
-        }
-
         .header-info {
-            margin-top: 8px;
             display: flex;
-            flex-wrap: wrap;
+            justify-content: flex-end;
             align-items: center;
             gap: 10px;
         }
         
-        .link-legislacao {
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            font-size: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: color 0.3s;
-        }
-        
-        .link-legislacao:hover {
-            color: white;
-            text-decoration: underline;
-        }
-        
-        .badge-atualizacao-header {
+        .update-badge {
             background-color: rgba(255, 255, 255, 0.15);
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 15px;
-            font-size: 11px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         /* ==================== FILTROS ==================== */
@@ -674,15 +654,6 @@
             margin-bottom: 20px;
         }
 
-        .footer {
-            text-align: center;
-            padding: 15px;
-            color: var(--primary-dark);
-            font-size: 0.85rem;
-            border-top: 1px solid #dee2e6;
-            margin-top: 30px;
-        }
-        
         /* ==================== BUSCA RÁPIDA ==================== */
         .search-box-container {
             display: flex;
@@ -791,25 +762,30 @@
             vertical-align: middle;
         }
         
+        /* ==================== DATA ATUALIZAÇÃO MINIMALISTA ==================== */
+        .data-atualizacao-container {
+            text-align: center;
+            margin: 10px 0 20px 0;
+            font-size: 12px;
+            color: var(--primary-darker);
+            opacity: 0.8;
+        }
+        
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
             .main-header {
-                padding: 15px 0;
-                margin-bottom: 20px;
+                padding: 10px 0;
+                margin-bottom: 15px;
             }
             
             .logo-container {
                 flex-direction: column;
                 text-align: center;
-                gap: 10px;
+                gap: 8px;
             }
             
             .header-title {
-                font-size: 18px;
-            }
-            
-            .header-subtitle {
-                font-size: 12px;
+                font-size: 16px;
             }
             
             .header-info {
@@ -913,75 +889,38 @@
         }
 
         /* ==================== LINK CLICÁVEL ==================== */
-    .orgao-link {
-    color: var(--primary-dark);
-    text-decoration: none;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-block;
-    padding: 2px 4px;
-    border-radius: 4px;
-    font-size: 13px;
-    border-bottom: 1px dashed rgba(41, 67, 90, 0.3);
-    }
+        .orgao-link {
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-block;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 13px;
+            border-bottom: 1px dashed rgba(41, 67, 90, 0.3);
+        }
 
-    .orgao-link:hover {
-    color: var(--accent-red);
-    background-color: rgba(185, 60, 66, 0.05);
-    border-bottom: 1px solid var(--accent-red);
-    transform: translateY(-1px);
-    }
+        .orgao-link:hover {
+            color: var(--accent-red);
+            background-color: rgba(185, 60, 66, 0.05);
+            border-bottom: 1px solid var(--accent-red);
+            transform: translateY(-1px);
+        }
 
-    .orgao-link:active {
-    transform: translateY(0);
-    }
+        .orgao-link:active {
+            transform: translateY(0);
+        }
 
-    /* Para a tabela específica da visão geral */
-    #visaoGeralTable .orgao-link {
-    padding: 4px 8px;
-    margin: -4px -8px;
-    }
+        /* Para a tabela específica da visão geral */
+        #visaoGeralTable .orgao-link {
+            padding: 4px 8px;
+            margin: -4px -8px;
+        }
     </style>
 </head>
 <body>
-
-
-    <!-- ==================== HEADER PRINCIPAL ==================== -->
-    <header class="main-header">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="logo-container">
-                    <div class="logo">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div>
-                        <h1 class="header-title">Empregados Terceirizados</h1>
-                        <p class="header-subtitle">Governo do Estado de Minas Gerais - Dados de Empregados Terceirizados</p>
-                        <div class="header-info">
-                            <a href="https://dados.mg.gov.br/dataset/empregados-terceirizados" target="_blank" class="link-legislacao">
-                                <i class="fas fa-external-link-alt"></i> Portal de Dados Abertos MG
-                            </a>
-                            <a href="https://github.com/transparencia-mg/empregados_terceirizados" target="_blank" class="link-legislacao">
-                                <i class="fab fa-github"></i> Repositório GitHub
-                            </a>
-                            <span class="badge-atualizacao-header">
-                                <i class="fas fa-sync-alt"></i> Última atualização: <span id="data-atualizacao-header">Carregando...</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Informação de Fonte de Dados -->
-                <div class="text-end">
-                    <div class="btn-export" style="background: rgba(255, 255, 255, 0.2); color: white; border-color: white;">
-                        <i class="fas fa-database me-2"></i> Fonte: GitHub
-                    </div>
-                    <small class="text-white d-block mt-1" style="font-size: 10px;">Atualização automática</small>
-                </div>
-            </div>
-        </div>
-    </header>
 
     <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
     <div class="container">
@@ -1003,6 +942,10 @@
                         <i class="fas fa-download me-2"></i>Downloads
                     </button>
                 </li>
+                <div class="update-badge" id="data-atualizacao-header">
+                    <i class="fas fa-sync-alt"></i> 
+                    <span>Atualizado em: Carregando...</span>
+                </div>
             </ul>
         </div>
 
@@ -1364,7 +1307,7 @@
                                 <div class="card-stats">
                                     <i class="fas fa-external-link-alt fa-3x mb-3" style="color: var(--primary-dark);"></i>
                                     <h4>Portal de Dados Abertos</h4>
-                                    <p class="text-muted" style="font-size: 13px;">Acesse o conjunto de dados de empregados terceirzaos do Estado de Minas Gerais</p>
+                                    <p class="text-muted" style="font-size: 13px;">Acesse o conjunto de dados de empregados terceirizados do Estado de Minas Gerais</p>
                                     <div class="mt-3">
                                         <a href="https://dados.mg.gov.br/dataset/empregados-terceirizados" 
                                            target="_blank" 
@@ -1444,30 +1387,6 @@
             </div> <!-- Fim Dashboard 3 -->
         </div>
     </div>
-
-    <!-- ==================== FOOTER ==================== -->
-    <footer class="footer mt-4 pt-4 border-top">
-        <div class="container text-center text-muted">
-            <p class="mb-1">
-                <i class="fas fa-sync-alt me-2"></i> 
-                Data de Atualização — 
-                <span id="footer-atualizacao">Carregando...</span>
-            </p>
-            <p class="mb-0" style="font-size: 0.85rem;">
-                © 2025 Empregados Terceirizados - Governo do Estado de Minas Gerais
-            </p>
-            <p class="mt-2 mb-0 small">
-                <a href="https://dados.mg.gov.br" style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">
-                    <i class="fas fa-external-link-alt"></i> dados.mg.gov.br
-                </a>
-                | 
-                <a href="https://github.com/transparencia-mg/empregados_terceirizados" 
-                   style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-            </p>
-        </div>
-    </footer>
 
     <!-- ==================== MODAL DE HISTÓRICO ==================== -->
     <div class="modal fade" id="historicModal" tabindex="-1" aria-labelledby="historicModalLabel" aria-hidden="true">
@@ -1784,7 +1703,7 @@
                             const cnpj_empresa = row.cnpj_empresa || row['CNPJ EMPRESA'] || '';
                             const mes_referencia = row.mes_referencia || row['MÊS REFERÊNCIA'] || '';
 
-                            // CORREÇÃO DA EMPRESA "MINAS GERAIS ADMINISTRA��O E SERVI�OS S.A"
+                            // CORREÇÃO DA EMPRESA "MINAS GERAIS ADMINISTRA  O E SERVI OS S.A"
                             if (empresa.includes('MINAS GERAIS ADMINISTRA')) {
                                 empresa = 'MINAS GERAIS ADMINISTRACAO E SERVICOS S.A';
                             }
@@ -1973,9 +1892,8 @@
 
         function updateDataAtualizacao() {
             const now = new Date();
-            const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
-            document.getElementById('data-atualizacao-header').textContent = dataFormatada;
-            document.getElementById('footer-atualizacao').textContent = dataFormatada;
+            const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR').substring(0, 5);
+            document.getElementById('data-atualizacao-header').innerHTML = `<i class="fas fa-sync-alt"></i> <span>Última atualização: ${dataFormatada}</span>`;
         }
 
         // Função para converter sigla em nome completo do órgão

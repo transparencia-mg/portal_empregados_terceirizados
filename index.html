@@ -1105,9 +1105,6 @@
 
                 <!-- Tabela Dashboard 1 - VISÃO GERAL -->
                 <div class="table-container">
-                    <div class="table-header">
-                        <h3 class="table-title">Visão Geral - Total de Servidores por Órgão</h3>
-                    </div>
                     <div class="table-fixed-header-container">
                         <table class="table table-hover" id="visaoGeralTable">
                             <thead>
@@ -1615,7 +1612,7 @@
             'PRODEMG': 'Companhia de Tecnologia da Informação do Estado de Minas Gerais'
         };
 
-        // Mapeamento de siglas (ATUALIZADO)
+        // Mapeamento de siglas atualizadas - CORREÇÃO DO ERRO
         const orgaosSiglas = {
             'AG.METROP.BH': 'ARMBH',
             'PRODEMG': 'PRODEMGE'
@@ -1805,9 +1802,9 @@
                                 empresa = 'MINAS GERAIS ADMINISTRACAO E SERVICOS S.A';
                             }
 
-                            // Atualizar siglas dos órgãos
-                            if (orgaoSiglas[orgao]) {
-                                orgao = orgaoSiglas[orgao];
+                            // Atualizar siglas dos órgãos - CORREÇÃO DO ERRO
+                            if (orgaosSiglas[orgao]) {
+                                orgao = orgaosSiglas[orgao];
                             }
 
                             // === LÓGICA SIMPLIFICADA PARA FORMATO ISO (2025-09-01) ===
@@ -2017,8 +2014,8 @@
             if (!orgaoSigla) return '';
             
             // Primeiro verificar se temos uma sigla atualizada
-            if (orgaoSiglas[orgaoSigla]) {
-                orgaoSigla = orgaoSiglas[orgaoSigla];
+            if (orgaosSiglas[orgaoSigla]) {
+                orgaoSigla = orgaosSiglas[orgaoSigla];
             }
             
             // Verificar se é uma sigla conhecida

@@ -438,7 +438,7 @@
         
         /* ==================== BOTÕES ==================== */
         .btn-primary-custom {
-            background: linear-gradient(to right, var(--accent-red), var(--accent-bright));
+            background: linear-gradient(to right, var(--primary-dark), var(--primary-darker));
             border: none;
             padding: 10px 20px;
             font-weight: 600;
@@ -449,7 +449,7 @@
         }
         
         .btn-primary-custom:hover {
-            background: linear-gradient(to right, #007bff, #0056b3);
+            background: linear-gradient(to right, var(--primary-darker), var(--hover-blue));
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
             color: white;
@@ -979,12 +979,12 @@
             <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="dashboard1-tab" data-bs-toggle="tab" data-bs-target="#dashboard1" type="button" role="tab">
-                        <i class="fas fa-chart-bar me-2"></i>Visão Geral
+                        <i class="fas fa-bar-chart me-2"></i>Visão Geral
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="dashboard2-tab" data-bs-toggle="tab" data-bs-target="#dashboard2" type="button" role="tab">
-                        <i class="fas fa-user-tie me-2"></i>Consulta Individual
+                        <i class="fas fa-user me-2"></i>Consulta Individual
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -1090,16 +1090,18 @@
                                 <i class="fas fa-print me-2"></i> Imprimir
                             </button>
                         </div>
-                        <div class="items-per-page">
-                            <span>Itens por página:</span>
-                            <select id="itemsPerPageDashboard1">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50" selected>50</option>
-                                <option value="100">100</option>
-                            </select>
+                        <div class="d-flex align-items-center gap-3 ms-auto">
+                            <div class="items-per-page">
+                                <span>Itens por página:</span>
+                                <select id="itemsPerPageDashboard1">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50" selected>50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            <span class="table-badge" id="resumoCountDashboard1">0 órgãos</span>
                         </div>
-                        <span class="table-badge" id="resumoCountDashboard1">0 órgãos</span>
                     </div>
                 </div>
 
@@ -1225,26 +1227,22 @@
 
                 <!-- Ações Dashboard 2 -->
                 <div class="actions-container mb-4">
-                    <div class="export-buttons">
-                        <button class="btn-export" id="exportCSVDashboard2">
-                            <i class="fas fa-file-csv me-2"></i> Exportar CSV
-                        </button>
-                        <button class="btn-export" id="printDashboard2">
-                            <i class="fas fa-print me-2"></i> Imprimir
-                        </button>
-                    </div>
-
-                    <div class="search-box-container">
-                        <label for="searchEmpregados">Buscar registros:</label>
-                        <input type="text" id="searchEmpregados" placeholder="Buscar por nome, cargo, empresa ou órgão...">
-                    </div>
-                </div>
-
-                <!-- Tabela de Empregados Dashboard 2 -->
-                <div class="table-container">
-                    <div class="table-header">
-                        <h3 class="table-title">Consulta Individual - Total de Servidores</h3>
+                    <div class="d-flex align-items-center gap-3 w-100">
+                        <div class="export-buttons">
+                            <button class="btn-export" id="exportCSVDashboard2">
+                                <i class="fas fa-file-csv me-2"></i> Exportar CSV
+                            </button>
+                            <button class="btn-export" id="printDashboard2">
+                                <i class="fas fa-print me-2"></i> Imprimir
+                            </button>
+                        </div>
+                        
                         <div class="d-flex align-items-center gap-3 ms-auto">
+                            <div class="search-box-container">
+                                <label for="searchEmpregados">Buscar registros:</label>
+                                <input type="text" id="searchEmpregados" placeholder="Buscar por nome, cargo, empresa ou órgão...">
+                            </div>
+                            
                             <div class="items-per-page">
                                 <span>Itens por página:</span>
                                 <select id="itemsPerPageDashboard2">
@@ -1254,9 +1252,14 @@
                                     <option value="100">100</option>
                                 </select>
                             </div>
+                            
                             <span class="table-badge" id="resumoCountDashboard2">0 empregados</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- Tabela de Empregados Dashboard 2 -->
+                <div class="table-container">
                     <div class="table-fixed-header-container">
                         <table class="table table-hover" id="empregadosTable">
                             <thead>
@@ -2846,6 +2849,18 @@
                 .sort((a, b) => b.count - a.count)
                 .slice(0, 8);
             
+            // Cores para barras do gráfico de cargos
+            const barColors = [
+                chartColors.primary,
+                chartColors.accent,
+                chartColors.secondaryBlue,
+                chartColors.secondaryBrown,
+                chartColors.secondaryTeal,
+                chartColors.bright,
+                '#4ECDC4',
+                '#FF6B6B'
+            ];
+            
             if (charts.cargo) {
                 charts.cargo.destroy();
             }
@@ -2859,8 +2874,8 @@
                     datasets: [{
                         label: 'Quantidade de Empregados',
                         data: cargosArray.map(item => item.count),
-                        backgroundColor: chartColors.accent,
-                        borderColor: chartColors.primary,
+                        backgroundColor: barColors,
+                        borderColor: barColors.map(color => color + '99'),
                         borderWidth: 1
                     }]
                 },
@@ -2956,7 +2971,7 @@
             // Gerar HTML da tabela - Ordem corrigida: Nome primeiro, depois Matrícula
             const rowsHTML = currentData.map(empregado => `
                 <tr>
-                    <td><strong>${empregado.nome}</strong></td>
+                    <td><strong style="color: var(--primary-darker); font-weight: 600; font-size: 13px;">${empregado.nome}</strong></td>
                     <td>${empregado.matricula}</td>
                     <td>
                         <a href="#" onclick="filtrarPorOrgao('${empregado.orgao}')" class="orgao-link" title="Clique para filtrar por este órgão">

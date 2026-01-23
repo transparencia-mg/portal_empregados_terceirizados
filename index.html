@@ -29,6 +29,7 @@
             --secondary-blue: #3F704D;
             --secondary-brown: #8B7355;
             --secondary-teal: #20B2AA;
+            --hover-blue: #006a82;
         }
         
         /* ==================== ESTILOS GERAIS ==================== */
@@ -448,9 +449,9 @@
         }
         
         .btn-primary-custom:hover {
-            background: linear-gradient(to right, var(--accent-bright), var(--accent-red));
+            background: linear-gradient(to right, #007bff, #0056b3);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(219, 35, 63, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
             color: white;
         }
         
@@ -619,6 +620,11 @@
             text-decoration: none !important;
         }
 
+        .orgao-link.selected {
+            color: var(--hover-blue) !important;
+            background-color: rgba(0, 106, 130, 0.1);
+        }
+
         .orgao-link:active {
             transform: translateY(0);
         }
@@ -674,24 +680,24 @@
             align-items: center;
             gap: 8px;
             font-size: 12px;
-            color: white;
+            color: var(--primary-dark);
             font-weight: 600;
         }
         
         .items-per-page select {
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(41, 67, 90, 0.3);
             border-radius: 6px;
             padding: 5px 10px;
             font-size: 12px;
             width: auto;
             min-width: 70px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
+            background-color: white;
+            color: var(--primary-dark);
         }
         
         .items-per-page select option {
-            background-color: var(--primary-dark);
-            color: white;
+            background-color: white;
+            color: var(--primary-dark);
         }
         
         /* ==================== CARDS ==================== */
@@ -986,10 +992,6 @@
                         <i class="fas fa-download me-2"></i>Downloads
                     </button>
                 </li>
-                <div class="update-badge" id="data-atualizacao-header">
-                    <i class="fas fa-sync-alt"></i> 
-                    <span>Atualizado em: Carregando...</span>
-                </div>
             </ul>
         </div>
 
@@ -998,6 +1000,12 @@
             
             <!-- ==================== DASHBOARD 1: VISÃO GERAL ==================== -->
             <div class="tab-pane fade show active" id="dashboard1" role="tabpanel">
+                
+                <!-- Data de Atualização -->
+                <div class="data-atualizacao-container">
+                    <i class="fas fa-sync-alt me-2"></i>
+                    <span id="data-atualizacao-body">Última atualização: Carregando...</span>
+                </div>
                 
                 <!-- Filtros Dashboard 1 -->
                 <div class="filter-container">
@@ -1020,8 +1028,8 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="mb-3">
-                                <label for="orgaoDashboard1" class="form-label filter-label">Órgão (Nome Completo)</label>
-                                <input type="text" class="form-control" list="orgaosListDashboard1" id="orgaoDashboard1" placeholder="Digite o nome completo do órgão...">
+                                <label for="orgaoDashboard1" class="form-label filter-label">Órgão</label>
+                                <input type="text" class="form-control" list="orgaosListDashboard1" id="orgaoDashboard1" placeholder="Digite o nome do órgão...">
                                 <datalist id="orgaosListDashboard1">
                                     <option value="all">Todos os Órgãos</option>
                                 </datalist>
@@ -1035,7 +1043,7 @@
                                     <i class="fas fa-filter me-2"></i>Pesquisar
                                 </button>
                                 <button class="btn-secondary-custom" id="limparFiltros">
-                                    <i class="fas fa-redo me-2"></i>Limpar Filtros
+                                    <i class="fas fa-times me-2"></i>Limpar Filtros
                                 </button>
                             </div>
                         </div>
@@ -1047,9 +1055,9 @@
                     <!-- Cards serão carregados aqui -->
                 </div>
 
-                <!-- Gráficos Dashboard 1 -->
+                <!-- Gráficos Dashboard 1 - APENAS 2 GRÁFICOS -->
                 <div class="row mb-4">
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-6 col-12">
                         <div class="chart-container">
                             <div class="chart-header">
                                 <h4 class="chart-title">Empregados por Órgão</h4>
@@ -1059,7 +1067,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-6 col-12">
                         <div class="chart-container">
                             <div class="chart-header">
                                 <h4 class="chart-title">Empregados por Cargo</h4>
@@ -1069,27 +1077,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4 class="chart-title">Empregados por Empresa</h4>
-                            </div>
-                            <div class="chart-wrapper">
-                                <canvas id="chartEmpresa"></canvas>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Ações Dashboard 1 -->
+                <!-- Ações Dashboard 1 com informações -->
                 <div class="actions-container mb-4">
-                    <div class="export-buttons">
-                        <button class="btn-export" id="exportCSVDashboard1">
-                            <i class="fas fa-file-csv me-2"></i> Exportar CSV
-                        </button>
-                        <button class="btn-export" id="printDashboard1">
-                            <i class="fas fa-print me-2"></i> Imprimir
-                        </button>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="export-buttons">
+                            <button class="btn-export" id="exportCSVDashboard1">
+                                <i class="fas fa-file-csv me-2"></i> Exportar CSV
+                            </button>
+                            <button class="btn-export" id="printDashboard1">
+                                <i class="fas fa-print me-2"></i> Imprimir
+                            </button>
+                        </div>
+                        <div class="items-per-page">
+                            <span>Itens por página:</span>
+                            <select id="itemsPerPageDashboard1">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50" selected>50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                        <span class="table-badge" id="resumoCountDashboard1">0 órgãos</span>
                     </div>
                 </div>
 
@@ -1097,25 +1107,13 @@
                 <div class="table-container">
                     <div class="table-header">
                         <h3 class="table-title">Visão Geral - Total de Servidores por Órgão</h3>
-                        <div class="d-flex align-items-center gap-3 ms-auto">
-                            <div class="items-per-page">
-                                <span>Itens por página:</span>
-                                <select id="itemsPerPageDashboard1">
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50" selected>50</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </div>
-                            <span class="table-badge" id="resumoCountDashboard1">0 registros</span>
-                        </div>
                     </div>
                     <div class="table-fixed-header-container">
                         <table class="table table-hover" id="visaoGeralTable">
                             <thead>
                                 <tr>
                                     <th data-sort="orgao_nome" data-order="asc" onclick="sortTable('visaoGeral', 'orgao_nome')">
-                                        Órgão (Nome Completo) <span class="sort-icon">▼</span>
+                                        Órgão <span class="sort-icon">▼</span>
                                     </th>
                                     <th data-sort="orgao_sigla" data-order="asc" onclick="sortTable('visaoGeral', 'orgao_sigla')">
                                         Sigla <span class="sort-icon">▼</span>
@@ -1187,8 +1185,8 @@
                     <div class="row">
                         <div class="col-md-4 col-12">
                             <div class="mb-3">
-                                <label for="orgaoDashboard2" class="form-label filter-label">Órgão (Nome Completo)</label>
-                                <input type="text" class="form-control" list="orgaosListDashboard2" id="orgaoDashboard2" placeholder="Digite o nome completo do órgão...">
+                                <label for="orgaoDashboard2" class="form-label filter-label">Órgão</label>
+                                <input type="text" class="form-control" list="orgaosListDashboard2" id="orgaoDashboard2" placeholder="Digite o nome do órgão...">
                                 <datalist id="orgaosListDashboard2">
                                     <option value="all">Todos os Órgãos</option>
                                 </datalist>
@@ -1268,7 +1266,7 @@
                                 <tr>
                                     <th data-sort="nome" data-order="asc" onclick="sortTable('empregados', 'nome')">Nome <span class="sort-icon">▼</span></th>
                                     <th data-sort="matricula" data-order="asc" onclick="sortTable('empregados', 'matricula')">Matrícula (MASP) <span class="sort-icon">▼</span></th>
-                                    <th data-sort="orgao" data-order="asc" onclick="sortTable('empregados', 'orgao')">Órgão (Nome Completo) <span class="sort-icon">▼</span></th>
+                                    <th data-sort="orgao" data-order="asc" onclick="sortTable('empregados', 'orgao')">Órgão <span class="sort-icon">▼</span></th>
                                     <th data-sort="cargo" data-order="asc" onclick="sortTable('empregados', 'cargo')">Cargo <span class="sort-icon">▼</span></th>
                                     <th data-sort="empresa" data-order="asc" onclick="sortTable('empregados', 'empresa')">Empresa <span class="sort-icon">▼</span></th>
                                     <th data-sort="cnpj_empresa" data-order="asc" onclick="sortTable('empregados', 'cnpj_empresa')">CNPJ Empresa <span class="sort-icon">▼</span></th>
@@ -1522,7 +1520,8 @@
             dark: '#132837',
             secondaryBlue: '#3F704D',
             secondaryBrown: '#8B7355',
-            secondaryTeal: '#20B2AA'
+            secondaryTeal: '#20B2AA',
+            hoverBlue: '#006a82'
         };
 
         // URLs dos CSVs no GitHub - CORRETAS
@@ -1551,7 +1550,7 @@
             '10': 'Outubro', '11': 'Novembro', '12': 'Dezembro'
         };
 
-        // Mapeamento de siglas para nomes completos de órgãos
+        // Mapeamento de siglas para nomes completos de órgãos (ATUALIZADO)
         const orgaosExtenso = {
             'AGE': 'Assembleia Geral do Estado',
             'ARMVA': 'Administração Regional do Médio Vale do Aço',
@@ -1590,7 +1589,7 @@
             'LEMG': 'Loteria Mineira',
             'OGE': 'Ouvidoria-Geral do Estado',
             'PCMG': 'Polícia Civil',
-            'PRODEMGE': 'Empresa de Tecnologia da Informação do Estado de Minas Gerais S.A.',
+            'PRODEMGE': 'Companhia de Tecnologia da Informação do Estado de Minas Gerais',
             'SCC': 'Secretaria de Estado da Casa Civil',
             'SEAPA': 'Secretaria de Estado de Agricultura, Pecuária e Abastecimento',
             'SEC': 'Secretaria de Estado de Cultura',
@@ -1611,7 +1610,15 @@
             'TV MINAS': 'Empresa Mineira de Comunicação',
             'UEMG': 'Universidade do Estado de Minas Gerais',
             'UNIMONTES': 'Universidade Estadual de Montes Claros',
-            'UTRAMIG': 'Fundação de Educação para o Trabalho de Minas Gerais'
+            'UTRAMIG': 'Fundação de Educação para o Trabalho de Minas Gerais',
+            'AG.METROP.BH': 'Agência de Desenvolvimento da Região Metropolitana de Belo Horizonte',
+            'PRODEMG': 'Companhia de Tecnologia da Informação do Estado de Minas Gerais'
+        };
+
+        // Mapeamento de siglas (ATUALIZADO)
+        const orgaosSiglas = {
+            'AG.METROP.BH': 'ARMBH',
+            'PRODEMG': 'PRODEMGE'
         };
 
         // ==================== FUNÇÃO PARA ATUALIZAR ALTURA DO IFRAME ====================
@@ -1787,7 +1794,7 @@
                             // Normalizar nomes de colunas
                             const matricula = row.matricula || row['MAT.'] || row['MAT'] || '';
                             const nome = row.nome || row['NOME'] || '';
-                            const orgao = row.orgao || row['ÓRGÃO'] || '';
+                            let orgao = row.orgao || row['ÓRGÃO'] || '';
                             const cargo = row.cargo || row['CARGO'] || '';
                             let empresa = row.empresa || row['EMPRESA'] || '';
                             const cnpj_empresa = row.cnpj_empresa || row['CNPJ EMPRESA'] || '';
@@ -1796,6 +1803,11 @@
                             // CORREÇÃO DA EMPRESA "MINAS GERAIS ADMINISTRA  O E SERVI OS S.A"
                             if (empresa.includes('MINAS GERAIS ADMINISTRA')) {
                                 empresa = 'MINAS GERAIS ADMINISTRACAO E SERVICOS S.A';
+                            }
+
+                            // Atualizar siglas dos órgãos
+                            if (orgaoSiglas[orgao]) {
+                                orgao = orgaoSiglas[orgao];
                             }
 
                             // === LÓGICA SIMPLIFICADA PARA FORMATO ISO (2025-09-01) ===
@@ -1997,18 +2009,28 @@
         function updateDataAtualizacao() {
             const now = new Date();
             const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR').substring(0, 5);
-            document.getElementById('data-atualizacao-header').innerHTML = `<i class="fas fa-sync-alt"></i> <span>Última atualização: ${dataFormatada}</span>`;
+            document.getElementById('data-atualizacao-body').innerHTML = `Última atualização: ${dataFormatada}`;
         }
 
-        // Função para converter sigla em nome completo do órgão
+        // Função para converter sigla em nome completo do órgão (ATUALIZADA)
         function getOrgaoExtenso(orgaoSigla) {
             if (!orgaoSigla) return '';
+            
+            // Primeiro verificar se temos uma sigla atualizada
+            if (orgaoSiglas[orgaoSigla]) {
+                orgaoSigla = orgaoSiglas[orgaoSigla];
+            }
             
             // Verificar se é uma sigla conhecida
             for (const [sigla, nome] of Object.entries(orgaosExtenso)) {
                 if (orgaoSigla.toUpperCase().includes(sigla)) {
                     return nome;
                 }
+            }
+            
+            // Remover "1100 - " do início se existir
+            if (orgaoSigla.startsWith('1100 - ')) {
+                orgaoSigla = orgaoSigla.substring(7);
             }
             
             // Se não encontrar, retorna o próprio nome
@@ -2124,6 +2146,14 @@
                 filteredData
                     .map(e => getOrgaoExtenso(e.orgao))
                     .filter(Boolean)
+                    .map(nome => {
+                        // Remover "1100 - " do início se existir
+                        if (nome.startsWith('1100 - ')) {
+                            return nome.substring(7);
+                        }
+                        return nome;
+                    })
+                    .filter(nome => nome !== '1100 - OUVIDORIA GERAL DO ESTADO')
             )].sort();
             
             // Dashboard 1 - datalist de órgãos (NOMES COMPLETOS)
@@ -2131,7 +2161,7 @@
             if (orgaoDatalist1) {
                 orgaoDatalist1.innerHTML = '<option value="all">Todos os Órgãos</option>';
                 orgaosNomesUnicos.forEach(orgaoNome => {
-                    if (orgaoNome) {
+                    if (orgaoNome && orgaoNome !== '1100 - OUVIDORIA GERAL DO ESTADO') {
                         const option = document.createElement('option');
                         option.value = orgaoNome;
                         orgaoDatalist1.appendChild(option);
@@ -2144,7 +2174,7 @@
             if (orgaoDatalist2) {
                 orgaoDatalist2.innerHTML = '<option value="all">Todos os Órgãos</option>';
                 orgaosNomesUnicos.forEach(orgaoNome => {
-                    if (orgaoNome) {
+                    if (orgaoNome && orgaoNome !== '1100 - OUVIDORIA GERAL DO ESTADO') {
                         const option = document.createElement('option');
                         option.value = orgaoNome;
                         orgaoDatalist2.appendChild(option);
@@ -2542,7 +2572,7 @@
             if (filteredData.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">Nenhum dado encontrado para o período atual.</td></tr>';
                 tfoot.innerHTML = '';
-                if (countElement) countElement.textContent = '0 registros';
+                if (countElement) countElement.textContent = '0 órgãos';
                 if (paginationInfo) paginationInfo.textContent = 'Mostrando 0-0 de 0 registros';
                 updatePaginationDashboard1(1, 1);
                 return;
@@ -2725,7 +2755,7 @@
             
             updateOrgaoChart();
             updateCargoChart();
-            updateEmpresaChart();
+            // Removido gráfico de empresas
         }
 
         function updateOrgaoChart() {
@@ -2860,74 +2890,6 @@
                     plugins: {
                         legend: {
                             display: false
-                        }
-                    }
-                }
-            });
-        }
-
-        function updateEmpresaChart() {
-            const ctx = document.getElementById('chartEmpresa')?.getContext('2d');
-            if (!ctx) return;
-            
-            // Agrupar por empresa e pegar top 8
-            const grupos = {};
-            filteredData.forEach(empregado => {
-                if (!grupos[empregado.empresa]) {
-                    grupos[empregado.empresa] = 0;
-                }
-                grupos[empregado.empresa]++;
-            });
-            
-            const empresasArray = Object.entries(grupos)
-                .map(([empresa, count]) => ({ empresa, count }))
-                .sort((a, b) => b.count - a.count)
-                .slice(0, 8);
-            
-            if (charts.empresa) {
-                charts.empresa.destroy();
-            }
-            
-            charts.empresa = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: empresasArray.map(item => {
-                        return item.empresa.length > 20 ? item.empresa.substring(0, 20) + '...' : item.empresa;
-                    }),
-                    datasets: [{
-                        data: empresasArray.map(item => item.count),
-                        backgroundColor: [
-                            '#29435A', '#B93C42', '#DB233F', '#3F704D',
-                            '#8B7355', '#20B2AA', '#4ECDC4', '#FF6B6B'
-                        ],
-                        borderWidth: 2,
-                        borderColor: '#fff'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 15,
-                                usePointStyle: true,
-                                font: {
-                                    size: 10
-                                }
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const value = context.raw || 0;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const percentage = Math.round((value / total) * 100);
-                                    return `${label}: ${value} empregados (${percentage}%)`;
-                                }
-                            }
                         }
                     }
                 }

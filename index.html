@@ -8,6 +8,7 @@
     <!-- ==================== ESTILOS E BIBLIOTECAS ==================== -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
@@ -436,9 +437,9 @@
             transform: translateY(-1px);
         }
         
-        /* ==================== BOTÕES ==================== */
+        /* ==================== BOTÕES  ==================== */
         .btn-primary-custom {
-            background: linear-gradient(to right, var(--primary-dark), var(--primary-darker));
+            background: linear-gradient(to right, var(--accent-red), var(--accent-bright));
             border: none;
             padding: 10px 20px;
             font-weight: 600;
@@ -493,7 +494,8 @@
             color: white;
             transform: translateY(-1px);
         }
-        
+
+
         /* ==================== MENU DE NAVEGAÇÃO ==================== */
         .nav-tabs-container {
             background: white;
@@ -501,7 +503,7 @@
             padding: 12px;
             margin-bottom: 20px;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-            margin-top: 10px; /* Espaço antes do menu principal */
+            margin-top: 10px; 
         }
         
         .nav-tabs {
@@ -520,6 +522,8 @@
             transition: all 0.3s ease;
             font-size: 13px;
             white-space: nowrap;
+	    display: flex;
+            align-items: center;
         }
         
         .nav-tabs .nav-link:hover {
@@ -531,8 +535,19 @@
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
             color: white;
         }
+
+	.nav-tabs .nav-link .material-icons {
+            font-size: 16px;
+            margin-right: 8px;
+            vertical-align: middle;
+            line-height: 1;
+        }
         
-        /* ==================== AÇÕES ==================== */
+        .nav-tabs .nav-link.active .material-icons {
+            color: white;
+        }
+        
+        /* ==================== AÇÕES - CORREÇÃO DO ALINHAMENTO ==================== */
         .actions-container {
             background: white;
             border-radius: 10px;
@@ -553,6 +568,14 @@
             background: white;
             padding: 8px 12px;
             border-radius: 6px;
+        }
+        
+        /* Container para alinhar itens à direita */
+        .right-aligned-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: auto;
         }
         
         /* ==================== LOADING OVERLAY ==================== */
@@ -635,6 +658,19 @@
             margin: -4px -8px;
             text-transform: none;
             font-weight: 600;
+        }
+        
+        /* CORREÇÃO: Link de órgão na Consulta Individual NÃO deve trocar de cor ao passar mouse */
+        #empregadosTable .orgao-link {
+            color: var(--primary-darker) !important;
+            background-color: transparent !important;
+            cursor: default;
+        }
+        
+        #empregadosTable .orgao-link:hover {
+            color: var(--primary-darker) !important;
+            background-color: transparent !important;
+            transform: none;
         }
         
         /* ==================== PAGINAÇÃO ==================== */
@@ -888,6 +924,12 @@
                 justify-content: flex-start;
             }
             
+            .right-aligned-container {
+                width: 100%;
+                justify-content: flex-start;
+                margin-left: 0;
+            }
+            
             .nav-tabs .nav-link {
                 padding: 8px 12px;
                 font-size: 12px;
@@ -979,17 +1021,17 @@
             <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="dashboard1-tab" data-bs-toggle="tab" data-bs-target="#dashboard1" type="button" role="tab">
-                        <i class="fas fa-bar-chart me-2"></i>Visão Geral
+                        <i class="material-icons me-2">bar_chart</i>Visão Geral
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="dashboard2-tab" data-bs-toggle="tab" data-bs-target="#dashboard2" type="button" role="tab">
-                        <i class="fas fa-user me-2"></i>Consulta Individual
+                        <i class="material-icons me-2">perm_identity</i>Consulta Individual
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="dashboard3-tab" data-bs-toggle="tab" data-bs-target="#dashboard3" type="button" role="tab">
-                        <i class="fas fa-download me-2"></i>Downloads
+                        <i class="material-icons me-2">downloading</i>Downloads
                     </button>
                 </li>
             </ul>
@@ -1079,29 +1121,28 @@
                     </div>
                 </div>
 
-                <!-- Ações Dashboard 1 com informações -->
+                <!-- Ações Dashboard 1 com informações - ALINHAMENTO CORRIGIDO -->
                 <div class="actions-container mb-4">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="export-buttons">
-                            <button class="btn-export" id="exportCSVDashboard1">
-                                <i class="fas fa-file-csv me-2"></i> Exportar CSV
-                            </button>
-                            <button class="btn-export" id="printDashboard1">
-                                <i class="fas fa-print me-2"></i> Imprimir
-                            </button>
+                    <div class="export-buttons">
+                        <button class="btn-export" id="exportCSVDashboard1">
+                            <i class="fas fa-file-csv me-2"></i> Exportar CSV
+                        </button>
+                        <button class="btn-export" id="printDashboard1">
+                            <i class="fas fa-print me-2"></i> Imprimir
+                        </button>
+                    </div>
+                    
+                    <div class="right-aligned-container">
+                        <div class="items-per-page">
+                            <span>Itens por página:</span>
+                            <select id="itemsPerPageDashboard1">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50" selected>50</option>
+                                <option value="100">100</option>
+                            </select>
                         </div>
-                        <div class="d-flex align-items-center gap-3 ms-auto">
-                            <div class="items-per-page">
-                                <span>Itens por página:</span>
-                                <select id="itemsPerPageDashboard1">
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50" selected>50</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </div>
-                            <span class="table-badge" id="resumoCountDashboard1">0 órgãos</span>
-                        </div>
+                        <span class="table-badge" id="resumoCountDashboard1">0 órgãos</span>
                     </div>
                 </div>
 
@@ -1175,7 +1216,7 @@
                         </div>
                         <div class="col-md-3 col-6">
                             <div class="mb-3">
-                                <label for="matriculaDashboard2" class="form-label filter-label">Matrícula (MASP)</label>
+                                <label for="matriculaDashboard2" class="form-label filter-label">Matrícula</label>
                                 <input type="text" class="form-control" id="matriculaDashboard2" placeholder="Digite a matrícula...">
                             </div>
                         </div>
@@ -1237,7 +1278,7 @@
                             </button>
                         </div>
                         
-                        <div class="d-flex align-items-center gap-3 ms-auto">
+                        <div class="right-aligned-container">
                             <div class="search-box-container">
                                 <label for="searchEmpregados">Buscar registros:</label>
                                 <input type="text" id="searchEmpregados" placeholder="Buscar por nome, cargo, empresa ou órgão...">
@@ -1265,7 +1306,7 @@
                             <thead>
                                 <tr>
                                     <th data-sort="nome" data-order="asc" onclick="sortTable('empregados', 'nome')">Nome <span class="sort-icon">▼</span></th>
-                                    <th data-sort="matricula" data-order="asc" onclick="sortTable('empregados', 'matricula')">Matrícula (MASP) <span class="sort-icon">▼</span></th>
+                                    <th data-sort="matricula" data-order="asc" onclick="sortTable('empregados', 'matricula')">Matrícula <span class="sort-icon">▼</span></th>
                                     <th data-sort="orgao" data-order="asc" onclick="sortTable('empregados', 'orgao')">Órgão <span class="sort-icon">▼</span></th>
                                     <th data-sort="cargo" data-order="asc" onclick="sortTable('empregados', 'cargo')">Cargo <span class="sort-icon">▼</span></th>
                                     <th data-sort="empresa" data-order="asc" onclick="sortTable('empregados', 'empresa')">Empresa <span class="sort-icon">▼</span></th>
@@ -1436,7 +1477,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="historicModalLabel">
-                        <i class="fas fa-history me-2"></i>Histórico do Empregado
+                        <i class="fas fa-history me-2"></i>Empregado
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -1611,7 +1652,7 @@
             'UEMG': 'Universidade do Estado de Minas Gerais',
             'UNIMONTES': 'Universidade Estadual de Montes Claros',
             'UTRAMIG': 'Fundação de Educação para o Trabalho de Minas Gerais',
-            'AG.METROP.BH': 'Agência de Desenvolvimento da Região Metropolitana de Belo Horizonte',
+            'ARMBH': 'Agência de Desenvolvimento da Região Metropolitana de Belo Horizonte',
             'PRODEMG': 'Companhia de Tecnologia da Informação do Estado de Minas Gerais'
         };
 
@@ -2147,13 +2188,17 @@
                     .map(e => getOrgaoExtenso(e.orgao))
                     .filter(Boolean)
                     .map(nome => {
-                        // Remover "1100 - " do início se existir
+                        // Remover "1100 - " do início se existir e filtrar "1100 - OUVIDORIA GERAL DO ESTADO"
                         if (nome.startsWith('1100 - ')) {
-                            return nome.substring(7);
+                            nome = nome.substring(7);
+                        }
+                        // Filtrar especificamente "OUVIDORIA GERAL DO ESTADO"
+                        if (nome === 'OUVIDORIA GERAL DO ESTADO') {
+                            return null;
                         }
                         return nome;
                     })
-                    .filter(nome => nome !== '1100 - OUVIDORIA GERAL DO ESTADO')
+                    .filter(nome => nome !== null && nome !== '')
             )].sort();
             
             // Dashboard 1 - datalist de órgãos (NOMES COMPLETOS)
@@ -2161,7 +2206,7 @@
             if (orgaoDatalist1) {
                 orgaoDatalist1.innerHTML = '<option value="all">Todos os Órgãos</option>';
                 orgaosNomesUnicos.forEach(orgaoNome => {
-                    if (orgaoNome && orgaoNome !== '1100 - OUVIDORIA GERAL DO ESTADO') {
+                    if (orgaoNome) {
                         const option = document.createElement('option');
                         option.value = orgaoNome;
                         orgaoDatalist1.appendChild(option);
@@ -2174,7 +2219,7 @@
             if (orgaoDatalist2) {
                 orgaoDatalist2.innerHTML = '<option value="all">Todos os Órgãos</option>';
                 orgaosNomesUnicos.forEach(orgaoNome => {
-                    if (orgaoNome && orgaoNome !== '1100 - OUVIDORIA GERAL DO ESTADO') {
+                    if (orgaoNome) {
                         const option = document.createElement('option');
                         option.value = orgaoNome;
                         orgaoDatalist2.appendChild(option);
@@ -2755,7 +2800,6 @@
             
             updateOrgaoChart();
             updateCargoChart();
-            // Removido gráfico de empresas
         }
 
         function updateOrgaoChart() {
@@ -2974,9 +3018,9 @@
                     <td><strong style="color: var(--primary-darker); font-weight: 600; font-size: 13px;">${empregado.nome}</strong></td>
                     <td>${empregado.matricula}</td>
                     <td>
-                        <a href="#" onclick="filtrarPorOrgao('${empregado.orgao}')" class="orgao-link" title="Clique para filtrar por este órgão">
+                        <span class="orgao-link">
                             ${getOrgaoExtenso(empregado.orgao)}
-                        </a>
+                        </span>
                     </td>
                     <td>${empregado.cargo}</td>
                     <td>${empregado.empresa}</td>
@@ -3177,7 +3221,7 @@
                             <div class="info-item">
                                 <span class="info-label">Período</span>
                                 <span class="info-value">${historico.length > 0 ? 
-                                    `${historico[historico.length-1].mes_referencia} a ${historico[0].mes_referencia}` : 
+                                    `${formatarDataBR(historico[historico.length-1].mes_referencia)} a ${formatarDataBR(historico[0].mes_referencia)}` : 
                                     'N/A'}</span>
                             </div>
                         </div>
@@ -3187,13 +3231,13 @@
                     
                     // Atualizar título do modal
                     document.getElementById('historicModalLabel').innerHTML = `
-                        <i class="fas fa-history me-2"></i>Histórico de ${empregado.nome}
+                        <i class="fas fa-history me-2"></i>${empregado.nome}
                     `;
                     
                     // Tabela de histórico
                     const historicHTML = historico.map(registro => `
                         <tr>
-                            <td>${registro.mes_referencia}</td>
+                            <td>${formatarDataBR(registro.mes_referencia)}</td>
                             <td>${getOrgaoExtenso(registro.orgao)}</td>
                             <td>${registro.cargo}</td>
                             <td>${registro.empresa}</td>
@@ -3221,6 +3265,23 @@
                 showLoading(false);
             }
         };
+
+        // Função para formatar data de aaaa-mm-dd para dd-mm-aaaa
+        function formatarDataBR(dataString) {
+            if (!dataString) return '';
+            
+            // Verificar se está no formato aaaa-mm-dd
+            const regex = /^(\d{4})-(\d{2})-(\d{2})$/;
+            const match = dataString.match(regex);
+            
+            if (match) {
+                const [, ano, mes, dia] = match;
+                return `${dia}-${mes}-${ano}`;
+            }
+            
+            // Se não estiver no formato esperado, retorna o original
+            return dataString;
+        }
 
         // ==================== DASHBOARD 3: DOWNLOADS ====================
         function updateDashboard3() {

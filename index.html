@@ -195,19 +195,19 @@
         .chart-container {
             background: white;
             border-radius: 10px;
-            padding: 15px;
+            padding: 20px;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
             margin-bottom: 20px;
             height: 100%;
-            min-height: 280px;
+            min-height: 320px;
         }
         
         .chart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
             border-bottom: 2px solid var(--background-light);
         }
         
@@ -220,8 +220,83 @@
         
         .chart-wrapper {
             position: relative;
-            height: 220px;
+            height: 260px;
             width: 100%;
+        }
+        
+        /* ==================== LAYOUT ESPECÍFICO PARA GRÁFICO DE PIZZA ==================== */
+        .chart-container.pie-chart .chart-wrapper {
+            display: flex;
+            height: 240px;
+            gap: 20px;
+        }
+        
+        .chart-container.pie-chart .chart-canvas-container {
+            flex: 1;
+            position: relative;
+            min-height: 220px;
+        }
+        
+        .chart-container.pie-chart .chart-legend-container {
+            flex: 0 0 45%;
+            overflow-y: auto;
+            max-height: 240px;
+            padding-right: 10px;
+            border-left: 1px solid var(--background-light);
+            padding-left: 20px;
+        }
+        
+        .chart-container.pie-chart .chart-legend {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 11px;
+        }
+        
+        .chart-container.pie-chart .chart-legend li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+            background-color: rgba(41, 67, 90, 0.03);
+        }
+        
+        .chart-container.pie-chart .chart-legend li:hover {
+            background-color: rgba(41, 67, 90, 0.08);
+            transform: translateX(2px);
+        }
+        
+        .chart-container.pie-chart .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .chart-container.pie-chart .legend-text {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 12px;
+        }
+        
+        .chart-container.pie-chart .legend-value {
+            margin-left: 8px;
+            font-weight: 700;
+            color: var(--accent-red);
+            font-size: 11px;
+            flex-shrink: 0;
+            background-color: rgba(185, 60, 66, 0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
         }
         
         /* ==================== TABELAS COM BORDAS ==================== */
@@ -495,20 +570,20 @@
             transform: translateY(-1px);
         }
 
-	.btn-primary-custom .material-icons,
-	.btn-secondary-custom .material-icons {
-    	    font-size: 16px;
-    	    vertical-align: middle;
-    	    margin-right: 8px;
-    	    line-height: 1;
-	}
+        .btn-primary-custom .material-icons,
+        .btn-secondary-custom .material-icons {
+            font-size: 16px;
+            vertical-align: middle;
+            margin-right: 8px;
+            line-height: 1;
+        }
 
-	.btn-primary-custom,
-	.btn-secondary-custom {
-    	    display: inline-flex;
-    	    align-items: center;
-    	    justify-content: center;
-	}
+        .btn-primary-custom,
+        .btn-secondary-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
 
 
         /* ==================== MENU DE NAVEGAÇÃO ==================== */
@@ -537,7 +612,7 @@
             transition: all 0.3s ease;
             font-size: 13px;
             white-space: nowrap;
-	    display: flex;
+            display: flex;
             align-items: center;
         }
         
@@ -551,7 +626,7 @@
             color: white;
         }
 
-	.nav-tabs .nav-link .material-icons {
+        .nav-tabs .nav-link .material-icons {
             font-size: 16px;
             margin-right: 8px;
             vertical-align: middle;
@@ -954,6 +1029,27 @@
                 height: 200px;
             }
             
+            .chart-container.pie-chart .chart-wrapper {
+                flex-direction: column;
+                height: auto;
+                gap: 15px;
+            }
+            
+            .chart-container.pie-chart .chart-canvas-container {
+                height: 220px;
+                min-height: 220px;
+            }
+            
+            .chart-container.pie-chart .chart-legend-container {
+                flex: none;
+                width: 100%;
+                max-height: 180px;
+                border-left: none;
+                border-top: 1px solid var(--background-light);
+                padding-left: 0;
+                padding-top: 15px;
+            }
+            
             .table-responsive {
                 font-size: 12px;
             }
@@ -1005,11 +1101,16 @@
             }
             
             .chart-container {
-                min-height: 240px;
+                min-height: 280px;
             }
             
             .chart-wrapper {
                 height: 180px;
+            }
+            
+            .chart-container.pie-chart .chart-canvas-container {
+                height: 180px;
+                min-height: 180px;
             }
             
             .actions-column {
@@ -1023,6 +1124,14 @@
             
             .btn-action span {
                 display: none;
+            }
+            
+            .chart-container.pie-chart .chart-legend li {
+                padding: 4px 8px;
+            }
+            
+            .chart-container.pie-chart .legend-text {
+                font-size: 11px;
             }
         }
     </style>
@@ -1115,12 +1224,19 @@
                 <!-- Gráficos Dashboard 1 - APENAS 2 GRÁFICOS -->
                 <div class="row mb-4">
                     <div class="col-md-6 col-12">
-                        <div class="chart-container">
+                        <div class="chart-container pie-chart">
                             <div class="chart-header">
                                 <h4 class="chart-title">Empregados por Órgão</h4>
                             </div>
                             <div class="chart-wrapper">
-                                <canvas id="chartOrgao"></canvas>
+                                <div class="chart-canvas-container">
+                                    <canvas id="chartOrgao"></canvas>
+                                </div>
+                                <div class="chart-legend-container">
+                                    <ul class="chart-legend" id="chartOrgaoLegend">
+                                        <!-- Legenda será carregada dinamicamente -->
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2819,7 +2935,8 @@
 
         function updateOrgaoChart() {
             const ctx = document.getElementById('chartOrgao')?.getContext('2d');
-            if (!ctx) return;
+            const legendContainer = document.getElementById('chartOrgaoLegend');
+            if (!ctx || !legendContainer) return;
             
             // Agrupar por órgão e pegar top 8
             const grupos = {};
@@ -2842,6 +2959,38 @@
                 '#4ECDC4', '#FF6B6B'
             ];
             
+            // Calcular total para porcentagens
+            const total = orgaosArray.reduce((sum, item) => sum + item.count, 0);
+            
+            // Criar legenda personalizada
+            let legendHTML = '';
+            orgaosArray.forEach((item, index) => {
+                const orgaoNome = getOrgaoExtenso(item.orgao);
+                const percentage = total > 0 ? Math.round((item.count / total) * 100) : 0;
+                
+                legendHTML += `
+                    <li>
+                        <span class="legend-color" style="background-color: ${pieColors[index % pieColors.length]};"></span>
+                        <span class="legend-text" title="${orgaoNome}">
+                            ${orgaoNome.length > 25 ? orgaoNome.substring(0, 25) + '...' : orgaoNome}
+                        </span>
+                        <span class="legend-value">${percentage}%</span>
+                    </li>
+                `;
+            });
+            
+            // Adicionar linha do total se houver mais de um item
+            if (orgaosArray.length > 0) {
+                legendHTML += `
+                    <li style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(41, 67, 90, 0.1);">
+                        <span class="legend-text"><strong>Total</strong></span>
+                        <span class="legend-value"><strong>${total.toLocaleString('pt-BR')}</strong></span>
+                    </li>
+                `;
+            }
+            
+            legendContainer.innerHTML = legendHTML;
+            
             if (charts.orgao) {
                 charts.orgao.destroy();
             }
@@ -2857,7 +3006,8 @@
                         data: orgaosArray.map(item => item.count),
                         backgroundColor: pieColors,
                         borderWidth: 2,
-                        borderColor: '#fff'
+                        borderColor: '#fff',
+                        hoverOffset: 10
                     }]
                 },
                 options: {
@@ -2865,25 +3015,20 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 15,
-                                usePointStyle: true,
-                                font: {
-                                    size: 10
-                                }
-                            }
+                            display: false // Desativar legenda padrão do Chart.js
                         },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
                                     const label = context.label || '';
                                     const value = context.raw || 0;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
                                     const percentage = Math.round((value / total) * 100);
                                     return `${label}: ${value} empregados (${percentage}%)`;
                                 }
-                            }
+                            },
+                            backgroundColor: 'rgba(41, 67, 90, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff'
                         }
                     }
                 }
@@ -2935,7 +3080,8 @@
                         data: cargosArray.map(item => item.count),
                         backgroundColor: barColors,
                         borderColor: barColors.map(color => color + '99'),
-                        borderWidth: 1
+                        borderWidth: 1,
+                        borderRadius: 4
                     }]
                 },
                 options: {
@@ -2948,6 +3094,9 @@
                                 font: {
                                     size: 10
                                 }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
                             }
                         },
                         x: {
@@ -2955,12 +3104,20 @@
                                 font: {
                                     size: 10
                                 }
+                            },
+                            grid: {
+                                display: false
                             }
                         }
                     },
                     plugins: {
                         legend: {
                             display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(41, 67, 90, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff'
                         }
                     }
                 }

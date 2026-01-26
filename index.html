@@ -299,6 +299,81 @@
             border-radius: 10px;
         }
         
+        /* ==================== LAYOUT ESPECÍFICO PARA GRÁFICO DE BARRAS ==================== */
+        .chart-container.bar-chart .chart-wrapper {
+            display: flex;
+            height: 240px;
+            gap: 20px;
+        }
+        
+        .chart-container.bar-chart .chart-canvas-container {
+            flex: 1;
+            position: relative;
+            min-height: 220px;
+        }
+        
+        .chart-container.bar-chart .chart-legend-container {
+            flex: 0 0 45%;
+            overflow-y: auto;
+            max-height: 240px;
+            padding-right: 10px;
+            border-left: 1px solid var(--background-light);
+            padding-left: 20px;
+        }
+        
+        .chart-container.bar-chart .chart-legend {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 11px;
+        }
+        
+        .chart-container.bar-chart .chart-legend li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+            background-color: rgba(41, 67, 90, 0.03);
+        }
+        
+        .chart-container.bar-chart .chart-legend li:hover {
+            background-color: rgba(41, 67, 90, 0.08);
+            transform: translateX(2px);
+        }
+        
+        .chart-container.bar-chart .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            margin-right: 10px;
+            flex-shrink: 0;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .chart-container.bar-chart .legend-text {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 12px;
+        }
+        
+        .chart-container.bar-chart .legend-value {
+            margin-left: 8px;
+            font-weight: 700;
+            color: var(--accent-red);
+            font-size: 11px;
+            flex-shrink: 0;
+            background-color: rgba(185, 60, 66, 0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        
         /* ==================== TABELAS COM BORDAS ==================== */
         .table-container {
             background: white;
@@ -1029,18 +1104,21 @@
                 height: 200px;
             }
             
-            .chart-container.pie-chart .chart-wrapper {
+            .chart-container.pie-chart .chart-wrapper,
+            .chart-container.bar-chart .chart-wrapper {
                 flex-direction: column;
                 height: auto;
                 gap: 15px;
             }
             
-            .chart-container.pie-chart .chart-canvas-container {
+            .chart-container.pie-chart .chart-canvas-container,
+            .chart-container.bar-chart .chart-canvas-container {
                 height: 220px;
                 min-height: 220px;
             }
             
-            .chart-container.pie-chart .chart-legend-container {
+            .chart-container.pie-chart .chart-legend-container,
+            .chart-container.bar-chart .chart-legend-container {
                 flex: none;
                 width: 100%;
                 max-height: 180px;
@@ -1108,7 +1186,8 @@
                 height: 180px;
             }
             
-            .chart-container.pie-chart .chart-canvas-container {
+            .chart-container.pie-chart .chart-canvas-container,
+            .chart-container.bar-chart .chart-canvas-container {
                 height: 180px;
                 min-height: 180px;
             }
@@ -1126,11 +1205,13 @@
                 display: none;
             }
             
-            .chart-container.pie-chart .chart-legend li {
+            .chart-container.pie-chart .chart-legend li,
+            .chart-container.bar-chart .chart-legend li {
                 padding: 4px 8px;
             }
             
-            .chart-container.pie-chart .legend-text {
+            .chart-container.pie-chart .legend-text,
+            .chart-container.bar-chart .legend-text {
                 font-size: 11px;
             }
         }
@@ -1241,13 +1322,19 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
-                        <div class="chart-container pie-chart">
+                        <div class="chart-container bar-chart">
                             <div class="chart-header">
                                 <h4 class="chart-title">Empregados por Cargo</h4>
                             </div>
                             <div class="chart-wrapper">
                                 <div class="chart-canvas-container">   
                                     <canvas id="chartCargo"></canvas>
+                                </div>
+                                <div class="chart-legend-container">
+                                    <ul class="chart-legend" id="chartCargoLegend">
+                                        <!-- Legenda será carregada dinamicamente -->
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2960,19 +3047,21 @@
                 '#4ECDC4', '#FF6B6B'
             ];          
        
-            // Criar legenda personalizada
+            // Calcular total para porcentagens
+            const total = orgaosArray.reduce((sum, item) => sum + item.count, 0);
+            
+            // Criar legenda personalizada - USANDO SIGLAS DOS ÓRGÃOS
             let legendHTML = '';
             orgaosArray.forEach((item, index) => {
-                const orgaoNome = getOrgaoExtenso(item.orgao);
                 const percentage = total > 0 ? Math.round((item.count / total) * 100) : 0;
                 
                 legendHTML += `
                     <li>
                         <span class="legend-color" style="background-color: ${pieColors[index % pieColors.length]};"></span>
-                        <span class="legend-text" title="${orgaoNome}">
-                            ${orgaoNome.length > 25 ? orgaoNome.substring(0, 25) + '...' : orgaoNome}
+                        <span class="legend-text" title="${item.orgao}">
+                            ${item.orgao}
                         </span>
-                        <span class="legend-value">${percentage}%</span>
+                        <span class="legend-value">${item.count}</span>
                     </li>
                 `;
             });          
@@ -2986,10 +3075,7 @@
             charts.orgao = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: orgaosArray.map(item => {
-                        const orgaoNome = getOrgaoExtenso(item.orgao);
-                        return orgaoNome.length > 15 ? orgaoNome.substring(0, 15) + '...' : orgaoNome;
-                    }),
+                    labels: orgaosArray.map(item => item.orgao),
                     datasets: [{
                         data: orgaosArray.map(item => item.count),
                         backgroundColor: pieColors,
@@ -3054,6 +3140,27 @@
                 '#FF6B6B'
             ];
             
+            // Calcular total para porcentagens
+            const total = cargosArray.reduce((sum, item) => sum + item.count, 0);
+            
+            // Criar legenda personalizada
+            let legendHTML = '';
+            cargosArray.forEach((item, index) => {
+                const percentage = total > 0 ? Math.round((item.count / total) * 100) : 0;
+                
+                legendHTML += `
+                    <li>
+                        <span class="legend-color" style="background-color: ${barColors[index % barColors.length]};"></span>
+                        <span class="legend-text" title="${item.cargo}">
+                            ${item.cargo.length > 25 ? item.cargo.substring(0, 25) + '...' : item.cargo}
+                        </span>
+                        <span class="legend-value">${item.count}</span>
+                    </li>
+                `;
+            });
+            
+            legendContainer.innerHTML = legendHTML;
+            
             if (charts.cargo) {
                 charts.cargo.destroy();
             }
@@ -3062,7 +3169,7 @@
                 type: 'bar',
                 data: {
                     labels: cargosArray.map(item => {
-                        return item.cargo.length > 20 ? item.cargo.substring(0, 20) + '...' : item.cargo;
+                        return item.cargo.length > 15 ? item.cargo.substring(0, 15) + '...' : item.cargo;
                     }),
                     datasets: [{
                         label: 'Quantidade de Empregados',
@@ -3104,6 +3211,14 @@
                             display: false
                         },
                         tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.raw || 0;
+                                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            },
                             backgroundColor: 'rgba(41, 67, 90, 0.9)',
                             titleColor: '#fff',
                             bodyColor: '#fff'

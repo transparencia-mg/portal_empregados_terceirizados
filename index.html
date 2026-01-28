@@ -662,100 +662,55 @@
 
 
         /* ==================== MENU DE NAVEGAÇÃO ==================== */
-        /* Container principal - CORRIGIDO */
-.nav-tabs-container {
-    background: white;
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-    margin-top: 10px;
-    overflow-x: auto; /* Adicionado para controlar overflow */
-    -webkit-overflow-scrolling: touch; /* Melhor rolagem no iOS */
-}
+        .nav-tabs-container {
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-top: 10px; 
+        }
+        
+        .nav-tabs {
+            border: none;
+            gap: 4px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            transition: all 0.3s ease;
+            font-size: 13px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            background-color: rgba(41, 67, 90, 0.05);
+            color: var(--accent-red);
+        }
+        
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
+            color: white;
+        }
 
-/* Nav tabs - CORRIGIDO */
-.nav-tabs {
-    border: none !important; /* !important para sobrescrever Bootstrap */
-    gap: 4px;
-    flex-wrap: nowrap; /* Mantém em uma linha */
-    min-width: max-content; /* Garante largura mínima baseada no conteúdo */
-    padding-bottom: 5px; /* Espaço para scrollbar */
-    margin-bottom: 0 !important;
-}
-
-/* Itens dos tabs - NOVO, necessário */
-.nav-tabs .nav-item {
-    flex-shrink: 0; /* Não permite que os tabs encolham */
-}
-
-/* Links dos tabs - CORRIGIDO */
-.nav-tabs .nav-link {
-    border: none !important;
-    border-radius: 6px !important;
-    padding: 10px 15px !important;
-    font-weight: 600;
-    color: #1a5276 !important; /* Fallback para var(--primary-dark) */
-    transition: all 0.3s ease;
-    font-size: 13px;
-    white-space: nowrap;
-    display: inline-flex !important; /* Mudado de flex para inline-flex */
-    align-items: center;
-    background: none !important;
-}
-
-.nav-tabs .nav-link:hover {
-    background-color: rgba(26, 82, 118, 0.05) !important;
-    color: #3498db !important; /* Fallback para var(--accent-blue) */
-}
-
-.nav-tabs .nav-link.active {
-    background: linear-gradient(135deg, #1a5276 0%, #154360 100%) !important;
-    color: white !important;
-    border: none !important;
-}
-
-/* Ícones - CORRIGIDO */
-.nav-tabs .nav-link .material-icons {
-    font-size: 16px !important;
-    margin-right: 8px !important;
-    vertical-align: middle;
-    line-height: 1;
-}
-
-.nav-tabs .nav-link.active .material-icons {
-    color: white !important;
-}
-
-/* Estilizar a scrollbar para ficar discreta */
-.nav-tabs-container::-webkit-scrollbar {
-    height: 4px;
-}
-
-.nav-tabs-container::-webkit-scrollbar-track {
-    background: #f8f9fa;
-    border-radius: 4px;
-}
-
-.nav-tabs-container::-webkit-scrollbar-thumb {
-    background: #dee2e6;
-    border-radius: 4px;
-}
-
-.nav-tabs-container::-webkit-scrollbar-thumb:hover {
-    background: #adb5bd;
-}
-
-/* Para Firefox */
-.nav-tabs-container {
-    scrollbar-width: thin;
-    scrollbar-color: #dee2e6 #f8f9fa;
-}
-
-/* Remover a borda inferior padrão do Bootstrap */
-.nav-tabs {
-    border-bottom: none !important;
-}
+        .nav-tabs .nav-link .material-icons {
+            font-size: 16px;
+            margin-right: 8px;
+            vertical-align: middle;
+            line-height: 1;
+        }
+        
+        .nav-tabs .nav-link.active .material-icons {
+            color: white;
+        }
         
         /* ==================== AÇÕES - CORREÇÃO DO ALINHAMENTO ==================== */
         .actions-container {

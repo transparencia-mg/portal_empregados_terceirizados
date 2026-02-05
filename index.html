@@ -2218,15 +2218,12 @@ canvas + ul,
             document.getElementById('limparFiltrosDashboard2').addEventListener('click', function() {
                 clearDashboard2Filters();
             });
-
+            
             // Exportação
             document.getElementById('exportCSVDashboard1').addEventListener('click', () => exportToCSV('dashboard1'));
             document.getElementById('printDashboard1').addEventListener('click', () => printDashboard('dashboard1'));
-            document.getElementById('compartilharLinkDashboard1').addEventListener('click', () => compartilharLink('dashboard1'));
-           
             document.getElementById('exportCSVDashboard2').addEventListener('click', () => exportToCSV('dashboard2'));
             document.getElementById('printDashboard2').addEventListener('click', () => printDashboard('dashboard2'));
-            document.getElementById('compartilharLinkDashboard2').addEventListener('click', () => compartilharLink('dashboard2'));
             
             // Download por ano na aba Downloads
             document.getElementById('downloadAnoCSV').addEventListener('click', downloadYearCSV);
@@ -3725,21 +3722,6 @@ function updateCargoChart() {
             window.print();
         }
 
-        function compartilharLink(source) {
-            const currentUrl = window.location.href;
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Acordos de Cooperação Técnica - Governo de Minas Gerais',
-                    text: 'Confira os dados de acordos de cooperação técnica do Governo de Minas Gerais',
-                    url: currentUrl
-                });
-            } else {
-                navigator.clipboard.writeText(currentUrl).then(() => {
-                    alert('Link copiado para a área de transferência!');
-                });
-            }
-        }
-        
         function exportResumoCSV() {
             if (filteredData.length === 0) return;
             

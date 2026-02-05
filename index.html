@@ -3725,35 +3725,20 @@ function updateCargoChart() {
             window.print();
         }
 
-function compartilharLink() {
-    const currentUrl = window.location.href;
-    
-    navigator.clipboard.writeText(currentUrl).then(() => {
-        alert('Link copiado para a área de transferência!');
-    }).catch(err => {
-        console.error('Erro ao copiar:', err);
-        // Fallback para navegadores antigos
-        copiarFallback(currentUrl);
-    });
-}
-
-function copiarFallback(texto) {
-    const textarea = document.createElement('textarea');
-    textarea.value = texto;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    document.body.appendChild(textarea);
-    textarea.select();
-    
-    try {
-        document.execCommand('copy');
-        alert('Link copiado para a área de transferência!');
-    } catch (err) {
-        alert('Não foi possível copiar o link. Tente selecionar e copiar manualmente: ' + texto);
-    }
-    
-    document.body.removeChild(textarea);
-}
+        function compartilharLink(source) {
+            const currentUrl = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Acordos de Cooperação Técnica - Governo de Minas Gerais',
+                    text: 'Confira os dados de acordos de cooperação técnica do Governo de Minas Gerais',
+                    url: currentUrl
+                });
+            } else {
+                navigator.clipboard.writeText(currentUrl).then(() => {
+                    alert('Link copiado para a área de transferência!');
+                });
+            }
+        }
         
         function exportResumoCSV() {
             if (filteredData.length === 0) return;

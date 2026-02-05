@@ -38,6 +38,50 @@
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
             padding-bottom: 15px;
+            overflow-y: visible !important;
+            overflow-x: hidden !important;
+            min-height: auto !important;
+            height: auto !important;
+            position: relative;
+        }
+
+        html {
+            overflow-y: visible !important;
+            height: auto !important;
+        }
+
+        .main-container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            position: relative;
+        }
+
+        .container.dashboard-spacing {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
+        }
+
+        .tab-content {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
+        }
+
+        .table-container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            position: relative;
+        }
+
+        .table-fixed-header-container {
+            max-height: 500px;
+            overflow-y: auto;
+            position: relative;
         }
         
         /* ==================== HEADER MINIMALISTA ==================== */
@@ -230,54 +274,66 @@
             height: 240px;
             gap: 20px;
         }
-        
+
         .chart-container.pie-chart .chart-canvas-container {
             flex: 1;
             position: relative;
             min-height: 220px;
         }
-        
+
         .chart-container.pie-chart .chart-legend-container {
             flex: 0 0 45%;
-            overflow-y: auto;
-            max-height: 240px;
+            overflow-y: visible;
+            max-height: 100%;
             padding-right: 10px;
             border-left: 1px solid var(--background-light);
             padding-left: 20px;
+            height: 240px;
+            display: flex;
+            flex-direction: column;
         }
-        
+
         .chart-container.pie-chart .chart-legend {
             list-style: none;
             margin: 0;
             padding: 0;
             font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            gap: 6px;
+            overflow-y: visible;
+            max-height: 100%;
+            flex: 1;
         }
-        
+
         .chart-container.pie-chart .chart-legend li {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
-            padding: 6px 10px;
+            margin-bottom: 0;
+            padding: 5px 10px;
             border-radius: 6px;
             transition: background-color 0.2s;
             background-color: rgba(41, 67, 90, 0.03);
+            min-height: 28px;
+            flex-shrink: 0;
         }
-        
+
         .chart-container.pie-chart .chart-legend li:hover {
             background-color: rgba(41, 67, 90, 0.08);
             transform: translateX(2px);
         }
-        
+
         .chart-container.pie-chart .legend-color {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            margin-right: 10px;
+            margin-right: 8px;
             flex-shrink: 0;
             border: 2px solid white;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        
+
         .chart-container.pie-chart .legend-text {
             flex: 1;
             white-space: nowrap;
@@ -285,74 +341,91 @@
             text-overflow: ellipsis;
             font-weight: 600;
             color: var(--primary-dark);
-            font-size: 12px;
+            font-size: 11px;
+            line-height: 1.2;
+            min-width: 0;
         }
-        
+
         .chart-container.pie-chart .legend-value {
-            margin-left: 8px;
+            margin-left: 6px;
             font-weight: 700;
             color: var(--accent-red);
-            font-size: 11px;
+            font-size: 10px;
             flex-shrink: 0;
             background-color: rgba(185, 60, 66, 0.1);
-            padding: 2px 6px;
-            border-radius: 10px;
+            padding: 1px 5px;
+            border-radius: 8px;
+            line-height: 1.2;
         }
-        
+
         /* ==================== LAYOUT ESPECÍFICO PARA GRÁFICO DE BARRAS ==================== */
         .chart-container.bar-chart .chart-wrapper {
             display: flex;
             height: 240px;
             gap: 20px;
         }
-        
+
         .chart-container.bar-chart .chart-canvas-container {
             flex: 1;
             position: relative;
             min-height: 220px;
+            padding-right: 10px;
         }
-        
+
         .chart-container.bar-chart .chart-legend-container {
             flex: 0 0 45%;
-            overflow-y: auto;
-            max-height: 240px;
+            overflow-y: visible;
+            max-height: 100%;
             padding-right: 10px;
             border-left: 1px solid var(--background-light);
             padding-left: 20px;
+            height: 240px;
+            display: flex;
+            flex-direction: column;
         }
-        
+
         .chart-container.bar-chart .chart-legend {
             list-style: none;
             margin: 0;
             padding: 0;
             font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            gap: 6px;
+            overflow-y: visible;
+            max-height: 100%;
+            flex: 1;
         }
-        
+
         .chart-container.bar-chart .chart-legend li {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
-            padding: 6px 10px;
+            margin-bottom: 0;
+            padding: 5px 10px;
             border-radius: 6px;
-            transition: background-color 0.2s;
+            transition: all 0.2s ease;
             background-color: rgba(41, 67, 90, 0.03);
+            min-height: 28px;
+            flex-shrink: 0;
+            cursor: pointer;
         }
-        
+
         .chart-container.bar-chart .chart-legend li:hover {
             background-color: rgba(41, 67, 90, 0.08);
             transform: translateX(2px);
         }
-        
+
         .chart-container.bar-chart .legend-color {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             border-radius: 3px;
-            margin-right: 10px;
+            margin-right: 8px;
             flex-shrink: 0;
             border: 2px solid white;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        
+
         .chart-container.bar-chart .legend-text {
             flex: 1;
             white-space: nowrap;
@@ -360,18 +433,119 @@
             text-overflow: ellipsis;
             font-weight: 600;
             color: var(--primary-dark);
-            font-size: 12px;
+            font-size: 11px;
+            line-height: 1.2;
+            min-width: 0;
         }
-        
+
         .chart-container.bar-chart .legend-value {
-            margin-left: 8px;
+            margin-left: 6px;
             font-weight: 700;
             color: var(--accent-red);
-            font-size: 11px;
+            font-size: 10px;
             flex-shrink: 0;
             background-color: rgba(185, 60, 66, 0.1);
-            padding: 2px 6px;
+            padding: 1px 5px;
+            border-radius: 8px;
+            line-height: 1.2;
+        }
+
+/* MATAR LEGENDA NATIVA DO CHART.JS NA MARRA */
+#chartCargo + div,
+canvas + ul,
+.chartjs-legend,
+.chartjs-render-monitor + div {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+}
+
+        /* ==================== MENU DE NAVEGAÇÃO ==================== */
+        .nav-tabs-container {
+            background: white;
             border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-top: 10px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-tabs {
+            border: none !important;
+            gap: 4px;
+            flex-wrap: nowrap;
+            min-width: max-content;
+            padding-bottom: 5px;
+            margin-bottom: 0 !important;
+        }
+
+        .nav-tabs .nav-item {
+            flex-shrink: 0;
+        }
+
+        .nav-tabs .nav-link {
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 10px 15px !important;
+            font-weight: 600;
+            color: var(--primary-dark) !important;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            white-space: nowrap;
+            display: inline-flex !important;
+            align-items: center;
+            background: none !important;
+        }
+
+        .nav-tabs .nav-link:hover {
+            background-color: rgba(41, 67, 90, 0.05) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%) !important;
+            color: white !important;
+            border: none !important;
+        }
+
+        .nav-tabs .nav-link .material-icons {
+            font-size: 16px !important;
+            margin-right: 8px !important;
+            vertical-align: middle;
+            line-height: 1;
+        }
+
+        .nav-tabs .nav-link.active .material-icons {
+            color: white !important;
+        }
+
+        .nav-tabs-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .nav-tabs-container::-webkit-scrollbar-track {
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .nav-tabs-container::-webkit-scrollbar-thumb {
+            background: #dee2e6;
+            border-radius: 4px;
+        }
+
+        .nav-tabs-container::-webkit-scrollbar-thumb:hover {
+            background: #adb5bd;
+        }
+
+        .nav-tabs-container {
+            scrollbar-width: thin;
+            scrollbar-color: #dee2e6 #f8f9fa;
+        }
+
+        .nav-tabs {
+            border-bottom: none !important;
         }
         
         /* ==================== TABELAS COM BORDAS ==================== */
@@ -410,7 +584,6 @@
             font-weight: 600;
         }
         
-        /* Container para tabela com cabeçalho fixo */
         .table-fixed-header-container {
             position: relative;
             max-height: 500px;
@@ -418,7 +591,6 @@
             padding: 0;
         }
         
-        /* Cabeçalho fixo para todas as tabelas */
         .table-fixed-header-container table thead {
             position: sticky;
             top: 0;
@@ -448,7 +620,6 @@
             border: 1px solid #dee2e6;
         }
         
-        /* Adicionar bordas verticais ao cabeçalho da tabela */
         .table thead th {
             background-color: var(--primary-dark) !important;
             color: white !important;
@@ -506,7 +677,6 @@
             content: "↓";
         }
         
-        /* Aplicar bordas verticais a TODAS as tabelas */
         .table-container table th, 
         .table-container table td {
             border-left: 1px solid #dee2e6;
@@ -524,7 +694,6 @@
             border-right: none;
         }
         
-        /* Borda inferior para linhas */
         .table-container table tbody tr {
             border-bottom: 1px solid #f1f1f1;
         }
@@ -547,13 +716,11 @@
             font-size: 13px;
         }
         
-        /* Coluna de quantidade centralizada */
         .table tbody td.quantidade {
             text-align: center;
             font-weight: 600;
         }
         
-        /* Coluna de ações na tabela */
         .actions-column {
             width: 100px;
             text-align: center;
@@ -660,58 +827,6 @@
             justify-content: center;
         }
 
-
-        /* ==================== MENU DE NAVEGAÇÃO ==================== */
-        .nav-tabs-container {
-            background: white;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-            margin-top: 10px; 
-        }
-        
-        .nav-tabs {
-            border: none;
-            gap: 4px;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-        }
-        
-        .nav-tabs .nav-link {
-            border: none;
-            border-radius: 6px;
-            padding: 10px 15px;
-            font-weight: 600;
-            color: var(--primary-dark);
-            transition: all 0.3s ease;
-            font-size: 13px;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-        }
-        
-        .nav-tabs .nav-link:hover {
-            background-color: rgba(41, 67, 90, 0.05);
-            color: var(--accent-red);
-        }
-        
-        .nav-tabs .nav-link.active {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
-            color: white;
-        }
-
-        .nav-tabs .nav-link .material-icons {
-            font-size: 16px;
-            margin-right: 8px;
-            vertical-align: middle;
-            line-height: 1;
-        }
-        
-        .nav-tabs .nav-link.active .material-icons {
-            color: white;
-        }
-        
         /* ==================== AÇÕES - CORREÇÃO DO ALINHAMENTO ==================== */
         .actions-container {
             background: white;
@@ -735,7 +850,6 @@
             border-radius: 6px;
         }
         
-        /* Container para alinhar itens à direita */
         .right-aligned-container {
             display: flex;
             align-items: center;
@@ -817,7 +931,6 @@
             transform: translateY(0);
         }
 
-        /* Para a tabela específica da visão geral - TEXT TRANSFORM REMOVIDO */
         #visaoGeralTable .orgao-link {
             padding: 4px 8px;
             margin: -4px -8px;
@@ -825,7 +938,6 @@
             font-weight: 600;
         }
         
-        /* CORREÇÃO: Link de órgão na Consulta Individual NÃO deve trocar de cor ao passar mouse */
         #empregadosTable .orgao-link {
             color: var(--primary-darker) !important;
             background-color: transparent !important;
@@ -875,7 +987,6 @@
             color: var(--primary-dark);
         }
         
-        /* Itens por página */
         .items-per-page {
             display: flex;
             align-items: center;
@@ -1044,15 +1155,34 @@
             vertical-align: middle;
         }
         
-        /* ==================== DATA ATUALIZAÇÃO MINIMALISTA ==================== */
+        /* ==================== DATA ATUALIZAÇÃO CENTRALIZADA ==================== */
         .data-atualizacao-container {
-            text-align: center;
-            margin: 10px 0 20px 0;
-            font-size: 12px;
-            color: var(--primary-darker);
-            opacity: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
         }
         
+        .data-atualizacao-box {
+            background: white;
+            border-radius: 8px;
+            padding: 8px 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .data-atualizacao-box i {
+            font-size: 14px;
+            color: var(--accent-red);
+        }
+
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
             .main-header {
@@ -1248,12 +1378,13 @@
             <!-- ==================== DASHBOARD 1: VISÃO GERAL ==================== -->
             <div class="tab-pane fade show active" id="dashboard1" role="tabpanel">
                 
-                <!-- Data de Atualização -->
                 <div class="data-atualizacao-container">
-                    <i class="fas fa-sync-alt me-2"></i>
-                    <span id="data-atualizacao-body">Última atualização: Carregando...</span>
+                    <div class="data-atualizacao-box">
+                        <i class="material-icons">update</i>
+                        Atualizado em: <span id="data-atualizacao-header">Carregando...</span>
+                    </div>
                 </div>
-                
+
                 <!-- Filtros Dashboard 1 -->
                 <div class="filter-container">
                     <div class="row">
@@ -1278,7 +1409,6 @@
                                 <label for="orgaoDashboard1" class="form-label filter-label">Órgão</label>
                                 <input type="text" class="form-control" list="orgaosListDashboard1" id="orgaoDashboard1" placeholder="Digite o nome do órgão...">
                                 <datalist id="orgaosListDashboard1">
-                                    <option value="all">Todos os Órgãos</option>
                                 </datalist>
                             </div>
                         </div>
@@ -1302,7 +1432,7 @@
                     <!-- Cards serão carregados aqui -->
                 </div>
 
-                <!-- Gráficos Dashboard 1 - APENAS 2 GRÁFICOS -->
+                <!-- Gráficos Dashboard 1 -->
                 <div class="row mb-4">
                     <div class="col-md-6 col-12">
                         <div class="chart-container pie-chart">
@@ -1340,7 +1470,7 @@
                     </div>
                 </div>
 
-                <!-- Ações Dashboard 1 com informações - ALINHAMENTO CORRIGIDO -->
+                <!-- Ações Dashboard 1 -->
                 <div class="actions-container mb-4">
                     <div class="export-buttons">
                         <button class="btn-export" id="exportCSVDashboard1">
@@ -1371,13 +1501,13 @@
                         <table class="table table-hover" id="visaoGeralTable">
                             <thead>
                                 <tr>
-                                    <th data-sort="orgao_nome" data-order="asc" onclick="sortTable('visaoGeral', 'orgao_nome')">
+                                    <th data-sort="orgao_nome" data-order="asc">
                                         Órgão <span class="sort-icon">▼</span>
                                     </th>
-                                    <th data-sort="orgao_sigla" data-order="asc" onclick="sortTable('visaoGeral', 'orgao_sigla')">
+                                    <th data-sort="orgao_sigla" data-order="asc">
                                         Sigla <span class="sort-icon">▼</span>
                                     </th>
-                                    <th data-sort="quantidade" data-order="desc" onclick="sortTable('visaoGeral', 'quantidade')">
+                                    <th data-sort="quantidade" data-order="desc">
                                         Quantidade de Empregados <span class="sort-icon">▼</span>
                                     </th>
                                 </tr>
@@ -1447,7 +1577,7 @@
                                 <label for="orgaoDashboard2" class="form-label filter-label">Órgão</label>
                                 <input type="text" class="form-control" list="orgaosListDashboard2" id="orgaoDashboard2" placeholder="Digite o nome do órgão...">
                                 <datalist id="orgaosListDashboard2">
-                                    <option value="all">Todos os Órgãos</option>
+                                    <!-- Opções serão carregadas dinamicamente -->
                                 </datalist>
                             </div>
                         </div>
@@ -1456,7 +1586,7 @@
                                 <label for="cargoDashboard2" class="form-label filter-label">Cargo</label>
                                 <input type="text" class="form-control" list="cargosListDashboard2" id="cargoDashboard2" placeholder="Digite ou selecione...">
                                 <datalist id="cargosListDashboard2">
-                                    <option value="all">Todos os Cargos</option>
+                                    <!-- Opções serão carregadas dinamicamente -->
                                 </datalist>
                             </div>
                         </div>
@@ -1465,7 +1595,7 @@
                                 <label for="empresaDashboard2" class="form-label filter-label">Empresa</label>
                                 <input type="text" class="form-control" list="empresasListDashboard2" id="empresaDashboard2" placeholder="Digite ou selecione...">
                                 <datalist id="empresasListDashboard2">
-                                    <option value="all">Todas as Empresas</option>
+                                    <!-- Opções serão carregadas dinamicamente -->
                                 </datalist>
                             </div>
                         </div>
@@ -1524,12 +1654,12 @@
                         <table class="table table-hover" id="empregadosTable">
                             <thead>
                                 <tr>
-                                    <th data-sort="nome" data-order="asc" onclick="sortTable('empregados', 'nome')">Nome <span class="sort-icon">▼</span></th>
-                                    <th data-sort="matricula" data-order="asc" onclick="sortTable('empregados', 'matricula')">Matrícula <span class="sort-icon">▼</span></th>
-                                    <th data-sort="orgao" data-order="asc" onclick="sortTable('empregados', 'orgao')">Órgão <span class="sort-icon">▼</span></th>
-                                    <th data-sort="cargo" data-order="asc" onclick="sortTable('empregados', 'cargo')">Cargo <span class="sort-icon">▼</span></th>
-                                    <th data-sort="empresa" data-order="asc" onclick="sortTable('empregados', 'empresa')">Empresa <span class="sort-icon">▼</span></th>
-                                    <th data-sort="cnpj_empresa" data-order="asc" onclick="sortTable('empregados', 'cnpj_empresa')">CNPJ Empresa <span class="sort-icon">▼</span></th>
+                                    <th data-sort="nome" data-order="asc">Nome <span class="sort-icon">▼</span></th>
+                                    <th data-sort="matricula" data-order="asc">Matrícula <span class="sort-icon">▼</span></th>
+                                    <th data-sort="orgao" data-order="asc">Órgão <span class="sort-icon">▼</span></th>
+                                    <th data-sort="cargo" data-order="asc">Cargo <span class="sort-icon">▼</span></th>
+                                    <th data-sort="empresa" data-order="asc">Empresa <span class="sort-icon">▼</span></th>
+                                    <th data-sort="cnpj_empresa" data-order="asc">CNPJ Empresa <span class="sort-icon">▼</span></th>
                                     <th class="actions-column">Ações</th>
                                 </tr>
                             </thead>
@@ -1740,16 +1870,10 @@
     </div>
 
     <!-- ==================== SCRIPTS ==================== -->
-
-    <!-- PapaParse (TEM QUE VIR PRIMEIRO) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    
-    <!-- jQuery e DataTables -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    
-    <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
@@ -1758,7 +1882,7 @@
         // ============================================
         let terceirizadosData = [];
         let filteredData = [];
-        let allData = {}; // Para armazenar dados por ano
+        let allData = {};
         let currentPageDashboard1 = 1;
         let currentPageDashboard2 = 1;
         let itemsPerPageDashboard1 = 50;
@@ -1769,9 +1893,6 @@
         let currentSortDashboard1 = { column: 'orgao_nome', order: 'asc' };
         let currentSortDashboard2 = { column: 'nome', order: 'asc' };
         let currentSearchTerm = '';
-        let lastGitHubCheck = null;
-        let lastDataHash = null;
-        let dashboardAnterior = null;
         
         const chartColors = {
             primary: '#29435A',
@@ -1784,23 +1905,13 @@
             hoverBlue: '#006a82'
         };
 
-        // URLs dos CSVs no GitHub - CORRETAS
         const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/transparencia-mg/empregados_terceirizados/main/dataset/data/';
-        const GITHUB_API_URL = 'https://api.github.com/repos/transparencia-mg/empregados_terceirizados/commits?path=dataset/data&per_page=1';
-
-        // LISTA CSV
         const CSV_FILES_BY_YEAR = {
             '2021': 'terceirizados_2021.csv',
             '2022': 'terceirizados_2022.csv',
             '2023': 'terceirizados_2023.csv',
             '2024': 'terceirizados_2024.csv',
             '2025': 'terceirizados_2025.csv'
-        };
-
-        // Mapeamento de meses abreviados para números
-        const mesesAbreviados = {
-            'jan': '01', 'fev': '02', 'mar': '03', 'abr': '04', 'mai': '05', 'jun': '06',
-            'jul': '07', 'ago': '08', 'set': '09', 'out': '10', 'nov': '11', 'dez': '12'
         };
 
         const monthNames = {
@@ -1810,7 +1921,6 @@
             '10': 'Outubro', '11': 'Novembro', '12': 'Dezembro'
         };
 
-        // Mapeamento de siglas para nomes completos de órgãos (ATUALIZADO)
         const orgaosExtenso = {
             'AGE': 'Assembleia Geral do Estado',
             'ARMVA': 'Administração Regional do Médio Vale do Aço',
@@ -1841,7 +1951,7 @@
             'IEPHA': 'Instituto Estadual do Patrimônio Histórico e Artístico de Minas Gerais',
             'IGAM': 'Instituto Mineiro de Gestão das Águas',
             'IMA': 'Instituto Mineiro de Agropecuária',
-            'INVESTE MINAS': 'Agência de Promoção de Investimentos e Comércio Exterior de Minas Gerais',
+            'INVESTE MINAS': 'Agência de Promoção de Investições e Comércio Exterior de Minas Gerais',
             'IPEM': 'Instituto de Pesos e Medidas',
             'IPSEMG': 'Instituto de Previdência dos Servidores',
             'IPSM': 'Instituto de Previdência dos Servidores Militares',
@@ -1875,16 +1985,10 @@
             'PRODEMG': 'Companhia de Tecnologia da Informação do Estado de Minas Gerais'
         };
 
-        // Mapeamento de siglas atualizadas - CORREÇÃO DO ERRO
         const orgaosSiglas = {
             'AG.METROP.BH': 'ARMBH',
             'PRODEMG': 'PRODEMGE'
         };
-
-        // ==================== FUNÇÃO PARA ATUALIZAR ALTURA DO IFRAME ====================
-        function iframeUpdateHeight() { 
-            window.parent.postMessage({ iframeHeight: document.body.scrollHeight + 10 }, '*'); 
-        }
 
         // ==================== INICIALIZAÇÃO ====================
         document.addEventListener('DOMContentLoaded', function() {
@@ -1899,35 +2003,21 @@
             
             console.log('Painel de Terceirizados carregado com sucesso!!!');
             iframeUpdateHeight();
-            
-            // Event listeners para mudança de aba
-            const tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function(e) {
-                    const tabId = this.getAttribute('data-bs-target').replace('#', '');
-                    
-                    if (tabId === 'dashboard3') {
-                        // Se vem de outro dashboard, mostra botão voltar
-                        if (dashboardAnterior && dashboardAnterior !== 'dashboard3') {
-                            document.getElementById('botaoVoltarContainer').style.display = 'block';
-                        } else {
-                            document.getElementById('botaoVoltarContainer').style.display = 'none';
-                        }
-                    } else {
-                        dashboardAnterior = tabId;
-                    }
-                    
-                    iframeUpdateHeight();
-                });
-            });
         });
 
         // ==================== FUNÇÕES AUXILIARES DE INICIALIZAÇÃO ====================
+        function iframeUpdateHeight() { 
+            try {
+                window.parent.postMessage({ iframeHeight: document.body.scrollHeight + 10 }, '*'); 
+            } catch(e) {
+                console.log('Erro ao atualizar altura do iframe:', e);
+            }
+        }
+
         function loadInitialData() {
             showLoading(true);
             
             try {
-                // Carregar dados iniciais
                 loadYearData('2025').then(() => {
                     determineLatestMonth();
                     updateDataAtualizacao();
@@ -1952,7 +2042,6 @@
         }
 
         function setupTooltips() {
-            // Inicializar tooltips do Bootstrap
             const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
             const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
@@ -1960,7 +2049,6 @@
         }
 
         function setupDescriptiveTooltips() {
-            // Adicionar tooltips descritivos
             const tooltips = {
                 'aplicarFiltros': 'Aplicar filtros selecionados',
                 'limparFiltros': 'Limpar todos os filtros',
@@ -1977,55 +2065,16 @@
                 }
             });
             
-            // Re-inicializar tooltips
             setupTooltips();
         }
 
         function setupAtualizacaoData() {
-            // Atualizar a data de atualização periodicamente
-            setInterval(updateDataAtualizacao, 60000); // Atualizar a cada minuto
-        }
-
-        // ==================== VERIFICAR ATUALIZAÇÕES NO GITHUB ====================
-        async function checkGitHubUpdates() {
-            try {
-                const response = await fetch(GITHUB_API_URL);
-                if (!response.ok) throw new Error('Erro ao verificar GitHub');
-                
-                const commits = await response.json();
-                if (commits && commits.length > 0) {
-                    const latestCommit = commits[0];
-                    const commitDate = new Date(latestCommit.commit.author.date);
-                    
-                    // Verificar se é a primeira vez ou se houve atualização
-                    if (!lastGitHubCheck || commitDate > lastGitHubCheck) {
-                        lastGitHubCheck = commitDate;
-                        return true; // Há atualizações
-                    }
-                }
-                return false; // Sem atualizações
-            } catch (error) {
-                console.error('Erro ao verificar atualizações:', error);
-                return true; // Em caso de erro, carregar dados
-            }
-        }
-
-        // ==================== CALCULAR HASH DOS DADOS ====================
-        async function calculateDataHash(data) {
-            if (!data || data.length === 0) return null;
-
-            const dataString = data.slice(0, 100).map(item =>
-                `${item.matricula}|${item.nome}|${item.orgao}|${item.empresa}`
-            ).join('|');
-
-            return btoa(unescape(encodeURIComponent(
-                dataString.length + dataString.substring(0, 50)
-            )));
+            setInterval(updateDataAtualizacao, 60000);
         }
 
         // ==================== CARREGAR DADOS DO GITHUB ====================
         async function loadYearData(year) {
-            if (allData[year] && lastDataHash) {
+            if (allData[year]) {
                 console.log(`Dados de ${year} já carregados.`);
                 terceirizadosData = allData[year];
                 return;
@@ -2046,12 +2095,11 @@
                     header: true,
                     skipEmptyLines: true,
                     encoding: 'UTF-8',
-                    delimiter: ";",  // ← ESSENCIAL: delimitador ponto e vírgula
+                    delimiter: ";",
                     complete: function (results) {
                         console.log(`Resultados brutos do Papa Parse para ${year}:`, results);
                         
                         const data = results.data.map(row => {
-                            // Normalizar nomes de colunas
                             const matricula = row.matricula || row['MAT.'] || row['MAT'] || '';
                             const nome = row.nome || row['NOME'] || '';
                             let orgao = row.orgao || row['ÓRGÃO'] || '';
@@ -2060,34 +2108,25 @@
                             const cnpj_empresa = row.cnpj_empresa || row['CNPJ EMPRESA'] || '';
                             const mes_referencia = row.mes_referencia || row['MÊS REFERÊNCIA'] || '';
 
-                            // CORREÇÃO DA EMPRESA "MINAS GERAIS ADMINISTRA  O E SERVI OS S.A"
                             if (empresa.includes('MINAS GERAIS ADMINISTRA')) {
                                 empresa = 'MINAS GERAIS ADMINISTRACAO E SERVICOS S.A';
                             }
 
-                            // Atualizar siglas dos órgãos - CORREÇÃO DO ERRO
                             if (orgaosSiglas[orgao]) {
                                 orgao = orgaosSiglas[orgao];
                             }
 
-                            // === LÓGICA SIMPLIFICADA PARA FORMATO ISO (2025-09-01) ===
                             let COMPETENCIA = null;
                             let ANO = '';
                             let MES_NUM = '';
                             
                             if (mes_referencia && mes_referencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                                // Formato: 2025-09-01
                                 const [ano, mes, dia] = mes_referencia.split('-');
-                                COMPETENCIA = `${ano}-${mes}`;  // "2025-09"
+                                COMPETENCIA = `${ano}-${mes}`;
                                 ANO = ano;
                                 MES_NUM = mes;
                             }
                             
-                            // DEBUG: Verificar primeiros registros
-                            if (results.data.indexOf(row) < 3) {
-                                console.log(`DEBUG: Linha ${results.data.indexOf(row) + 1}: mes_referencia="${mes_referencia}", COMPETENCIA=${COMPETENCIA}`);
-                            }
-
                             return {
                                 matricula: matricula,
                                 nome: nome,
@@ -2099,17 +2138,12 @@
                                 COMPETENCIA: COMPETENCIA,
                                 ANO: ANO,
                                 MES_NUM: MES_NUM,
-                                ORGAO_NOME_COMPLETO: getOrgaoExtenso(orgao) // Adicionar nome completo
+                                ORGAO_NOME_COMPLETO: getOrgaoExtenso(orgao)
                             };
-                        }).filter(e => e.COMPETENCIA !== null); // só registros válidos
+                        }).filter(e => e.COMPETENCIA !== null);
 
                         console.log(`Dados de ${year} processados: ${data.length} registros válidos de ${results.data.length} totais`);
                         
-                        // DEBUG: Mostrar primeiros registros
-                        if (data.length > 0) {
-                            console.log('Primeiro registro:', data[0]);
-                        }
-
                         allData[year] = data;
                         terceirizadosData = data;
 
@@ -2131,13 +2165,11 @@
                 return;
             }
 
-            // Encontrar competências únicas usando o novo formato ISO
             const competencias = [...new Set(
                 terceirizadosData
-                    .map(e => e.COMPETENCIA)  // Já está no formato "2025-09"
+                    .map(e => e.COMPETENCIA)
                     .filter(Boolean)
             )].sort((a, b) => {
-                // Ordenar por data (mais recente primeiro)
                 const [anoA, mesA] = a.split('-').map(Number);
                 const [anoB, mesB] = b.split('-').map(Number);
                 
@@ -2156,7 +2188,6 @@
             currentYear = ano;
             currentMonth = mes;
 
-            // Filtrar dados do mês mais recente
             filteredData = terceirizadosData.filter(
                 e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
             );
@@ -2185,7 +2216,6 @@
             // Exportação
             document.getElementById('exportCSVDashboard1').addEventListener('click', () => exportToCSV('dashboard1'));
             document.getElementById('printDashboard1').addEventListener('click', () => printDashboard('dashboard1'));
-           
             document.getElementById('exportCSVDashboard2').addEventListener('click', () => exportToCSV('dashboard2'));
             document.getElementById('printDashboard2').addEventListener('click', () => printDashboard('dashboard2'));
             
@@ -2196,21 +2226,6 @@
             document.getElementById('searchEmpregados').addEventListener('input', function(e) {
                 currentSearchTerm = e.target.value.toLowerCase();
                 filterEmpregadosTable(currentSearchTerm);
-            });
-            
-            // Troca de abas
-            document.getElementById('dashboard1-tab').addEventListener('click', function() {
-                setTimeout(updateDashboard1, 100);
-                iframeUpdateHeight();
-            });
-            
-            document.getElementById('dashboard2-tab').addEventListener('click', function() {
-                setTimeout(updateDashboard2, 100);
-                iframeUpdateHeight();
-            });
-            
-            document.getElementById('dashboard3-tab').addEventListener('click', function() {
-                iframeUpdateHeight();
             });
             
             // Itens por página
@@ -2244,12 +2259,29 @@
                     iframeUpdateHeight();
                 }
             });
+            
+            // Adicionar event listeners para ordenação
+            document.querySelectorAll('#visaoGeralTable th[data-sort]').forEach(th => {
+                th.addEventListener('click', function() {
+                    const column = this.getAttribute('data-sort');
+                    sortTable('visaoGeral', column);
+                });
+            });
+            
+            document.querySelectorAll('#empregadosTable th[data-sort]').forEach(th => {
+                th.addEventListener('click', function() {
+                    const column = this.getAttribute('data-sort');
+                    sortTable('empregados', column);
+                });
+            });
         }
 
         // ==================== FUNÇÕES DE UTILIDADE ====================
         function showLoading(show) {
             const overlay = document.getElementById('loadingOverlay');
-            overlay.style.display = show ? 'flex' : 'none';
+            if (overlay) {
+                overlay.style.display = show ? 'flex' : 'none';
+            }
         }
 
         function showError(message) {
@@ -2268,48 +2300,32 @@
 
         function updateDataAtualizacao() {
             const now = new Date();
-            const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR').substring(0, 5);
-            document.getElementById('data-atualizacao-body').innerHTML = `Última atualização: ${dataFormatada}`;
+            const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
+            const elementoData = document.getElementById('data-atualizacao-header');
+            if (elementoData) {
+                elementoData.textContent = dataFormatada;
+            }
+            console.log('Data de atualização definida:', dataFormatada);
         }
 
-        // Função para converter sigla em nome completo do órgão (ATUALIZADA)
         function getOrgaoExtenso(orgaoSigla) {
             if (!orgaoSigla) return '';
             
-            // Primeiro verificar se temos uma sigla atualizada
             if (orgaosSiglas[orgaoSigla]) {
                 orgaoSigla = orgaosSiglas[orgaoSigla];
             }
             
-            // Verificar se é uma sigla conhecida
             for (const [sigla, nome] of Object.entries(orgaosExtenso)) {
                 if (orgaoSigla.toUpperCase().includes(sigla)) {
                     return nome;
                 }
             }
             
-            // Remover "1100 - " do início se existir
             if (orgaoSigla.startsWith('1100 - ')) {
                 orgaoSigla = orgaoSigla.substring(7);
             }
             
-            // Se não encontrar, retorna o próprio nome
             return orgaoSigla;
-        }
-
-        // Função para obter sigla a partir do nome completo
-        function getOrgaoSigla(orgaoNome) {
-            if (!orgaoNome) return '';
-            
-            // Verificar se o nome completo contém uma sigla conhecida
-            for (const [sigla, nome] of Object.entries(orgaosExtenso)) {
-                if (orgaoNome === nome) {
-                    return sigla;
-                }
-            }
-            
-            // Se não encontrar, retorna as primeiras letras
-            return orgaoNome.substring(0, 3).toUpperCase();
         }
 
         // ==================== FUNÇÕES DE ANO E MES ====================
@@ -2345,29 +2361,28 @@
                 });
             }
             
-            // Dashboard 1 - Mês (SOMENTE O NOME DO MÊS)
+            // Dashboard 1 - Mês
             const mesSelect1 = document.getElementById('mesDashboard1');
             if (mesSelect1 && currentYear) {
-                // Obter meses do ano atual do formato ISO
                 const mesesDoAno = [...new Set(
                     (allData[currentYear] || [])
                         .map(e => e.MES_NUM)
                         .filter(Boolean)
                         .map(mes => parseInt(mes))
-                )].sort((a, b) => b - a); // Mais recente primeiro
+                )].sort((a, b) => b - a);
                 
                 mesSelect1.innerHTML = '';
                 mesesDoAno.forEach(mesNum => {
                     const mesStr = mesNum.toString().padStart(2, '0');
                     const option = document.createElement('option');
                     option.value = mesStr;
-                    option.textContent = monthNames[mesStr] || mesStr; // APENAS O NOME DO MÊS
+                    option.textContent = monthNames[mesStr] || mesStr;
                     if (mesStr === currentMonth) option.selected = true;
                     mesSelect1.appendChild(option);
                 });
             }
             
-            // Dashboard 2 - Ano (mesma lógica)
+            // Dashboard 2 - Ano
             const anoSelect2 = document.getElementById('anoDashboard2');
             if (anoSelect2) {
                 anoSelect2.innerHTML = '';
@@ -2380,7 +2395,7 @@
                 });
             }
             
-            // Dashboard 2 - Mês (SOMENTE O NOME DO MÊS)
+            // Dashboard 2 - Mês
             const mesSelect2 = document.getElementById('mesDashboard2');
             if (mesSelect2 && currentYear) {
                 const mesesDoAno = [...new Set(
@@ -2395,7 +2410,7 @@
                     const mesStr = mesNum.toString().padStart(2, '0');
                     const option = document.createElement('option');
                     option.value = mesStr;
-                    option.textContent = monthNames[mesStr] || mesStr; // APENAS O NOME DO MÊS
+                    option.textContent = monthNames[mesStr] || mesStr;
                     if (mesStr === currentMonth) option.selected = true;
                     mesSelect2.appendChild(option);
                 });
@@ -2407,11 +2422,9 @@
                     .map(e => getOrgaoExtenso(e.orgao))
                     .filter(Boolean)
                     .map(nome => {
-                        // Remover "1100 - " do início se existir e filtrar "1100 - OUVIDORIA GERAL DO ESTADO"
                         if (nome.startsWith('1100 - ')) {
                             nome = nome.substring(7);
                         }
-                        // Filtrar especificamente "OUVIDORIA GERAL DO ESTADO"
                         if (nome === 'OUVIDORIA GERAL DO ESTADO') {
                             return null;
                         }
@@ -2420,10 +2433,10 @@
                     .filter(nome => nome !== null && nome !== '')
             )].sort();
             
-            // Dashboard 1 - datalist de órgãos (NOMES COMPLETOS)
+            // Dashboard 1 - datalist de órgãos
             const orgaoDatalist1 = document.getElementById('orgaosListDashboard1');
             if (orgaoDatalist1) {
-                orgaoDatalist1.innerHTML = '<option value="all">Todos os Órgãos</option>';
+                orgaoDatalist1.innerHTML = '';
                 orgaosNomesUnicos.forEach(orgaoNome => {
                     if (orgaoNome) {
                         const option = document.createElement('option');
@@ -2433,10 +2446,10 @@
                 });
             }
             
-            // Dashboard 2 - datalist de órgãos (NOMES COMPLETOS)
+            // Dashboard 2 - datalist de órgãos
             const orgaoDatalist2 = document.getElementById('orgaosListDashboard2');
             if (orgaoDatalist2) {
-                orgaoDatalist2.innerHTML = '<option value="all">Todos os Órgãos</option>';
+                orgaoDatalist2.innerHTML = '';
                 orgaosNomesUnicos.forEach(orgaoNome => {
                     if (orgaoNome) {
                         const option = document.createElement('option');
@@ -2446,13 +2459,12 @@
                 });
             }
             
-            // Obter todos os cargos únicos do período atual
+            // Obter todos os cargos únicos
             const cargosUnicos = [...new Set(filteredData.map(e => e.cargo))].sort();
             
-            // Dashboard 2 - datalist de cargos
             const cargoDatalist2 = document.getElementById('cargosListDashboard2');
             if (cargoDatalist2) {
-                cargoDatalist2.innerHTML = '<option value="all">Todos os Cargos</option>';
+                cargoDatalist2.innerHTML = '';
                 cargosUnicos.forEach(cargo => {
                     if (cargo) {
                         const option = document.createElement('option');
@@ -2462,13 +2474,12 @@
                 });
             }
             
-            // Obter todas as empresas únicas do período atual
+            // Obter todas as empresas únicas
             const empresasUnicas = [...new Set(filteredData.map(e => e.empresa))].sort();
             
-            // Dashboard 2 - datalist de empresas
             const empresaDatalist2 = document.getElementById('empresasListDashboard2');
             if (empresaDatalist2) {
-                empresaDatalist2.innerHTML = '<option value="all">Todas as Empresas</option>';
+                empresaDatalist2.innerHTML = '';
                 empresasUnicas.forEach(empresa => {
                     if (empresa) {
                         const option = document.createElement('option');
@@ -2487,12 +2498,10 @@
                 const mes = document.getElementById('mesDashboard1').value;
                 const orgaoInput = document.getElementById('orgaoDashboard1').value;
                 
-                const orgaoNome = orgaoInput === 'all' || orgaoInput === '' ? 'all' : orgaoInput;
+                const orgaoNome = orgaoInput === '' ? null : orgaoInput;
                 
-                // Se o ano mudou, carregar os dados do ano
                 if (ano !== currentYear) {
                     switchYearData(ano).then(() => {
-                        // Após carregar o ano, aplicar os filtros
                         applyFiltersAfterYearLoad(dashboard, mes, orgaoNome);
                     });
                     return;
@@ -2501,13 +2510,11 @@
                 currentMonth = mes;
                 
                 filteredData = (allData[currentYear] || []).filter(empregado => {
-                    // Filtrar por ano e mês selecionados
                     if (empregado.ANO !== currentYear || empregado.MES_NUM !== currentMonth) {
                         return false;
                     }
                     
-                    // Filtro por nome completo do órgão
-                    if (orgaoNome !== 'all') {
+                    if (orgaoNome !== null) {
                         const nomeCompletoOrgao = getOrgaoExtenso(empregado.orgao);
                         if (nomeCompletoOrgao !== orgaoNome) {
                             return false;
@@ -2529,14 +2536,12 @@
                 const orgaoInput = document.getElementById('orgaoDashboard2').value;
                 const matricula = document.getElementById('matriculaDashboard2').value;
                 
-                const cargo = cargoInput === 'all' || cargoInput === '' ? 'all' : cargoInput;
-                const empresa = empresaInput === 'all' || empresaInput === '' ? 'all' : empresaInput;
-                const orgaoNome = orgaoInput === 'all' || orgaoInput === '' ? 'all' : orgaoInput;
+                const cargo = cargoInput === '' ? null : cargoInput;
+                const empresa = empresaInput === '' ? null : empresaInput;
+                const orgaoNome = orgaoInput === '' ? null : orgaoInput;
                 
-                // Se o ano mudou, carregar os dados do ano
                 if (ano !== currentYear) {
                     switchYearData(ano).then(() => {
-                        // Após carregar o ano, aplicar os filtros
                         applyFiltersAfterYearLoad(dashboard, mes, nome, cargo, empresa, orgaoNome, matricula);
                     });
                     return;
@@ -2545,35 +2550,29 @@
                 currentMonth = mes;
                 
                 filteredData = (allData[currentYear] || []).filter(empregado => {
-                    // Filtrar por ano e mês selecionados
                     if (empregado.ANO !== currentYear || empregado.MES_NUM !== currentMonth) {
                         return false;
                     }
                     
-                    // Filtro por nome
                     if (nome && !empregado.nome.toLowerCase().includes(nome)) {
                         return false;
                     }
                     
-                    // Filtro por cargo
-                    if (cargo !== 'all' && empregado.cargo !== cargo) {
+                    if (cargo !== null && empregado.cargo !== cargo) {
                         return false;
                     }
                     
-                    // Filtro por empresa
-                    if (empresa !== 'all' && empregado.empresa !== empresa) {
+                    if (empresa !== null && empregado.empresa !== empresa) {
                         return false;
                     }
                     
-                    // Filtro por nome completo do órgão
-                    if (orgaoNome !== 'all') {
+                    if (orgaoNome !== null) {
                         const nomeCompletoOrgao = getOrgaoExtenso(empregado.orgao);
                         if (nomeCompletoOrgao !== orgaoNome) {
                             return false;
                         }
                     }
                     
-                    // Filtro por matrícula
                     if (matricula && !empregado.matricula.toString().includes(matricula)) {
                         return false;
                     }
@@ -2600,7 +2599,7 @@
                         return false;
                     }
                     
-                    if (orgaoNome !== 'all') {
+                    if (orgaoNome !== null) {
                         const nomeCompletoOrgao = getOrgaoExtenso(empregado.orgao);
                         if (nomeCompletoOrgao !== orgaoNome) {
                             return false;
@@ -2623,15 +2622,15 @@
                         return false;
                     }
                     
-                    if (cargo !== 'all' && empregado.cargo !== cargo) {
+                    if (cargo !== null && empregado.cargo !== cargo) {
                         return false;
                     }
                     
-                    if (empresa !== 'all' && empregado.empresa !== empresa) {
+                    if (empresa !== null && empregado.empresa !== empresa) {
                         return false;
                     }
                     
-                    if (orgaoNome !== 'all') {
+                    if (orgaoNome !== null) {
                         const nomeCompletoOrgao = getOrgaoExtenso(empregado.orgao);
                         if (nomeCompletoOrgao !== orgaoNome) {
                             return false;
@@ -2655,13 +2654,11 @@
         function filterEmpregadosTable(searchTerm) {
             const searchLower = searchTerm.toLowerCase();
             
-            // Se não há termo de busca, mostrar todos os registros
             if (!searchTerm.trim()) {
                 updateEmpregadosTable();
                 return;
             }
             
-            // Filtrar os dados
             const filtered = filteredData.filter(empregado => {
                 return (
                     empregado.nome.toLowerCase().includes(searchLower) ||
@@ -2672,26 +2669,21 @@
                 );
             });
             
-            // Se encontrou resultados, ir para a página 1 e mostrar
             if (filtered.length > 0) {
-                // Encontrar o índice do primeiro resultado na lista completa
                 const firstMatchIndex = filteredData.findIndex(empregado => 
                     empregado.nome.toLowerCase().includes(searchLower)
                 );
                 
                 if (firstMatchIndex >= 0) {
-                    // Calcular em qual página está o primeiro resultado
                     const pageForFirstResult = Math.floor(firstMatchIndex / itemsPerPageDashboard2) + 1;
                     currentPageDashboard2 = pageForFirstResult;
                 }
                 
-                // Mostrar apenas os resultados filtrados
                 const tempFilteredData = filteredData;
                 filteredData = filtered;
                 updateEmpregadosTable();
-                filteredData = tempFilteredData; // Restaurar dados originais
+                filteredData = tempFilteredData;
             } else {
-                // Se não encontrou resultados, mostrar mensagem
                 const tbody = document.getElementById('empregadosTableBody');
                 const tfoot = document.getElementById('empregadosTableFooter');
                 const countElement = document.getElementById('resumoCountDashboard2');
@@ -2709,10 +2701,8 @@
         }
 
         function clearAllFilters() {
-            // Resetar filtros do Dashboard 1
             document.getElementById('orgaoDashboard1').value = '';
             
-            // Voltar para o mês mais recente do ano atual
             const mesesDoAno = [...new Set(
                 (allData[currentYear] || [])
                     .map(e => e.MES_NUM)
@@ -2742,7 +2732,6 @@
             document.getElementById('searchEmpregados').value = '';
             currentSearchTerm = '';
             
-            // Voltar para o mês mais recente do ano atual
             const mesesDoAno = [...new Set(
                 (allData[currentYear] || [])
                     .map(e => e.MES_NUM)
@@ -2779,7 +2768,6 @@
                 return;
             }
             
-            // Calcular métricas
             const totalEmpregados = filteredData.length;
             const orgaosUnicos = [...new Set(filteredData.map(e => e.orgao))].length;
             const empresasUnicas = [...new Set(filteredData.map(e => e.empresa))].length;
@@ -2842,7 +2830,6 @@
                 return;
             }
             
-            // Agrupar por órgão
             const grupos = {};
             filteredData.forEach(empregado => {
                 const orgao = empregado.orgao;
@@ -2857,10 +2844,8 @@
                 grupos[orgao].count++;
             });
             
-            // Converter para array
             let resumoArray = Object.values(grupos);
             
-            // Ordenar de acordo com a coluna selecionada
             resumoArray.sort((a, b) => {
                 const order = currentSortDashboard1.order === 'asc' ? 1 : -1;
                 
@@ -2874,18 +2859,15 @@
                 return 0;
             });
             
-            // Calcular totais
             const totalOrgaos = resumoArray.length;
             const totalEmpregados = resumoArray.reduce((sum, item) => sum + item.count, 0);
             
-            // Paginação
             const itemsPerPage = itemsPerPageDashboard1;
             const totalPages = Math.ceil(resumoArray.length / itemsPerPage);
             const startIndex = (currentPageDashboard1 - 1) * itemsPerPage;
             const endIndex = Math.min(startIndex + itemsPerPage, resumoArray.length);
             const currentData = resumoArray.slice(startIndex, endIndex);
             
-            // Gerar HTML da tabela
             const rowsHTML = currentData.map(item => {
                 return `
                 <tr>
@@ -2903,10 +2885,9 @@
                 </tr>
             `}).join('');
             
-            // Gerar rodapé
             const footerHTML = `
                 <tr class="table-total-row">
-                    <td><strong>TOTAL GERAL (${totalOrgaos} órgãos)</strong></td>
+                    <td><strong>TOTAL </strong></td>
                     <td><strong>-</strong></td>
                     <td class="quantidade"><strong>${totalEmpregados.toLocaleString('pt-BR')}</strong></td>
                 </tr>
@@ -2918,8 +2899,6 @@
             if (paginationInfo) paginationInfo.textContent = `Mostrando ${startIndex + 1}-${endIndex} de ${resumoArray.length.toLocaleString()} registros`;
             
             updatePaginationDashboard1(totalPages, currentPageDashboard1);
-            
-            // Atualizar ícones de ordenação
             updateSortIconsDashboard1();
         }
 
@@ -2949,7 +2928,6 @@
             
             let paginationHTML = '';
             
-            // Botão anterior
             paginationHTML += `
                 <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
                     <a class="page-link" href="#" onclick="changePageDashboard1(${currentPage - 1})" aria-label="Anterior">
@@ -2958,12 +2936,10 @@
                 </li>
             `;
             
-            // Páginas
             const maxVisiblePages = 5;
             let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
             let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
             
-            // Ajustar se estiver no final
             if (endPage - startPage + 1 < maxVisiblePages) {
                 startPage = Math.max(1, endPage - maxVisiblePages + 1);
             }
@@ -2976,7 +2952,6 @@
                 `;
             }
             
-            // Botão próximo
             paginationHTML += `
                 <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
                     <a class="page-link" href="#" onclick="changePageDashboard1(${currentPage + 1})" aria-label="Próximo">
@@ -3026,7 +3001,6 @@
             const legendContainer = document.getElementById('chartOrgaoLegend');
             if (!ctx || !legendContainer) return;
             
-            // Agrupar por órgão e pegar top 8
             const grupos = {};
             filteredData.forEach(empregado => {
                 if (!grupos[empregado.orgao]) {
@@ -3040,17 +3014,14 @@
                 .sort((a, b) => b.count - a.count)
                 .slice(0, 8);
             
-            // Cores para o gráfico
             const pieColors = [
                 chartColors.primary, chartColors.secondaryBlue, chartColors.accent,
                 chartColors.secondaryBrown, chartColors.secondaryTeal, chartColors.bright,
                 '#4ECDC4', '#FF6B6B'
             ];          
        
-            // Calcular total para porcentagens
             const total = orgaosArray.reduce((sum, item) => sum + item.count, 0);
             
-            // Criar legenda personalizada - USANDO SIGLAS DOS ÓRGÃOS
             let legendHTML = '';
             orgaosArray.forEach((item, index) => {
                 const percentage = total > 0 ? Math.round((item.count / total) * 100) : 0;
@@ -3089,7 +3060,7 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: false // Desativar legenda padrão do Chart.js
+                            display: false
                         },
                         tooltip: {
                             callbacks: {
@@ -3108,124 +3079,190 @@
                 }
             });
         }
+function updateCargoChart() {
+    const ctx = document.getElementById('chartCargo')?.getContext('2d');
+    const legendContainer = document.getElementById('chartCargoLegend');
+    if (!ctx || !legendContainer) return;
 
-        function updateCargoChart() {
-            const ctx = document.getElementById('chartCargo')?.getContext('2d');
-            const legendContainer = document.getElementById('chartCargoLegend');
-            if (!ctx || !legendContainer) return;
+    // === AGRUPAMENTO ===
+    const grupos = {};
+    filteredData.forEach(empregado => {
+        if (!grupos[empregado.cargo]) {
+            grupos[empregado.cargo] = 0;
+        }
+        grupos[empregado.cargo]++;
+    });
+
+    const cargosArray = Object.entries(grupos)
+        .map(([cargo, count]) => ({ cargo, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 8);
+
+    const barColors = [
+        chartColors.primary,
+        chartColors.secondaryBlue,
+        chartColors.accent,
+        chartColors.secondaryBrown,
+        chartColors.secondaryTeal,
+        chartColors.bright,
+        '#4ECDC4',
+        '#FF6B6B'
+    ];
+
+    const total = cargosArray.reduce((sum, item) => sum + item.count, 0);
+    
+    // ===== CRIA LEGENDA CLICÁVEL =====
+    legendContainer.innerHTML = '';
+
+    cargosArray.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.style.cursor = 'pointer';
+        li.setAttribute('data-index', index);
+
+        li.innerHTML = `
+            <span class="legend-color" style="background-color: ${barColors[index]}"></span>
+            <span class="legend-text" title="${item.cargo}">
+                ${item.cargo.length > 25 ? item.cargo.substring(0, 25) + '...' : item.cargo}
+            </span>
+            <span class="legend-value">${item.count}</span>
+        `;
+
+        // Evento de clique para filtrar
+        li.addEventListener('click', function() {
+            if (!charts.cargo) return;
             
-            // Agrupar por cargo e pegar top 8
-            const grupos = {};
-            filteredData.forEach(empregado => {
-                if (!grupos[empregado.cargo]) {
-                    grupos[empregado.cargo] = 0;
-                }
-                grupos[empregado.cargo]++;
-            });
+            const dataset = charts.cargo.data.datasets[0];
             
-            const cargosArray = Object.entries(grupos)
-                .map(([cargo, count]) => ({ cargo, count }))
-                .sort((a, b) => b.count - a.count)
-                .slice(0, 8);
+            // Toggle
+            dataset._hidden = dataset._hidden || {};
+            dataset._hidden[index] = !dataset._hidden[index];
             
-            // Cores para barras do gráfico de cargos
-            const barColors = [
-                chartColors.primary,
-                chartColors.accent,
-                chartColors.secondaryBlue,
-                chartColors.secondaryBrown,
-                chartColors.secondaryTeal,
-                chartColors.bright,
-                '#4ECDC4',
-                '#FF6B6B'
-            ];
-            
-            // Calcular total para porcentagens
-            const total = cargosArray.reduce((sum, item) => sum + item.count, 0);
-            
-            // Criar legenda personalizada
-            let legendHTML = '';
-            cargosArray.forEach((item, index) => {
-                const percentage = total > 0 ? Math.round((item.count / total) * 100) : 0;
-                
-                legendHTML += `
-                    <li>
-                        <span class="legend-color" style="background-color: ${barColors[index % barColors.length]};"></span>
-                        <span class="legend-text" title="${item.cargo}">
-                            ${item.cargo.length > 25 ? item.cargo.substring(0, 25) + '...' : item.cargo}
-                        </span>
-                        <span class="legend-value">${item.count}</span>
-                    </li>
-                `;
-            });
-            
-            legendContainer.innerHTML = legendHTML;
-            
-            if (charts.cargo) {
-                charts.cargo.destroy();
+            // Estilo visual da legenda
+            if (dataset._hidden[index]) {
+                li.style.opacity = '0.4';
+                li.style.textDecoration = 'line-through';
+            } else {
+                li.style.opacity = '1';
+                li.style.textDecoration = 'none';
             }
             
-            charts.cargo = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: cargosArray.map(item => {
-                        return item.cargo.length > 15 ? item.cargo.substring(0, 15) + '...' : item.cargo;
-                    }),
-                    datasets: [{
-                        label: 'Quantidade de Empregados',
-                        data: cargosArray.map(item => item.count),
-                        backgroundColor: barColors,
-                        borderColor: barColors.map(color => color + '99'),
-                        borderWidth: 1,
-                        borderRadius: 4
-                    }]
+            // Recalcula dados visíveis
+            const newData = cargosArray.map((c, i) =>
+                dataset._hidden[i] ? 0 : c.count
+            );
+            
+            charts.cargo.data.datasets[0].data = newData;
+            charts.cargo.update();
+        });
+
+        legendContainer.appendChild(li);
+    });
+
+    // === DESTROI ANTERIOR ===
+    if (charts.cargo) {
+        charts.cargo.destroy();
+    }
+
+    // ===== GRÁFICO SEM LEGENDA NATIVA E SEM LABELS NAS BARRAS =====
+    charts.cargo = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: cargosArray.map(() => ''), // 👈 Labels vazios para não aparecer nada abaixo das barras
+            datasets: [{
+                data: cargosArray.map(item => item.count),
+                backgroundColor: barColors,
+                borderRadius: 4,
+                borderWidth: 1,
+                borderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                font: {
-                                    size: 10
-                                }
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
+                tooltip: {
+                    callbacks: {
+                        title: function(context) {
+                            // Mostra o nome do cargo no tooltip
+                            return cargosArray[context[0].dataIndex]?.cargo || '';
                         },
-                        x: {
-                            ticks: {
-                                font: {
-                                    size: 10
-                                }
-                            },
-                            grid: {
-                                display: false
-                            }
+                        label: function(context) {
+                            const value = context.raw || 0;
+                            const percentage = Math.round((value / total) * 100);
+                            return `${value} empregados (${percentage}%)`;
                         }
                     },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.dataset.label || '';
-                                    const value = context.raw || 0;
-                                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
-                                    return `${label}: ${value} (${percentage}%)`;
-                                }
-                            },
-                            backgroundColor: 'rgba(41, 67, 90, 0.9)',
-                            titleColor: '#fff',
-                            bodyColor: '#fff'
+                    backgroundColor: 'rgba(41, 67, 90, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    cornerRadius: 6
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { 
+                        font: { 
+                            size: 10 
+                        } 
+                    },
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    }
+                },
+                x: {
+                    ticks: {
+                        display: false, // 👈 DESATIVA os ticks do eixo X
+                        font: { 
+                            size: 10 
                         }
+                    },
+                    grid: {
+                        display: false // 👈 Desativa as linhas de grade do eixo X
+                    },
+                    // 👈 Desativa completamente a linha do eixo X
+                    border: {
+                        display: false
                     }
                 }
-            });
+            },
+            interaction: {
+                intersect: true,
+                mode: 'nearest'
+            },
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
+            },
+            hover: {
+                animationDuration: 0
+            }
+        }
+    });
+    
+    // Remove qualquer elemento de legenda do Chart.js que possa aparecer
+    setTimeout(() => {
+        const canvasElement = document.getElementById('chartCargo');
+        if (canvasElement) {
+            const parent = canvasElement.parentElement;
+            if (parent) {
+                Array.from(parent.children).forEach(child => {
+                    if (child.tagName === 'DIV' && child.classList.contains('chartjs-legend')) {
+                        child.style.display = 'none';
+                    }
+                });
+            }
+        }
+        
+        // Garante que a legenda nativa não aparece
+        const chartLegend = document.querySelector('.chartjs-legend');
+        if (chartLegend) {
+            chartLegend.style.display = 'none';
+        }
+    }, 50);
         }
 
         // ==================== DASHBOARD 2: CONSULTA INDIVIDUAL ====================
@@ -3255,7 +3292,6 @@
                 return;
             }
             
-            // Ordenar de acordo com a coluna selecionada
             let empregadosArray = [...filteredData];
             empregadosArray.sort((a, b) => {
                 const order = currentSortDashboard2.order === 'asc' ? 1 : -1;
@@ -3276,19 +3312,16 @@
                 return 0;
             });
             
-            // Calcular totais
             const totalEmpregados = empregadosArray.length;
             const orgaosUnicos = [...new Set(empregadosArray.map(e => e.orgao))].length;
             const empresasUnicas = [...new Set(empregadosArray.map(e => e.empresa))].length;
             
-            // Paginação
             const itemsPerPage = itemsPerPageDashboard2;
             const totalPages = Math.ceil(empregadosArray.length / itemsPerPage);
             const startIndex = (currentPageDashboard2 - 1) * itemsPerPage;
             const endIndex = Math.min(startIndex + itemsPerPage, empregadosArray.length);
             const currentData = empregadosArray.slice(startIndex, endIndex);
             
-            // Gerar HTML da tabela - Ordem corrigida: Nome primeiro, depois Matrícula
             const rowsHTML = currentData.map(empregado => `
                 <tr>
                     <td><strong style="color: var(--primary-darker); font-weight: 600; font-size: 13px;">${empregado.nome}</strong></td>
@@ -3311,7 +3344,6 @@
                 </tr>
             `).join('');
             
-            // Gerar rodapé
             const footerHTML = `
                 <tr class="table-total-row">
                     <td colspan="2"><strong>TOTAL GERAL: ${totalEmpregados.toLocaleString('pt-BR')} empregados</strong></td>
@@ -3327,8 +3359,6 @@
             if (paginationInfo) paginationInfo.textContent = `Mostrando ${startIndex + 1}-${endIndex} de ${empregadosArray.length.toLocaleString('pt-BR')} registros`;
             
             updatePaginationDashboard2(totalPages, currentPageDashboard2);
-            
-            // Atualizar ícones de ordenação
             updateSortIconsDashboard2();
         }
 
@@ -3358,7 +3388,6 @@
             
             let paginationHTML = '';
             
-            // Botão anterior
             paginationHTML += `
                 <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
                     <a class="page-link" href="#" onclick="changePageDashboard2(${currentPage - 1})" aria-label="Anterior">
@@ -3367,7 +3396,6 @@
                 </li>
             `;
             
-            // Páginas
             const maxVisiblePages = 5;
             let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
             let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
@@ -3384,7 +3412,6 @@
                 `;
             }
             
-            // Botão próximo
             paginationHTML += `
                 <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
                     <a class="page-link" href="#" onclick="changePageDashboard2(${currentPage + 1})" aria-label="Próximo">
@@ -3417,11 +3444,9 @@
             showLoading(true);
             
             try {
-                // Encontrar todos os registros do empregado em todos os anos
                 const historico = [];
                 let ultimoRegistro = null;
                 
-                // Primeiro, garantir que todos os anos estão carregados
                 const loadAllYears = async () => {
                     const years = Object.keys(CSV_FILES_BY_YEAR);
                     for (const year of years) {
@@ -3431,9 +3456,7 @@
                     }
                 };
                 
-                // Carregar todos os anos se necessário
                 loadAllYears().then(() => {
-                    // Procurar em todos os anos carregados
                     Object.keys(allData).forEach(ano => {
                         const dadosAno = allData[ano];
                         const registrosAno = dadosAno.filter(e => 
@@ -3451,19 +3474,15 @@
                         });
                     });
                     
-                    // Ordenar histórico por data (mais recente primeiro)
                     historico.sort((a, b) => {
                         if (a.ANO !== b.ANO) return parseInt(b.ANO) - parseInt(a.ANO);
                         return parseInt(b.MES_NUM) - parseInt(a.MES_NUM);
                     });
                     
-                    // Preparar informações do empregado
                     const empregado = ultimoRegistro || historico[0];
                     
-                    // Atualizar modal
                     const modal = new bootstrap.Modal(document.getElementById('historicModal'));
                     
-                    // Informações do empregado
                     const infoHTML = `
                         <div class="employee-info-grid">
                             <div class="info-item">
@@ -3505,12 +3524,10 @@
                     
                     document.getElementById('employeeInfo').innerHTML = infoHTML;
                     
-                    // Atualizar título do modal
                     document.getElementById('historicModalLabel').innerHTML = `
                         <i class="fas fa-history me-2"></i>${empregado.nome}
                     `;
                     
-                    // Tabela de histórico
                     const historicHTML = historico.map(registro => `
                         <tr>
                             <td>${formatarDataBR(registro.mes_referencia)}</td>
@@ -3524,7 +3541,6 @@
                     document.getElementById('historicTableBody').innerHTML = historicHTML || 
                         '<tr><td colspan="5" class="text-center text-muted">Nenhum histórico encontrado</td></tr>';
                     
-                    // Mostrar modal
                     modal.show();
                     showLoading(false);
                     
@@ -3542,11 +3558,9 @@
             }
         };
 
-        // Função para formatar data de aaaa-mm-dd para dd-mm-aaaa
         function formatarDataBR(dataString) {
             if (!dataString) return '';
             
-            // Verificar se está no formato aaaa-mm-dd
             const regex = /^(\d{4})-(\d{2})-(\d{2})$/;
             const match = dataString.match(regex);
             
@@ -3555,7 +3569,6 @@
                 return `${dia}-${mes}-${ano}`;
             }
             
-            // Se não estiver no formato esperado, retorna o original
             return dataString;
         }
 
@@ -3574,7 +3587,6 @@
             showLoading(true);
             
             try {
-                // Carregar os dados do ano selecionado se ainda não carregados
                 if (!allData[year]) {
                     await loadYearData(year);
                 }
@@ -3586,7 +3598,6 @@
                     return;
                 }
                 
-                // Preparar CSV
                 const headers = ['matricula', 'nome', 'orgao_sigla', 'orgao_nome_completo', 'cargo', 'empresa', 'cnpj_empresa', 'mes_referencia'];
                 const csvContent = [
                     headers.join(';'),
@@ -3602,7 +3613,6 @@
                     ].map(cell => `"${cell}"`).join(';'))
                 ].join('\n');
                 
-                // Criar e baixar arquivo
                 const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
                 const link = document.createElement('a');
                 const url = URL.createObjectURL(blob);
@@ -3630,43 +3640,35 @@
             console.log('Filtrando por órgão:', orgao);
             
             try {
-                // Mudar para a aba de Consulta Individual
                 const tabElement = document.getElementById('dashboard2-tab');
                 if (tabElement) {
-                    // Usar Bootstrap Tab para mudar de aba
                     const tab = new bootstrap.Tab(tabElement);
                     tab.show();
                     
-                    // Aguardar a transição da aba
                     setTimeout(() => {
-                        // Preencher o campo do órgão no Dashboard 2 com o NOME COMPLETO
                         const orgaoElement = document.getElementById('orgaoDashboard2');
                         if (orgaoElement) {
                             orgaoElement.value = getOrgaoExtenso(orgao);
                         }
                         
-                        // Limpar outros filtros
                         document.getElementById('nomeEmpregado').value = '';
                         document.getElementById('cargoDashboard2').value = '';
                         document.getElementById('empresaDashboard2').value = '';
                         document.getElementById('matriculaDashboard2').value = '';
                         document.getElementById('searchEmpregados').value = '';
                         
-                        // Configurar o ano e mês atuais
                         document.getElementById('anoDashboard2').value = currentYear;
                         document.getElementById('mesDashboard2').value = currentMonth;
                         
-                        // Aplicar o filtro
                         applyFilters('dashboard2');
                         
-                        // Rolar para a tabela
                         const tableContainer = document.querySelector('#dashboard2 .table-container');
                         if (tableContainer) {
                             tableContainer.scrollIntoView({ behavior: 'smooth' });
                         }
                         
                         iframeUpdateHeight();
-                    }, 350); // Tempo maior para garantir que a aba mudou
+                    }, 350);
                 } else {
                     console.error('Elemento da aba não encontrado');
                 }
@@ -3679,24 +3681,18 @@
         // ==================== FUNÇÕES DE ORDENAÇÃO ====================
         window.sortTable = function(tableType, column) {
             if (tableType === 'visaoGeral') {
-                // Verificar se está ordenando a mesma coluna
                 if (currentSortDashboard1.column === column) {
-                    // Inverter a ordem
                     currentSortDashboard1.order = currentSortDashboard1.order === 'asc' ? 'desc' : 'asc';
                 } else {
-                    // Nova coluna, ordem padrão asc
                     currentSortDashboard1.column = column;
                     currentSortDashboard1.order = 'asc';
                 }
                 currentPageDashboard1 = 1;
                 updateResumoTable();
             } else if (tableType === 'empregados') {
-                // Verificar se está ordenando a mesma coluna
                 if (currentSortDashboard2.column === column) {
-                    // Inverter a ordem
                     currentSortDashboard2.order = currentSortDashboard2.order === 'asc' ? 'desc' : 'asc';
                 } else {
-                    // Nova coluna, ordem padrão asc
                     currentSortDashboard2.column = column;
                     currentSortDashboard2.order = 'asc';
                 }
@@ -3723,7 +3719,6 @@
         function exportResumoCSV() {
             if (filteredData.length === 0) return;
             
-            // Agrupar por órgão
             const grupos = {};
             filteredData.forEach(empregado => {
                 const orgao = empregado.orgao;

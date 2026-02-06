@@ -2497,117 +2497,152 @@
         }
 
         // ==================== CONFIGURAR EVENT LISTENERS ====================
-        function setupEventListeners() {
-            // Filtros Dashboard 1
-            document.getElementById('aplicarFiltros').addEventListener('click', function() {
-                applyFilters('dashboard1');
+function setupEventListeners() {
+    // Filtros Dashboard 1
+    const aplicarFiltrosBtn = document.getElementById('aplicarFiltros');
+    const limparFiltrosBtn = document.getElementById('limparFiltros');
+    
+    if (aplicarFiltrosBtn) {
+        aplicarFiltrosBtn.addEventListener('click', function() {
+            applyFilters('dashboard1');
+        });
+    }
+    
+    if (limparFiltrosBtn) {
+        limparFiltrosBtn.addEventListener('click', function() {
+            clearAllFilters();
+        });
+    }
+    
+    // Dashboard 2
+    const pesquisarEmpregadosBtn = document.getElementById('pesquisarEmpregados');
+    const limparFiltrosDashboard2Btn = document.getElementById('limparFiltrosDashboard2');
+    
+    if (pesquisarEmpregadosBtn) {
+        pesquisarEmpregadosBtn.addEventListener('click', function() {
+            applyFilters('dashboard2');
+        });
+    }
+    
+    if (limparFiltrosDashboard2Btn) {
+        limparFiltrosDashboard2Btn.addEventListener('click', function() {
+            clearDashboard2Filters();
+        });
+    }
+    
+    // Exportação Dashboard 1 - CORREÇÃO: Verificar se o elemento existe antes de usar
+    const exportCSVDashboard1Btn = document.getElementById('exportCSVDashboard1');
+    const printDashboard1Btn = document.getElementById('printDashboard1');
+    const shareDashboard1Btn = document.getElementById('shareDashboard1');
+    
+    if (exportCSVDashboard1Btn) {
+        exportCSVDashboard1Btn.addEventListener('click', () => exportToCSV('dashboard1'));
+    }
+    
+    if (printDashboard1Btn) {
+        printDashboard1Btn.addEventListener('click', () => printDashboard('dashboard1'));
+    }
+    
+    if (shareDashboard1Btn) {
+        shareDashboard1Btn.addEventListener('click', () => toggleShareDropdown(1));
+    }
+    
+    // Exportação Dashboard 2 - CORREÇÃO: Verificar se o elemento existe antes de usar
+    const exportCSVDashboard2Btn = document.getElementById('exportCSVDashboard2');
+    const printDashboard2Btn = document.getElementById('printDashboard2');
+    const shareDashboard2Btn = document.getElementById('shareDashboard2');
+    
+    if (exportCSVDashboard2Btn) {
+        exportCSVDashboard2Btn.addEventListener('click', () => exportToCSV('dashboard2'));
+    }
+    
+    if (printDashboard2Btn) {
+        printDashboard2Btn.addEventListener('click', () => printDashboard('dashboard2'));
+    }
+    
+    if (shareDashboard2Btn) {
+        shareDashboard2Btn.addEventListener('click', () => toggleShareDropdown(2));
+    }
+    
+    // Download
+    const downloadCSVBtn = document.getElementById('downloadCSV');
+    if (downloadCSVBtn) {
+        downloadCSVBtn.addEventListener('click', downloadFullCSV);
+    }
+    
+    // Campo de busca na Consulta
+    const searchEmpregadosInput = document.getElementById('searchEmpregados');
+    if (searchEmpregadosInput) {
+        searchEmpregadosInput.addEventListener('input', function(e) {
+            currentSearchTerm = e.target.value.toLowerCase();
+            filterEmpregadosTable(currentSearchTerm);
+        });
+    }
+    
+    // Itens por página Dashboard 1
+    const itemsPerPageDashboard1Select = document.getElementById('itemsPerPageDashboard1');
+    if (itemsPerPageDashboard1Select) {
+        itemsPerPageDashboard1Select.addEventListener('change', function() {
+            itemsPerPageDashboard1 = parseInt(this.value);
+            currentPageDashboard1 = 1;
+            updateResumoTable();
+            iframeUpdateHeight();
+        });
+    }
+    
+    // Itens por página Dashboard 2
+    const itemsPerPageDashboard2Select = document.getElementById('itemsPerPageDashboard2');
+    if (itemsPerPageDashboard2Select) {
+        itemsPerPageDashboard2Select.addEventListener('change', function() {
+            itemsPerPageDashboard2 = parseInt(this.value);
+            currentPageDashboard2 = 1;
+            updateEmpregadosTable();
+            iframeUpdateHeight();
+        });
+    }
+    
+    // Adicionar event listeners para ordenação
+    setTimeout(() => {
+        const visaoGeralThs = document.querySelectorAll('#visaoGeralTable th[data-sort]');
+        visaoGeralThs.forEach(th => {
+            th.addEventListener('click', function() {
+                const column = this.getAttribute('data-sort');
+                sortTable('visaoGeral', column);
             });
-            document.getElementById('limparFiltros').addEventListener('click', function() {
-                clearAllFilters();
+        });
+        
+        const empregadosTableThs = document.querySelectorAll('#empregadosTable th[data-sort]');
+        empregadosTableThs.forEach(th => {
+            th.addEventListener('click', function() {
+                const column = this.getAttribute('data-sort');
+                sortTable('empregados', column);
             });
-            
-            // Dashboard 2
-            document.getElementById('pesquisarEmpregados').addEventListener('click', function() {
-                applyFilters('dashboard2');
-            });
-            document.getElementById('limparFiltrosDashboard2').addEventListener('click', function() {
-                clearDashboard2Filters();
-            });
-            
-            // Exportação
-            document.getElementById('exportCSVDashboard1').addEventListener('click', () => exportToCSV('dashboard1'));
-            document.getElementById('printDashboard1').addEventListener('click', () => printDashboard('dashboard1'));
-            document.getElementById('exportCSVDashboard2').addEventListener('click', () => exportToCSV('dashboard2'));
-            document.getElementById('printDashboard2').addEventListener('click', () => printDashboard('dashboard2'));
-                        const compartilharLinkDashboard1Btn = document.getElementById('shareDashboard1');
-            
-            if (exportCSVDashboard1Btn) {
-                exportCSVDashboard1Btn.addEventListener('click', () => exportToCSV('dashboard1'));
-            }
-            
-            if (printDashboard1Btn) {
-                printDashboard1Btn.addEventListener('click', () => printDashboard('dashboard1'));
-            }
-            
-            if (compartilharLinkDashboard1Btn) {
-                compartilharLinkDashboard1Btn.addEventListener('click', () => toggleShareDropdown(1));
-            }
-            const compartilharLinkDashboard2Btn = document.getElementById('shareDashboard2');
-            
-            if (exportCSVDashboard2Btn) {
-                exportCSVDashboard2Btn.addEventListener('click', () => exportToCSV('dashboard2'));
-            }
-            
-            if (printDashboard2Btn) {
-                printDashboard2Btn.addEventListener('click', () => printDashboard('dashboard2'));
-            }
-            
-            if (compartilharLinkDashboard2Btn) {
-                compartilharLinkDashboard2Btn.addEventListener('click', () => toggleShareDropdown(2));
-            }
-            
-            // Download
-            const downloadCSVBtn = document.getElementById('downloadCSV');
-            if (downloadCSVBtn) {
-                downloadCSVBtn.addEventListener('click', downloadFullCSV);
-            }
-            
-            // Download por ano na aba Downloads
-            document.getElementById('downloadAnoCSV').addEventListener('click', downloadYearCSV);
-            
-            // Campo de busca na Consulta Individual
-            document.getElementById('searchEmpregados').addEventListener('input', function(e) {
-                currentSearchTerm = e.target.value.toLowerCase();
-                filterEmpregadosTable(currentSearchTerm);
-            });
-            
-            // Itens por página
-            document.getElementById('itemsPerPageDashboard1').addEventListener('change', function() {
-                itemsPerPageDashboard1 = parseInt(this.value);
-                currentPageDashboard1 = 1;
-                updateResumoTable();
-                iframeUpdateHeight();
-            });
-            
-            document.getElementById('itemsPerPageDashboard2').addEventListener('change', function() {
-                itemsPerPageDashboard2 = parseInt(this.value);
-                currentPageDashboard2 = 1;
-                updateEmpregadosTable();
-                iframeUpdateHeight();
-            });
-            
-            // Mudança de ano nos selects
-            document.getElementById('anoDashboard1').addEventListener('change', async function() {
-                const selectedYear = this.value;
-                if (selectedYear !== currentYear) {
-                    await switchYearData(selectedYear);
-                    iframeUpdateHeight();
-                }
-            });
-            
-            document.getElementById('anoDashboard2').addEventListener('change', async function() {
-                const selectedYear = this.value;
-                if (selectedYear !== currentYear) {
-                    await switchYearData(selectedYear);
-                    iframeUpdateHeight();
-                }
-            });
-            
-            // Adicionar event listeners para ordenação
-            document.querySelectorAll('#visaoGeralTable th[data-sort]').forEach(th => {
-                th.addEventListener('click', function() {
-                    const column = this.getAttribute('data-sort');
-                    sortTable('visaoGeral', column);
-                });
-            });
-            
-            document.querySelectorAll('#empregadosTable th[data-sort]').forEach(th => {
-                th.addEventListener('click', function() {
-                    const column = this.getAttribute('data-sort');
-                    sortTable('empregados', column);
-                });
-            });
-        }
+        });
+    }, 100);
+    
+    // Event listeners para opções de compartilhamento do dropdown
+    setTimeout(() => {
+        document.querySelectorAll('.link-share').forEach(btn => {
+            btn.addEventListener('click', copiarLink);
+        });
+        
+        document.querySelectorAll('.facebook-share').forEach(btn => {
+            btn.addEventListener('click', compartilharFacebook);
+        });
+        
+        document.querySelectorAll('.twitter-share').forEach(btn => {
+            btn.addEventListener('click', compartilharTwitter);
+        });
+        
+        document.querySelectorAll('.linkedin-share').forEach(btn => {
+            btn.addEventListener('click', compartilharLinkedIn);
+        });
+        
+        document.querySelectorAll('.whatsapp-share').forEach(btn => {
+            btn.addEventListener('click', compartilharWhatsApp);
+        });
+    }, 500);
+}
 
         // ==================== FUNÇÕES DE UTILIDADE ====================
         function showLoading(show) {

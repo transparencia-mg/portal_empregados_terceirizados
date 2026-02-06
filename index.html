@@ -2273,190 +2273,205 @@
         });
         
         // ==================== INICIALIZAÇÃO ====================
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('=== INICIANDO DASHBOARD TERCEIRIZADOS ===');
-            console.log('GitHub URL:', GITHUB_BASE_URL);
-            
-            setupEventListeners();
-            loadInitialData();
-            setupTooltips();
-            setupDescriptiveTooltips();
-            setupAtualizacaoData();
-            
-            console.log('Painel de Terceirizados carregado com sucesso!!!');
-            iframeUpdateHeight();
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('=== INICIANDO DASHBOARD TERCEIRIZADOS ===');
+    console.log('GitHub URL:', GITHUB_BASE_URL);
+    
+    removeAllScrollIssues();
+    setupEventListeners();
+    loadInitialData();
+    // Removi setupTooltips que não existe mais
+    setupAtualizacaoData();
+    
+    console.log('Painel de Empregados Terceirizados carregado com sucesso!!!');
+    iframeUpdateHeight();
+});
 
         // ==================== FUNÇÕES AUXILIARES DE INICIALIZAÇÃO ====================
         function removeAllScrollIssues() {
-            const elements = [
-                document.body,
-                document.documentElement,
-                document.querySelector('.main-container'),
-                document.querySelector('.container.dashboard-spacing'),
-                document.querySelector('.tab-content'),
-                ...document.querySelectorAll('.tab-pane'),
-                ...document.querySelectorAll('.table-container'),
-                ...document.querySelectorAll('.row'),
-                ...document.querySelectorAll('.col'),
-                ...document.querySelectorAll('.container'),
-                ...document.querySelectorAll('.container-fluid')
-            ];
-            
-            elements.forEach(el => {
-                if (el && el.style) {
-                    el.style.overflowY = 'visible !important';
-                    el.style.overflowX = 'visible !important';
-                    el.style.overflow = 'visible !important';
-                }
-            });
-            
-            document.body.classList.remove('overflow-auto');
-            document.documentElement.classList.remove('overflow-auto');
-            
-            document.documentElement.style.height = 'auto';
-            document.body.style.height = 'auto';
+    const elements = [
+        document.body,
+        document.documentElement,
+        document.querySelector('.main-container'),
+        document.querySelector('.container.dashboard-spacing'),
+        document.querySelector('.tab-content'),
+        ...document.querySelectorAll('.tab-pane'),
+        ...document.querySelectorAll('.table-container'),
+        ...document.querySelectorAll('.row'),
+        ...document.querySelectorAll('.col'),
+        ...document.querySelectorAll('.container'),
+        ...document.querySelectorAll('.container-fluid')
+    ];
+    
+    elements.forEach(el => {
+        if (el && el.style) {
+            el.style.overflowY = 'visible !important';
+            el.style.overflowX = 'visible !important';
+            el.style.overflow = 'visible !important';
         }
+    });
+    
+    document.body.classList.remove('overflow-auto');
+    document.documentElement.classList.remove('overflow-auto');
+    
+    document.documentElement.style.height = 'auto';
+    document.body.style.height = 'auto';
+}
 
-        function iframeUpdateHeight() {
-            document.body.style.display = 'none';
-            document.body.offsetHeight;
-            document.body.style.display = '';
-            
-            const html = document.documentElement;
-            const body = document.body;
-            
-            const scrollHeight = Math.max(
-                body.scrollHeight, 
-                html.scrollHeight,
-                body.offsetHeight, 
-                html.offsetHeight
-            );
-            
-            const finalHeight = scrollHeight + 10;
-            
-            window.parent.postMessage({ 
-                iframeHeight: finalHeight 
-            }, '*');
-            
-            return finalHeight;
-        }
+function iframeUpdateHeight() { 
+    try {
+        const html = document.documentElement;
+        const body = document.body;
+        
+        const scrollHeight = Math.max(
+            body.scrollHeight, 
+            html.scrollHeight,
+            body.offsetHeight, 
+            html.offsetHeight
+        );
+        
+        const finalHeight = scrollHeight + 10;
+        
+        window.parent.postMessage({ 
+            iframeHeight: finalHeight 
+        }, '*');
+        
+        return finalHeight;
+    } catch(e) {
+        console.log('Erro ao atualizar altura do iframe:', e);
+    }
+}
 
-        function loadInitialData() {
-            showLoading(true);
+function loadInitialData() {
+    showLoading(true);
+    
+    try {
+        loadData().then(() => {
+            updateDataAtualizacao();
+            updateFilterOptions();
+            updateDashboard1();
+            initializeDashboard2();
+            updateDashboard3();
+            showLoading(false);
             
-            try {
-                loadData().then(() => {
-                    updateDataAtualizacao();
-                    updateFilterOptions();
-                    updateDashboard1();
-                    initializeDashboard2();
-                    updateDashboard3();
-                    showLoading(false);
-                    
-                    iframeUpdateHeight();
-                }).catch(error => {
-                    console.error('Erro ao carregar dados:', error);
-                    showError('Erro ao carregar dados do CSV.');
-                    showLoading(false);
-                });
-                
-            } catch (error) {
-                console.error('Erro ao carregar dados:', error);
-                showError('Erro ao carregar dados do CSV.');
-                showLoading(false);
-            }
-        }
+            iframeUpdateHeight();
+        }).catch(error => {
+            console.error('Erro ao carregar dados:', error);
+            showError('Erro ao carregar dados do GitHub. Por favor, tente novamente.');
+            showLoading(false);
+        });
+        
+    } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        showError('Erro ao carregar dados do GitHub. Por favor, tente novamente.');
+        showLoading(false);
+    }
+}
 
-        function setupAtualizacaoData() {
-            setInterval(updateDataAtualizacao, 60000);
-        }
+function setupAtualizacaoData() {
+    setInterval(updateDataAtualizacao, 60000);
+}
 
 
         // ==================== CARREGAR DADOS DO GITHUB ====================
-        async function loadYearData(year) {
-            if (allData[year]) {
-                console.log(`Dados de ${year} já carregados.`);
-                terceirizadosData = allData[year];
-                return;
-            }
-
-            const filename = CSV_FILES_BY_YEAR[year];
-            if (!filename) {
-                console.error(`Arquivo para o ano ${year} não encontrado.`);
-                return;
-            }
-
-            const url = `${GITHUB_BASE_URL}${filename}`;
-            console.log(`Carregando dados de ${year}: ${url}`);
-
-            return new Promise((resolve, reject) => {
-                Papa.parse(url, {
-                    download: true,
-                    header: true,
-                    skipEmptyLines: true,
-                    encoding: 'UTF-8',
-                    delimiter: ";",
-                    complete: function (results) {
-                        console.log(`Resultados brutos do Papa Parse para ${year}:`, results);
-                        
-                        const data = results.data.map(row => {
-                            const matricula = row.matricula || row['MAT.'] || row['MAT'] || '';
-                            const nome = row.nome || row['NOME'] || '';
-                            let orgao = row.orgao || row['ÓRGÃO'] || '';
-                            const cargo = row.cargo || row['CARGO'] || '';
-                            let empresa = row.empresa || row['EMPRESA'] || '';
-                            const cnpj_empresa = row.cnpj_empresa || row['CNPJ EMPRESA'] || '';
-                            const mes_referencia = row.mes_referencia || row['MÊS REFERÊNCIA'] || '';
-
-                            if (empresa.includes('MINAS GERAIS ADMINISTRA')) {
-                                empresa = 'MINAS GERAIS ADMINISTRACAO E SERVICOS S.A';
-                            }
-
-                            if (orgaosSiglas[orgao]) {
-                                orgao = orgaosSiglas[orgao];
-                            }
-
-                            let COMPETENCIA = null;
-                            let ANO = '';
-                            let MES_NUM = '';
-                            
-                            if (mes_referencia && mes_referencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                                const [ano, mes, dia] = mes_referencia.split('-');
-                                COMPETENCIA = `${ano}-${mes}`;
-                                ANO = ano;
-                                MES_NUM = mes;
-                            }
-                            
-                            return {
-                                matricula: matricula,
-                                nome: nome,
-                                orgao: orgao,
-                                cargo: cargo,
-                                empresa: empresa,
-                                cnpj_empresa: cnpj_empresa,
-                                mes_referencia: mes_referencia,
-                                COMPETENCIA: COMPETENCIA,
-                                ANO: ANO,
-                                MES_NUM: MES_NUM,
-                                ORGAO_NOME_COMPLETO: getOrgaoExtenso(orgao)
-                            };
-                        }).filter(e => e.COMPETENCIA !== null);
-
-                        console.log(`Dados de ${year} processados: ${data.length} registros válidos de ${results.data.length} totais`);
-                        
-                        allData[year] = data;
-                        terceirizadosData = data;
-
-                        resolve();
-                    },
-                    error: function (err) {
-                        console.error(`Erro ao carregar dados de ${year}:`, err);
-                        reject(err);
-                    }
-                });
-            });
+function loadData() {
+    return new Promise((resolve, reject) => {
+        // Carrega o ano mais recente (2025)
+        const year = '2025';
+        const filename = CSV_FILES_BY_YEAR[year];
+        if (!filename) {
+            reject(new Error(`Arquivo para o ano ${year} não encontrado.`));
+            return;
         }
+        
+        const url = `${GITHUB_BASE_URL}${filename}`;
+        console.log(`Carregando dados de ${year}: ${url}`);
+        
+        Papa.parse(url, {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            encoding: 'UTF-8',
+            delimiter: ";",
+            complete: function (results) {
+                console.log(`Resultados brutos do Papa Parse para ${year}:`, results);
+                
+                const data = results.data.map(row => {
+                    const matricula = row.matricula || row['MAT.'] || row['MAT'] || '';
+                    const nome = row.nome || row['NOME'] || '';
+                    let orgao = row.orgao || row['ÓRGÃO'] || '';
+                    const cargo = row.cargo || row['CARGO'] || '';
+                    let empresa = row.empresa || row['EMPRESA'] || '';
+                    const cnpj_empresa = row.cnpj_empresa || row['CNPJ EMPRESA'] || '';
+                    const mes_referencia = row.mes_referencia || row['MÊS REFERÊNCIA'] || '';
+
+                    if (empresa.includes('MINAS GERAIS ADMINISTRA')) {
+                        empresa = 'MINAS GERAIS ADMINISTRACAO E SERVICOS S.A';
+                    }
+
+                    let COMPETENCIA = null;
+                    let ANO = '';
+                    let MES_NUM = '';
+                    
+                    if (mes_referencia && mes_referencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                        const [ano, mes, dia] = mes_referencia.split('-');
+                        COMPETENCIA = `${ano}-${mes}`;
+                        ANO = ano;
+                        MES_NUM = mes;
+                    }
+                    
+                    return {
+                        matricula: matricula,
+                        nome: nome,
+                        orgao: orgao,
+                        cargo: cargo,
+                        empresa: empresa,
+                        cnpj_empresa: cnpj_empresa,
+                        mes_referencia: mes_referencia,
+                        COMPETENCIA: COMPETENCIA,
+                        ANO: ANO,
+                        MES_NUM: MES_NUM
+                    };
+                }).filter(e => e.COMPETENCIA !== null);
+
+                console.log(`Dados de ${year} processados: ${data.length} registros válidos de ${results.data.length} totais`);
+                
+                terceirizadosData = data;
+                
+                // Determina o mês mais recente
+                const competencias = [...new Set(
+                    terceirizadosData
+                        .map(e => e.COMPETENCIA)
+                        .filter(Boolean)
+                )].sort((a, b) => {
+                    const [anoA, mesA] = a.split('-').map(Number);
+                    const [anoB, mesB] = b.split('-').map(Number);
+                    
+                    if (anoB !== anoA) return anoB - anoA;
+                    return mesB - mesA;
+                });
+
+                if (competencias.length > 0) {
+                    const [ano, mes] = competencias[0].split('-');
+                    currentYear = ano;
+                    currentMonth = mes;
+                    filteredData = terceirizadosData.filter(
+                        e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
+                    );
+                } else {
+                    filteredData = terceirizadosData;
+                }
+
+                console.log(`Mês mais recente encontrado: ${currentMonth}/${currentYear} - ${filteredData.length} registros`);
+                resolve();
+            },
+            error: function (err) {
+                console.error(`Erro ao carregar dados:`, err);
+                reject(err);
+            }
+        });
+    });
+}
 
         // ==================== DETERMINAR MÊS MAIS RECENTE ====================
         async function determineLatestMonth() {
@@ -2645,56 +2660,59 @@ function setupEventListeners() {
 }
 
         // ==================== FUNÇÕES DE UTILIDADE ====================
-        function showLoading(show) {
-            const overlay = document.getElementById('loadingOverlay');
-            if (overlay) {
-                overlay.style.display = show ? 'flex' : 'none';
-            }
-        }
+function showLoading(show) {
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) {
+        overlay.style.display = show ? 'flex' : 'none';
+    }
+}
 
-        function showError(message) {
-            const container = document.querySelector('.container');
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'alert alert-danger alert-dismissible fade show';
-            errorDiv.innerHTML = `
-                <i class="fas fa-exclamation-triangle me-2"></i>
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            `;
-            container.prepend(errorDiv);
-            
-            iframeUpdateHeight();
-        }
+function showError(message) {
+    const container = document.querySelector('.container');
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'alert alert-danger alert-dismissible fade show';
+    errorDiv.innerHTML = `
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    container.prepend(errorDiv);
+    
+    iframeUpdateHeight();
+}
 
-        function updateDataAtualizacao() {
-            const now = new Date();
-            const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
-            const elementoData = document.getElementById('data-atualizacao-header');
-            if (elementoData) {
-                elementoData.textContent = dataFormatada;
-            }
-            console.log('Data de atualização definida:', dataFormatada);
-        }
+function updateDataAtualizacao() {
+    const now = new Date();
+    const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
+    const elementoData = document.getElementById('data-atualizacao-header');
+    if (elementoData) {
+        elementoData.textContent = dataFormatada;
+    }
+    console.log('Data de atualização definida:', dataFormatada);
+}
 
-        function getOrgaoExtenso(orgaoSigla) {
-            if (!orgaoSigla) return '';
-            
-            if (orgaosSiglas[orgaoSigla]) {
-                orgaoSigla = orgaosSiglas[orgaoSigla];
-            }
-            
-            for (const [sigla, nome] of Object.entries(orgaosExtenso)) {
-                if (orgaoSigla.toUpperCase().includes(sigla)) {
-                    return nome;
-                }
-            }
-            
-            if (orgaoSigla.startsWith('1100 - ')) {
-                orgaoSigla = orgaoSigla.substring(7);
-            }
-            
-            return orgaoSigla;
-        }
+function formatDate(dateString) {
+    if (!dateString) return '-';
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        return dateString;
+    }
+    return date.toLocaleDateString('pt-BR');
+}
+
+function getTotal(dataset) {
+    return dataset._total || (dataset._total = dataset.data.reduce((a, b) => a + b, 0));
+}
+
+function destroyChart(chart) {
+    if (chart) chart.destroy();
+}
+
+function shortenLabel(label, maxLength = 20) {
+    if (label.length <= maxLength) return label;
+    return label.substring(0, maxLength - 3) + '...';
+}
 
         // ==================== FUNÇÕES DE ANO E MES ====================
         async function switchYearData(year) {
@@ -3736,354 +3754,325 @@ function updateCargoChart() {
         };
 
         // ==================== FUNÇÃO PARA MOSTRAR HISTÓRICO ====================
-        window.showEmployeeHistory = function(matricula, nome) {
-            showLoading(true);
-            
-            try {
-                const historico = [];
-                let ultimoRegistro = null;
-                
-                const loadAllYears = async () => {
-                    const years = Object.keys(CSV_FILES_BY_YEAR);
-                    for (const year of years) {
-                        if (!allData[year]) {
-                            await loadYearData(year);
-                        }
-                    }
-                };
-                
-                loadAllYears().then(() => {
-                    Object.keys(allData).forEach(ano => {
-                        const dadosAno = allData[ano];
-                        const registrosAno = dadosAno.filter(e => 
-                            e.matricula === matricula || e.nome === nome
-                        );
-                        
-                        registrosAno.forEach(registro => {
-                            historico.push(registro);
-                            if (!ultimoRegistro || 
-                                (registro.ANO > ultimoRegistro.ANO) ||
-                                (registro.ANO === ultimoRegistro.ANO && 
-                                 registro.MES_NUM > ultimoRegistro.MES_NUM)) {
-                                ultimoRegistro = registro;
-                            }
-                        });
-                    });
-                    
-                    historico.sort((a, b) => {
-                        if (a.ANO !== b.ANO) return parseInt(b.ANO) - parseInt(a.ANO);
-                        return parseInt(b.MES_NUM) - parseInt(a.MES_NUM);
-                    });
-                    
-                    const empregado = ultimoRegistro || historico[0];
-                    
-                    const modal = new bootstrap.Modal(document.getElementById('historicModal'));
-                    
-                    const infoHTML = `
-                        <div class="employee-info-grid">
-                            <div class="info-item">
-                                <span class="info-label">Matrícula</span>
-                                <span class="info-value">${empregado.matricula}</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Nome</span>
-                                <span class="info-value">${empregado.nome}</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Órgão Atual</span>
-                                <span class="info-value">${getOrgaoExtenso(empregado.orgao)}</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Cargo Atual</span>
-                                <span class="info-value">${empregado.cargo}</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Empresa Atual</span>
-                                <span class="info-value">${empregado.empresa}</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">CNPJ Empresa</span>
-                                <span class="info-value">${empregado.cnpj_empresa}</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Total de Registros</span>
-                                <span class="info-value">${historico.length} meses</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Período</span>
-                                <span class="info-value">${historico.length > 0 ? 
-                                    `${formatarDataBR(historico[historico.length-1].mes_referencia)} a ${formatarDataBR(historico[0].mes_referencia)}` : 
-                                    'N/A'}</span>
-                            </div>
-                        </div>
-                    `;
-                    
-                    document.getElementById('employeeInfo').innerHTML = infoHTML;
-                    
-                    document.getElementById('historicModalLabel').innerHTML = `
-                        <i class="fas fa-history me-2"></i>${empregado.nome}
-                    `;
-                    
-                    const historicHTML = historico.map(registro => `
-                        <tr>
-                            <td>${formatarDataBR(registro.mes_referencia)}</td>
-                            <td>${getOrgaoExtenso(registro.orgao)}</td>
-                            <td>${registro.cargo}</td>
-                            <td>${registro.empresa}</td>
-                            <td>${registro.cnpj_empresa}</td>
-                        </tr>
-                    `).join('');
-                    
-                    document.getElementById('historicTableBody').innerHTML = historicHTML || 
-                        '<tr><td colspan="5" class="text-center text-muted">Nenhum histórico encontrado</td></tr>';
-                    
-                    modal.show();
-                    showLoading(false);
-                    
-                    iframeUpdateHeight();
-                }).catch(error => {
-                    console.error('Erro ao carregar histórico:', error);
-                    showError('Erro ao carregar histórico do empregado.');
-                    showLoading(false);
-                });
-                
-            } catch (error) {
-                console.error('Erro ao carregar histórico:', error);
-                showError('Erro ao carregar histórico do empregado.');
-                showLoading(false);
-            }
-        };
+window.showEmployeeHistory = function(matricula, nome) {
+    showLoading(true);
+    
+    try {
+        // Para simplificar, vamos usar apenas os dados já carregados
+        const historico = terceirizadosData.filter(empregado => 
+            empregado.matricula === matricula || empregado.nome === nome
+        );
+        
+        historico.sort((a, b) => {
+            if (a.ANO !== b.ANO) return parseInt(b.ANO) - parseInt(a.ANO);
+            return parseInt(b.MES_NUM) - parseInt(a.MES_NUM);
+        });
+        
+        const empregado = historico[0] || {};
+        
+        const modal = new bootstrap.Modal(document.getElementById('historicModal'));
+        
+        const infoHTML = `
+            <div class="info-grid">
+                <div class="info-card primary">
+                    <div class="info-label">Matrícula</div>
+                    <div class="info-value highlight">${empregado.matricula || '-'}</div>
+                    <div class="info-label mt-2">Nome</div>
+                    <div class="info-value">${empregado.nome || '-'}</div>
+                </div>
 
-        function formatarDataBR(dataString) {
-            if (!dataString) return '';
-            
-            const regex = /^(\d{4})-(\d{2})-(\d{2})$/;
-            const match = dataString.match(regex);
-            
-            if (match) {
-                const [, ano, mes, dia] = match;
-                return `${dia}-${mes}-${ano}`;
-            }
-            
-            return dataString;
-        }
+                <div class="info-card success">
+                    <div class="info-label">Órgão Atual</div>
+                    <div class="info-value">${empregado.orgao || '-'}</div>
+                    <div class="info-label mt-2">Cargo Atual</div>
+                    <div class="info-value">${empregado.cargo || '-'}</div>
+                </div>
+
+                <div class="info-card warning">
+                    <div class="info-label">Empresa Atual</div>
+                    <div class="info-value">${empregado.empresa || '-'}</div>
+                    <div class="info-label mt-2">CNPJ Empresa</div>
+                    <div class="info-value">${empregado.cnpj_empresa || '-'}</div>
+                </div>
+
+                <div class="info-card info">
+                    <div class="info-label">Total de Registros</div>
+                    <div class="info-value">${historico.length} meses</div>
+                    <div class="info-label mt-2">Período</div>
+                    <div class="info-value">${historico.length > 0 ? 
+                        `${formatarDataBR(historico[historico.length-1].mes_referencia)} a ${formatarDataBR(historico[0].mes_referencia)}` : 
+                        'N/A'}</div>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('employeeInfo').innerHTML = infoHTML;
+        
+        document.getElementById('historicModalLabel').innerHTML = `
+            <i class="material-icons me-2">history</i>${empregado.nome || 'Histórico'}
+        `;
+        
+        const historicHTML = historico.map(registro => `
+            <tr>
+                <td>${formatarDataBR(registro.mes_referencia)}</td>
+                <td>${registro.orgao}</td>
+                <td>${registro.cargo}</td>
+                <td>${registro.empresa}</td>
+                <td>${registro.cnpj_empresa}</td>
+            </tr>
+        `).join('');
+        
+        document.getElementById('historicTableBody').innerHTML = historicHTML || 
+            '<tr><td colspan="5" class="text-center text-muted">Nenhum histórico encontrado</td></tr>';
+        
+        modal.show();
+        showLoading(false);
+        
+        iframeUpdateHeight();
+        
+    } catch (error) {
+        console.error('Erro ao carregar histórico:', error);
+        showError('Erro ao carregar histórico do empregado.');
+        showLoading(false);
+    }
+};
+
+function formatarDataBR(dataString) {
+    if (!dataString) return '';
+    
+    const regex = /^(\d{4})-(\d{2})-(\d{2})$/;
+    const match = dataString.match(regex);
+    
+    if (match) {
+        const [, ano, mes, dia] = match;
+        return `${dia}-${mes}-${ano}`;
+    }
+    
+    return dataString;
+}
+
 
         // ==================== DASHBOARD 3: DOWNLOADS ====================
-        function updateDashboard3() {
-            // Nada a fazer aqui
+function updateDashboard3() {
+    iframeUpdateHeight();
+}
+
+async function downloadFullCSV() {
+    const year = document.getElementById('anoDownload').value;
+    
+    showLoading(true);
+    
+    try {
+        let dataToDownload;
+        
+        if (!year) {
+            dataToDownload = terceirizadosData;
+        } else {
+            // Aqui você precisaria implementar a lógica para carregar dados do ano específico
+            alert('Funcionalidade de download por ano específico requer implementação adicional');
+            showLoading(false);
+            return;
         }
-
-        async function downloadYearCSV() {
-            const year = document.getElementById('anoDownload').value;
-            if (!year) {
-                alert('Por favor, selecione um ano para download.');
-                return;
-            }
-            
-            showLoading(true);
-            
-            try {
-                if (!allData[year]) {
-                    await loadYearData(year);
-                }
-                
-                const data = allData[year];
-                if (!data || data.length === 0) {
-                    alert(`Nenhum dado disponível para o ano ${year}.`);
-                    showLoading(false);
-                    return;
-                }
-                
-                const headers = ['matricula', 'nome', 'orgao_sigla', 'orgao_nome_completo', 'cargo', 'empresa', 'cnpj_empresa', 'mes_referencia'];
-                const csvContent = [
-                    headers.join(';'),
-                    ...data.map(empregado => [
-                        empregado.matricula,
-                        empregado.nome,
-                        empregado.orgao,
-                        getOrgaoExtenso(empregado.orgao),
-                        empregado.cargo,
-                        empregado.empresa,
-                        empregado.cnpj_empresa,
-                        empregado.mes_referencia
-                    ].map(cell => `"${cell}"`).join(';'))
-                ].join('\n');
-                
-                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                const link = document.createElement('a');
-                const url = URL.createObjectURL(blob);
-                
-                link.setAttribute('href', url);
-                link.setAttribute('download', `empregados_terceirizados_${year}.csv`);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                console.log(`Download do ano ${year} realizado: ${data.length} registros`);
-                
-            } catch (error) {
-                console.error(`Erro ao baixar dados de ${year}:`, error);
-                alert(`Erro ao baixar dados de ${year}. Por favor, tente novamente.`);
-            } finally {
-                showLoading(false);
-            }
+        
+        if (!dataToDownload || dataToDownload.length === 0) {
+            alert(`Nenhum dado disponível ${year ? 'para o ano ' + year : ''}.`);
+            showLoading(false);
+            return;
         }
-
-        // ==================== FUNÇÕES GLOBAIS E UTILITÁRIOS ====================
-
-        window.filtrarPorOrgao = function(orgao) {
-            console.log('Filtrando por órgão:', orgao);
-            
-            try {
-                const tabElement = document.getElementById('dashboard2-tab');
-                if (tabElement) {
-                    const tab = new bootstrap.Tab(tabElement);
-                    tab.show();
-                    
-                    setTimeout(() => {
-                        const orgaoElement = document.getElementById('orgaoDashboard2');
-                        if (orgaoElement) {
-                            orgaoElement.value = getOrgaoExtenso(orgao);
-                        }
-                        
-                        document.getElementById('nomeEmpregado').value = '';
-                        document.getElementById('cargoDashboard2').value = '';
-                        document.getElementById('empresaDashboard2').value = '';
-                        document.getElementById('matriculaDashboard2').value = '';
-                        document.getElementById('searchEmpregados').value = '';
-                        
-                        document.getElementById('anoDashboard2').value = currentYear;
-                        document.getElementById('mesDashboard2').value = currentMonth;
-                        
-                        applyFilters('dashboard2');
-                        
-                        const tableContainer = document.querySelector('#dashboard2 .table-container');
-                        if (tableContainer) {
-                            tableContainer.scrollIntoView({ behavior: 'smooth' });
-                        }
-                        
-                        iframeUpdateHeight();
-                    }, 350);
-                } else {
-                    console.error('Elemento da aba não encontrado');
-                }
-            } catch (error) {
-                console.error('Erro ao filtrar por órgão:', error);
-                showError('Erro ao filtrar por órgão. Por favor, tente novamente.');
-            }
-        };
-
-        // ==================== FUNÇÕES DE ORDENAÇÃO ====================
-        window.sortTable = function(tableType, column) {
-            if (tableType === 'visaoGeral') {
-                if (currentSortDashboard1.column === column) {
-                    currentSortDashboard1.order = currentSortDashboard1.order === 'asc' ? 'desc' : 'asc';
-                } else {
-                    currentSortDashboard1.column = column;
-                    currentSortDashboard1.order = 'asc';
-                }
-                currentPageDashboard1 = 1;
-                updateResumoTable();
-            } else if (tableType === 'empregados') {
-                if (currentSortDashboard2.column === column) {
-                    currentSortDashboard2.order = currentSortDashboard2.order === 'asc' ? 'desc' : 'asc';
-                } else {
-                    currentSortDashboard2.column = column;
-                    currentSortDashboard2.order = 'asc';
-                }
-                currentPageDashboard2 = 1;
-                updateEmpregadosTable();
-            }
-            
-            iframeUpdateHeight();
-        };
-
-        // ==================== FUNÇÕES DE EXPORTAÇÃO ====================
-        function exportToCSV(source) {
-            if (source === 'dashboard1') {
-                exportResumoCSV();
-            } else if (source === 'dashboard2') {
-                exportEmpregadosCSV();
-            }
-        }
-
-        function printDashboard(source) {
-            window.print();
-        }
-
-        function exportResumoCSV() {
-            if (filteredData.length === 0) return;
-            
-            const grupos = {};
-            filteredData.forEach(empregado => {
-                const orgao = empregado.orgao;
-                if (!grupos[orgao]) {
-                    grupos[orgao] = {
-                        orgao: orgao,
-                        orgao_extenso: getOrgaoExtenso(orgao),
-                        count: 0
-                    };
-                }
-                grupos[orgao].count++;
-            });
-            
-            const headers = ['Órgão (Sigla)', 'Órgão (Nome Completo)', 'Quantidade de Empregados'];
-            const data = Object.values(grupos).map(info => [
-                info.orgao,
-                info.orgao_extenso,
-                info.count
-            ]);
-            
-            const csvContent = [
-                headers.join(';'),
-                ...data.map(row => row.map(cell => `"${cell}"`).join(';'))
-            ].join('\n');
-            
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            
-            link.setAttribute('href', url);
-            link.setAttribute('download', `visao_geral_orgaos_terceirizados_${currentYear}_${currentMonth}.csv`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function exportEmpregadosCSV() {
-            if (filteredData.length === 0) return;
-            
-            const headers = ['matricula', 'nome', 'orgao_sigla', 'orgao_nome_completo', 'cargo', 'empresa', 'cnpj_empresa', 'mes_referencia', 'ANO'];
-            const data = filteredData.map(empregado => [
+        
+        const headers = ['matricula', 'nome', 'orgao', 'cargo', 'empresa', 'cnpj_empresa', 'mes_referencia', 'ANO', 'MES_NUM'];
+        const csvContent = [
+            headers.join(';'),
+            ...dataToDownload.map(empregado => [
                 empregado.matricula,
                 empregado.nome,
                 empregado.orgao,
-                getOrgaoExtenso(empregado.orgao),
                 empregado.cargo,
                 empregado.empresa,
                 empregado.cnpj_empresa,
                 empregado.mes_referencia,
-                empregado.ANO || ''
-            ]);
+                empregado.ANO,
+                empregado.MES_NUM
+            ].map(cell => `"${cell}"`).join(';'))
+        ].join('\n');
+        
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        
+        const filename = !year ? 'empregados_terceirizados_completo.csv' : `empregados_terceirizados_${year}.csv`;
+        
+        link.setAttribute('href', url);
+        link.setAttribute('download', filename);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        console.log(`Download realizado: ${dataToDownload.length} registros`);
+        
+    } catch (error) {
+        console.error(`Erro ao baixar dados:`, error);
+        alert(`Erro ao baixar dados. Por favor, tente novamente.`);
+    } finally {
+        showLoading(false);
+    }
+}
+
+        // ==================== FUNÇÕES GLOBAIS E UTILITÁRIOS ====================
+
+          window.filtrarPorOrgao = function(orgao) {
+    console.log('Filtrando por órgão:', orgao);
+    
+    try {
+        const tabElement = document.getElementById('dashboard2-tab');
+        if (tabElement) {
+            const tab = new bootstrap.Tab(tabElement);
+            tab.show();
             
-            const csvContent = [
-                headers.join(';'),
-                ...data.map(row => row.map(cell => `"${cell}"`).join(';'))
-            ].join('\n');
-            
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            
-            link.setAttribute('href', url);
-            link.setAttribute('download', `empregados_terceirizados_${currentYear}_${currentMonth}.csv`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            setTimeout(() => {
+                const orgaoElement = document.getElementById('orgaoDashboard2');
+                if (orgaoElement) {
+                    orgaoElement.value = orgao;
+                }
+                
+                document.getElementById('nomeEmpregado').value = '';
+                document.getElementById('cargoDashboard2').value = '';
+                document.getElementById('empresaDashboard2').value = '';
+                document.getElementById('matriculaDashboard2').value = '';
+                document.getElementById('searchEmpregados').value = '';
+                
+                document.getElementById('anoDashboard2').value = currentYear;
+                document.getElementById('mesDashboard2').value = currentMonth;
+                
+                applyFilters('dashboard2');
+                
+                const tableContainer = document.querySelector('#dashboard2 .table-container');
+                if (tableContainer) {
+                    tableContainer.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                iframeUpdateHeight();
+            }, 350);
+        } else {
+            console.error('Elemento da aba não encontrado');
         }
+    } catch (error) {
+        console.error('Erro ao filtrar por órgão:', error);
+        showError('Erro ao filtrar por órgão. Por favor, tente novamente.');
+    }
+};
+
+        // ==================== FUNÇÕES DE ORDENAÇÃO ====================
+        window.sortTable = function(tableType, column) {
+    if (tableType === 'visaoGeral') {
+        if (currentSortDashboard1.column === column) {
+            currentSortDashboard1.order = currentSortDashboard1.order === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSortDashboard1.column = column;
+            currentSortDashboard1.order = 'asc';
+        }
+        currentPageDashboard1 = 1;
+        updateResumoTable();
+    } else if (tableType === 'empregados') {
+        if (currentSortDashboard2.column === column) {
+            currentSortDashboard2.order = currentSortDashboard2.order === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSortDashboard2.column = column;
+            currentSortDashboard2.order = 'asc';
+        }
+        currentPageDashboard2 = 1;
+        updateEmpregadosTable();
+    }
+    
+    iframeUpdateHeight();
+};
+
+        // ==================== FUNÇÕES DE EXPORTAÇÃO ====================
+        function exportToCSV(source) {
+    if (source === 'dashboard1') {
+        exportResumoCSV();
+    } else if (source === 'dashboard2') {
+        exportEmpregadosCSV();
+    }
+}
+
+function printDashboard(source) {
+    window.print();
+}
+
+function exportResumoCSV() {
+    if (filteredData.length === 0) return;
+    
+    const grupos = {};
+    filteredData.forEach(empregado => {
+        const orgao = empregado.orgao;
+        if (!grupos[orgao]) {
+            grupos[orgao] = {
+                orgao: orgao,
+                count: 0
+            };
+        }
+        grupos[orgao].count++;
+    });
+    
+    const headers = ['Órgão', 'Quantidade de Empregados'];
+    const data = Object.values(grupos).map(info => [
+        info.orgao,
+        info.count
+    ]);
+    
+    const csvContent = [
+        headers.join(';'),
+        ...data.map(row => row.map(cell => `"${cell}"`).join(';'))
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    
+    const filename = `visao_geral_empregados_${currentYear}_${currentMonth}.csv`;
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function exportEmpregadosCSV() {
+    if (filteredData.length === 0) return;
+    
+    const headers = ['matricula', 'nome', 'orgao', 'cargo', 'empresa', 'cnpj_empresa', 'mes_referencia'];
+    const data = filteredData.map(empregado => [
+        empregado.matricula,
+        empregado.nome,
+        empregado.orgao,
+        empregado.cargo,
+        empregado.empresa,
+        empregado.cnpj_empresa,
+        empregado.mes_referencia
+    ]);
+    
+    const csvContent = [
+        headers.join(';'),
+        ...data.map(row => row.map(cell => `"${cell}"`).join(';'))
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    
+    const filename = `empregados_terceirizados_${currentYear}_${currentMonth}.csv`;
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
     </script>
 </body>
 </html>

@@ -20,7 +20,7 @@
         /* ==================== VARIÁVEIS DE CORES ==================== */
         :root {
             --primary-dark: #29435A;
-            --primary-darker: #132837;
+            --primary-darker: #0E2F44;
             --accent-red: #B93C42;
             --accent-bright: #DB233F;
             --background-light: #EEEFF5;
@@ -31,6 +31,20 @@
             --secondary-brown: #8B7355;
             --secondary-teal: #20B2AA;
             --hover-blue: #006a82;
+            
+            /* ===== NOVAS PARA GRÁFICOS ===== */
+            --chart-blue-1: #2F5D8A;
+            --chart-blue-2: #4A7DAA;
+            --chart-blue-3: #1F6F8B;
+            --chart-orange-1: #D97A30;
+            --chart-orange-2: #C65A2C;
+            --chart-red-2: #A8323A;
+            --chart-green-1: #2F7A5C;
+            --chart-green-2: #5A8F6E;
+            --chart-lime: #7FAF3F;
+            --chart-purple: #6B5B95;
+            --chart-gray: #6C7A89;
+            --chart-brown: #9C6B4A;
         }
         
         /* ==================== ESTILOS GERAIS ==================== */
@@ -235,230 +249,215 @@
             color: var(--success-green);
         }
         
-        /* ==================== CONTAINER DE GRÁFICOS ==================== */
-        .chart-container {
-            background: white;
-            border-radius: 10px;
+        /* ==================== NOVOS GRÁFICOS - ESTILO MODERNO E CLARO ==================== */
+.dashboard-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 1200px) {
+    .dashboard-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-2 {
+        gap: 15px;
+    }
+}
+
+        .card-chart {
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid #e9ecef;
             padding: 20px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-            margin-bottom: 20px;
-            height: 100%;
-            min-height: 320px;
-        }
-        
-        .chart-header {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            height: 320px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--background-light);
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        
-        .chart-title {
+
+        .card-chart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-chart h3 {
+            margin: 0 0 16px 0;
+            color: #1a1f36;
             font-size: 16px;
-            font-weight: 600;
-            color: var(--primary-dark);
-            margin: 0;
+            font-weight: 700;
+            line-height: 1.4;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f1f3f9;
         }
-        
+
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 16px;
+            flex: 1;
+            min-height: 0;
+            align-items: center;
+        }
+
         .chart-wrapper {
-            position: relative;
-            height: 260px;
-            width: 100%;
-        }
-        
-        /* ==================== LAYOUT ESPECÍFICO PARA GRÁFICO DE PIZZA ==================== */
-        .chart-container.pie-chart .chart-wrapper {
-            display: flex;
-            height: 240px;
-            gap: 20px;
-        }
-
-        .chart-container.pie-chart .chart-canvas-container {
             flex: 1;
+            min-width: 190px;
+            height: 190px;
             position: relative;
-            min-height: 220px;
-        }
-
-        .chart-container.pie-chart .chart-legend-container {
-            flex: 0 0 45%;
-            overflow-y: visible;
-            max-height: 100%;
-            padding-right: 10px;
-            border-left: 1px solid var(--background-light);
-            padding-left: 20px;
-            height: 240px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chart-container.pie-chart .chart-legend {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            font-size: 11px;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: nowrap;
-            gap: 6px;
-            overflow-y: visible;
-            max-height: 100%;
-            flex: 1;
-        }
-
-        .chart-container.pie-chart .chart-legend li {
             display: flex;
             align-items: center;
-            margin-bottom: 0;
-            padding: 5px 10px;
-            border-radius: 6px;
-            transition: background-color 0.2s;
-            background-color: rgba(41, 67, 90, 0.03);
-            min-height: 28px;
-            flex-shrink: 0;
+            justify-content: center;
         }
 
-        .chart-container.pie-chart .chart-legend li:hover {
-            background-color: rgba(41, 67, 90, 0.08);
-            transform: translateX(2px);
+        /* ===== LEGENDA MODERNA COM MELHOR HIERARQUIA ===== */
+        .legend-compact {
+            flex: 0 0 170px;
+            max-width: 190px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto;
+            padding-right: 6px;
+            max-height: 200px;
         }
 
-        .chart-container.pie-chart .legend-color {
+        .legend-compact::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .legend-compact::-webkit-scrollbar-track {
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .legend-compact::-webkit-scrollbar-thumb {
+            background: #d1d9e6;
+            border-radius: 10px;
+        }
+
+        .legend-item-compact {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+            background: #fafbfd;
+        }
+
+        .legend-item-compact:hover {
+            background-color: #fff;
+            border-color: #e2e6eb;
+            transform: translateX(3px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .legend-dot-compact {
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            margin-right: 8px;
             flex-shrink: 0;
-            border: 2px solid white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .chart-container.pie-chart .legend-text {
-            flex: 1;
+        .legend-label-compact {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2d3748;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            font-weight: 600;
-            color: var(--primary-dark);
-            font-size: 11px;
-            line-height: 1.2;
-            min-width: 0;
-        }
-
-        .chart-container.pie-chart .legend-value {
-            margin-left: 6px;
-            font-weight: 700;
-            color: var(--accent-red);
-            font-size: 10px;
-            flex-shrink: 0;
-            background-color: rgba(185, 60, 66, 0.1);
-            padding: 1px 5px;
-            border-radius: 8px;
-            line-height: 1.2;
-        }
-
-        /* ==================== LAYOUT ESPECÍFICO PARA GRÁFICO DE BARRAS ==================== */
-        .chart-container.bar-chart .chart-wrapper {
-            display: flex;
-            height: 240px;
-            gap: 20px;
-        }
-
-        .chart-container.bar-chart .chart-canvas-container {
-            flex: 1;
-            position: relative;
-            min-height: 220px;
-            padding-right: 10px;
-        }
-
-        .chart-container.bar-chart .chart-legend-container {
-            flex: 0 0 45%;
-            overflow-y: visible;
-            max-height: 100%;
-            padding-right: 10px;
-            border-left: 1px solid var(--background-light);
-            padding-left: 20px;
-            height: 240px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chart-container.bar-chart .chart-legend {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            font-size: 11px;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: nowrap;
-            gap: 6px;
-            overflow-y: visible;
-            max-height: 100%;
             flex: 1;
         }
 
-        .chart-container.bar-chart .chart-legend li {
+        .legend-content-compact {
+            flex: 1;
             display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .legend-stats-compact {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            margin-bottom: 0;
-            padding: 5px 10px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-            background-color: rgba(41, 67, 90, 0.03);
-            min-height: 28px;
-            flex-shrink: 0;
-            cursor: pointer;
         }
 
-        .chart-container.bar-chart .chart-legend li:hover {
-            background-color: rgba(41, 67, 90, 0.08);
-            transform: translateX(2px);
-        }
-
-        .chart-container.bar-chart .legend-color {
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
-            margin-right: 8px;
-            flex-shrink: 0;
-            border: 2px solid white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .chart-container.bar-chart .legend-text {
-            flex: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-weight: 600;
-            color: var(--primary-dark);
-            font-size: 11px;
-            line-height: 1.2;
-            min-width: 0;
-        }
-
-        .chart-container.bar-chart .legend-value {
-            margin-left: 6px;
+        .legend-percent-compact {
+            font-size: 12px;
             font-weight: 700;
-            color: var(--accent-red);
-            font-size: 10px;
-            flex-shrink: 0;
-            background-color: rgba(185, 60, 66, 0.1);
-            padding: 1px 5px;
-            border-radius: 8px;
-            line-height: 1.2;
+            color: var(--primary-dark);
         }
 
-/* MATAR LEGENDA NATIVA DO CHART.JS NA MARRA */
-#chartCargo + div,
-canvas + ul,
-.chartjs-legend,
-.chartjs-render-monitor + div {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-}
+        .legend-count-compact {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-red);
+            background-color: rgba(185, 60, 66, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .legend-bar-mini {
+            height: 4px;
+            background-color: #f1f3f9;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .legend-bar-fill-mini {
+            height: 100%;
+            border-radius: 2px;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 1200px) {
+            .chart-row {
+                grid-template-columns: 1.2fr 0.8fr;
+            }
+
+            .chart-wrapper {
+                min-width: 170px;
+                height: 170px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card-chart {
+                height: auto;
+                min-height: 320px;
+            }
+
+            .chart-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .chart-wrapper {
+                width: 160px;
+                height: 160px;
+                margin: 0 auto;
+            }
+
+            .legend-compact {
+                max-width: 100%;
+                max-height: 160px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chart-wrapper {
+                width: 140px;
+                height: 140px;
+            }
+        }
 
         /* ==================== MENU DE NAVEGAÇÃO ==================== */
         .nav-tabs-container {
@@ -1183,6 +1182,51 @@ canvas + ul,
             color: var(--accent-red);
         }
 
+                /* ==================== COMPARTILHAMENTO ==================== */
+        .share-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            z-index: 1000;
+            display: none;
+            padding: 8px 0;
+            border: 1px solid #dee2e6;
+        }
+        
+        .share-options.show {
+            display: block;
+        }
+        
+        .share-option {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+        
+        .share-option:hover {
+            background-color: var(--background-light);
+            color: var(--accent-red);
+        }
+        
+        .share-option i {
+            width: 20px;
+            text-align: center;
+        }
+
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
             .main-header {
@@ -1432,43 +1476,22 @@ canvas + ul,
                     <!-- Cards serão carregados aqui -->
                 </div>
 
-                <!-- Gráficos Dashboard 1 -->
-                <div class="row mb-4">
-                    <div class="col-md-6 col-12">
-                        <div class="chart-container pie-chart">
-                            <div class="chart-header">
-                                <h4 class="chart-title">Empregados por Órgão</h4>
-                            </div>
-                            <div class="chart-wrapper">
-                                <div class="chart-canvas-container">
-                                    <canvas id="chartOrgao"></canvas>
-                                </div>
-                                <div class="chart-legend-container">
-                                    <ul class="chart-legend" id="chartOrgaoLegend">
-                                        <!-- Legenda será carregada dinamicamente -->
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-12">
-                        <div class="chart-container bar-chart">
-                            <div class="chart-header">
-                                <h4 class="chart-title">Empregados por Cargo</h4>
-                            </div>
-                            <div class="chart-wrapper">
-                                <div class="chart-canvas-container">   
-                                    <canvas id="chartCargo"></canvas>
-                                </div>
-                                <div class="chart-legend-container">
-                                    <ul class="chart-legend" id="chartCargoLegend">
-                                        <!-- Legenda será carregada dinamicamente -->
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- NOVOS GRÁFICOS Dashboard 1 - APENAS 2 GRÁFICOS -->
+<div class="dashboard-2">
+    <div class="card-chart">
+        <h3>Empregados por Órgão</h3>
+        <div class="chart-wrapper">
+            <canvas id="chartOrgao"></canvas>
+        </div>
+    </div>
+
+    <div class="card-chart">
+        <h3>Top Cargos</h3>
+        <div class="chart-wrapper">
+            <canvas id="chartCargo"></canvas>
+        </div>
+    </div>
+</div>
 
                 <!-- Ações Dashboard 1 -->
                 <div class="actions-container mb-4">
@@ -1479,11 +1502,30 @@ canvas + ul,
                         <button class="btn-export" id="printDashboard1">
                             <i class="fas fa-print me-2"></i> Imprimir
                         </button>
-                        <button class="btn-export" id="compartilharLinkDashboard1">
-                            <i class="fas fa-share me-2"></i>Compartilhar Link
-                        </button>
-                    </div>
-                    
+                        <!-- Botão de Compartilhar -->
+                        <div class="share-dropdown">
+                            <button class="btn-share" id="shareDashboard1">
+                                <i class="fas fa-share-alt me-2"></i> Compartilhar
+                            </button>
+                            <div class="share-options" id="shareOptionsDashboard1">
+                                <a href="#" class="link-share" onclick="copiarLink()">
+                                    <i class="fas fa-link"></i> Copiar Link
+                                </a>
+                                <a href="#" class="facebook-share" onclick="compartilharFacebook(event)">
+                                    <i class="fab fa-facebook-f"></i> Facebook
+                                </a>
+                                <a href="#" class="twitter-share" onclick="compartilharTwitter(event)">
+                                    <i class="fab fa-twitter"></i> Twitter
+                                </a>
+                                <a href="#" class="linkedin-share" onclick="compartilharLinkedIn(event)">
+                                    <i class="fab fa-linkedin-in"></i> LinkedIn
+                                </a>
+                                <a href="#" class="whatsapp-share" onclick="compartilharWhatsApp(event)">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>                    
                     <div class="right-aligned-container">
                         <div class="items-per-page">
                             <span>Itens por página:</span>
@@ -1497,6 +1539,7 @@ canvas + ul,
                         <span class="table-badge" id="resumoCountDashboard1">0 órgãos</span>
                     </div>
                 </div>
+
 
                 <!-- Tabela Dashboard 1 - VISÃO GERAL -->
                 <div class="table-container">
@@ -1623,16 +1666,36 @@ canvas + ul,
                     <div class="d-flex align-items-center gap-3 w-100">
                         <div class="export-buttons">
                             <button class="btn-export" id="exportCSVDashboard2">
-                                <i class="fas fa-file-csv me-2"></i> Exportar CSV
+                                <i class="fas fa-file-csv me-2"></i>Exportar CSV
                             </button>
                             <button class="btn-export" id="printDashboard2">
-                                <i class="fas fa-print me-2"></i> Imprimir
+                                <i class="fas fa-print me-2"></i>Imprimir
                             </button>
-                            <button class="btn-export" id="compartilharLinkDashboard1">
-                                <i class="fas fa-share me-2"></i>Compartilhar Link
-                            </button>
+                            <!-- Botão de Compartilhar -->
+                            <div class="share-dropdown">
+                                <button class="btn-share" id="shareDashboard2">
+                                    <i class="fas fa-share-alt me-2"></i> Compartilhar
+                                </button>
+                                <div class="share-options" id="shareOptionsDashboard2">
+                                    <a href="#" class="link-share" onclick="copiarLink()">
+                                        <i class="fas fa-link"></i> Copiar Link
+                                    </a>
+                                    <a href="#" class="facebook-share" onclick="compartilharFacebook(event)">
+                                        <i class="fab fa-facebook-f"></i> Facebook
+                                    </a>
+                                    <a href="#" class="twitter-share" onclick="compartilharTwitter(event)">
+                                        <i class="fab fa-twitter"></i> Twitter
+                                    </a>
+                                    <a href="#" class="linkedin-share" onclick="compartilharLinkedIn(event)">
+                                        <i class="fab fa-linkedin-in"></i> LinkedIn
+                                    </a>
+                                    <a href="#" class="whatsapp-share" onclick="compartilharWhatsApp(event)">
+                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        
+
                         <div class="right-aligned-container">
                             <div class="search-box-container">
                                 <label for="searchEmpregados">Buscar registros:</label>
@@ -1901,15 +1964,31 @@ canvas + ul,
         let currentSearchTerm = '';
         
         const chartColors = {
-            primary: '#29435A',
-            accent: '#B93C42',
-            bright: '#DB233F',
-            dark: '#132837',
-            secondaryBlue: '#3F704D',
-            secondaryBrown: '#8B7355',
-            secondaryTeal: '#20B2AA',
-            hoverBlue: '#006a82'
+            primaryDark: "#29435A",
+            primaryDarker: "#132837",
+            accentRed: "#B93C42",
+            accentBright: "#DB233F",
+            successGreen: "#28a745",
+            warningYellow: "#ffc107",
+            infoBlue: "#17a2b8",
+            secondaryBlue: "#3F704D",
+            secondaryBrown: "#8B7355",
+            secondaryTeal: "#20B2AA",
+            hoverBlue: "#006a82",
+            backgroundLight: "#EEEFF5",
+            white: "#ffffff"
         };
+
+        const chartPalette = [
+            chartColors.accentRed,
+            chartColors.primaryDark,
+            chartColors.secondaryTeal,
+            chartColors.warningYellow,
+            chartColors.infoBlue,
+            chartColors.secondaryBlue,
+            chartColors.successGreen,
+            chartColors.secondaryBrown
+        ];
 
         const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/transparencia-mg/empregados_terceirizados/main/dataset/data/';
         const CSV_FILES_BY_YEAR = {
@@ -1917,7 +1996,8 @@ canvas + ul,
             '2022': 'terceirizados_2022.csv',
             '2023': 'terceirizados_2023.csv',
             '2024': 'terceirizados_2024.csv',
-            '2025': 'terceirizados_2025.csv'
+            '2025': 'terceirizados_2025.csv',
+            '2026': 'terceirizados_2026.csv'
         };
 
         const monthNames = {
@@ -1996,6 +2076,88 @@ canvas + ul,
             'PRODEMG': 'PRODEMGE'
         };
 
+
+                // ==================== FUNÇÕES DE COMPARTILHAMENTO ====================
+        function copiarLink() {
+            const currentUrl = window.location.href;
+            
+            navigator.clipboard.writeText(currentUrl).then(() => {
+                alert('Link copiado para a área de transferência!');
+            }).catch(err => {
+                console.error('Erro ao copiar:', err);
+                copiarFallback(currentUrl);
+            });
+        }
+
+        function copiarFallback(texto) {
+            const textarea = document.createElement('textarea');
+            textarea.value = texto;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                alert('Link copiado para a área de transferência!');
+            } catch (err) {
+                alert('Não foi possível copiar o link. Tente selecionar e copiar manualmente: ' + texto);
+            }
+            
+            document.body.removeChild(textarea);
+        }
+
+        function compartilharFacebook(e) {
+            e.preventDefault();
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function compartilharTwitter(e) {
+            e.preventDefault();
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Empregados Terceirizados - Governo de Minas Gerais');
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        }
+
+        function compartilharLinkedIn(e) {
+            e.preventDefault();
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+        }
+
+        function compartilharWhatsApp(e) {
+            e.preventDefault();
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Confira os Empregados Terceirizados do Governo de Minas Gerais');
+            window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+        }
+
+        function toggleShareDropdown(dashboard) {
+            const dropdownId = dashboard === 1 ? 'shareOptionsDashboard1' : 'shareOptionsDashboard2';
+            const dropdown = document.getElementById(dropdownId);
+            
+            if (dropdown) {
+                const isShowing = dropdown.classList.contains('show');
+                
+                document.querySelectorAll('.share-options').forEach(opt => {
+                    opt.classList.remove('show');
+                });
+                
+                if (!isShowing) {
+                    dropdown.classList.add('show');
+                }
+            }
+        }
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.share-dropdown')) {
+                document.querySelectorAll('.share-options').forEach(opt => {
+                    opt.classList.remove('show');
+                });
+            }
+        });
+        
         // ==================== INICIALIZAÇÃO ====================
         document.addEventListener('DOMContentLoaded', function() {
             console.log('=== INICIANDO DASHBOARD TERCEIRIZADOS ===');
@@ -2012,20 +2174,65 @@ canvas + ul,
         });
 
         // ==================== FUNÇÕES AUXILIARES DE INICIALIZAÇÃO ====================
-        function iframeUpdateHeight() { 
-            try {
-                window.parent.postMessage({ iframeHeight: document.body.scrollHeight + 10 }, '*'); 
-            } catch(e) {
-                console.log('Erro ao atualizar altura do iframe:', e);
-            }
+        function removeAllScrollIssues() {
+            const elements = [
+                document.body,
+                document.documentElement,
+                document.querySelector('.main-container'),
+                document.querySelector('.container.dashboard-spacing'),
+                document.querySelector('.tab-content'),
+                ...document.querySelectorAll('.tab-pane'),
+                ...document.querySelectorAll('.table-container'),
+                ...document.querySelectorAll('.row'),
+                ...document.querySelectorAll('.col'),
+                ...document.querySelectorAll('.container'),
+                ...document.querySelectorAll('.container-fluid')
+            ];
+            
+            elements.forEach(el => {
+                if (el && el.style) {
+                    el.style.overflowY = 'visible !important';
+                    el.style.overflowX = 'visible !important';
+                    el.style.overflow = 'visible !important';
+                }
+            });
+            
+            document.body.classList.remove('overflow-auto');
+            document.documentElement.classList.remove('overflow-auto');
+            
+            document.documentElement.style.height = 'auto';
+            document.body.style.height = 'auto';
+        }
+
+        function iframeUpdateHeight() {
+            document.body.style.display = 'none';
+            document.body.offsetHeight;
+            document.body.style.display = '';
+            
+            const html = document.documentElement;
+            const body = document.body;
+            
+            const scrollHeight = Math.max(
+                body.scrollHeight, 
+                html.scrollHeight,
+                body.offsetHeight, 
+                html.offsetHeight
+            );
+            
+            const finalHeight = scrollHeight + 10;
+            
+            window.parent.postMessage({ 
+                iframeHeight: finalHeight 
+            }, '*');
+            
+            return finalHeight;
         }
 
         function loadInitialData() {
             showLoading(true);
             
             try {
-                loadYearData('2025').then(() => {
-                    determineLatestMonth();
+                loadData().then(() => {
                     updateDataAtualizacao();
                     updateFilterOptions();
                     updateDashboard1();
@@ -2036,47 +2243,21 @@ canvas + ul,
                     iframeUpdateHeight();
                 }).catch(error => {
                     console.error('Erro ao carregar dados:', error);
-                    showError('Erro ao carregar dados do GitHub. Por favor, tente novamente.');
+                    showError('Erro ao carregar dados do CSV.');
                     showLoading(false);
                 });
                 
             } catch (error) {
                 console.error('Erro ao carregar dados:', error);
-                showError('Erro ao carregar dados do GitHub. Por favor, tente novamente.');
+                showError('Erro ao carregar dados do CSV.');
                 showLoading(false);
             }
-        }
-
-        function setupTooltips() {
-            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
-            });
-        }
-
-        function setupDescriptiveTooltips() {
-            const tooltips = {
-                'aplicarFiltros': 'Aplicar filtros selecionados',
-                'limparFiltros': 'Limpar todos os filtros',
-                'pesquisarEmpregados': 'Pesquisar empregados com os filtros selecionados',
-                'exportCSVDashboard1': 'Exportar dados da visão geral para CSV',
-                'exportCSVDashboard2': 'Exportar dados da consulta individual para CSV'
-            };
-            
-            Object.keys(tooltips).forEach(id => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.setAttribute('title', tooltips[id]);
-                    element.setAttribute('data-bs-toggle', 'tooltip');
-                }
-            });
-            
-            setupTooltips();
         }
 
         function setupAtualizacaoData() {
             setInterval(updateDataAtualizacao, 60000);
         }
+
 
         // ==================== CARREGAR DADOS DO GITHUB ====================
         async function loadYearData(year) {
@@ -2224,6 +2405,38 @@ canvas + ul,
             document.getElementById('printDashboard1').addEventListener('click', () => printDashboard('dashboard1'));
             document.getElementById('exportCSVDashboard2').addEventListener('click', () => exportToCSV('dashboard2'));
             document.getElementById('printDashboard2').addEventListener('click', () => printDashboard('dashboard2'));
+                        const compartilharLinkDashboard1Btn = document.getElementById('shareDashboard1');
+            
+            if (exportCSVDashboard1Btn) {
+                exportCSVDashboard1Btn.addEventListener('click', () => exportToCSV('dashboard1'));
+            }
+            
+            if (printDashboard1Btn) {
+                printDashboard1Btn.addEventListener('click', () => printDashboard('dashboard1'));
+            }
+            
+            if (compartilharLinkDashboard1Btn) {
+                compartilharLinkDashboard1Btn.addEventListener('click', () => toggleShareDropdown(1));
+            }
+            const compartilharLinkDashboard2Btn = document.getElementById('shareDashboard2');
+            
+            if (exportCSVDashboard2Btn) {
+                exportCSVDashboard2Btn.addEventListener('click', () => exportToCSV('dashboard2'));
+            }
+            
+            if (printDashboard2Btn) {
+                printDashboard2Btn.addEventListener('click', () => printDashboard('dashboard2'));
+            }
+            
+            if (compartilharLinkDashboard2Btn) {
+                compartilharLinkDashboard2Btn.addEventListener('click', () => toggleShareDropdown(2));
+            }
+            
+            // Download
+            const downloadCSVBtn = document.getElementById('downloadCSV');
+            if (downloadCSVBtn) {
+                downloadCSVBtn.addEventListener('click', downloadFullCSV);
+            }
             
             // Download por ano na aba Downloads
             document.getElementById('downloadAnoCSV').addEventListener('click', downloadYearCSV);
@@ -2995,18 +3208,17 @@ canvas + ul,
             iframeUpdateHeight();
         };
 
-        function updateCharts1() {
-            if (filteredData.length === 0) return;
-            
-            updateOrgaoChart();
-            updateCargoChart();
-        }
+function updateCharts1() {
+    if (filteredData.length === 0) return;
+    
+    updateOrgaoChart();  // Mantém o gráfico de pizza para órgãos
+    updateCargoChart();  // Agora é o gráfico de barras horizontais para Top Cargos
+}
 
         function updateOrgaoChart() {
             const ctx = document.getElementById('chartOrgao')?.getContext('2d');
-            const legendContainer = document.getElementById('chartOrgaoLegend');
-            if (!ctx || !legendContainer) return;
-            
+            if (!ctx) return;
+
             const grupos = {};
             filteredData.forEach(empregado => {
                 if (!grupos[empregado.orgao]) {
@@ -3019,46 +3231,18 @@ canvas + ul,
                 .map(([orgao, count]) => ({ orgao, count }))
                 .sort((a, b) => b.count - a.count)
                 .slice(0, 8);
-            
-            const pieColors = [
-                chartColors.primary, chartColors.secondaryBlue, chartColors.accent,
-                chartColors.secondaryBrown, chartColors.secondaryTeal, chartColors.bright,
-                '#4ECDC4', '#FF6B6B'
-            ];          
-       
-            const total = orgaosArray.reduce((sum, item) => sum + item.count, 0);
-            
-            let legendHTML = '';
-            orgaosArray.forEach((item, index) => {
-                const percentage = total > 0 ? Math.round((item.count / total) * 100) : 0;
-                
-                legendHTML += `
-                    <li>
-                        <span class="legend-color" style="background-color: ${pieColors[index % pieColors.length]};"></span>
-                        <span class="legend-text" title="${item.orgao}">
-                            ${item.orgao}
-                        </span>
-                        <span class="legend-value">${item.count}</span>
-                    </li>
-                `;
-            });          
-          
-            legendContainer.innerHTML = legendHTML;
-            
-            if (charts.orgao) {
-                charts.orgao.destroy();
-            }
-            
+
+            destroyChart(charts.orgao);
+
             charts.orgao = new Chart(ctx, {
-                type: 'pie',
+                type: 'doughnut',
                 data: {
                     labels: orgaosArray.map(item => item.orgao),
                     datasets: [{
                         data: orgaosArray.map(item => item.count),
-                        backgroundColor: pieColors,
-                        borderWidth: 2,
-                        borderColor: '#fff',
-                        hoverOffset: 10
+                        backgroundColor: chartPalette,
+                        borderWidth: 1,
+                        borderColor: chartColors.white
                     }]
                 },
                 options: {
@@ -3066,139 +3250,131 @@ canvas + ul,
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: false
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                font: { size: 11 }
+                            }
                         },
                         tooltip: {
                             callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const value = context.raw || 0;
-                                    const percentage = Math.round((value / total) * 100);
-                                    return `${label}: ${value} empregados (${percentage}%)`;
+                                label(ctx) {
+                                    const total = getTotal(ctx.dataset);
+                                    const value = ctx.raw;
+                                    const perc = Math.round((value / total) * 100);
+                                    return `${ctx.label}: ${value} (${perc}%)`;
                                 }
-                            },
-                            backgroundColor: 'rgba(41, 67, 90, 0.9)',
-                            titleColor: '#fff',
-                            bodyColor: '#fff'
+                            }
                         }
                     }
                 }
             });
         }
+
 function updateCargoChart() {
     const ctx = document.getElementById('chartCargo')?.getContext('2d');
-    const legendContainer = document.getElementById('chartCargoLegend');
-    if (!ctx || !legendContainer) return;
+    if (!ctx) return;
 
-    // === AGRUPAMENTO ===
+    // === MAPA DE ABREVIAÇÕES PARA CARGOS ===
+    const mapaCargos = {
+        "ASSISTENTE ADMINISTRATIVO": "ASSIST. ADMIN.",
+        "AUXILIAR ADMINISTRATIVO": "AUX. ADMIN.",
+        "ASSISTENTE DE TI": "ASSIST. TI",
+        "ANALISTA DE SISTEMAS": "ANAL. SIST.",
+        "TÉCNICO EM INFORMÁTICA": "TÉC. INF.",
+        "TÉCNICO ADMINISTRATIVO": "TÉC. ADMIN.",
+        "ASSISTENTE DE RECURSOS HUMANOS": "ASSIST. RH",
+        "ANALISTA ADMINISTRATIVO": "ANAL. ADMIN.",
+        "AUXILIAR DE SERVIÇOS GERAIS": "AUX. SERV. GERAIS",
+        "MOTORISTA": "MOTOR.",
+        "VIGILANTE": "VIGIL.",
+        "SEGURANÇA PATRIMONIAL": "SEG. PATR.",
+        "RECEPCIONISTA": "RECEP.",
+        "PORTEIRO": "PORT.",
+        "ZELADOR": "ZELAD.",
+        "FAXINEIRO": "FAXIN.",
+        "COORDENADOR": "COORD.",
+        "SUPERVISOR": "SUPERV.",
+        "GERENTE": "GER.",
+        "DIRETOR": "DIR."
+    };
+
     const grupos = {};
+
     filteredData.forEach(empregado => {
-        if (!grupos[empregado.cargo]) {
-            grupos[empregado.cargo] = 0;
+        let cargo = empregado.cargo || "Não informado";
+        
+        // Tentar converter pelo mapa de abreviações
+        if (mapaCargos[cargo.toUpperCase()]) {
+            cargo = mapaCargos[cargo.toUpperCase()];
+        } else {
+            // Abreviação automática para cargos longos
+            if (cargo.length > 25) {
+                cargo = cargo
+                    .split(" ")
+                    .filter(p => p.length > 3)
+                    .map(p => p[0])
+                    .join("")
+                    .substring(0, 8)
+                    .toUpperCase();
+            }
         }
-        grupos[empregado.cargo]++;
+
+        const chave = cargo;
+
+        grupos[chave] = grupos[chave] || {
+            count: 0,
+            nomeCompleto: empregado.cargo || "Não informado"
+        };
+
+        grupos[chave].count++;
     });
 
-    const cargosArray = Object.entries(grupos)
-        .map(([cargo, count]) => ({ cargo, count }))
+    const items = Object.entries(grupos)
+        .map(([cargoAbreviado, obj]) => ({
+            cargoAbreviado,
+            count: obj.count,
+            nomeCompleto: obj.nomeCompleto
+        }))
         .sort((a, b) => b.count - a.count)
         .slice(0, 8);
 
-    const barColors = [
-        chartColors.primary,
-        chartColors.secondaryBlue,
-        chartColors.accent,
-        chartColors.secondaryBrown,
-        chartColors.secondaryTeal,
-        chartColors.bright,
-        '#4ECDC4',
-        '#FF6B6B'
-    ];
+    destroyChart(charts.cargo);
 
-    const total = cargosArray.reduce((sum, item) => sum + item.count, 0);
-    
-    // ===== CRIA LEGENDA CLICÁVEL =====
-    legendContainer.innerHTML = '';
-
-    cargosArray.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.style.cursor = 'pointer';
-        li.setAttribute('data-index', index);
-
-        li.innerHTML = `
-            <span class="legend-color" style="background-color: ${barColors[index]}"></span>
-            <span class="legend-text" title="${item.cargo}">
-                ${item.cargo.length > 25 ? item.cargo.substring(0, 25) + '...' : item.cargo}
-            </span>
-            <span class="legend-value">${item.count}</span>
-        `;
-
-        // Evento de clique para filtrar
-        li.addEventListener('click', function() {
-            if (!charts.cargo) return;
-            
-            const dataset = charts.cargo.data.datasets[0];
-            
-            // Toggle
-            dataset._hidden = dataset._hidden || {};
-            dataset._hidden[index] = !dataset._hidden[index];
-            
-            // Estilo visual da legenda
-            if (dataset._hidden[index]) {
-                li.style.opacity = '0.4';
-                li.style.textDecoration = 'line-through';
-            } else {
-                li.style.opacity = '1';
-                li.style.textDecoration = 'none';
-            }
-            
-            // Recalcula dados visíveis
-            const newData = cargosArray.map((c, i) =>
-                dataset._hidden[i] ? 0 : c.count
-            );
-            
-            charts.cargo.data.datasets[0].data = newData;
-            charts.cargo.update();
-        });
-
-        legendContainer.appendChild(li);
-    });
-
-    // === DESTROI ANTERIOR ===
-    if (charts.cargo) {
-        charts.cargo.destroy();
-    }
-
-    // ===== GRÁFICO SEM LEGENDA NATIVA E SEM LABELS NAS BARRAS =====
     charts.cargo = new Chart(ctx, {
         type: 'bar',
+
         data: {
-            labels: cargosArray.map(() => ''), // 👈 Labels vazios para não aparecer nada abaixo das barras
+            labels: items.map(i => i.cargoAbreviado),   // 👈 AQUI FICA A ABREVIAÇÃO DO CARGO
             datasets: [{
-                data: cargosArray.map(item => item.count),
-                backgroundColor: barColors,
-                borderRadius: 4,
-                borderWidth: 1,
-                borderColor: '#fff'
+                data: items.map(i => i.count),
+                backgroundColor: chartPalette.slice(0, items.length),
+                borderRadius: 4
             }]
         },
+
         options: {
+            indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
+
             plugins: {
-                legend: {
-                    display: false
-                },
+                legend: { display: false },
+
                 tooltip: {
                     callbacks: {
-                        title: function(context) {
-                            // Mostra o nome do cargo no tooltip
-                            return cargosArray[context[0].dataIndex]?.cargo || '';
+                        title(ctx) {
+                            // 👇 Tooltip mostra o nome completo do cargo
+                            const i = ctx[0].dataIndex;
+                            return items[i].nomeCompleto;
                         },
-                        label: function(context) {
-                            const value = context.raw || 0;
-                            const percentage = Math.round((value / total) * 100);
-                            return `${value} empregados (${percentage}%)`;
+
+                        label(ctx) {
+                            const total = getTotal(ctx.dataset);
+                            const value = ctx.raw;
+                            const perc = Math.round((value / total) * 100);
+
+                            return `${value} empregados (${perc}%)`;
                         }
                     },
                     backgroundColor: 'rgba(41, 67, 90, 0.9)',
@@ -3207,69 +3383,34 @@ function updateCargoChart() {
                     cornerRadius: 6
                 }
             },
+
             scales: {
-                y: {
+                x: {
                     beginAtZero: true,
-                    ticks: { 
-                        font: { 
-                            size: 10 
-                        } 
+                    grid: { 
+                        color: chartColors.backgroundLight 
                     },
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.05)'
+                    ticks: {
+                        font: { 
+                            size: 11 
+                        }
                     }
                 },
-                x: {
+
+                y: {
+                    grid: { 
+                        display: false 
+                    },
                     ticks: {
-                        display: false, // 👈 DESATIVA os ticks do eixo X
                         font: { 
-                            size: 10 
+                            size: 11 
                         }
-                    },
-                    grid: {
-                        display: false // 👈 Desativa as linhas de grade do eixo X
-                    },
-                    // 👈 Desativa completamente a linha do eixo X
-                    border: {
-                        display: false
                     }
                 }
-            },
-            interaction: {
-                intersect: true,
-                mode: 'nearest'
-            },
-            animation: {
-                duration: 1000,
-                easing: 'easeOutQuart'
-            },
-            hover: {
-                animationDuration: 0
             }
         }
     });
-    
-    // Remove qualquer elemento de legenda do Chart.js que possa aparecer
-    setTimeout(() => {
-        const canvasElement = document.getElementById('chartCargo');
-        if (canvasElement) {
-            const parent = canvasElement.parentElement;
-            if (parent) {
-                Array.from(parent.children).forEach(child => {
-                    if (child.tagName === 'DIV' && child.classList.contains('chartjs-legend')) {
-                        child.style.display = 'none';
-                    }
-                });
-            }
-        }
-        
-        // Garante que a legenda nativa não aparece
-        const chartLegend = document.querySelector('.chartjs-legend');
-        if (chartLegend) {
-            chartLegend.style.display = 'none';
-        }
-    }, 50);
-        }
+}
 
         // ==================== DASHBOARD 2: CONSULTA INDIVIDUAL ====================
         function initializeDashboard2() {

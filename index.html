@@ -855,7 +855,121 @@
             gap: 15px;
             margin-left: auto;
         }
+
+                /* Botão de Compartilhar */
+        .btn-share {
+            background: white;
+            border: 2px solid var(--primary-dark);
+            color: var(--primary-dark);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            position: relative;
+        }
         
+        .btn-share:hover {
+            background: var(--primary-dark);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        /* Dropdown de Compartilhamento */
+        .share-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .share-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            z-index: 1000;
+            display: none;
+            margin-top: 5px;
+            border: 1px solid var(--light3);
+        }
+        
+        .share-options.show {
+            display: block;
+        }
+        
+        .share-options a {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--light4);
+            font-size: 13px;
+            gap: 10px;
+        }
+        
+        .share-options a:last-child {
+            border-bottom: none;
+        }
+        
+        .share-options a:hover {
+            background-color: var(--light1);
+            color: var(--primary-dark);
+        }
+        
+        .share-options a i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .share-options a.facebook-share:hover {
+            background-color: #3b5998;
+            color: white;
+        }
+        
+        .share-options a.twitter-share:hover {
+            background-color: #1da1f2;
+            color: white;
+        }
+        
+        .share-options a.linkedin-share:hover {
+            background-color: #0077b5;
+            color: white;
+        }
+        
+        .share-options a.whatsapp-share:hover {
+            background-color: #25d366;
+            color: white;
+        }
+        
+        .share-options a.link-share:hover {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+
+        .btn-primary-custom .material-icons,
+        .btn-secondary-custom .material-icons,
+        .btn-search-custom .material-icons {
+            font-size: 16px;
+            vertical-align: middle;
+            margin-right: 8px;
+            line-height: 1;
+        }
+
+        .btn-primary-custom,
+        .btn-secondary-custom,
+        .btn-search-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
         /* ==================== LOADING OVERLAY ==================== */
         .loading-overlay {
             position: fixed;

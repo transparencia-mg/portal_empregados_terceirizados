@@ -2875,6 +2875,49 @@ function shortenLabel(label, maxLength = 20) {
                 });
             }
         }
+        function updateFilterOptions() {
+    // ... (código anterior até a parte dos órgãos) ...
+    
+    // Obter todos os nomes completos de órgãos únicos do período atual
+    const orgaosNomesUnicos = [...new Set(
+        filteredData
+            .map(e => getOrgaoExtenso(e.orgao))
+            .filter(Boolean)
+            .map(nome => {
+                // Limpeza básica dos nomes
+                if (nome.startsWith('1100 - ')) {
+                    nome = nome.substring(7);
+                }
+                return nome;
+            })
+            .filter(nome => nome !== null && nome.trim() !== '')
+    )].sort();
+    
+    // Dashboard 1 - datalist de órgãos
+    const orgaoDatalist1 = document.getElementById('orgaosListDashboard1');
+    if (orgaoDatalist1) {
+        orgaoDatalist1.innerHTML = '';
+        orgaosNomesUnicos.forEach(orgaoNome => {
+            if (orgaoNome) {
+                const option = document.createElement('option');
+                option.value = orgaoNome;
+                orgaoDatalist1.appendChild(option);
+            }
+        });
+    }
+    
+    // Dashboard 2 - datalist de órgãos
+    const orgaoDatalist2 = document.getElementById('orgaosListDashboard2');
+    if (orgaoDatalist2) {
+        orgaoDatalist2.innerHTML = '';
+        orgaosNomesUnicos.forEach(orgaoNome => {
+            if (orgaoNome) {
+                const option = document.createElement('option');
+                option.value = orgaoNome;
+                orgaoDatalist2.appendChild(option);
+            }
+        });
+    }
 
         function applyFilters(dashboard) {
             showLoading(true);
@@ -2885,7 +2928,22 @@ function shortenLabel(label, maxLength = 20) {
                 const orgaoInput = document.getElementById('orgaoDashboard1').value;
                 
                 const orgaoNome = orgaoInput === '' ? null : orgaoInput;
-                
+
+                        filteredData = terceirizadosData.filter(empregado => {
+            if (empregado.ANO !== currentYear || empregado.MES_NUM !== currentMonth) {
+                return false;
+            }
+            
+            if (orgaoNome !== null) {
+                const nomeCompletoOrgao = getOrgaoExtenso(empregado.orgao);
+                // Comparação case-insensitive
+                if (nomeCompletoOrgao.toUpperCase() !== orgaoNome.toUpperCase()) {
+                    return false;
+                }
+            }
+            
+            return true;
+        });
                 if (ano !== currentYear) {
                     switchYearData(ano).then(() => {
                         applyFiltersAfterYearLoad(dashboard, mes, orgaoNome);
@@ -2932,6 +2990,20 @@ function shortenLabel(label, maxLength = 20) {
                     });
                     return;
                 }
+                        if (orgaoNome !== null) {
+            const nomeCompletoOrgao = getOrgaoExtenso(empregado.orgao);
+            // Comparação case-insensitive
+            if (nomeCompletoOrgao.toUpperCase() !== orgaoNome.toUpperCase()) {
+                return false;
+            }
+        }
+        
+        // ... (resto do código) ...
+    }
+    
+    showLoading(false);
+    iframeUpdateHeight();
+}
                 
                 currentMonth = mes;
                 
@@ -3137,6 +3209,92 @@ function shortenLabel(label, maxLength = 20) {
             updateDashboard2();
             iframeUpdateHeight();
         }
+        function getOrgaoExtenso(orgaoSigla) {
+    if (!orgaoSigla || orgaoSigla.trim() === '') {
+        return '';
+    }
+    
+    // Se já é um nome completo, retorna ele mesmo
+    if (orgaoSigla.includes('SECRETARIA') || 
+        orgaoSigla.includes('POLÍCIA') || 
+        orgaoSigla.includes('CORPO') ||
+        orgaoSigla.length > 10) {
+        return orgaoSigla;
+    }
+    
+    // Mapa de siglas para nomes completos - baseado nos dados comuns
+    const mapaOrgaos = {
+        // Secretarias
+        'SES': 'SECRETARIA DE ESTADO DE SAÚDE',
+        'SEE': 'SECRETARIA DE ESTADO DE EDUCAÇÃO',
+        'SEPLAG': 'SECRETARIA DE ESTADO DE PLANEJAMENTO E GESTÃO',
+        'SEF': 'SECRETARIA DE ESTADO DE FAZENDA',
+        'SEJUSP': 'SECRETARIA DE ESTADO DE JUSTIÇA E SEGURANÇA PÚBLICA',
+        'SEMAD': 'SECRETARIA DE ESTADO DE MEIO AMBIENTE E DESENVOLVIMENTO SUSTENTÁVEL',
+        'SEC': 'SECRETARIA DE ESTADO DE CULTURA',
+        'SEAPA': 'SECRETARIA DE ESTADO DE AGRICULTURA, PECUÁRIA E ABASTECIMENTO',
+        'SEDE': 'SECRETARIA DE ESTADO DE DESENVOLVIMENTO ECONÔMICO',
+        'SEINFRA': 'SECRETARIA DE ESTADO DE INFRAESTRUTURA E MOBILIDADE',
+        
+        // Órgãos de Segurança
+        'PCMG': 'POLÍCIA CIVIL DE MINAS GERAIS',
+        'PMMG': 'POLÍCIA MILITAR DE MINAS GERAIS',
+        'CBMMG': 'CORPO DE BOMBEIROS MILITAR DE MINAS GERAIS',
+        
+        // Fundações
+        'FHEMIG': 'FUNDAÇÃO HOSPITALAR DO ESTADO DE MINAS GERAIS',
+        'FJP': 'FUNDAÇÃO JOÃO PINHEIRO',
+        'FUNED': 'FUNDAÇÃO EZEQUIEL DIAS',
+        'FEAM': 'FUNDAÇÃO ESTADUAL DO MEIO AMBIENTE',
+        'FAPEMIG': 'FUNDAÇÃO DE AMPARO À PESQUISA DO ESTADO DE MINAS GERAIS',
+        'FCS': 'FUNDAÇÃO CLÓVIS SALGADO',
+        'HEMOMINAS': 'FUNDAÇÃO CENTRO DE HEMATOLOGIA E HEMOTERAPIA DE MINAS GERAIS',
+        
+        // Institutos
+        'IEF': 'INSTITUTO ESTADUAL DE FLORESTAS',
+        'IGAM': 'INSTITUTO MINEIRO DE GESTÃO DAS ÁGUAS',
+        'IMA': 'INSTITUTO MINEIRO DE AGROPECUÁRIA',
+        'IEPHA': 'INSTITUTO ESTADUAL DO PATRIMÔNIO HISTÓRICO E ARTÍSTICO DE MINAS GERAIS',
+        'IPEM': 'INSTITUTO DE PESOS E MEDIDAS',
+        
+        // Empresas
+        'PRODEMGE': 'COMPANHIA DE TECNOLOGIA DA INFORMAÇÃO DO ESTADO DE MINAS GERAIS',
+        'CODEMGE': 'COMPANHIA DE DESENVOLVIMENTO DE MINAS GERAIS',
+        'COHAB': 'COMPANHIA DE HABITAÇÃO DO ESTADO DE MINAS GERAIS',
+        
+        // Outros
+        'UEMG': 'UNIVERSIDADE DO ESTADO DE MINAS GERAIS',
+        'UNIMONTES': 'UNIVERSIDADE ESTADUAL DE MONTES CLAROS',
+        'UAI': 'SECRETARIA DE ESTADO DE PLANEJAMENTO E GESTÃO - UAI',
+        'UTRAMIG': 'FUNDAÇÃO DE EDUCAÇÃO PARA O TRABALHO DE MINAS GERAIS',
+        'GMG': 'GABINETE MILITAR DO GOVERNADOR',
+        'CGE': 'CONTROLADORIA-GERAL DO ESTADO',
+        'OGE': 'OUVIDORIA-GERAL DO ESTADO',
+        'SG': 'SECRETARIA GERAL DO ESTADO',
+        'SCC': 'SECRETARIA DE ESTADO DA CASA CIVIL',
+        'SEGOV': 'SECRETARIA DE ESTADO DE GOVERNO',
+        'SECOM': 'SECRETARIA DE ESTADO DE COMUNICAÇÃO SOCIAL',
+        'SEDESE': 'SECRETARIA DE ESTADO DE DESENVOLVIMENTO SOCIAL'
+    };
+    
+    // Verifica se a sigla existe no mapa
+    const siglaUpper = orgaoSigla.toUpperCase().trim();
+    
+    // Primeiro, tenta encontrar uma correspondência exata
+    if (mapaOrgaos[siglaUpper]) {
+        return mapaOrgaos[siglaUpper];
+    }
+    
+    // Procura por correspondências parciais
+    for (const [sigla, nome] of Object.entries(mapaOrgaos)) {
+        if (siglaUpper.includes(sigla) || sigla.includes(siglaUpper)) {
+            return nome;
+        }
+    }
+    
+    // Se não encontrou, retorna a sigla original
+    return orgaoSigla;
+}
 
         // ==================== DASHBOARD 1: VISÃO GERAL ====================
         function updateDashboard1() {
@@ -3216,19 +3374,19 @@ function shortenLabel(label, maxLength = 20) {
                 return;
             }
             
-            const grupos = {};
-            filteredData.forEach(empregado => {
-                const orgao = empregado.orgao;
-                const orgaoNome = getOrgaoExtenso(orgao);
-                if (!grupos[orgao]) {
-                    grupos[orgao] = {
-                        orgao_nome: orgaoNome,
-                        orgao_sigla: orgao,
-                        count: 0
-                    };
-                }
-                grupos[orgao].count++;
-            });
+    const grupos = {};
+    filteredData.forEach(empregado => {
+        const orgao = empregado.orgao;
+        const orgaoNome = getOrgaoExtenso(orgao);
+        if (!grupos[orgao]) {
+            grupos[orgao] = {
+                orgao_nome: orgaoNome,
+                orgao_sigla: orgao,
+                count: 0
+            };
+        }
+        grupos[orgao].count++;
+    });
             
             let resumoArray = Object.values(grupos);
             

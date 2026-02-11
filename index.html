@@ -17,44 +17,85 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* ==================== RESET E ESTILOS BASE ==================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* ==================== VARIÁVEIS DE CORES ==================== */
+        :root {
+            --primary-dark: #29435A;
+            --primary-darker: #0E2F44;
+            --accent-red: #B93C42;
+            --accent-bright: #DB233F;
+            --background-light: #EEEFF5;
+            --success-green: #28a745;
+            --warning-yellow: #ffc107;
+            --info-blue: #17a2b8;
+            --secondary-blue: #3F704D;
+            --secondary-brown: #8B7355;
+            --secondary-teal: #20B2AA;
+            --hover-blue: #006a82;
+            
+            /* ===== NOVAS PARA GRÁFICOS ===== */
+            --chart-blue-1: #2F5D8A;
+            --chart-blue-2: #4A7DAA;
+            --chart-blue-3: #1F6F8B;
+            --chart-orange-1: #D97A30;
+            --chart-orange-2: #C65A2C;
+            --chart-red-2: #A8323A;
+            --chart-green-1: #2F7A5C;
+            --chart-green-2: #5A8F6E;
+            --chart-lime: #7FAF3F;
+            --chart-purple: #6B5B95;
+            --chart-gray: #6C7A89;
+            --chart-brown: #9C6B4A;
         }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: hidden !important; /* SCROLL SOMENTE NO IFRAME */
-            font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #EEEFF5;
-        }
-
+        
+        /* ==================== ESTILOS GERAIS ==================== */
         body {
+            font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-light);
+            padding-bottom: 15px;
+            overflow-y: visible !important;
+            overflow-x: hidden !important;
+            min-height: auto !important;
+            height: auto !important;
             position: relative;
-            min-height: 100vh;
         }
 
-        /* ==================== CONTAINER PRINCIPAL - SCROLL DO IFRAME ==================== */
+        html {
+            overflow-y: visible !important;
+            height: auto !important;
+        }
+
         .main-container {
-            width: 100%;
-            height: 100vh;
-            overflow-y: auto !important; /* SCROLL SOMENTE AQUI - COMPORTAMENTO IFRAME */
-            overflow-x: hidden;
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
             position: relative;
-            padding: 20px 30px; /* MARGENS LATERAIS IGUAL AO ACORDOS */
-            background-color: #EEEFF5;
         }
 
-        /* ==================== WRAPPER PARA CONTEÚDO ==================== */
-        .content-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            width: 100%;
+        .container.dashboard-spacing {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
+        }
+
+        .tab-content {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
+        }
+
+        .table-container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            position: relative;
+        }
+
+        .table-fixed-header-container {
+            max-height: 500px;
+            overflow-y: auto;
+            position: relative;
         }
 
         /* ==================== HEADER MINIMALISTA ==================== */
@@ -1133,33 +1174,9 @@
     </style>
 </head>
 <body>
-    <!-- SCROLL SOMENTE NESTE CONTAINER - COMPORTAMENTO IFRAME -->
-    <div class="main-container">
-        <div class="content-wrapper">
+    <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+    <div class="container">
             
-            <!-- ==================== HEADER ==================== -->
-            <div class="main-header">
-                <div class="row align-items-center">
-                    <div class="col-md-6 col-12">
-                        <div class="logo-container">
-                            <div class="logo">MG</div>
-                            <div>
-                                <h2 class="header-title">Empregados Terceirizados</h2>
-                                <span style="font-size: 12px; opacity: 0.9;">Governo de Minas Gerais</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-12">
-                        <div class="header-info">
-                            <span class="update-badge">
-                                <i class="material-icons" style="font-size: 14px;">update</i>
-                                Atualizado: <span id="data-atualizacao-header2">Carregando...</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
             <div class="nav-tabs-container">
                 <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">

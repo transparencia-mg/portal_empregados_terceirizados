@@ -42,8 +42,6 @@
             --dark: #212529;
         }
         
-        /* ==================== ESTILOS GERAIS ==================== */
-
 /* ==================== ESTILOS GERAIS - VERSÃO PARA AMBIENTE EXTERNO ==================== */
 
 /* NÃO TOCAR NO HTML/BODY – eles não são seus */
@@ -84,6 +82,41 @@
     overflow-y: auto !important;
 }
 
+/* ==================== FIX DEFINITIVO PARA ANGULAR ==================== */
+
+/* TRANSFORMA APP-ROOT NO SEU IFRAME REAL */
+app-root {
+    display: block !important;
+
+    height: 100vh !important;
+    max-height: 100vh !important;
+
+    overflow-y: auto !important;   /* 👈 SCROLL SÓ AQUI */
+    overflow-x: hidden !important;
+}
+
+/* Impede que seu conteúdo empurre o body */
+app-root > * {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+}
+
+/* Containers internos não podem criar scroll global */
+.main-container,
+.container,
+.container-fluid,
+.tab-content,
+.dashboard-spacing {
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* EXCEÇÃO permitida */
+.table-fixed-header-container {
+    max-height: 500px !important;
+    overflow-y: auto !important;
+}
 
 
         /* ==================== HEADER MINIMALISTA ==================== */

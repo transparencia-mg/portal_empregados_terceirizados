@@ -31,7 +31,7 @@
             --secondary-brown: #8B7355;
             --secondary-teal: #20B2AA;
             --hover-blue: #006a82;
-            --border-gray: #ced4da;
+            --border-gray: #0E2F44;
             
             /* ===== NOVAS PARA GRÁFICOS ===== */
             --chart-blue-1: #2F5D8A;
@@ -48,11 +48,9 @@
             --chart-brown: #9C6B4A;
             
             /* ===== TRANSIÇÕES MAIS SUAVES ===== */
-            --transition-slow: 0.4s ease;
-            --transition-normal: 0.3s ease;
-            --transition-fast: 0.2s ease;
-            --hover-delay: 0.15s;
-            --hover-stay: 0.5s;
+            --transition-slow: 0.3s ease;
+            --transition-normal: 0.2s ease;
+            --transition-fast: 0.1s ease;
         }
         
         /* ==================== ESTILOS GERAIS ==================== */
@@ -60,82 +58,69 @@
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
             padding-bottom: 15px;
-            overflow-y: visible !important;
-            overflow-x: hidden !important;
-            min-height: auto !important;
-            height: auto !important;
+            overflow-y: auto !important;
+            overflow-x: hidden;
+            min-height: 100vh;
+            height: auto;
             position: relative;
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
         }
 
         html {
-            overflow-y: visible !important;
-            height: auto !important;
-            scroll-behavior: smooth;
+            overflow-y: auto !important;
+            height: 100%;
+            scroll-behavior: auto;
         }
 
-        /* Scrollbar personalizada com hover mais lento */
+        /* Remover scroll personalizado que pode causar problemas */
         ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
         }
 
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
-            border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb {
             background: #c1c1c1;
-            border-radius: 10px;
-            transition: background var(--transition-slow);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
-            transition: background var(--transition-slow);
+            border-radius: 4px;
         }
 
         .main-container {
-            height: auto !important;
-            min-height: auto !important;
-            overflow: visible !important;
+            height: auto;
+            min-height: 100%;
+            overflow: visible;
             position: relative;
         }
 
         .container.dashboard-spacing {
-            overflow: visible !important;
-            height: auto !important;
-            min-height: auto !important;
+            overflow: visible;
+            height: auto;
+            min-height: 100%;
             position: relative;
         }
 
         .tab-content {
-            overflow: visible !important;
-            height: auto !important;
-            min-height: auto !important;
+            overflow: visible;
+            height: auto;
+            min-height: 100%;
             position: relative;
         }
 
         .table-container {
-            height: auto !important;
-            min-height: auto !important;
-            overflow: visible !important;
+            height: auto;
+            min-height: auto;
+            overflow: visible;
             position: relative;
+            margin-bottom: 30px;
         }
 
         .table-fixed-header-container {
             max-height: 500px;
             overflow-y: auto;
             position: relative;
-            scrollbar-width: thin;
-            scrollbar-color: #c1c1c1 #f1f1f1;
-            transition: scrollbar-color var(--transition-slow);
-        }
-
-        .table-fixed-header-container:hover {
-            scrollbar-color: var(--primary-dark) #f1f1f1;
-            transition: scrollbar-color var(--transition-slow);
+            border-radius: 8px;
         }
         
         /* ==================== HEADER MINIMALISTA ==================== */
@@ -146,12 +131,6 @@
             margin-bottom: 15px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             border-bottom: 3px solid var(--accent-red);
-            transition: box-shadow var(--transition-normal);
-        }
-        
-        .main-header:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: box-shadow var(--transition-normal);
         }
         
         .logo-container {
@@ -171,13 +150,6 @@
             color: white;
             font-weight: bold;
             font-size: 16px;
-            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-        }
-        
-        .logo:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(185, 60, 66, 0.3);
-            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
         }
         
         .header-title {
@@ -185,7 +157,6 @@
             font-size: 18px;
             margin: 0;
             line-height: 1.2;
-            transition: color var(--transition-normal);
         }
         
         .header-info {
@@ -203,13 +174,6 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            transition: background-color var(--transition-normal), transform var(--transition-normal);
-        }
-        
-        .update-badge:hover {
-            background-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-1px);
-            transition: background-color var(--transition-normal), transform var(--transition-normal);
         }
         
         /* ==================== FILTROS ==================== */
@@ -220,13 +184,6 @@
             padding: 20px;
             margin-bottom: 20px;
             border-left: 5px solid var(--accent-red);
-            transition: box-shadow var(--transition-normal), transform var(--transition-normal);
-        }
-        
-        .filter-container:hover {
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-            transform: translateY(-2px);
-            transition: box-shadow var(--transition-normal), transform var(--transition-normal);
         }
         
         .filter-label {
@@ -236,12 +193,6 @@
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.3px;
-            transition: color var(--transition-normal);
-        }
-        
-        .filter-label:hover {
-            color: var(--accent-red);
-            transition: color var(--transition-normal);
         }
         
         .form-control, .form-select {
@@ -249,23 +200,19 @@
             border-radius: 6px;
             padding: 10px 12px;
             font-size: 13px;
-            transition: border-color var(--transition-slow), box-shadow var(--transition-slow), transform var(--transition-normal);
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
             height: 42px;
             color: var(--primary-darker);
         }
         
         .form-control:hover, .form-select:hover {
-            border-color: var(--primary-dark);
-            transform: translateY(-1px);
-            transition: border-color var(--transition-slow), box-shadow var(--transition-slow), transform var(--transition-normal);
+            border-color: var(--accent-red);
         }
         
         .form-control:focus, .form-select:focus {
             border-color: var(--accent-red);
-            box-shadow: 0 0 0 3px rgba(185, 60, 66, 0.2);
+            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
             outline: none;
-            transform: translateY(-1px);
-            transition: border-color var(--transition-slow), box-shadow var(--transition-slow), transform var(--transition-normal);
         }
         
         .form-control::placeholder {
@@ -279,7 +226,7 @@
             border-radius: 6px;
             padding: 10px 12px;
             font-size: 13px;
-            transition: border-color var(--transition-slow), box-shadow var(--transition-slow), transform var(--transition-normal);
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
             height: 42px;
             color: var(--primary-darker);
             width: 100%;
@@ -287,17 +234,13 @@
         }
         
         #searchEmpregados:hover {
-            border-color: var(--primary-dark);
-            transform: translateY(-1px);
-            transition: border-color var(--transition-slow), transform var(--transition-normal);
+            border-color: var(--accent-red);
         }
         
         #searchEmpregados:focus {
             border-color: var(--accent-red);
-            box-shadow: 0 0 0 3px rgba(185, 60, 66, 0.2);
+            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
             outline: none;
-            transform: translateY(-1px);
-            transition: border-color var(--transition-slow), box-shadow var(--transition-slow), transform var(--transition-normal);
         }
         
         #searchEmpregados::placeholder {
@@ -313,12 +256,6 @@
             background: white;
             padding: 8px 12px;
             border-radius: 6px;
-            transition: box-shadow var(--transition-normal);
-        }
-        
-        .search-box-container:hover {
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            transition: box-shadow var(--transition-normal);
         }
         
         .search-box-container label {
@@ -327,12 +264,6 @@
             font-size: 12px;
             white-space: nowrap;
             margin: 0;
-            transition: color var(--transition-normal);
-        }
-        
-        .search-box-container label:hover {
-            color: var(--accent-red);
-            transition: color var(--transition-normal);
         }
         
         /* ==================== CARDS DE MÉTRICAS ==================== */
@@ -343,49 +274,31 @@
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
             margin-bottom: 20px;
             border-top: 4px solid var(--accent-red);
-            transition: transform var(--transition-slow), box-shadow var(--transition-slow), border-top-color var(--transition-slow);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
             height: 100%;
             position: relative;
             cursor: default;
         }
         
         .metric-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            border-top-color: var(--primary-dark);
-            transition: transform var(--transition-slow), box-shadow var(--transition-slow), border-top-color var(--transition-slow);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
         }
         
         .metric-card.primary {
             border-top-color: var(--primary-dark);
         }
         
-        .metric-card.primary:hover {
-            border-top-color: var(--accent-red);
-        }
-        
         .metric-card.success {
             border-top-color: var(--success-green);
-        }
-        
-        .metric-card.success:hover {
-            border-top-color: var(--primary-dark);
         }
         
         .metric-card.warning {
             border-top-color: var(--warning-yellow);
         }
         
-        .metric-card.warning:hover {
-            border-top-color: var(--primary-dark);
-        }
-        
         .metric-card.info {
             border-top-color: var(--info-blue);
-        }
-        
-        .metric-card.info:hover {
-            border-top-color: var(--primary-dark);
         }
         
         .metric-value {
@@ -394,12 +307,6 @@
             color: var(--primary-dark);
             margin: 8px 0;
             line-height: 1;
-            transition: color var(--transition-normal);
-        }
-        
-        .metric-card:hover .metric-value {
-            color: var(--accent-red);
-            transition: color var(--transition-normal);
         }
         
         .metric-label {
@@ -409,12 +316,6 @@
             margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.3px;
-            transition: color var(--transition-normal);
-        }
-        
-        .metric-card:hover .metric-label {
-            color: var(--primary-dark);
-            transition: color var(--transition-normal);
         }
         
         .metric-change {
@@ -423,22 +324,11 @@
             padding: 3px 8px;
             border-radius: 15px;
             display: inline-block;
-            transition: background-color var(--transition-normal), color var(--transition-normal), transform var(--transition-normal);
-        }
-        
-        .metric-change:hover {
-            transform: scale(1.05);
-            transition: transform var(--transition-normal);
         }
         
         .metric-change.positive {
             background-color: rgba(40, 167, 69, 0.1);
             color: var(--success-green);
-        }
-        
-        .metric-change.positive:hover {
-            background-color: rgba(40, 167, 69, 0.15);
-            transition: background-color var(--transition-normal);
         }
         
         /* ==================== NOVOS GRÁFICOS - ESTILO MODERNO E CLARO ==================== */
@@ -455,28 +345,15 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .dashboard-2 {
-                gap: 15px;
-            }
-        }
-
         .card-chart {
             background: #fff;
             border-radius: 14px;
             border: 1px solid #e9ecef;
             padding: 20px;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-            height: 380px;
+            height: 360px;
             display: flex;
             flex-direction: column;
-            transition: transform var(--transition-slow), box-shadow var(--transition-slow);
-        }
-
-        .card-chart:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-            transition: transform var(--transition-slow), box-shadow var(--transition-slow);
         }
 
         .card-chart h3 {
@@ -484,92 +361,47 @@
             color: #1a1f36;
             font-size: 16px;
             font-weight: 700;
-            line-height: 1.4;
             padding-bottom: 12px;
             border-bottom: 1px solid #f1f3f9;
-            transition: color var(--transition-normal), border-bottom-color var(--transition-normal);
-        }
-        
-        .card-chart:hover h3 {
-            color: var(--primary-dark);
-            border-bottom-color: var(--accent-red);
-            transition: color var(--transition-normal), border-bottom-color var(--transition-normal);
         }
 
         .chart-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            display: flex;
+            gap: 20px;
             flex: 1;
             min-height: 0;
-            align-items: flex-start;
+            align-items: center;
         }
 
         .chart-wrapper {
-            width: 100%;
+            width: 180px;
             height: 180px;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
-        /* ===== LEGENDA MODERNA COM MELHOR HIERARQUIA ===== */
+        /* ===== LEGENDA SEM SCROLL ===== */
         .legend-compact {
+            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            overflow-y: auto;
-            padding-right: 6px;
-            max-height: 220px;
-            scrollbar-width: thin;
-            scrollbar-color: #d1d9e6 #f8f9fa;
-            transition: scrollbar-color var(--transition-slow);
-        }
-        
-        .legend-compact:hover {
-            scrollbar-color: var(--primary-dark) #f8f9fa;
-            transition: scrollbar-color var(--transition-slow);
-        }
-
-        .legend-compact::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .legend-compact::-webkit-scrollbar-track {
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-
-        .legend-compact::-webkit-scrollbar-thumb {
-            background: #d1d9e6;
-            border-radius: 10px;
-            transition: background var(--transition-slow);
-        }
-
-        .legend-compact::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
-            transition: background var(--transition-slow);
+            padding: 0 4px;
+            max-height: 200px;
+            overflow-y: visible;
         }
 
         .legend-item-compact {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all var(--transition-slow);
-            cursor: pointer;
-            border: 1px solid transparent;
+            padding: 6px 10px;
+            border-radius: 6px;
             background: #fafbfd;
-        }
-
-        .legend-item-compact:hover {
-            background-color: #fff;
-            border-color: #e2e6eb;
-            transform: translateX(5px);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-            transition: all var(--transition-slow);
+            border: 1px solid transparent;
         }
 
         .legend-dot-compact {
@@ -577,13 +409,14 @@
             height: 12px;
             border-radius: 50%;
             flex-shrink: 0;
-            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
         }
-        
-        .legend-item-compact:hover .legend-dot-compact {
-            transform: scale(1.2);
-            box-shadow: 0 0 8px currentColor;
-            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+
+        .legend-content-compact {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 0;
         }
 
         .legend-label-compact {
@@ -593,39 +426,20 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            flex: 1;
-            transition: color var(--transition-normal);
-        }
-        
-        .legend-item-compact:hover .legend-label-compact {
-            color: var(--accent-red);
-            transition: color var(--transition-normal);
-        }
-
-        .legend-content-compact {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            max-width: 120px;
         }
 
         .legend-stats-compact {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
         }
 
         .legend-percent-compact {
             font-size: 11px;
             font-weight: 700;
             color: var(--primary-dark);
-            transition: color var(--transition-normal), transform var(--transition-normal);
-        }
-        
-        .legend-item-compact:hover .legend-percent-compact {
-            color: var(--accent-red);
-            transform: scale(1.05);
-            transition: color var(--transition-normal), transform var(--transition-normal);
         }
 
         .legend-count-compact {
@@ -635,65 +449,32 @@
             background-color: rgba(185, 60, 66, 0.1);
             padding: 2px 6px;
             border-radius: 4px;
-            transition: background-color var(--transition-normal), color var(--transition-normal), transform var(--transition-normal);
-        }
-        
-        .legend-item-compact:hover .legend-count-compact {
-            background-color: rgba(185, 60, 66, 0.15);
-            transform: scale(1.05);
-            transition: background-color var(--transition-normal), transform var(--transition-normal);
-        }
-
-        .legend-bar-mini {
-            height: 4px;
-            background-color: #f1f3f9;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .legend-bar-fill-mini {
-            height: 100%;
-            border-radius: 2px;
-            transition: width var(--transition-slow);
         }
 
         /* ===== RESPONSIVIDADE ===== */
-        @media (max-width: 1200px) {
-            .chart-row {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .chart-wrapper {
-                height: 160px;
-            }
-        }
-
         @media (max-width: 768px) {
             .card-chart {
                 height: auto;
-                min-height: 380px;
+                min-height: 340px;
             }
 
             .chart-row {
-                grid-template-columns: 1fr;
-                gap: 12px;
+                flex-direction: column;
+                align-items: center;
             }
 
             .chart-wrapper {
                 width: 160px;
                 height: 160px;
-                margin: 0 auto;
             }
 
             .legend-compact {
-                max-height: 180px;
+                width: 100%;
+                max-height: none;
             }
-        }
-
-        @media (max-width: 480px) {
-            .chart-wrapper {
-                width: 140px;
-                height: 140px;
+            
+            .legend-label-compact {
+                max-width: 150px;
             }
         }
         
@@ -705,102 +486,45 @@
             margin-bottom: 20px;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
             margin-top: 10px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            transition: box-shadow var(--transition-slow);
-            scrollbar-width: thin;
-            scrollbar-color: #dee2e6 #f8f9fa;
-        }
-        
-        .nav-tabs-container:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            transition: box-shadow var(--transition-slow);
-        }
-        
-        .nav-tabs-container:hover {
-            scrollbar-color: var(--primary-dark) #f8f9fa;
-            transition: scrollbar-color var(--transition-slow);
         }
 
         .nav-tabs {
-            border: none !important;
+            border: none;
             gap: 4px;
-            flex-wrap: nowrap;
-            min-width: max-content;
-            padding-bottom: 5px;
-            margin-bottom: 0 !important;
-        }
-
-        .nav-tabs .nav-item {
-            flex-shrink: 0;
         }
 
         .nav-tabs .nav-link {
-            border: none !important;
-            border-radius: 6px !important;
-            padding: 10px 15px !important;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
             font-weight: 600;
-            color: var(--primary-dark) !important;
-            transition: background-color var(--transition-slow), color var(--transition-slow), transform var(--transition-normal);
+            color: var(--primary-dark);
+            transition: all var(--transition-fast);
             font-size: 13px;
-            white-space: nowrap;
-            display: inline-flex !important;
+            display: inline-flex;
             align-items: center;
-            background: none !important;
+            background: none;
         }
 
         .nav-tabs .nav-link:hover {
-            background-color: rgba(41, 67, 90, 0.08) !important;
-            color: var(--accent-red) !important;
-            transform: translateY(-2px);
-            transition: background-color var(--transition-slow), color var(--transition-slow), transform var(--transition-normal);
+            background-color: rgba(41, 67, 90, 0.05);
+            color: var(--accent-red);
         }
 
         .nav-tabs .nav-link.active {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%) !important;
-            color: white !important;
-            border: none !important;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(41, 67, 90, 0.3);
-            transition: background var(--transition-slow), box-shadow var(--transition-slow), transform var(--transition-normal);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
+            color: white;
         }
 
         .nav-tabs .nav-link .material-icons {
-            font-size: 16px !important;
-            margin-right: 8px !important;
+            font-size: 16px;
+            margin-right: 8px;
             vertical-align: middle;
             line-height: 1;
-            transition: transform var(--transition-normal);
-        }
-        
-        .nav-tabs .nav-link:hover .material-icons,
-        .nav-tabs .nav-link.active .material-icons {
-            transform: scale(1.1);
-            transition: transform var(--transition-normal);
         }
 
         .nav-tabs .nav-link.active .material-icons {
-            color: white !important;
-        }
-
-        .nav-tabs-container::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .nav-tabs-container::-webkit-scrollbar-track {
-            background: #f8f9fa;
-            border-radius: 4px;
-        }
-
-        .nav-tabs-container::-webkit-scrollbar-thumb {
-            background: #dee2e6;
-            border-radius: 4px;
-            transition: background var(--transition-slow);
-        }
-
-        .nav-tabs-container::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
-            transition: background var(--transition-slow);
+            color: white;
         }
         
         /* ==================== TABELAS COM BORDAS ==================== */
@@ -811,13 +535,6 @@
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
             margin-bottom: 20px;
             border: 1px solid #dee2e6;
-            transition: box-shadow var(--transition-slow), transform var(--transition-slow);
-        }
-        
-        .table-container:hover {
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-            transform: translateY(-3px);
-            transition: box-shadow var(--transition-slow), transform var(--transition-slow);
         }
         
         .table-header {
@@ -829,12 +546,6 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
-            transition: background var(--transition-slow);
-        }
-        
-        .table-header:hover {
-            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
-            transition: background var(--transition-slow);
         }
         
         .table-title {
@@ -850,222 +561,87 @@
             border-radius: 15px;
             font-size: 12px;
             font-weight: 600;
-            transition: background var(--transition-normal), transform var(--transition-normal), box-shadow var(--transition-normal);
-        }
-        
-        .table-badge:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(185, 60, 66, 0.3);
-            transition: background var(--transition-normal), transform var(--transition-normal), box-shadow var(--transition-normal);
         }
         
         .table-fixed-header-container {
             position: relative;
             max-height: 500px;
-            overflow: auto;
-            padding: 0;
-            scrollbar-width: thin;
-            scrollbar-color: #c1c1c1 #f1f1f1;
-            transition: scrollbar-color var(--transition-slow);
-        }
-        
-        .table-fixed-header-container:hover {
-            scrollbar-color: var(--primary-dark) #f1f1f1;
-            transition: scrollbar-color var(--transition-slow);
+            overflow-y: auto;
         }
         
         .table-fixed-header-container table thead {
             position: sticky;
             top: 0;
             z-index: 10;
-            background-color: var(--primary-dark) !important;
+            background-color: var(--primary-dark);
         }
         
         .table-fixed-header-container table thead th {
-            background-color: var(--primary-dark) !important;
-            color: white !important;
+            background-color: var(--primary-dark);
+            color: white;
             position: sticky;
             top: 0;
             z-index: 20;
-        }
-        
-        .table-responsive {
-            padding: 0;
-            overflow-x: auto;
         }
         
         .table {
             margin: 0;
             width: 100%;
             font-size: 13px;
-            border-collapse: separate;
-            border-spacing: 0;
-            border: 1px solid #dee2e6;
+            border-collapse: collapse;
         }
         
         .table thead th {
-            background-color: var(--primary-dark) !important;
-            color: white !important;
+            background-color: var(--primary-dark);
+            color: white;
             font-weight: 600;
-            border: none;
             padding: 12px 10px;
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.3px;
             cursor: pointer;
             user-select: none;
-            transition: background-color var(--transition-slow), color var(--transition-slow);
-            position: sticky;
-            top: 0;
-            z-index: 20;
             white-space: nowrap;
-            border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
-            border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .table thead th:first-child {
-            border-left: none !important;
+            border-left: none;
         }
         
         .table thead th:last-child {
-            border-right: none !important;
+            border-right: none;
         }
         
         .sort-icon {
             opacity: 0.8;
             margin-left: 4px;
             font-size: 9px;
-            transition: opacity var(--transition-slow), transform var(--transition-normal);
             color: white;
         }
         
         .table thead th:hover {
-            background-color: var(--primary-darker) !important;
-        }
-        
-        .table thead th:hover .sort-icon {
-            opacity: 1;
-            transform: scale(1.2);
-            transition: opacity var(--transition-slow), transform var(--transition-normal);
-        }
-        
-        .table thead th.sorted-asc .sort-icon,
-        .table thead th.sorted-desc .sort-icon {
-            opacity: 1;
-        }
-        
-        .table thead th.sorted-asc .sort-icon::after {
-            content: "↑";
-        }
-        
-        .table thead th.sorted-desc .sort-icon::after {
-            content: "↓";
-        }
-        
-        .table-container table th, 
-        .table-container table td {
-            border-left: 1px solid #dee2e6;
-            border-right: 1px solid #dee2e6;
-            vertical-align: middle;
-        }
-        
-        .table-container table th:first-child,
-        .table-container table td:first-child {
-            border-left: none;
-        }
-        
-        .table-container table th:last-child,
-        .table-container table td:last-child {
-            border-right: none;
-        }
-        
-        .table-container table tbody tr {
-            border-bottom: 1px solid #f1f1f1;
-            transition: background-color var(--transition-slow), transform var(--transition-slow);
-        }
-        
-        .table-container table tbody tr:last-child {
-            border-bottom: none;
+            background-color: var(--primary-darker);
         }
         
         .table tbody tr {
-            transition: background-color var(--transition-slow), transform var(--transition-slow);
+            border-bottom: 1px solid #f1f1f1;
         }
         
         .table tbody tr:hover {
-            background-color: rgba(41, 67, 90, 0.06);
-            transform: scale(1.001);
-            transition: background-color var(--transition-slow), transform var(--transition-slow);
+            background-color: rgba(41, 67, 90, 0.04);
         }
         
         .table tbody td {
             padding: 12px 10px;
             vertical-align: middle;
             font-size: 13px;
-            transition: color var(--transition-normal);
-        }
-        
-        .table tbody tr:hover td {
-            color: var(--primary-dark);
-            transition: color var(--transition-normal);
         }
         
         .table tbody td.quantidade {
             text-align: center;
             font-weight: 600;
-        }
-        
-        /* Estilos para tags coloridas nas tabelas */
-        .tag-vigente {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            background-color: rgba(40, 167, 69, 0.1);
-            color: var(--success-green);
-            transition: background-color var(--transition-normal), color var(--transition-normal), transform var(--transition-normal);
-        }
-        
-        .tag-vigente:hover {
-            background-color: rgba(40, 167, 69, 0.15);
-            transform: scale(1.05);
-            transition: background-color var(--transition-normal), transform var(--transition-normal);
-        }
-        
-        .tag-encerrado {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            background-color: rgba(23, 162, 184, 0.1);
-            color: var(--info-blue);
-            transition: background-color var(--transition-normal), transform var(--transition-normal);
-        }
-        
-        .tag-encerrado:hover {
-            background-color: rgba(23, 162, 184, 0.15);
-            transform: scale(1.05);
-            transition: background-color var(--transition-normal), transform var(--transition-normal);
-        }
-        
-        .tag-rescindido {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            background-color: rgba(185, 60, 66, 0.1);
-            color: var(--accent-red);
-            transition: background-color var(--transition-normal), transform var(--transition-normal);
-        }
-        
-        .tag-rescindido:hover {
-            background-color: rgba(185, 60, 66, 0.15);
-            transform: scale(1.05);
-            transition: background-color var(--transition-normal), transform var(--transition-normal);
         }
         
         .actions-column {
@@ -1085,22 +661,18 @@
             border-radius: 4px;
             border: none;
             cursor: pointer;
-            transition: all var(--transition-slow);
             display: flex;
             align-items: center;
             gap: 3px;
         }
         
         .btn-history {
-            background-color: var(--primary-dark);
+            background-color: var(--primary-darker);
             color: white;
         }
         
         .btn-history:hover {
-            background-color: var(--primary-darker);
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 4px 12px rgba(41, 67, 90, 0.3);
-            transition: all var(--transition-slow);
+            background-color: var(--primary-dark);
         }
         
         /* ==================== BOTÕES ==================== */
@@ -1110,126 +682,59 @@
             padding: 10px 20px;
             font-weight: 600;
             border-radius: 6px;
-            transition: all var(--transition-slow);
+            transition: all var(--transition-fast);
             font-size: 13px;
             color: white;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-primary-custom::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width var(--transition-slow), height var(--transition-slow);
         }
         
         .btn-primary-custom:hover {
-            background: linear-gradient(to right, var(--primary-darker), var(--hover-blue));
-            transform: translateY(-3px);
-            box-shadow: 0 8px 18px rgba(185, 60, 66, 0.3);
-            color: white;
-            transition: all var(--transition-slow);
-        }
-        
-        .btn-primary-custom:hover::after {
-            width: 200px;
-            height: 200px;
-            transition: width var(--transition-slow), height var(--transition-slow);
+            background: linear-gradient(to right, var(--primary-darker), var(--primary-dark));
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(14, 47, 68, 0.25);
         }
         
         .btn-secondary-custom {
             background: white;
             border: 2px solid var(--border-gray);
-            color: var(--primary-dark);
+            color: var(--primary-darker);
             padding: 10px 20px;
             font-weight: 600;
             border-radius: 6px;
-            transition: all var(--transition-slow);
+            transition: all var(--transition-fast);
             font-size: 13px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-secondary-custom::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(41, 67, 90, 0.1);
-            transform: translate(-50%, -50%);
-            transition: width var(--transition-slow), height var(--transition-slow);
         }
         
         .btn-secondary-custom:hover {
-            background-color: var(--primary-dark);
+            background-color: var(--primary-darker);
             color: white;
-            border-color: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 18px rgba(41, 67, 90, 0.25);
-            transition: all var(--transition-slow);
-        }
-        
-        .btn-secondary-custom:hover::after {
-            width: 200px;
-            height: 200px;
-            transition: width var(--transition-slow), height var(--transition-slow);
+            border-color: var(--primary-darker);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(14, 47, 68, 0.2);
         }
         
         .btn-export {
             background: white;
             border: 2px solid var(--border-gray);
-            color: var(--primary-dark);
+            color: var(--primary-darker);
             padding: 8px 15px;
             border-radius: 6px;
             font-weight: 600;
             font-size: 12px;
-            transition: all var(--transition-slow);
+            transition: all var(--transition-fast);
             display: flex;
             align-items: center;
             gap: 6px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-export::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(41, 67, 90, 0.1);
-            transform: translate(-50%, -50%);
-            transition: width var(--transition-slow), height var(--transition-slow);
         }
         
         .btn-export:hover {
-            background: var(--primary-dark);
+            background: var(--primary-darker);
             color: white;
-            border-color: var(--primary-dark);
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 6px 16px rgba(41, 67, 90, 0.25);
-            transition: all var(--transition-slow);
-        }
-        
-        .btn-export:hover::after {
-            width: 200px;
-            height: 200px;
-            transition: width var(--transition-slow), height var(--transition-slow);
+            border-color: var(--primary-darker);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(14, 47, 68, 0.2);
         }
 
         .btn-primary-custom .material-icons,
@@ -1238,18 +743,12 @@
             vertical-align: middle;
             margin-right: 8px;
             line-height: 1;
-            transition: transform var(--transition-normal);
-        }
-        
-        .btn-primary-custom:hover .material-icons,
-        .btn-secondary-custom:hover .material-icons,
-        .btn-export:hover .material-icons {
-            transform: scale(1.1);
-            transition: transform var(--transition-normal);
         }
 
         .btn-primary-custom,
-        .btn-secondary-custom {
+        .btn-secondary-custom,
+        .btn-export,
+        .btn-share {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -1259,49 +758,28 @@
         .btn-share {
             background: white;
             border: 2px solid var(--border-gray);
-            color: var(--primary-dark);
+            color: var(--primary-darker);
             padding: 8px 15px;
             border-radius: 6px;
             font-weight: 600;
             font-size: 12px;
-            transition: all var(--transition-slow);
+            transition: all var(--transition-fast);
             display: flex;
             align-items: center;
             gap: 6px;
             cursor: pointer;
             position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-share::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(41, 67, 90, 0.1);
-            transform: translate(-50%, -50%);
-            transition: width var(--transition-slow), height var(--transition-slow);
         }
         
         .btn-share:hover {
-            background: var(--primary-dark);
+            background: var(--primary-darker);
             color: white;
-            border-color: var(--primary-dark);
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 6px 16px rgba(41, 67, 90, 0.25);
-            transition: all var(--transition-slow);
+            border-color: var(--primary-darker);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(14, 47, 68, 0.2);
         }
         
-        .btn-share:hover::after {
-            width: 200px;
-            height: 200px;
-            transition: width var(--transition-slow), height var(--transition-slow);
-        }
-        
-        /* Dropdown de Compartilhamento - HOVER MAIS LENTO */
+        /* Dropdown de Compartilhamento */
         .share-dropdown {
             position: relative;
             display: inline-block;
@@ -1317,95 +795,42 @@
             min-width: 200px;
             z-index: 1000;
             display: none;
-            margin-top: 8px;
+            margin-top: 5px;
             border: 1px solid #e9ecef;
-            animation: fadeIn var(--transition-slow);
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         
         .share-options.show {
             display: block;
         }
         
-        /* Delay para evitar fechamento rápido */
-        .share-dropdown {
-            transition: visibility 0.2s;
-        }
-        
-        .share-dropdown:hover .share-options.show {
-            display: block;
-            transition-delay: 0s;
-        }
-        
-        .share-options:hover {
-            display: block;
-            transition-delay: 0s;
-        }
-        
-        .share-options a {
+        .share-option {
+            padding: 10px 15px;
             display: flex;
             align-items: center;
-            padding: 12px 15px;
-            color: var(--primary-dark);
-            text-decoration: none;
-            transition: all var(--transition-slow);
-            border-bottom: 1px solid #e9ecef;
-            font-size: 13px;
             gap: 10px;
+            color: var(--primary-darker);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
         }
         
-        .share-options a:last-child {
-            border-bottom: none;
+        .share-option:hover {
+            background-color: var(--primary-darker);
+            color: white;
         }
         
-        .share-options a:hover {
-            background-color: var(--background-light);
-            color: var(--accent-red);
-            padding-left: 20px;
-            transition: all var(--transition-slow);
-        }
-        
-        .share-options a i {
+        .share-option i {
             width: 20px;
             text-align: center;
-            transition: transform var(--transition-normal);
-        }
-        
-        .share-options a:hover i {
-            transform: scale(1.2);
-            transition: transform var(--transition-normal);
-        }
-        
-        .share-options a.facebook-share:hover {
-            background-color: #3b5998;
-            color: white;
-        }
-        
-        .share-options a.twitter-share:hover {
-            background-color: #1da1f2;
-            color: white;
-        }
-        
-        .share-options a.linkedin-share:hover {
-            background-color: #0077b5;
-            color: white;
-        }
-        
-        .share-options a.whatsapp-share:hover {
-            background-color: #25d366;
-            color: white;
-        }
-        
-        .share-options a.link-share:hover {
-            background-color: var(--primary-dark);
-            color: white;
         }
 
-        /* ==================== AÇÕES - CORREÇÃO DO ALINHAMENTO ==================== */
+        /* ==================== AÇÕES ==================== */
         .actions-container {
             background: white;
             border-radius: 10px;
@@ -1417,22 +842,12 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
-            transition: box-shadow var(--transition-slow), transform var(--transition-slow);
-        }
-        
-        .actions-container:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-            transition: box-shadow var(--transition-slow), transform var(--transition-slow);
         }
         
         .export-buttons {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            background: white;
-            padding: 8px 12px;
-            border-radius: 6px;
         }
         
         .right-aligned-container {
@@ -1455,7 +870,6 @@
             align-items: center;
             z-index: 9999;
             display: none;
-            animation: fadeIn var(--transition-slow);
         }
         
         .spinner {
@@ -1464,35 +878,22 @@
             border: 4px solid rgba(41, 67, 90, 0.1);
             border-radius: 50%;
             border-top-color: var(--accent-red);
-            animation: spin 1.2s linear infinite;
-            transition: border-top-color var(--transition-slow);
-        }
-        
-        .spinner:hover {
-            border-top-color: var(--primary-dark);
-            transition: border-top-color var(--transition-slow);
+            animation: spin 1s linear infinite;
         }
         
         @keyframes spin {
-            0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
         
         /* ==================== RODAPÉ DA TABELA ==================== */
         .table-total-row {
-            background-color: #f8f9fa !important;
+            background-color: #f8f9fa;
             font-weight: 600;
             color: var(--primary-dark);
-            transition: background-color var(--transition-slow);
-        }
-        
-        .table-total-row:hover {
-            background-color: #e9ecef !important;
-            transition: background-color var(--transition-slow);
         }
         
         .table-total-row td {
-            border-top: 2px solid #dee2e6 !important;
+            border-top: 2px solid #dee2e6;
         }
         
         .table-total-row td.quantidade {
@@ -1505,56 +906,21 @@
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
-            transition: all var(--transition-slow);
+            transition: color var(--transition-fast);
             display: inline-block;
-            padding: 4px 8px;
+            padding: 2px 4px;
             border-radius: 4px;
             font-size: 13px;
-            border-bottom: none !important;
-            text-transform: none;
-            position: relative;
-        }
-        
-        .orgao-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--accent-red);
-            transform: translateX(-50%);
-            transition: width var(--transition-slow);
         }
 
         .orgao-link:hover {
-            color: var(--accent-red) !important;
+            color: var(--accent-red);
             background-color: rgba(185, 60, 66, 0.05);
-            transform: translateY(-2px);
-            text-decoration: none !important;
-            transition: all var(--transition-slow);
-        }
-        
-        .orgao-link:hover::after {
-            width: 80%;
-            transition: width var(--transition-slow);
         }
 
         .orgao-link.selected {
-            color: var(--hover-blue) !important;
+            color: var(--hover-blue);
             background-color: rgba(0, 106, 130, 0.1);
-        }
-
-        .orgao-link:active {
-            transform: translateY(1px);
-            transition: transform var(--transition-fast);
-        }
-
-        #visaoGeralTable .orgao-link {
-            padding: 6px 10px;
-            margin: -6px -10px;
-            text-transform: none;
-            font-weight: 600;
         }
         
         /* ==================== PAGINAÇÃO ==================== */
@@ -1567,24 +933,12 @@
             background-color: white;
             flex-wrap: wrap;
             gap: 10px;
-            transition: background-color var(--transition-slow);
-        }
-        
-        .pagination-container:hover {
-            background-color: #f8f9fa;
-            transition: background-color var(--transition-slow);
         }
         
         .pagination-info {
             font-size: 12px;
             color: var(--primary-darker);
             font-weight: 600;
-            transition: color var(--transition-normal);
-        }
-        
-        .pagination-info:hover {
-            color: var(--accent-red);
-            transition: color var(--transition-normal);
         }
         
         .pagination .page-link {
@@ -1594,24 +948,19 @@
             font-weight: 600;
             font-size: 12px;
             cursor: pointer;
-            transition: all var(--transition-slow);
+            transition: all var(--transition-fast);
         }
 
         .pagination .page-item.active .page-link {
             background-color: var(--primary-dark);
             border-color: var(--primary-dark);
             color: white;
-            transform: scale(1.05);
-            transition: all var(--transition-slow);
         }
         
         .pagination .page-link:hover {
             background-color: var(--background-light);
             color: var(--accent-red);
             border-color: var(--accent-red);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: all var(--transition-slow);
         }
         
         .items-per-page {
@@ -1619,7 +968,7 @@
             align-items: center;
             gap: 8px;
             font-size: 12px;
-            color: var(--primary-dark);
+            color: var(--primary-darker);
             font-weight: 600;
         }
         
@@ -1631,28 +980,18 @@
             width: auto;
             min-width: 70px;
             background-color: white;
-            color: var(--primary-dark);
+            color: var(--primary-darker);
             cursor: pointer;
-            transition: all var(--transition-slow);
         }
         
         .items-per-page select:hover {
-            border-color: var(--primary-dark);
-            transform: translateY(-1px);
-            transition: all var(--transition-slow);
+            border-color: var(--accent-red);
         }
         
         .items-per-page select:focus {
             border-color: var(--accent-red);
-            box-shadow: 0 0 0 3px rgba(185, 60, 66, 0.2);
+            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
             outline: none;
-            transform: translateY(-1px);
-            transition: all var(--transition-slow);
-        }
-        
-        .items-per-page select option {
-            background-color: white;
-            color: var(--primary-dark);
         }
         
         /* ==================== NOVO MODAL CRIATIVO ==================== */
@@ -1661,12 +1000,6 @@
             overflow: hidden;
             border: none;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: modalFadeIn var(--transition-slow);
-        }
-        
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         
         .modal-creative .modal-header {
@@ -1674,13 +1007,6 @@
             color: white;
             padding: 20px 30px;
             border-bottom: none;
-            position: relative;
-            transition: background var(--transition-slow);
-        }
-        
-        .modal-creative .modal-header:hover {
-            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
-            transition: background var(--transition-slow);
         }
         
         .modal-creative .modal-header::after {
@@ -1693,12 +1019,6 @@
             height: 3px;
             background: linear-gradient(90deg, var(--accent-red), var(--success-green));
             border-radius: 2px;
-            transition: width var(--transition-slow);
-        }
-        
-        .modal-creative .modal-header:hover::after {
-            width: 120px;
-            transition: width var(--transition-slow);
         }
         
         .modal-creative .modal-title {
@@ -1706,7 +1026,6 @@
             font-size: 1.4rem;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
             gap: 10px;
         }
         
@@ -1714,20 +1033,19 @@
             background: rgba(255, 255, 255, 0.2) url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
             border-radius: 50%;
             padding: 8px;
-            transition: all var(--transition-slow);
+            transition: transform var(--transition-fast);
             opacity: 0.8;
         }
         
         .modal-creative .btn-close:hover {
             background-color: rgba(255, 255, 255, 0.3);
-            transform: rotate(180deg) scale(1.1);
+            transform: rotate(90deg);
             opacity: 1;
-            transition: all var(--transition-slow);
         }
         
         .modal-creative .modal-body {
             padding: 30px;
-            background: linear-gradient(to bottom, #ffffff, #f8fafc);
+            background: white;
         }
         
         .modal-creative .modal-footer {
@@ -1754,45 +1072,22 @@
             padding: 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             border-left: 4px solid var(--accent-red);
-            transition: all var(--transition-slow);
-        }
-        
-        .info-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-            transition: all var(--transition-slow);
         }
         
         .info-card.primary {
             border-left-color: var(--primary-dark);
         }
         
-        .info-card.primary:hover {
-            border-left-color: var(--accent-red);
-        }
-        
         .info-card.success {
             border-left-color: var(--success-green);
-        }
-        
-        .info-card.success:hover {
-            border-left-color: var(--primary-dark);
         }
         
         .info-card.warning {
             border-left-color: var(--warning-yellow);
         }
         
-        .info-card.warning:hover {
-            border-left-color: var(--primary-dark);
-        }
-        
         .info-card.danger {
             border-left-color: var(--accent-red);
-        }
-        
-        .info-card.danger:hover {
-            border-left-color: var(--primary-dark);
         }
         
         .info-label {
@@ -1802,12 +1097,6 @@
             color: #6c757d;
             font-weight: 600;
             margin-bottom: 5px;
-            transition: color var(--transition-normal);
-        }
-        
-        .info-card:hover .info-label {
-            color: var(--primary-dark);
-            transition: color var(--transition-normal);
         }
         
         .info-value {
@@ -1815,13 +1104,6 @@
             font-weight: 600;
             color: var(--primary-dark);
             word-break: break-word;
-            transition: color var(--transition-normal), transform var(--transition-normal);
-        }
-        
-        .info-card:hover .info-value {
-            color: var(--accent-red);
-            transform: scale(1.02);
-            transition: color var(--transition-normal), transform var(--transition-normal);
         }
         
         .info-value.highlight {
@@ -1830,79 +1112,12 @@
             font-weight: 700;
         }
         
-        .info-card:hover .info-value.highlight {
-            color: var(--primary-dark);
-        }
-        
-        .objeto-container {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            margin-top: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border-top: 4px solid var(--success-green);
-            transition: all var(--transition-slow);
-        }
-        
-        .objeto-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-            border-top-color: var(--primary-dark);
-            transition: all var(--transition-slow);
-        }
-        
-        .objeto-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 10px;
-        }
-        
-        .objeto-text {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #495057;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid var(--accent-red);
-            transition: border-left-color var(--transition-slow), background-color var(--transition-slow);
-        }
-        
-        .objeto-container:hover .objeto-text {
-            border-left-color: var(--primary-dark);
-            background-color: #fff;
-            transition: border-left-color var(--transition-slow), background-color var(--transition-slow);
-        }
-        
-        .modal-status-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all var(--transition-slow);
-        }
-        
-        .modal-status-badge:hover {
-            transform: scale(1.05);
-            transition: all var(--transition-slow);
-        }
-        
         /* ==================== DATA ATUALIZAÇÃO CENTRALIZADA ==================== */
         .data-atualizacao-container {
             display: flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 20px;
-            padding: 10px 0;
         }
         
         .data-atualizacao-box {
@@ -1912,30 +1127,15 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
             font-size: 12px;
             color: var(--primary-dark);
             font-weight: 600;
-            transition: all var(--transition-slow);
-        }
-        
-        .data-atualizacao-box:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-            background: linear-gradient(to right, white, #f8f9fa);
-            transition: all var(--transition-slow);
         }
         
         .data-atualizacao-box i {
             font-size: 14px;
             color: var(--accent-red);
-            transition: transform var(--transition-normal);
-        }
-        
-        .data-atualizacao-box:hover i {
-            transform: rotate(180deg);
-            transition: transform var(--transition-slow);
         }
         
         /* ==================== COMPARTILHAMENTO ==================== */
@@ -1951,12 +1151,6 @@
             display: none;
             padding: 8px 0;
             border: 1px solid #dee2e6;
-            animation: slideDown var(--transition-slow);
-        }
-        
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         
         .share-options.show {
@@ -1964,15 +1158,15 @@
         }
         
         .share-option {
-            padding: 12px 15px;
+            padding: 10px 15px;
             display: flex;
             align-items: center;
             gap: 10px;
-            color: var(--primary-dark);
+            color: var(--primary-darker);
             text-decoration: none;
             font-size: 13px;
             font-weight: 600;
-            transition: all var(--transition-slow);
+            transition: all var(--transition-fast);
             border: none;
             background: none;
             width: 100%;
@@ -1981,56 +1175,47 @@
         }
         
         .share-option:hover {
-            background-color: var(--background-light);
-            color: var(--accent-red);
-            padding-left: 20px;
-            transition: all var(--transition-slow);
+            background-color: var(--primary-darker);
+            color: white;
         }
         
         .share-option i {
             width: 20px;
             text-align: center;
-            transition: transform var(--transition-normal);
         }
         
-        .share-option:hover i {
-            transform: scale(1.2);
-            transition: transform var(--transition-normal);
+        /* ==================== CORREÇÃO DE ROLAGEM ==================== */
+        body {
+            overflow-y: auto !important;
+            height: auto !important;
+            position: relative !important;
+        }
+        
+        html {
+            overflow-y: auto !important;
+            height: 100% !important;
+            position: relative !important;
+        }
+        
+        .tab-pane {
+            position: relative !important;
+            overflow: visible !important;
+        }
+        
+        /* Remover qualquer evento de scroll que possa estar interferindo */
+        * {
+            scroll-behavior: auto !important;
         }
         
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
-            body, html {
-                overflow-y: visible !important;
-            }
-            
-            .main-container, 
-            .container.dashboard-spacing,
-            .tab-content {
-                overflow: visible !important;
-            }
-            
-            .table-fixed-header-container {
-                max-height: 400px;
-            }
-            
             .main-header {
                 padding: 15px 0;
-                margin-bottom: 20px;
             }
             
             .logo-container {
                 flex-direction: column;
                 text-align: center;
-                gap: 10px;
-            }
-            
-            .header-title {
-                font-size: 18px;
-            }
-            
-            .header-info {
-                justify-content: center;
             }
             
             .metric-value {
@@ -2040,75 +1225,28 @@
             .actions-container {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 10px;
             }
             
             .export-buttons {
                 width: 100%;
-                justify-content: flex-start;
             }
             
             .right-aligned-container {
                 width: 100%;
-                justify-content: flex-start;
                 margin-left: 0;
-            }
-            
-            .nav-tabs .nav-link {
-                padding: 8px 12px;
-                font-size: 12px;
-            }
-            
-            .chart-wrapper {
-                height: 160px;
-            }
-            
-            .legend-compact {
-                max-height: 180px;
-            }
-            
-            .legend-label-compact {
-                font-size: 11px;
-            }
-            
-            .table-responsive {
-                font-size: 12px;
-            }
-            
-            .table thead th,
-            .table tbody td {
-                padding: 8px 6px;
-                font-size: 11px;
-            }
-            
-            .actions-column {
-                width: 80px;
-            }
-            
-            .btn-action {
-                padding: 3px 6px;
-                font-size: 10px;
-            }
-            
-            .pagination-container {
-                flex-direction: column;
-                gap: 8px;
-                text-align: center;
-            }
-            
-            .btn-primary-custom,
-            .btn-secondary-custom {
-                padding: 8px 15px;
-                font-size: 12px;
+                flex-wrap: wrap;
             }
             
             .search-box-container {
                 width: 100%;
-                justify-content: flex-start;
             }
             
             #searchEmpregados {
                 max-width: 100%;
+            }
+            
+            .table-fixed-header-container {
+                max-height: 400px;
             }
             
             .modal-creative .modal-body {
@@ -2118,10 +1256,6 @@
             .info-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .data-atualizacao-container {
-                justify-content: center;
-            }
         }
         
         @media (max-width: 576px) {
@@ -2129,100 +1263,44 @@
                 max-height: 350px;
             }
             
-            .filter-container .row > div {
-                margin-bottom: 10px;
-            }
-            
             .card-chart {
-                min-height: 360px;
+                min-height: 380px;
             }
             
             .chart-wrapper {
-                height: 150px;
+                width: 140px;
+                height: 140px;
+            }
+            
+            .legend-label-compact {
+                max-width: 100px;
             }
             
             .actions-column {
                 width: 70px;
             }
             
-            .btn-action {
-                padding: 2px 4px;
-                font-size: 9px;
-            }
-            
             .btn-action span {
                 display: none;
             }
             
-            .legend-item-compact {
-                padding: 6px 10px;
-            }
-            
-            .legend-label-compact {
-                font-size: 10px;
-            }
-            
-            .modal-creative .modal-header {
-                padding: 15px 20px;
-            }
-            
-            .modal-creative .modal-title {
-                font-size: 1.1rem;
-            }
-            
-            .right-aligned-container {
+            .pagination-container {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .search-box-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .search-box-container label {
-                margin-bottom: 5px;
+                text-align: center;
             }
         }
 
-        /* ==================== TRANSIÇÕES GLOBAIS ==================== */
-        * {
-            transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            transition-duration: var(--transition-slow);
-        }
-        
-        /* Hover mais lento para elementos específicos */
-        .nav-link, .btn, .btn-action, .btn-primary-custom, .btn-secondary-custom, 
-        .btn-export, .btn-share, .share-option, .orgao-link, .metric-card,
-        .card-chart, .legend-item-compact, .table-container, .filter-container,
-        .info-card, .table-badge, .pagination .page-link, .items-per-page select {
-            transition-duration: var(--transition-slow) !important;
-        }
-        
-        /* Delay para evitar fechamento rápido de dropdowns */
-        .share-dropdown {
-            transition-delay: 0s;
-        }
-        
-        .share-options {
-            transition-delay: 0.1s;
-        }
-        
-        .share-dropdown:hover .share-options.show {
-            transition-delay: 0.2s;
-        }
-        
-        .share-options:hover {
-            transition-delay: 0s;
+        /* Ajuste para garantir que a tabela seja rolável */
+        .table-fixed-header-container {
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch;
         }
     </style>
 </head>
 <body>
 
     <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
-    <div class="container">
+    <div class="container-fluid px-4">
         <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
         <div class="nav-tabs-container">
             <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
@@ -2259,9 +1337,9 @@
 
                 <!-- Filtros Dashboard 1 -->
                 <div class="filter-container">
-                    <div class="row">
+                    <div class="row g-3">
                         <div class="col-md-3 col-6">
-                            <div class="mb-3">
+                            <div>
                                 <label for="anoDashboard1" class="form-label filter-label">Ano</label>
                                 <select class="form-select" id="anoDashboard1">
                                     <!-- Opções serão carregadas dinamicamente -->
@@ -2269,7 +1347,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 col-6">
-                            <div class="mb-3">
+                            <div>
                                 <label for="mesDashboard1" class="form-label filter-label">Mês</label>
                                 <select class="form-select" id="mesDashboard1">
                                     <!-- Opções serão carregadas dinamicamente -->
@@ -2277,7 +1355,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
-                            <div class="mb-3">
+                            <div>
                                 <label for="orgaoDashboard1" class="form-label filter-label">Órgão</label>
                                 <input type="text" class="form-control" list="orgaosListDashboard1" id="orgaoDashboard1" placeholder="Digite o nome do órgão...">
                                 <datalist id="orgaosListDashboard1">
@@ -2286,7 +1364,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row mt-3">
                         <div class="col-12">
                             <div class="d-flex gap-3 flex-wrap">
                                 <button type="button" class="btn-primary-custom" id="aplicarFiltros">
@@ -2419,9 +1497,9 @@
                 
                 <!-- Filtros Dashboard 2 -->
                 <div class="filter-container">
-                    <div class="row">
+                    <div class="row g-3">
                         <div class="col-md-3 col-6">
-                            <div class="mb-3">
+                            <div>
                                 <label for="anoDashboard2" class="form-label filter-label">Ano</label>
                                 <select class="form-select" id="anoDashboard2">
                                     <!-- Opções serão carregadas dinamicamente -->
@@ -2429,7 +1507,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 col-6">
-                            <div class="mb-3">
+                            <div>
                                 <label for="mesDashboard2" class="form-label filter-label">Mês Referência</label>
                                 <select class="form-select" id="mesDashboard2">
                                     <!-- Opções serão carregadas dinamicamente -->
@@ -2437,22 +1515,22 @@
                             </div>
                         </div>
                         <div class="col-md-3 col-6">
-                            <div class="mb-3">
+                            <div>
                                 <label for="nomeEmpregado" class="form-label filter-label">Nome do Empregado</label>
                                 <input type="text" class="form-control" id="nomeEmpregado" placeholder="Digite o nome...">
                             </div>
                         </div>
                         <div class="col-md-3 col-6">
-                            <div class="mb-3">
+                            <div>
                                 <label for="matriculaDashboard2" class="form-label filter-label">Matrícula</label>
                                 <input type="text" class="form-control" id="matriculaDashboard2" placeholder="Digite a matrícula...">
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row g-3 mt-2">
                         <div class="col-md-4 col-12">
-                            <div class="mb-3">
+                            <div>
                                 <label for="orgaoDashboard2" class="form-label filter-label">Órgão</label>
                                 <input type="text" class="form-control" list="orgaosListDashboard2" id="orgaoDashboard2" placeholder="Digite o nome do órgão...">
                                 <datalist id="orgaosListDashboard2">
@@ -2461,7 +1539,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
-                            <div class="mb-3">
+                            <div>
                                 <label for="cargoDashboard2" class="form-label filter-label">Cargo</label>
                                 <input type="text" class="form-control" list="cargosListDashboard2" id="cargoDashboard2" placeholder="Digite ou selecione...">
                                 <datalist id="cargosListDashboard2">
@@ -2470,7 +1548,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
-                            <div class="mb-3">
+                            <div>
                                 <label for="empresaDashboard2" class="form-label filter-label">Empresa</label>
                                 <input type="text" class="form-control" list="empresasListDashboard2" id="empresaDashboard2" placeholder="Digite ou selecione...">
                                 <datalist id="empresasListDashboard2">
@@ -2480,7 +1558,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row mt-3">
                         <div class="col-12">
                             <div class="d-flex gap-3 flex-wrap">
                                 <button type="button" class="btn-primary-custom" id="pesquisarEmpregados">
@@ -2496,7 +1574,7 @@
 
                 <!-- Ações Dashboard 2 -->
                 <div class="actions-container mb-4">
-                    <div class="d-flex align-items-center gap-3 w-100">
+                    <div class="d-flex align-items-center gap-3 w-100 flex-wrap">
                         <div class="export-buttons">
                             <button type="button" class="btn-export" id="exportCSVDashboard2">
                                 <i class="fas fa-file-csv me-2"></i>Exportar CSV
@@ -2594,9 +1672,9 @@
                 
                 <!-- Filtro de Download -->
                 <div class="filter-container">
-                    <div class="row align-items-end">
+                    <div class="row align-items-end g-3">
                         <div class="col-md-6">
-                            <div class="mb-0">
+                            <div>
                                 <label for="anoDownload" class="form-label filter-label">Selecione o Ano para Download</label>
                                 <select class="form-select" id="anoDownload">
                                     <!-- Opções serão carregadas dinamicamente -->
@@ -2617,7 +1695,7 @@
                         <h3 class="table-title">Informações sobre os Dados</h3>
                     </div>
                     <div class="p-4">
-                        <div class="row">
+                        <div class="row g-4">
                             <div class="col-md-6 col-12">
                                 <div class="card-stats">
                                     <i class="fas fa-database fa-3x mb-3" style="color: var(--primary-dark);"></i>
@@ -2794,7 +1872,7 @@
         // ==================== PALETA DE CORES ====================
         const chartColors = {
             primaryDark: "#29435A",
-            primaryDarker: "#132837",
+            primaryDarker: "#0E2F44",
             accentRed: "#B93C42",
             accentBright: "#DB233F",
             successGreen: "#28a745",
@@ -2918,7 +1996,7 @@
         }
 
         function showError(message) {
-            const container = document.querySelector('.container');
+            const container = document.querySelector('.container-fluid');
             const errorDiv = document.createElement('div');
             errorDiv.className = 'alert alert-danger alert-dismissible fade show';
             errorDiv.innerHTML = `
@@ -2927,8 +2005,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             `;
             container.prepend(errorDiv);
-            
-            iframeUpdateHeight();
         }
 
         function updateDataAtualizacao() {
@@ -2940,52 +2016,14 @@
             }
         }
 
-        function formatDate(dateString) {
-            if (!dateString) return '-';
-            
-            const date = new Date(dateString);
-            if (isNaN(date.getTime())) {
-                return dateString;
-            }
-            return date.toLocaleDateString('pt-BR');
-        }
-
-        function getTotal(dataset) {
-            return dataset._total || (dataset._total = dataset.data.reduce((a, b) => a + b, 0));
-        }
-
         function destroyChart(chart) {
             if (chart) chart.destroy();
         }
 
-        function shortenLabel(label, maxLength = 25) {
+        function shortenLabel(label, maxLength = 20) {
             if (!label) return '';
             if (label.length <= maxLength) return label;
             return label.substring(0, maxLength - 3) + '...';
-        }
-
-        function iframeUpdateHeight() {
-            document.body.style.display = 'none';
-            document.body.offsetHeight;
-            document.body.style.display = '';
-            
-            const html = document.documentElement;
-            const body = document.body;
-            
-            const scrollHeight = Math.max(
-                body.scrollHeight, 
-                html.scrollHeight,
-                body.offsetHeight, 
-                html.offsetHeight
-            );
-            
-            const finalHeight = scrollHeight + 10;
-            
-            window.parent.postMessage({ 
-                iframeHeight: finalHeight 
-            }, '*');
-            
-            return finalHeight;
         }
 
         // ==================== FUNÇÕES DE ÓRGÃOS ====================
@@ -3061,22 +2099,18 @@
                 'SEDESE': 'SECRETARIA DE ESTADO DE DESENVOLVIMENTO SOCIAL'
             };
             
-            // Verifica se a sigla existe no mapa
             const siglaUpper = orgaoSigla.toUpperCase().trim();
             
-            // Primeiro, tenta encontrar uma correspondência exata
             if (mapaOrgaos[siglaUpper]) {
                 return mapaOrgaos[siglaUpper];
             }
             
-            // Procura por correspondências parciais
             for (const [sigla, nome] of Object.entries(mapaOrgaos)) {
                 if (siglaUpper.includes(sigla) || sigla.includes(siglaUpper)) {
                     return nome;
                 }
             }
             
-            // Se não encontrou, retorna a sigla original
             return orgaoSigla;
         }
 
@@ -3090,7 +2124,6 @@
                 }
                 
                 const url = `${GITHUB_BASE_URL}${filename}`;
-                console.log(`Carregando dados de ${year}: ${url}`);
                 
                 Papa.parse(url, {
                     download: true,
@@ -3099,8 +2132,6 @@
                     encoding: 'UTF-8',
                     delimiter: ";",
                     complete: function (results) {
-                        console.log(`Resultados brutos do Papa Parse para ${year}:`, results);
-                        
                         const data = results.data.map(row => {
                             const matricula = row.matricula || row['MAT.'] || row['MAT'] || '';
                             const nome = row.nome || row['NOME'] || '';
@@ -3124,7 +2155,6 @@
                                 ANO = ano;
                                 MES_NUM = mes;
                             } else if (mes_referencia) {
-                                // Tentar outros formatos de data
                                 ANO = year;
                                 MES_NUM = mes_referencia.substring(0, 2);
                                 if (MES_NUM.match(/^\d{2}$/)) {
@@ -3146,13 +2176,10 @@
                             };
                         }).filter(e => e.COMPETENCIA !== null);
 
-                        console.log(`Dados de ${year} processados: ${data.length} registros válidos de ${results.data.length} totais`);
-                        
                         allData[year] = data;
                         resolve(data);
                     },
                     error: function (err) {
-                        console.error(`Erro ao carregar dados do ano ${year}:`, err);
                         reject(err);
                     }
                 });
@@ -3162,7 +2189,6 @@
         async function switchYearData(year) {
             showLoading(true);
             try {
-                // Verifica se os dados do ano já foram carregados
                 if (!allData[year]) {
                     await loadYearData(year);
                 }
@@ -3170,7 +2196,6 @@
                 currentYear = year;
                 terceirizadosData = allData[year];
                 
-                // Determina o mês mais recente do novo ano
                 const competencias = [...new Set(
                     terceirizadosData
                         .map(e => e.COMPETENCIA)
@@ -3178,7 +2203,6 @@
                 )].sort((a, b) => {
                     const [anoA, mesA] = a.split('-').map(Number);
                     const [anoB, mesB] = b.split('-').map(Number);
-                    
                     if (anoB !== anoA) return anoB - anoA;
                     return mesB - mesA;
                 });
@@ -3187,13 +2211,11 @@
                     const [ano, mes] = competencias[0].split('-');
                     currentMonth = mes;
                 } else {
-                    // Se não encontrar competências, usa o primeiro mês disponível
                     const meses = [...new Set(
                         terceirizadosData
                             .map(e => e.MES_NUM)
                             .filter(Boolean)
                     )].sort((a, b) => parseInt(b) - parseInt(a));
-                    
                     currentMonth = meses.length > 0 ? meses[0] : '01';
                 }
                 
@@ -3201,11 +2223,8 @@
                     e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
                 );
                 
-                console.log(`Ano alterado para: ${currentYear}, Mês: ${currentMonth} - ${filteredData.length} registros`);
-                
                 return true;
             } catch (error) {
-                console.error('Erro ao trocar ano:', error);
                 showError('Erro ao carregar dados do ano selecionado.');
                 return false;
             } finally {
@@ -3214,71 +2233,80 @@
         }
 
         // ==================== FUNÇÃO PRINCIPAL DE CARREGAMENTO ====================
-        function loadData() {
-            return new Promise(async (resolve, reject) => {
-                showLoading(true);
+        async function loadData() {
+            showLoading(true);
+            
+            try {
+                const initialYear = '2025';
+                await loadYearData(initialYear);
                 
-                try {
-                    // Carrega o ano mais recente (2025) primeiro
-                    const initialYear = '2025';
-                    await loadYearData(initialYear);
-                    
-                    terceirizadosData = allData[initialYear];
-                    currentYear = initialYear;
-                    
-                    // Determina o mês mais recente
-                    const competencias = [...new Set(
-                        terceirizadosData
-                            .map(e => e.COMPETENCIA)
-                            .filter(Boolean)
-                    )].sort((a, b) => {
-                        const [anoA, mesA] = a.split('-').map(Number);
-                        const [anoB, mesB] = b.split('-').map(Number);
-                        
-                        if (anoB !== anoA) return anoB - anoA;
-                        return mesB - mesA;
-                    });
+                terceirizadosData = allData[initialYear];
+                currentYear = initialYear;
+                
+                const competencias = [...new Set(
+                    terceirizadosData
+                        .map(e => e.COMPETENCIA)
+                        .filter(Boolean)
+                )].sort((a, b) => {
+                    const [anoA, mesA] = a.split('-').map(Number);
+                    const [anoB, mesB] = b.split('-').map(Number);
+                    if (anoB !== anoA) return anoB - anoA;
+                    return mesB - mesA;
+                });
 
-                    if (competencias.length > 0) {
-                        const [ano, mes] = competencias[0].split('-');
-                        currentMonth = mes;
-                        filteredData = terceirizadosData.filter(
-                            e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
-                        );
-                    } else {
-                        filteredData = terceirizadosData;
-                    }
-
-                    console.log(`Mês mais recente encontrado: ${currentMonth}/${currentYear} - ${filteredData.length} registros`);
-                    resolve();
-                } catch (error) {
-                    console.error('Erro ao carregar dados:', error);
-                    reject(error);
-                } finally {
-                    showLoading(false);
+                if (competencias.length > 0) {
+                    const [ano, mes] = competencias[0].split('-');
+                    currentMonth = mes;
+                    filteredData = terceirizadosData.filter(
+                        e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
+                    );
+                } else {
+                    filteredData = terceirizadosData;
                 }
-            });
+            } catch (error) {
+                showError('Erro ao carregar dados. Por favor, recarregue a página.');
+            } finally {
+                showLoading(false);
+            }
         }
 
         // ==================== CONFIGURAR EVENT LISTENERS ====================
         function setupEventListeners() {
-            console.log('Configurando event listeners...');
-            
             // Filtros Dashboard 1
             const aplicarFiltrosBtn = document.getElementById('aplicarFiltros');
             const limparFiltrosBtn = document.getElementById('limparFiltros');
             
             if (aplicarFiltrosBtn) {
                 aplicarFiltrosBtn.addEventListener('click', function() {
-                    console.log('Botão Aplicar Filtros clicado');
                     applyFilters('dashboard1');
                 });
             }
             
             if (limparFiltrosBtn) {
                 limparFiltrosBtn.addEventListener('click', function() {
-                    console.log('Botão Limpar Filtros clicado');
                     clearAllFilters();
+                });
+            }
+            
+            const anoSelect1 = document.getElementById('anoDashboard1');
+            const mesSelect1 = document.getElementById('mesDashboard1');
+            const orgaoInput1 = document.getElementById('orgaoDashboard1');
+            
+            if (anoSelect1) {
+                anoSelect1.addEventListener('change', function() {
+                    applyFilters('dashboard1');
+                });
+            }
+            
+            if (mesSelect1) {
+                mesSelect1.addEventListener('change', function() {
+                    applyFilters('dashboard1');
+                });
+            }
+            
+            if (orgaoInput1) {
+                orgaoInput1.addEventListener('change', function() {
+                    applyFilters('dashboard1');
                 });
             }
             
@@ -3288,41 +2316,13 @@
             
             if (pesquisarEmpregadosBtn) {
                 pesquisarEmpregadosBtn.addEventListener('click', function() {
-                    console.log('Botão Pesquisar Empregados clicado');
                     applyFilters('dashboard2');
                 });
             }
             
             if (limparFiltrosDashboard2Btn) {
                 limparFiltrosDashboard2Btn.addEventListener('click', function() {
-                    console.log('Botão Limpar Filtros Dashboard 2 clicado');
                     clearDashboard2Filters();
-                });
-            }
-            
-            // Event listeners para mudanças nos selects - APLICAR FILTROS AUTOMATICAMENTE
-            const anoSelect1 = document.getElementById('anoDashboard1');
-            const mesSelect1 = document.getElementById('mesDashboard1');
-            const orgaoInput1 = document.getElementById('orgaoDashboard1');
-            
-            if (anoSelect1) {
-                anoSelect1.addEventListener('change', function() {
-                    console.log('Ano Dashboard 1 alterado:', this.value);
-                    applyFilters('dashboard1');
-                });
-            }
-            
-            if (mesSelect1) {
-                mesSelect1.addEventListener('change', function() {
-                    console.log('Mês Dashboard 1 alterado:', this.value);
-                    applyFilters('dashboard1');
-                });
-            }
-            
-            if (orgaoInput1) {
-                orgaoInput1.addEventListener('change', function() {
-                    console.log('Órgão Dashboard 1 alterado:', this.value);
-                    applyFilters('dashboard1');
                 });
             }
             
@@ -3336,21 +2336,17 @@
             
             if (anoSelect2) {
                 anoSelect2.addEventListener('change', function() {
-                    console.log('Ano Dashboard 2 alterado:', this.value);
                     applyFilters('dashboard2');
                 });
             }
             
             if (mesSelect2) {
                 mesSelect2.addEventListener('change', function() {
-                    console.log('Mês Dashboard 2 alterado:', this.value);
                     applyFilters('dashboard2');
                 });
             }
             
-            // Event listeners para inputs com debounce
             let searchTimeout;
-            
             function debounceFilter(dashboard) {
                 clearTimeout(searchTimeout);
                 searchTimeout = setTimeout(() => {
@@ -3388,7 +2384,7 @@
                 });
             }
             
-            // Exportação Dashboard 1
+            // Exportação
             const exportCSVDashboard1Btn = document.getElementById('exportCSVDashboard1');
             const printDashboard1Btn = document.getElementById('printDashboard1');
             const shareDashboard1Btn = document.getElementById('shareDashboard1');
@@ -3405,7 +2401,6 @@
                 shareDashboard1Btn.addEventListener('click', () => toggleShareDropdown(1));
             }
             
-            // Exportação Dashboard 2
             const exportCSVDashboard2Btn = document.getElementById('exportCSVDashboard2');
             const printDashboard2Btn = document.getElementById('printDashboard2');
             const shareDashboard2Btn = document.getElementById('shareDashboard2');
@@ -3428,7 +2423,7 @@
                 downloadCSVBtn.addEventListener('click', downloadFullCSV);
             }
             
-            // Campo de busca na Consulta
+            // Busca
             const searchEmpregadosInput = document.getElementById('searchEmpregados');
             if (searchEmpregadosInput) {
                 searchEmpregadosInput.addEventListener('input', function(e) {
@@ -3437,48 +2432,41 @@
                 });
             }
             
-            // Itens por página Dashboard 1
+            // Itens por página
             const itemsPerPageDashboard1Select = document.getElementById('itemsPerPageDashboard1');
             if (itemsPerPageDashboard1Select) {
                 itemsPerPageDashboard1Select.addEventListener('change', function() {
                     itemsPerPageDashboard1 = parseInt(this.value);
                     currentPageDashboard1 = 1;
                     updateResumoTable();
-                    iframeUpdateHeight();
                 });
             }
             
-            // Itens por página Dashboard 2
             const itemsPerPageDashboard2Select = document.getElementById('itemsPerPageDashboard2');
             if (itemsPerPageDashboard2Select) {
                 itemsPerPageDashboard2Select.addEventListener('change', function() {
                     itemsPerPageDashboard2 = parseInt(this.value);
                     currentPageDashboard2 = 1;
                     updateEmpregadosTable();
-                    iframeUpdateHeight();
                 });
             }
             
-            // Event listeners para ordenação
+            // Ordenação
             setTimeout(() => {
-                const visaoGeralThs = document.querySelectorAll('#visaoGeralTable th[data-sort]');
-                visaoGeralThs.forEach(th => {
+                document.querySelectorAll('#visaoGeralTable th[data-sort]').forEach(th => {
                     th.addEventListener('click', function() {
-                        const column = this.getAttribute('data-sort');
-                        sortTable('visaoGeral', column);
+                        sortTable('visaoGeral', this.getAttribute('data-sort'));
                     });
                 });
                 
-                const empregadosTableThs = document.querySelectorAll('#empregadosTable th[data-sort]');
-                empregadosTableThs.forEach(th => {
+                document.querySelectorAll('#empregadosTable th[data-sort]').forEach(th => {
                     th.addEventListener('click', function() {
-                        const column = this.getAttribute('data-sort');
-                        sortTable('empregados', column);
+                        sortTable('empregados', this.getAttribute('data-sort'));
                     });
                 });
             }, 100);
             
-            // Event listeners para compartilhamento
+            // Compartilhamento
             document.querySelectorAll('.link-share').forEach(btn => {
                 btn.addEventListener('click', copiarLink);
             });
@@ -3499,24 +2487,13 @@
                 btn.addEventListener('click', compartilharWhatsApp);
             });
             
-            // Fechar dropdowns ao clicar fora - com delay para evitar fechamento acidental
-            let clickOutsideTimer;
+            // Fechar dropdowns
             document.addEventListener('click', function(event) {
                 if (!event.target.closest('.share-dropdown')) {
-                    clearTimeout(clickOutsideTimer);
-                    clickOutsideTimer = setTimeout(() => {
-                        document.querySelectorAll('.share-options').forEach(opt => {
-                            opt.classList.remove('show');
-                        });
-                    }, 200);
+                    document.querySelectorAll('.share-options').forEach(opt => {
+                        opt.classList.remove('show');
+                    });
                 }
-            });
-            
-            // Prevenir fechamento ao clicar dentro do dropdown
-            document.querySelectorAll('.share-options').forEach(opt => {
-                opt.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                });
             });
         }
 
@@ -3528,7 +2505,6 @@
         }
 
         function clearAllFilters() {
-            // Limpa filtros do Dashboard 1
             const anoSelect1 = document.getElementById('anoDashboard1');
             const mesSelect1 = document.getElementById('mesDashboard1');
             const orgaoInput1 = document.getElementById('orgaoDashboard1');
@@ -3537,17 +2513,14 @@
             if (mesSelect1 && currentMonth) mesSelect1.value = currentMonth;
             if (orgaoInput1) orgaoInput1.value = '';
             
-            // Reaplica filtros padrão
             filteredData = terceirizadosData.filter(
                 e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
             );
             
-            console.log(`Dashboard 1 - Filtros limpos: ${filteredData.length} registros para ${currentMonth}/${currentYear}`);
             updateDashboard1();
         }
 
         function clearDashboard2Filters() {
-            // Limpa filtros do Dashboard 2
             const anoSelect2 = document.getElementById('anoDashboard2');
             const mesSelect2 = document.getElementById('mesDashboard2');
             const nomeInput = document.getElementById('nomeEmpregado');
@@ -3568,19 +2541,16 @@
             
             currentSearchTerm = '';
             
-            // Reaplica filtros padrão
             filteredData = terceirizadosData.filter(
                 e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
             );
             
-            console.log(`Dashboard 2 - Filtros limpos: ${filteredData.length} registros para ${currentMonth}/${currentYear}`);
             updateDashboard2();
         }
 
         // ==================== FUNÇÕES DE ORDENAÇÃO ====================
         function sortTable(tableType, column) {
             if (tableType === 'visaoGeral') {
-                // Alterna entre asc e desc se clicar na mesma coluna
                 if (currentSortDashboard1.column === column) {
                     currentSortDashboard1.order = currentSortDashboard1.order === 'asc' ? 'desc' : 'asc';
                 } else {
@@ -3588,20 +2558,7 @@
                     currentSortDashboard1.order = column === 'quantidade' ? 'desc' : 'asc';
                 }
                 updateResumoTable();
-                
-                // Atualiza ícones de ordenação
-                document.querySelectorAll('#visaoGeralTable th').forEach(th => {
-                    th.classList.remove('sorted-asc', 'sorted-desc');
-                    const sortIcon = th.querySelector('.sort-icon');
-                    if (sortIcon) {
-                        if (th.getAttribute('data-sort') === currentSortDashboard1.column) {
-                            th.classList.add(`sorted-${currentSortDashboard1.order}`);
-                        }
-                    }
-                });
-                
             } else if (tableType === 'empregados') {
-                // Alterna entre asc e desc se clicar na mesma coluna
                 if (currentSortDashboard2.column === column) {
                     currentSortDashboard2.order = currentSortDashboard2.order === 'asc' ? 'desc' : 'asc';
                 } else {
@@ -3609,17 +2566,6 @@
                     currentSortDashboard2.order = 'asc';
                 }
                 updateEmpregadosTable();
-                
-                // Atualiza ícones de ordenação
-                document.querySelectorAll('#empregadosTable th').forEach(th => {
-                    th.classList.remove('sorted-asc', 'sorted-desc');
-                    const sortIcon = th.querySelector('.sort-icon');
-                    if (sortIcon) {
-                        if (th.getAttribute('data-sort') === currentSortDashboard2.column) {
-                            th.classList.add(`sorted-${currentSortDashboard2.order}`);
-                        }
-                    }
-                });
             }
         }
 
@@ -3641,10 +2587,8 @@
             const summaryCards = document.getElementById('summaryCards');
             if (!summaryCards || !filteredData) return;
             
-            // Calcula métricas
             const totalEmpregados = filteredData.length;
             
-            // Conta órgãos únicos
             const orgaosUnicos = new Set();
             filteredData.forEach(e => {
                 if (e.orgao && e.orgao.trim() !== '') {
@@ -3653,7 +2597,6 @@
             });
             const totalOrgaos = orgaosUnicos.size;
             
-            // Conta empresas únicas
             const empresasUnicas = new Set();
             filteredData.forEach(e => {
                 if (e.empresa && e.empresa.trim() !== '') {
@@ -3662,10 +2605,8 @@
             });
             const totalEmpresas = empresasUnicas.size;
             
-            // Mês atual formatado
             const mesFormatado = monthNames[currentMonth] || currentMonth;
             
-            // Cria os cards
             summaryCards.innerHTML = `
                 <div class="col-md-3 col-6">
                     <div class="metric-card primary">
@@ -3708,16 +2649,11 @@
 
         // ==================== FUNÇÕES PARA GRÁFICOS ====================
         function updateCharts() {
-            if (!filteredData || filteredData.length === 0) {
-                console.warn('Sem dados para criar gráficos');
-                return;
-            }
+            if (!filteredData || filteredData.length === 0) return;
             
-            // Destruir gráficos existentes
             destroyChart(charts.chartOrgao);
             destroyChart(charts.chartCargo);
             
-            // Criar novos gráficos
             createOrgaoChart();
             createCargoChart();
         }
@@ -3727,24 +2663,20 @@
             const legendContainer = document.getElementById('legendOrgao');
             if (!ctx || !legendContainer) return;
             
-            // Agrupa dados por órgão
             const orgaoCounts = {};
             filteredData.forEach(e => {
                 const orgaoNome = getOrgaoExtenso(e.orgao);
                 orgaoCounts[orgaoNome] = (orgaoCounts[orgaoNome] || 0) + 1;
             });
             
-            // Ordena por quantidade (do maior para o menor)
             const sortedOrgaos = Object.entries(orgaoCounts)
                 .sort((a, b) => b[1] - a[1])
-                .slice(0, 8); // Top 8 órgãos para não sobrecarregar
+                .slice(0, 6);
             
-            const labels = sortedOrgaos.map(item => shortenLabel(item[0], 20));
+            const labels = sortedOrgaos.map(item => shortenLabel(item[0], 15));
             const data = sortedOrgaos.map(item => item[1]);
-            const fullLabels = sortedOrgaos.map(item => item[0]);
             const total = data.reduce((a, b) => a + b, 0);
             
-            // Cores para o gráfico
             const backgroundColors = chartPalette.slice(0, labels.length);
             
             charts.chartOrgao = new Chart(ctx, {
@@ -3764,9 +2696,7 @@
                     maintainAspectRatio: true,
                     cutout: '60%',
                     plugins: {
-                        legend: {
-                            display: false
-                        },
+                        legend: { display: false },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
@@ -3780,7 +2710,6 @@
                 }
             });
             
-            // Criar legenda personalizada
             legendContainer.innerHTML = '';
             sortedOrgaos.forEach((item, index) => {
                 const label = item[0];
@@ -3793,11 +2722,11 @@
                 legendItem.innerHTML = `
                     <span class="legend-dot-compact" style="background-color: ${color};"></span>
                     <div class="legend-content-compact">
+                        <span class="legend-label-compact" title="${label}">${shortenLabel(label, 18)}</span>
                         <div class="legend-stats-compact">
-                            <span class="legend-label-compact" title="${label}">${shortenLabel(label, 18)}</span>
                             <span class="legend-percent-compact">${percentage}%</span>
+                            <span class="legend-count-compact">${value.toLocaleString('pt-BR')}</span>
                         </div>
-                        <span class="legend-count-compact">${value.toLocaleString('pt-BR')}</span>
                     </div>
                 `;
                 legendContainer.appendChild(legendItem);
@@ -3809,7 +2738,6 @@
             const legendContainer = document.getElementById('legendCargo');
             if (!ctx || !legendContainer) return;
             
-            // Agrupa dados por cargo
             const cargoCounts = {};
             filteredData.forEach(e => {
                 if (e.cargo && e.cargo.trim() !== '') {
@@ -3817,17 +2745,14 @@
                 }
             });
             
-            // Ordena por quantidade (do maior para o menor)
             const sortedCargos = Object.entries(cargoCounts)
                 .sort((a, b) => b[1] - a[1])
-                .slice(0, 8); // Top 8 cargos
+                .slice(0, 6);
             
-            const labels = sortedCargos.map(item => shortenLabel(item[0], 18));
+            const labels = sortedCargos.map(item => shortenLabel(item[0], 15));
             const data = sortedCargos.map(item => item[1]);
-            const fullLabels = sortedCargos.map(item => item[0]);
             const total = data.reduce((a, b) => a + b, 0);
             
-            // Cores para o gráfico
             const backgroundColors = chartPalette.slice(0, labels.length);
             
             charts.chartCargo = new Chart(ctx, {
@@ -3847,9 +2772,7 @@
                     maintainAspectRatio: true,
                     cutout: '60%',
                     plugins: {
-                        legend: {
-                            display: false
-                        },
+                        legend: { display: false },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
@@ -3863,7 +2786,6 @@
                 }
             });
             
-            // Criar legenda personalizada
             legendContainer.innerHTML = '';
             sortedCargos.forEach((item, index) => {
                 const label = item[0];
@@ -3876,11 +2798,11 @@
                 legendItem.innerHTML = `
                     <span class="legend-dot-compact" style="background-color: ${color};"></span>
                     <div class="legend-content-compact">
+                        <span class="legend-label-compact" title="${label}">${shortenLabel(label, 18)}</span>
                         <div class="legend-stats-compact">
-                            <span class="legend-label-compact" title="${label}">${shortenLabel(label, 18)}</span>
                             <span class="legend-percent-compact">${percentage}%</span>
+                            <span class="legend-count-compact">${value.toLocaleString('pt-BR')}</span>
                         </div>
-                        <span class="legend-count-compact">${value.toLocaleString('pt-BR')}</span>
                     </div>
                 `;
                 legendContainer.appendChild(legendItem);
@@ -3904,7 +2826,6 @@
                 return;
             }
             
-            // Agrupa por órgão
             const orgaoGroups = {};
             filteredData.forEach(e => {
                 const orgaoSigla = e.orgao || 'Não informado';
@@ -3920,10 +2841,8 @@
                 orgaoGroups[orgaoNome].quantidade++;
             });
             
-            // Converte para array
             let resumoData = Object.values(orgaoGroups);
             
-            // Aplica ordenação
             const sortColumn = currentSortDashboard1.column;
             const sortOrder = currentSortDashboard1.order;
             
@@ -3936,12 +2855,9 @@
                 } else if (sortColumn === 'orgao_sigla') {
                     aValue = a.sigla.toLowerCase();
                     bValue = b.sigla.toLowerCase();
-                } else if (sortColumn === 'quantidade') {
+                } else {
                     aValue = a.quantidade;
                     bValue = b.quantidade;
-                } else {
-                    aValue = a.nome.toLowerCase();
-                    bValue = b.nome.toLowerCase();
                 }
                 
                 if (sortOrder === 'asc') {
@@ -3951,11 +2867,9 @@
                 }
             });
             
-            // Calcula paginação
             const totalItems = resumoData.length;
             const totalPages = Math.ceil(totalItems / itemsPerPageDashboard1);
             
-            // Ajusta página atual se necessário
             if (currentPageDashboard1 > totalPages) {
                 currentPageDashboard1 = totalPages || 1;
             }
@@ -3964,58 +2878,46 @@
             const endIndex = Math.min(startIndex + itemsPerPageDashboard1, totalItems);
             const paginatedData = resumoData.slice(startIndex, endIndex);
             
-            // Atualiza o contador
             document.getElementById('resumoCountDashboard1').textContent = `${totalItems.toLocaleString('pt-BR')} órgãos`;
             
-            // Preenche a tabela
             const tableBody = document.getElementById('resumoTableBody');
             tableBody.innerHTML = '';
             
             paginatedData.forEach(item => {
                 const row = document.createElement('tr');
-                const orgaoNome = item.nome || 'Não informado';
-                const orgaoSigla = item.sigla || '';
-                
                 row.innerHTML = `
                     <td>
-                        <a href="#" class="orgao-link" data-orgao="${orgaoNome}">
-                            ${orgaoNome}
+                        <a href="#" class="orgao-link" data-orgao="${item.nome}">
+                            ${item.nome}
                         </a>
                     </td>
-                    <td>${orgaoSigla}</td>
+                    <td>${item.sigla}</td>
                     <td class="quantidade">${item.quantidade.toLocaleString('pt-BR')}</td>
                 `;
                 tableBody.appendChild(row);
             });
             
-            // Adiciona eventos aos links dos órgãos
             setTimeout(() => {
                 document.querySelectorAll('#visaoGeralTable .orgao-link').forEach(link => {
                     link.addEventListener('click', function(e) {
                         e.preventDefault();
                         const orgaoNome = this.getAttribute('data-orgao');
                         
-                        // Remove a seleção anterior
                         document.querySelectorAll('.orgao-link').forEach(l => {
                             l.classList.remove('selected');
                         });
                         
-                        // Adiciona seleção ao link clicado
                         this.classList.add('selected');
                         
-                        // Muda para a aba de Consulta Individual
                         const tabButton = document.querySelector('#dashboard2-tab');
                         if (tabButton) {
                             const tab = new bootstrap.Tab(tabButton);
                             tab.show();
                         }
                         
-                        // Preenche o filtro de órgão na aba 2
                         const orgaoInputDashboard2 = document.getElementById('orgaoDashboard2');
                         if (orgaoInputDashboard2) {
                             orgaoInputDashboard2.value = orgaoNome;
-                            
-                            // Aplica o filtro após um pequeno delay
                             setTimeout(() => {
                                 applyFilters('dashboard2');
                             }, 100);
@@ -4024,7 +2926,6 @@
                 });
             }, 10);
             
-            // Atualiza o rodapé com total geral
             const totalGeral = resumoData.reduce((sum, item) => sum + item.quantidade, 0);
             document.getElementById('resumoTableFooter').innerHTML = `
                 <tr class="table-total-row">
@@ -4033,11 +2934,9 @@
                 </tr>
             `;
             
-            // Atualiza informações de paginação
             document.getElementById('paginationInfoDashboard1').textContent = 
                 `Mostrando ${startIndex + 1}-${endIndex} de ${totalItems.toLocaleString('pt-BR')} registros`;
             
-            // Gera os botões de paginação
             updatePagination('paginationDashboard1', currentPageDashboard1, totalPages, 'dashboard1');
         }
 
@@ -4057,7 +2956,6 @@
                 return;
             }
             
-            // Filtra por termo de busca se existir
             let empregadosData = [...filteredData];
             
             if (currentSearchTerm) {
@@ -4076,7 +2974,6 @@
                 });
             }
             
-            // Aplica ordenação
             const sortColumn = currentSortDashboard2.column;
             const sortOrder = currentSortDashboard2.order;
             
@@ -4098,12 +2995,9 @@
                 } else if (sortColumn === 'empresa') {
                     aValue = (a.empresa || '').toLowerCase();
                     bValue = (b.empresa || '').toLowerCase();
-                } else if (sortColumn === 'cnpj_empresa') {
+                } else {
                     aValue = a.cnpj_empresa || '';
                     bValue = b.cnpj_empresa || '';
-                } else {
-                    aValue = (a.nome || '').toLowerCase();
-                    bValue = (b.nome || '').toLowerCase();
                 }
                 
                 if (sortOrder === 'asc') {
@@ -4113,11 +3007,9 @@
                 }
             });
             
-            // Calcula paginação
             const totalItems = empregadosData.length;
             const totalPages = Math.ceil(totalItems / itemsPerPageDashboard2);
             
-            // Ajusta página atual se necessário
             if (currentPageDashboard2 > totalPages) {
                 currentPageDashboard2 = totalPages || 1;
             }
@@ -4126,10 +3018,8 @@
             const endIndex = Math.min(startIndex + itemsPerPageDashboard2, totalItems);
             const paginatedData = empregadosData.slice(startIndex, endIndex);
             
-            // Atualiza o contador
             document.getElementById('resumoCountDashboard2').textContent = `${totalItems.toLocaleString('pt-BR')} empregados`;
             
-            // Preenche a tabela
             const tableBody = document.getElementById('empregadosTableBody');
             tableBody.innerHTML = '';
             
@@ -4162,7 +3052,6 @@
                 tableBody.appendChild(row);
             });
             
-            // Atualiza o rodapé com total geral
             document.getElementById('empregadosTableFooter').innerHTML = `
                 <tr class="table-total-row">
                     <td colspan="7" class="text-center">
@@ -4171,14 +3060,11 @@
                 </tr>
             `;
             
-            // Atualiza informações de paginação
             document.getElementById('paginationInfoDashboard2').textContent = 
                 `Mostrando ${startIndex + 1}-${endIndex} de ${totalItems.toLocaleString('pt-BR')} registros`;
             
-            // Gera os botões de paginação
             updatePagination('paginationDashboard2', currentPageDashboard2, totalPages, 'dashboard2');
             
-            // Adiciona eventos aos botões de histórico
             setTimeout(() => {
                 document.querySelectorAll('.btn-history').forEach(button => {
                     button.addEventListener('click', function() {
@@ -4206,7 +3092,6 @@
             
             let paginationHTML = '';
             
-            // Botão Anterior
             if (currentPage > 1) {
                 paginationHTML += `
                     <li class="page-item">
@@ -4225,17 +3110,14 @@
                 `;
             }
             
-            // Páginas
             const maxVisiblePages = 5;
             let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
             let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
             
-            // Ajusta startPage se endPage estiver no limite
             if (endPage - startPage + 1 < maxVisiblePages) {
                 startPage = Math.max(1, endPage - maxVisiblePages + 1);
             }
             
-            // Primeira página
             if (startPage > 1) {
                 paginationHTML += `
                     <li class="page-item">
@@ -4251,7 +3133,6 @@
                 }
             }
             
-            // Páginas visíveis
             for (let i = startPage; i <= endPage; i++) {
                 if (i === currentPage) {
                     paginationHTML += `
@@ -4268,7 +3149,6 @@
                 }
             }
             
-            // Última página
             if (endPage < totalPages) {
                 if (endPage < totalPages - 1) {
                     paginationHTML += `
@@ -4284,7 +3164,6 @@
                 `;
             }
             
-            // Botão Próximo
             if (currentPage < totalPages) {
                 paginationHTML += `
                     <li class="page-item">
@@ -4305,7 +3184,6 @@
             
             paginationElement.innerHTML = paginationHTML;
             
-            // Adiciona eventos de clique
             paginationElement.querySelectorAll('.page-link').forEach(link => {
                 if (link.getAttribute('data-page')) {
                     link.addEventListener('click', function(e) {
@@ -4319,8 +3197,6 @@
                             currentPageDashboard2 = page;
                             updateEmpregadosTable();
                         }
-                        
-                        iframeUpdateHeight();
                     });
                 }
             });
@@ -4328,32 +3204,26 @@
 
         // ==================== HISTÓRICO DO EMPREGADO ====================
         function showEmployeeHistory(matricula, nome, orgaoAtual, cargoAtual, empresaAtual, cnpjAtual) {
-            // Encontrar todos os registros do empregado em todos os anos
             let historico = [];
             
-            // Busca em todos os anos carregados
             for (const [year, yearData] of Object.entries(allData)) {
                 const empregadoNoAno = yearData.filter(e => e.matricula === matricula);
                 historico.push(...empregadoNoAno);
             }
             
-            // Ordena por competência (mais recente primeiro)
             historico.sort((a, b) => {
                 const dateA = a.COMPETENCIA ? new Date(a.COMPETENCIA + '-01') : new Date(0);
                 const dateB = b.COMPETENCIA ? new Date(b.COMPETENCIA + '-01') : new Date(0);
                 return dateB - dateA;
             });
             
-            // Atualiza o título do modal com o nome do empregado
             document.getElementById('historicModalLabel').innerHTML = `
                 <i class="material-icons me-2">person</i> ${nome || 'Histórico do Empregado'}
             `;
             
-            // Preenche o modal
             const employeeInfo = document.getElementById('employeeInfo');
             const historicTableBody = document.getElementById('historicTableBody');
             
-            // Determina o período atual
             const mesAtual = monthNames[currentMonth] || currentMonth;
             const periodoAtual = `${mesAtual}/${currentYear}`;
             
@@ -4392,7 +3262,6 @@
                 historico.forEach(registro => {
                     const row = document.createElement('tr');
                     
-                    // Formata o mês de referência
                     let mesFormatado = 'Não informado';
                     if (registro.mes_referencia) {
                         if (registro.mes_referencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
@@ -4417,7 +3286,6 @@
                 });
             }
             
-            // Mostra o modal
             const modal = new bootstrap.Modal(document.getElementById('historicModal'));
             modal.show();
         }
@@ -4428,7 +3296,6 @@
             let filename = '';
             
             if (dashboard === 'dashboard1') {
-                // Exporta dados agrupados por órgão
                 const orgaoGroups = {};
                 filteredData.forEach(e => {
                     const orgaoNome = getOrgaoExtenso(e.orgao || '');
@@ -4446,7 +3313,6 @@
                 filename = `terceirizados_visao_geral_${currentMonth}_${currentYear}.csv`;
                 
             } else if (dashboard === 'dashboard2') {
-                // Exporta dados completos dos empregados
                 dataToExport = filteredData.map(e => ({
                     nome: e.nome,
                     matricula: e.matricula,
@@ -4465,7 +3331,6 @@
                 return;
             }
             
-            // Converte para CSV
             const headers = Object.keys(dataToExport[0]);
             const csvContent = [
                 headers.join(';'),
@@ -4476,7 +3341,6 @@
                 )
             ].join('\n');
             
-            // Cria e baixa o arquivo
             const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -4486,37 +3350,24 @@
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
-            
-            console.log(`${dataToExport.length} registros exportados para ${filename}`);
         }
 
         function downloadFullCSV() {
             const yearSelect = document.getElementById('anoDownload');
             const year = yearSelect ? yearSelect.value : '';
             
-            let url = '';
-            let filename = '';
-            
             if (year && CSV_FILES_BY_YEAR[year]) {
-                // Download de um ano específico
-                url = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR[year]}`;
-                filename = CSV_FILES_BY_YEAR[year];
+                const url = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR[year]}`;
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = CSV_FILES_BY_YEAR[year];
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             } else {
-                // Download de todos os anos combinados
                 alert('Para baixar todos os anos, visite o repositório GitHub diretamente.');
                 window.open('https://github.com/transparencia-mg/empregados_terceirizados', '_blank');
-                return;
             }
-            
-            // Cria link para download direto
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            console.log(`Download iniciado: ${filename}`);
         }
 
         // ==================== IMPRESSÃO ====================
@@ -4549,7 +3400,6 @@
             `;
             
             if (dashboard === 'dashboard1') {
-                // Tabela de visão geral
                 const orgaoGroups = {};
                 filteredData.forEach(e => {
                     const orgaoNome = getOrgaoExtenso(e.orgao || '');
@@ -4601,7 +3451,6 @@
                 `;
                 
             } else if (dashboard === 'dashboard2') {
-                // Tabela de empregados
                 content += `
                     <h2>Consulta Individual de Empregados</h2>
                     <table>
@@ -4671,19 +3520,12 @@
                     
                     const orgaoNome = orgaoInput === '' ? null : orgaoInput;
 
-                    // Troca de ano se necessário
                     if (ano !== currentYear) {
-                        const success = await switchYearData(ano);
-                        if (!success) {
-                            showLoading(false);
-                            return;
-                        }
+                        await switchYearData(ano);
                     }
                     
-                    // Define o mês atual
                     currentMonth = mes;
                     
-                    // Filtra os dados
                     filteredData = terceirizadosData.filter(empregado => {
                         if (empregado.ANO !== currentYear || empregado.MES_NUM !== currentMonth) {
                             return false;
@@ -4699,7 +3541,6 @@
                         return true;
                     });
                     
-                    console.log(`Dashboard 1 - Filtros aplicados: ${filteredData.length} registros para ${currentMonth}/${currentYear}`);
                     updateDashboard1();
                     
                 } else if (dashboard === 'dashboard2') {
@@ -4715,19 +3556,12 @@
                     const empresa = empresaInput === '' ? null : empresaInput;
                     const orgaoNome = orgaoInput === '' ? null : orgaoInput;
                     
-                    // Troca de ano se necessário
                     if (ano !== currentYear) {
-                        const success = await switchYearData(ano);
-                        if (!success) {
-                            showLoading(false);
-                            return;
-                        }
+                        await switchYearData(ano);
                     }
                     
-                    // Define o mês atual
                     currentMonth = mes;
                     
-                    // Filtra os dados
                     filteredData = terceirizadosData.filter(empregado => {
                         if (empregado.ANO !== currentYear || empregado.MES_NUM !== currentMonth) {
                             return false;
@@ -4759,25 +3593,20 @@
                         return true;
                     });
                     
-                    // Atualiza o termo de busca se necessário
                     const searchInput = document.getElementById('searchEmpregados');
                     if (searchInput) {
                         currentSearchTerm = searchInput.value.toLowerCase();
                     }
                     
-                    console.log(`Dashboard 2 - Filtros aplicados: ${filteredData.length} registros para ${currentMonth}/${currentYear}`);
                     updateDashboard2();
                 }
                 
-                // Atualiza os filtros de mês e ano nos selects
                 updateFilterOptions();
                 
             } catch (error) {
-                console.error('Erro ao aplicar filtros:', error);
                 showError('Erro ao aplicar filtros. Por favor, tente novamente.');
             } finally {
                 showLoading(false);
-                iframeUpdateHeight();
             }
         }
 
@@ -4785,14 +3614,12 @@
         function updateDatalists() {
             if (!filteredData || filteredData.length === 0) return;
             
-            // Obter todos os nomes completos de órgãos únicos do período atual
             const orgaosNomesUnicos = [...new Set(
                 filteredData
                     .map(e => getOrgaoExtenso(e.orgao))
                     .filter(Boolean)
             )].sort();
             
-            // Dashboard 1 - datalist de órgãos
             const orgaoDatalist1 = document.getElementById('orgaosListDashboard1');
             if (orgaoDatalist1) {
                 orgaoDatalist1.innerHTML = '';
@@ -4805,7 +3632,6 @@
                 });
             }
             
-            // Dashboard 2 - datalist de órgãos
             const orgaoDatalist2 = document.getElementById('orgaosListDashboard2');
             if (orgaoDatalist2) {
                 orgaoDatalist2.innerHTML = '';
@@ -4818,7 +3644,6 @@
                 });
             }
             
-            // Obter todos os cargos únicos
             const cargosUnicos = [...new Set(filteredData.map(e => e.cargo))].sort();
             
             const cargoDatalist2 = document.getElementById('cargosListDashboard2');
@@ -4833,7 +3658,6 @@
                 });
             }
             
-            // Obter todas as empresas únicas
             const empresasUnicas = [...new Set(filteredData.map(e => e.empresa))].sort();
             
             const empresaDatalist2 = document.getElementById('empresasListDashboard2');
@@ -4851,9 +3675,6 @@
 
         // ==================== ATUALIZAR OPÇÕES DE FILTRO ====================
         function updateFilterOptions() {
-            console.log('Atualizando opções de filtro...');
-            
-            // Dashboard 1 - Ano
             const anoSelect1 = document.getElementById('anoDashboard1');
             if (anoSelect1) {
                 anoSelect1.innerHTML = '';
@@ -4866,7 +3687,6 @@
                 });
             }
             
-            // Dashboard 1 - Mês
             const mesSelect1 = document.getElementById('mesDashboard1');
             if (mesSelect1 && currentYear && allData[currentYear]) {
                 const mesesDoAno = [...new Set(
@@ -4886,7 +3706,6 @@
                 });
             }
             
-            // Dashboard 2 - Ano
             const anoSelect2 = document.getElementById('anoDashboard2');
             if (anoSelect2) {
                 anoSelect2.innerHTML = '';
@@ -4899,7 +3718,6 @@
                 });
             }
             
-            // Dashboard 2 - Mês
             const mesSelect2 = document.getElementById('mesDashboard2');
             if (mesSelect2 && currentYear && allData[currentYear]) {
                 const mesesDoAno = [...new Set(
@@ -4919,10 +3737,8 @@
                 });
             }
             
-            // Atualiza as listas de órgãos, cargos e empresas com base nos dados atuais
             updateDatalists();
             
-            // Download - Ano
             const anoDownload = document.getElementById('anoDownload');
             if (anoDownload) {
                 anoDownload.innerHTML = '<option value="">Todos os Anos</option>';
@@ -4940,55 +3756,28 @@
             showLoading(true);
             
             try {
-                // Atualiza a data de atualização
                 updateDataAtualizacao();
-                
-                // Carrega os dados
                 await loadData();
-                
-                // Atualiza opções de filtro
                 updateFilterOptions();
-                
-                // Atualiza o dashboard inicial
                 updateDashboard1();
-                
-                // Configura eventos
                 setupEventListeners();
-                
-                console.log('Dashboard inicializado com sucesso!');
-                console.log(`Dados carregados: ${filteredData.length} registros para ${currentMonth}/${currentYear}`);
-                
             } catch (error) {
-                console.error('Erro ao inicializar dashboard:', error);
                 showError('Erro ao carregar dados. Por favor, recarregue a página.');
             } finally {
                 showLoading(false);
-                
-                // Atualiza a altura do iframe após um pequeno delay
-                setTimeout(() => {
-                    iframeUpdateHeight();
-                }, 500);
             }
         }
 
-        // ==================== INICIALIZAÇÃO QUANDO O DOCUMENTO CARREGAR ====================
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM completamente carregado');
-            
-            // Inicializa o dashboard
             initializeDashboard();
-            
-            // Atualiza a altura do iframe periodicamente (para garantir que está sempre correta)
-            setInterval(iframeUpdateHeight, 1000);
-            
-            // Atualiza a data de atualização a cada minuto
             setInterval(updateDataAtualizacao, 60000);
         });
 
-        // Adiciona evento para quando as abas são trocadas
         document.addEventListener('shown.bs.tab', function(event) {
-            console.log('Aba trocada para:', event.target.id);
-            setTimeout(iframeUpdateHeight, 100);
+            // Pequeno atraso para garantir que a tabela seja renderizada antes de ajustar altura
+            setTimeout(() => {
+                window.dispatchEvent(new Event('resize'));
+            }, 50);
         });
     </script>
 </body>

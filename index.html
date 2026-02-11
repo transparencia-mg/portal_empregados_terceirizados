@@ -43,74 +43,54 @@
         }
         
         /* ==================== ESTILOS GERAIS ==================== */
-        body {
-            font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background-light);
-            padding-bottom: 15px;
-            overflow-y: visible !important;
-            overflow-x: hidden !important;
-            min-height: auto !important;
-            height: auto !important;
-            position: relative;
-        }
+        /* ==================== ESTILOS GERAIS ==================== */
 
-        html {
-            overflow-y: visible !important;
-            height: auto !important;
-        }
-
-        .main-container {
-            height: auto !important;
-            min-height: auto !important;
-            overflow: visible !important;
-            position: relative;
-        }
-
-        .container.dashboard-spacing {
-            overflow: visible !important;
-            height: auto !important;
-            min-height: auto !important;
-            position: relative;
-        }
-
-        .tab-content {
-            overflow: visible !important;
-            height: auto !important;
-            min-height: auto !important;
-            position: relative;
-        }
-
-        .table-container {
-            height: auto !important;
-            min-height: auto !important;
-            overflow: visible !important;
-            position: relative;
-        }
-
-        .table-fixed-header-container {
-            max-height: 500px;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        /* BLOQUEIA SCROLL GLOBAL */
+/* === 1. BLOQUEIO TOTAL DO SCROLL GLOBAL === */
 html, body {
-    overflow: hidden !important;
-    height: 100vh !important;
     margin: 0;
+    padding: 0;
+    height: 100vh !important;
+    overflow: hidden !important;     /* ❌ remove scroll da página */
 }
 
-/* CONTAINER QUE SIMULA O IFRAME */
+body {
+    font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-light);
+}
+
+/* === 2. CONTAINER QUE SIMULA O IFRAME (ÚNICO COM SCROLL) === */
 .iframe-scroll-container {
-    height: 100vh;              /* ocupa tela inteira */
-    overflow-y: auto;           /* SOMENTE AQUI TEM SCROLL */
-    overflow-x: hidden;
+    height: 100vh;                  /* ocupa toda tela */
+    overflow-y: auto !important;    /* ✅ SCROLL SÓ AQUI */
+    overflow-x: hidden !important;
+    position: relative;
+    -webkit-overflow-scrolling: touch; /* suavidade no mobile */
 }
 
-/* Conteúdo interno livre */
+/* Conteúdo interno livre para crescer */
 .content-wrapper {
     min-height: 100%;
+    position: relative;
 }
+
+/* === 3. GARANTIR QUE OS CONTAINERS INTERNOS NÃO CRIEM SCROLL === */
+.main-container,
+.container.dashboard-spacing,
+.tab-content,
+.table-container {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    position: relative;
+}
+
+/* === 4. EXCEÇÃO: TABELAS PODEM TER SCROLL PRÓPRIO === */
+.table-fixed-header-container {
+    max-height: 500px;
+    overflow-y: auto !important;   /* ✅ scroll interno da tabela permitido */
+    position: relative;
+}
+
 
         /* ==================== HEADER MINIMALISTA ==================== */
         .main-header {

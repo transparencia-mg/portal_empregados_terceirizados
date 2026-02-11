@@ -44,38 +44,41 @@
         
         /* ==================== ESTILOS GERAIS ==================== */
 
-/* TRAVA TOTAL DO BODY */
-html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    height: 100vh !important;
-    overflow: hidden !important;
-}
+/* ==================== ESTILOS GERAIS - VERSÃO PARA AMBIENTE EXTERNO ==================== */
 
-/* ÚNICO RESPONSÁVEL PELO SCROLL */
+/* NÃO TOCAR NO HTML/BODY – eles não são seus */
+
+/* Container raiz do seu app */
 .iframe-scroll-container {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    height: calc(100vh - 10px) !important;
+    max-height: calc(100vh - 10px) !important;
 
-    height: 100vh !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
+
+    display: block !important;
+    box-sizing: border-box !important;
 }
 
-/* Resto não pode gerar scroll */
-.content-wrapper,
-.main-container,
-.container,
-.container-fluid,
-.tab-content {
+/* Todo conteúdo precisa respeitar o container */
+.content-wrapper {
     height: auto !important;
     overflow: visible !important;
 }
 
-/* EXCEÇÃO PERMITIDA */
+/* Remove alturas forçadas que empurram o body */
+.main-container,
+.container,
+.container-fluid,
+.dashboard-spacing,
+.tab-content {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+/* SOMENTE tabelas podem ter scroll próprio */
 .table-fixed-header-container {
     max-height: 500px !important;
     overflow-y: auto !important;

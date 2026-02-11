@@ -42,45 +42,37 @@
             --dark: #212529;
         }
         
-/* ==================== ESTILOS GERAIS - VERSÃO PARA AMBIENTE EXTERNO ==================== */
+/* === PADRÃO DO PORTAL AGP1 === */
 
-/* NÃO TOCAR NO HTML/BODY – eles não são seus */
-
-/* Container raiz do seu app */
-.iframe-scroll-container {
-    height: calc(100vh - 10px) !important;
-    max-height: calc(100vh - 10px) !important;
-
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-
+/* Host do componente */
+:host {
     display: block !important;
-    box-sizing: border-box !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
 }
 
-/* Todo conteúdo precisa respeitar o container */
-.content-wrapper {
-    height: auto !important;
-    overflow: visible !important;
-}
-
-/* Remove alturas forçadas que empurram o body */
+/* Raiz da sua página */
+app-root,
 .main-container,
-.container,
-.container-fluid,
-.dashboard-spacing,
-.tab-content {
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow: visible !important;
+.content-wrapper {
+    height: 100% !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
 }
 
-/* SOMENTE tabelas podem ter scroll próprio */
+/* Área que PODE rolar dentro da página */
+.tab-content {
+    height: 100% !important;
+    overflow-y: auto !important;
+}
+
+/* Tabelas continuam com scroll próprio */
 .table-fixed-header-container {
     max-height: 500px !important;
     overflow-y: auto !important;
 }
+
 
 /* ==================== FIX DEFINITIVO PARA ANGULAR ==================== */
 
@@ -1217,8 +1209,8 @@ app-root > * {
 </head>
 <body>
     <!-- SCROLL APENAS DENTRO DESTE CONTAINER (SIMULA IFRAME) -->
-    <div class="iframe-scroll-container">
-        <div class="content-wrapper">
+<div class="main-container">
+   <div class="tab-content">
 
             <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
             <div class="nav-tabs-container">

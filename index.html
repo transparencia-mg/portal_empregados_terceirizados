@@ -42,74 +42,56 @@
             --dark: #212529;
         }
         
-/* === PADRÃO DO PORTAL AGP1 === */
+        /* ==================== ESTILOS GERAIS ==================== */
+        body {
+            font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-light);
+            padding-bottom: 15px;
+            overflow-y: visible !important;
+            overflow-x: hidden !important;
+            min-height: auto !important;
+            height: auto !important;
+            position: relative;
+        }
 
-/* Host do componente */
-:host {
-    display: block !important;
-    height: 100% !important;
-    max-height: 100% !important;
-    overflow: hidden !important;
-}
+        html {
+            overflow-y: visible !important;
+            height: auto !important;
+        }
 
-/* Raiz da sua página */
-app-root,
-.main-container,
-.content-wrapper {
-    height: 100% !important;
-    max-height: 100% !important;
-    overflow: hidden !important;
-}
+        .main-container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            position: relative;
+        }
 
-/* Área que PODE rolar dentro da página */
-.tab-content {
-    height: 100% !important;
-    overflow-y: auto !important;
-}
+        .container.dashboard-spacing {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
+        }
 
-/* Tabelas continuam com scroll próprio */
-.table-fixed-header-container {
-    max-height: 500px !important;
-    overflow-y: auto !important;
-}
+        .tab-content {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
+        }
 
+        .table-container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            position: relative;
+        }
 
-/* ==================== FIX DEFINITIVO PARA ANGULAR ==================== */
-
-/* TRANSFORMA APP-ROOT NO SEU IFRAME REAL */
-app-root {
-    display: block !important;
-
-    height: 100vh !important;
-    max-height: 100vh !important;
-
-    overflow-y: auto !important;   /* 👈 SCROLL SÓ AQUI */
-    overflow-x: hidden !important;
-}
-
-/* Impede que seu conteúdo empurre o body */
-app-root > * {
-    height: auto !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-}
-
-/* Containers internos não podem criar scroll global */
-.main-container,
-.container,
-.container-fluid,
-.tab-content,
-.dashboard-spacing {
-    height: auto !important;
-    overflow: visible !important;
-}
-
-/* EXCEÇÃO permitida */
-.table-fixed-header-container {
-    max-height: 500px !important;
-    overflow-y: auto !important;
-}
-
+        .table-fixed-header-container {
+            max-height: 500px;
+            overflow-y: auto;
+            position: relative;
+        }
 
         /* ==================== HEADER MINIMALISTA ==================== */
         .main-header {

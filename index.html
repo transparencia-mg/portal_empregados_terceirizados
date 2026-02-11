@@ -49,53 +49,51 @@
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
             padding-bottom: 15px;
-            overflow-y: auto !important;
-            overflow-x: hidden;
+            overflow-y: visible !important;
+            overflow-x: hidden !important;
             min-height: 100vh;
             height: auto;
             position: relative;
-            scroll-behavior: auto;
         }
 
         html {
-            overflow-y: auto !important;
-            height: 100%;
-            scroll-behavior: auto;
+            overflow-y: visible !important;
+            height: auto !important;
         }
 
-        /* Scrollbar padrão sem efeitos */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+        .main-container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            position: relative;
         }
 
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+        .container.dashboard-spacing {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
+        .tab-content {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
         }
 
-        .main-container,
-        .container.dashboard-spacing,
-        .tab-content,
         .table-container {
-            height: auto;
-            min-height: auto;
-            overflow: visible;
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
             position: relative;
         }
 
         .table-fixed-header-container {
             max-height: 500px;
-            overflow-y: auto !important;
+            overflow-y: auto;
             position: relative;
-            border-radius: 8px;
-            -webkit-overflow-scrolling: touch;
         }
-        
         /* ==================== HEADER MINIMALISTA ==================== */
         .main-header {
             background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);

@@ -93,6 +93,25 @@
             position: relative;
         }
 
+        /* BLOQUEIA SCROLL GLOBAL */
+html, body {
+    overflow: hidden !important;
+    height: 100vh !important;
+    margin: 0;
+}
+
+/* CONTAINER QUE SIMULA O IFRAME */
+.iframe-scroll-container {
+    height: 100vh;              /* ocupa tela inteira */
+    overflow-y: auto;           /* SOMENTE AQUI TEM SCROLL */
+    overflow-x: hidden;
+}
+
+/* Conteúdo interno livre */
+.content-wrapper {
+    min-height: 100%;
+}
+
         /* ==================== HEADER MINIMALISTA ==================== */
         .main-header {
             background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);

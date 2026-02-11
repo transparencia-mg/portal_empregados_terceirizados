@@ -17,91 +17,55 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* ==================== VARIÁVEIS DE CORES ==================== */
-        :root {
-            --primary-dark: #29435A;
-            --primary-darker: #0E2F44;
-            --accent-red: #B93C42;
-            --accent-bright: #DB233F;
-            --background-light: #EEEFF5;
-            --success-green: #28a745;
-            --warning-yellow: #ffc107;
-            --info-blue: #17a2b8;
-            --secondary-blue: #3F704D;
-            --secondary-brown: #8B7355;
-            --secondary-teal: #20B2AA;
-            --hover-blue: #006a82;
-            --border-gray: #0E2F44;
-            --white: #ffffff;
-            --light1: #f8f9fa;
-            --light2: #f5f5f5;
-            --light3: #eeeff5;
-            --light4: #efefef;
-            --gray: #6c757d;
-            --text: #495057;
-            --dark: #212529;
+        /* ==================== RESET E ESTILOS BASE ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        /* ==================== ESTILOS GERAIS ==================== */
-        body {
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important; /* SCROLL SOMENTE NO IFRAME */
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background-light);
-            padding-bottom: 15px;
-            overflow-y: visible !important;
-            overflow-x: hidden !important;
-            min-height: auto !important;
-            height: auto !important;
+            background-color: #EEEFF5;
+        }
+
+        body {
             position: relative;
+            min-height: 100vh;
         }
 
-        html {
-            overflow-y: visible !important;
-            height: auto !important;
-        }
-
+        /* ==================== CONTAINER PRINCIPAL - SCROLL DO IFRAME ==================== */
         .main-container {
-            height: auto !important;
-            min-height: auto !important;
-            overflow: visible !important;
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto !important; /* SCROLL SOMENTE AQUI - COMPORTAMENTO IFRAME */
+            overflow-x: hidden;
             position: relative;
+            padding: 20px 30px; /* MARGENS LATERAIS IGUAL AO ACORDOS */
+            background-color: #EEEFF5;
         }
 
-        .container.dashboard-spacing {
-            overflow: visible !important;
-            height: auto !important;
-            min-height: auto !important;
-            position: relative;
-        }
-
-        .tab-content {
-            overflow: visible !important;
-            height: auto !important;
-            min-height: auto !important;
-            position: relative;
-        }
-
-        .table-container {
-            height: auto !important;
-            min-height: auto !important;
-            overflow: visible !important;
-            position: relative;
-        }
-
-        .table-fixed-header-container {
-            max-height: 500px;
-            overflow-y: auto;
-            position: relative;
+        /* ==================== WRAPPER PARA CONTEÚDO ==================== */
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         /* ==================== HEADER MINIMALISTA ==================== */
         .main-header {
-            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, #0E2F44 0%, #29435A 100%);
             color: white;
             padding: 12px 24px;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border-bottom: 3px solid var(--accent-red);
-            width: 100%;
+            border-bottom: 3px solid #B93C42;
+            border-radius: 8px;
         }
         
         .logo-container {
@@ -113,7 +77,7 @@
         .logo {
             width: 45px;
             height: 45px;
-            background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-bright) 100%);
+            background: linear-gradient(135deg, #B93C42 0%, #DB233F 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -154,12 +118,12 @@
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
             padding: 20px;
             margin-bottom: 20px;
-            border-left: 5px solid var(--accent-red);
+            border-left: 5px solid #B93C42;
         }
         
         .filter-label {
             font-weight: 600;
-            color: var(--primary-dark);
+            color: #29435A;
             margin-bottom: 6px;
             font-size: 12px;
             text-transform: uppercase;
@@ -176,7 +140,7 @@
         }
         
         .form-control:focus, .form-select:focus {
-            border-color: var(--accent-red);
+            border-color: #B93C42;
             box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
         }
         
@@ -187,7 +151,7 @@
             padding: 20px 15px;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
             margin-bottom: 20px;
-            border-top: 4px solid var(--accent-red);
+            border-top: 4px solid #B93C42;
             transition: all 0.2s ease;
             height: 100%;
             position: relative;
@@ -200,32 +164,32 @@
         }
         
         .metric-card.primary {
-            border-top-color: var(--primary-dark);
+            border-top-color: #29435A;
         }
         
         .metric-card.success {
-            border-top-color: var(--success-green);
+            border-top-color: #28a745;
         }
         
         .metric-card.warning {
-            border-top-color: var(--warning-yellow);
+            border-top-color: #ffc107;
         }
         
         .metric-card.info {
-            border-top-color: var(--info-blue);
+            border-top-color: #17a2b8;
         }
         
         .metric-value {
             font-size: 24px;
             font-weight: 700;
-            color: var(--primary-dark);
+            color: #29435A;
             margin: 8px 0;
             line-height: 1;
         }
         
         .metric-label {
             font-size: 12px;
-            color: var(--primary-darker);
+            color: #0E2F44;
             font-weight: 600;
             margin-bottom: 6px;
             text-transform: uppercase;
@@ -242,10 +206,10 @@
         
         .metric-change.positive {
             background-color: rgba(40, 167, 69, 0.1);
-            color: var(--success-green);
+            color: #28a745;
         }
         
-        /* ==================== NOVOS GRÁFICOS ==================== */
+        /* ==================== GRÁFICOS ==================== */
         .dashboard-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -352,13 +316,13 @@
         .legend-percent-compact {
             font-size: 11px;
             font-weight: 700;
-            color: var(--primary-dark);
+            color: #29435A;
         }
 
         .legend-count-compact {
             font-size: 10px;
             font-weight: 600;
-            color: var(--accent-red);
+            color: #B93C42;
             background-color: rgba(185, 60, 66, 0.1);
             padding: 2px 6px;
             border-radius: 4px;
@@ -383,10 +347,6 @@
             .legend-compact {
                 width: 100%;
                 max-height: none;
-            }
-            
-            .legend-label-compact {
-                max-width: 150px;
             }
         }
         
@@ -421,7 +381,7 @@
             border-radius: 6px !important;
             padding: 10px 15px !important;
             font-weight: 600;
-            color: var(--primary-dark) !important;
+            color: #29435A !important;
             transition: all 0.2s ease;
             font-size: 13px;
             white-space: nowrap;
@@ -432,11 +392,11 @@
 
         .nav-tabs .nav-link:hover {
             background-color: rgba(41, 67, 90, 0.05) !important;
-            color: var(--accent-red) !important;
+            color: #B93C42 !important;
         }
 
         .nav-tabs .nav-link.active {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%) !important;
+            background: linear-gradient(135deg, #29435A 0%, #0E2F44 100%) !important;
             color: white !important;
             border: none !important;
         }
@@ -452,7 +412,7 @@
             color: white !important;
         }
         
-        /* ==================== TABELAS COM SCROLL INTERNO ==================== */
+        /* ==================== TABELAS ==================== */
         .table-container {
             background: white;
             border-radius: 10px;
@@ -464,7 +424,7 @@
         }
         
         .table-header {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
+            background: linear-gradient(135deg, #29435A 0%, #0E2F44 100%);
             color: white;
             padding: 15px 20px;
             display: flex;
@@ -481,7 +441,7 @@
         }
         
         .table-badge {
-            background: var(--accent-red);
+            background: #B93C42;
             color: white;
             padding: 4px 12px;
             border-radius: 15px;
@@ -489,29 +449,12 @@
             font-weight: 600;
         }
         
-        .table-fixed-header-container {
-            position: relative;
-            max-height: 500px;
-            overflow-y: auto !important; /* SCROLL INTERNO DA TABELA - PERMITIDO */
+        /* TABELA SEM SCROLL INTERNO - TODO SCROLL É NO IFRAME */
+        .table-responsive-wrapper {
+            width: 100%;
             overflow-x: auto;
             padding: 0;
             -webkit-overflow-scrolling: touch;
-            width: 100%;
-        }
-        
-        .table-fixed-header-container table thead {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background-color: var(--primary-dark) !important;
-        }
-        
-        .table-fixed-header-container table thead th {
-            background-color: var(--primary-dark) !important;
-            color: white !important;
-            position: sticky;
-            top: 0;
-            z-index: 20;
         }
         
         .table {
@@ -522,7 +465,7 @@
         }
         
         .table thead th {
-            background-color: var(--primary-dark) !important;
+            background-color: #29435A !important;
             color: white !important;
             font-weight: 600;
             border: none;
@@ -553,7 +496,7 @@
         }
         
         .table thead th:hover {
-            background-color: var(--primary-darker) !important;
+            background-color: #0E2F44 !important;
         }
         
         .table tbody tr {
@@ -598,17 +541,17 @@
         }
         
         .btn-history {
-            background-color: var(--primary-darker);
+            background-color: #0E2F44;
             color: white;
         }
         
         .btn-history:hover {
-            background-color: var(--primary-dark);
+            background-color: #29435A;
         }
         
         /* ==================== BOTÕES ==================== */
         .btn-primary-custom {
-            background: linear-gradient(to right, var(--accent-red), var(--accent-bright));
+            background: linear-gradient(to right, #B93C42, #DB233F);
             border: none;
             padding: 10px 20px;
             font-weight: 600;
@@ -623,7 +566,7 @@
         }
         
         .btn-primary-custom:hover {
-            background: linear-gradient(to right, var(--primary-darker), var(--primary-dark));
+            background: linear-gradient(to right, #0E2F44, #29435A);
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(14, 47, 68, 0.2);
             color: white;
@@ -631,8 +574,8 @@
         
         .btn-secondary-custom {
             background: white;
-            border: 2px solid var(--border-gray);
-            color: var(--primary-darker);
+            border: 2px solid #0E2F44;
+            color: #0E2F44;
             padding: 10px 20px;
             font-weight: 600;
             border-radius: 6px;
@@ -645,17 +588,17 @@
         }
         
         .btn-secondary-custom:hover {
-            background-color: var(--primary-darker);
+            background-color: #0E2F44;
             color: white;
-            border-color: var(--primary-darker);
+            border-color: #0E2F44;
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(14, 47, 68, 0.2);
         }
         
         .btn-export {
             background: white;
-            border: 2px solid var(--border-gray);
-            color: var(--primary-darker);
+            border: 2px solid #0E2F44;
+            color: #0E2F44;
             padding: 8px 15px;
             border-radius: 6px;
             font-weight: 600;
@@ -668,17 +611,17 @@
         }
         
         .btn-export:hover {
-            background: var(--primary-darker);
+            background: #0E2F44;
             color: white;
-            border-color: var(--primary-darker);
+            border-color: #0E2F44;
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(14, 47, 68, 0.2);
         }
 
         .btn-share {
             background: white;
-            border: 2px solid var(--border-gray);
-            color: var(--primary-darker);
+            border: 2px solid #0E2F44;
+            color: #0E2F44;
             padding: 8px 15px;
             border-radius: 6px;
             font-weight: 600;
@@ -692,9 +635,9 @@
         }
         
         .btn-share:hover {
-            background: var(--primary-darker);
+            background: #0E2F44;
             color: white;
-            border-color: var(--primary-darker);
+            border-color: #0E2F44;
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(14, 47, 68, 0.2);
         }
@@ -727,7 +670,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            color: var(--primary-darker);
+            color: #0E2F44;
             text-decoration: none;
             font-size: 13px;
             font-weight: 600;
@@ -740,7 +683,7 @@
         }
         
         .share-option:hover {
-            background-color: var(--primary-darker);
+            background-color: #0E2F44;
             color: white;
         }
         
@@ -805,7 +748,7 @@
             height: 50px;
             border: 4px solid rgba(41, 67, 90, 0.1);
             border-radius: 50%;
-            border-top-color: var(--accent-red);
+            border-top-color: #B93C42;
             animation: spin 1s linear infinite;
         }
         
@@ -817,7 +760,7 @@
         .table-total-row {
             background-color: #f8f9fa !important;
             font-weight: 600;
-            color: var(--primary-dark);
+            color: #29435A;
         }
         
         .table-total-row td {
@@ -830,7 +773,7 @@
 
         /* ==================== LINK CLICÁVEL ==================== */
         .orgao-link {
-            color: var(--primary-darker);
+            color: #0E2F44;
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
@@ -842,12 +785,12 @@
         }
 
         .orgao-link:hover {
-            color: var(--accent-red) !important;
+            color: #B93C42 !important;
             background-color: rgba(185, 60, 66, 0.05);
         }
 
         .orgao-link.selected {
-            color: var(--hover-blue) !important;
+            color: #006a82 !important;
             background-color: rgba(0, 106, 130, 0.1);
         }
         
@@ -865,13 +808,13 @@
         
         .pagination-info {
             font-size: 12px;
-            color: var(--primary-darker);
+            color: #0E2F44;
             font-weight: 600;
         }
         
         .pagination .page-link {
             border: 1px solid #dee2e6;
-            color: var(--primary-dark);
+            color: #29435A;
             padding: 6px 10px;
             font-weight: 600;
             font-size: 12px;
@@ -879,15 +822,15 @@
         }
 
         .pagination .page-item.active .page-link {
-            background-color: var(--primary-dark);
-            border-color: var(--primary-dark);
+            background-color: #29435A;
+            border-color: #29435A;
             color: white;
         }
         
         .pagination .page-link:hover {
-            background-color: var(--background-light);
-            color: var(--accent-red);
-            border-color: var(--accent-red);
+            background-color: #EEEFF5;
+            color: #B93C42;
+            border-color: #B93C42;
         }
         
         .items-per-page {
@@ -895,33 +838,33 @@
             align-items: center;
             gap: 8px;
             font-size: 12px;
-            color: var(--primary-darker);
+            color: #0E2F44;
             font-weight: 600;
         }
         
         .items-per-page select {
-            border: 2px solid var(--border-gray);
+            border: 2px solid #0E2F44;
             border-radius: 6px;
             padding: 5px 10px;
             font-size: 12px;
             width: auto;
             min-width: 70px;
             background-color: white;
-            color: var(--primary-darker);
+            color: #0E2F44;
             cursor: pointer;
         }
         
         .items-per-page select:hover {
-            border-color: var(--accent-red);
+            border-color: #B93C42;
         }
         
         .items-per-page select:focus {
-            border-color: var(--accent-red);
+            border-color: #B93C42;
             box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
             outline: none;
         }
         
-        /* ==================== MODAL CRIATIVO ==================== */
+        /* ==================== MODAL ==================== */
         .modal-creative {
             border-radius: 15px;
             overflow: hidden;
@@ -930,7 +873,7 @@
         }
         
         .modal-creative .modal-header {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
+            background: linear-gradient(135deg, #29435A 0%, #0E2F44 100%);
             color: white;
             padding: 20px 30px;
             border-bottom: none;
@@ -945,7 +888,7 @@
             transform: translateX(-50%);
             width: 80px;
             height: 3px;
-            background: linear-gradient(90deg, var(--accent-red), var(--success-green));
+            background: linear-gradient(90deg, #B93C42, #28a745);
             border-radius: 2px;
         }
         
@@ -975,11 +918,11 @@
             padding: 30px;
             background: white;
             max-height: 70vh;
-            overflow-y: auto !important; /* SCROLL INTERNO DO MODAL - PERMITIDO */
+            overflow-y: auto;
         }
         
         .modal-creative .modal-footer {
-            background: var(--background-light);
+            background: #EEEFF5;
             border-top: 1px solid rgba(0, 0, 0, 0.05);
             padding: 20px 30px;
             display: flex;
@@ -1000,23 +943,23 @@
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid var(--accent-red);
+            border-left: 4px solid #B93C42;
         }
         
         .info-card.primary {
-            border-left-color: var(--primary-dark);
+            border-left-color: #29435A;
         }
         
         .info-card.success {
-            border-left-color: var(--success-green);
+            border-left-color: #28a745;
         }
         
         .info-card.warning {
-            border-left-color: var(--warning-yellow);
+            border-left-color: #ffc107;
         }
         
         .info-card.danger {
-            border-left-color: var(--accent-red);
+            border-left-color: #B93C42;
         }
         
         .info-label {
@@ -1031,13 +974,13 @@
         .info-value {
             font-size: 14px;
             font-weight: 600;
-            color: var(--primary-dark);
+            color: #29435A;
             word-break: break-word;
         }
         
         .info-value.highlight {
             font-size: 18px;
-            color: var(--accent-red);
+            color: #B93C42;
             font-weight: 700;
         }
         
@@ -1058,17 +1001,46 @@
             align-items: center;
             gap: 8px;
             font-size: 12px;
-            color: var(--primary-dark);
+            color: #29435A;
             font-weight: 600;
         }
         
         .data-atualizacao-box i {
             font-size: 14px;
-            color: var(--accent-red);
+            color: #B93C42;
         }
         
+        /* ==================== SEARCH BOX ==================== */
+        .search-box-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #0E2F44;
+            font-weight: 600;
+        }
+
+        #searchEmpregados {
+            border: 2px solid #0E2F44;
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 12px;
+            min-width: 200px;
+            background-color: white;
+        }
+
+        #searchEmpregados:focus {
+            border-color: #B93C42;
+            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
+            outline: none;
+        }
+
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
+            .main-container {
+                padding: 15px 20px;
+            }
+            
             .main-header {
                 padding: 12px 16px;
             }
@@ -1105,10 +1077,6 @@
                 max-width: 100%;
             }
             
-            .table-fixed-header-container {
-                max-height: 400px;
-            }
-            
             .modal-creative .modal-body {
                 padding: 20px;
             }
@@ -1128,12 +1096,12 @@
         }
         
         @media (max-width: 576px) {
-            .filter-container .row > div {
-                margin-bottom: 10px;
+            .main-container {
+                padding: 10px 15px;
             }
             
-            .table-fixed-header-container {
-                max-height: 350px;
+            .filter-container .row > div {
+                margin-bottom: 10px;
             }
             
             .card-chart {
@@ -1162,37 +1130,35 @@
                 text-align: center;
             }
         }
-
-        /* ==================== CORREÇÃO DO SEARCH BOX ==================== */
-        .search-box-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--primary-darker);
-            font-weight: 600;
-        }
-
-        #searchEmpregados {
-            border: 2px solid var(--border-gray);
-            border-radius: 6px;
-            padding: 5px 10px;
-            font-size: 12px;
-            min-width: 200px;
-            background-color: white;
-        }
-
-        #searchEmpregados:focus {
-            border-color: var(--accent-red);
-            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
-            outline: none;
-        }
     </style>
 </head>
 <body>
-    <!-- SCROLL APENAS DENTRO DESTE CONTAINER (SIMULA IFRAME) -->
-<div class="main-container">
-   <div class="tab-content">
+    <!-- SCROLL SOMENTE NESTE CONTAINER - COMPORTAMENTO IFRAME -->
+    <div class="main-container">
+        <div class="content-wrapper">
+            
+            <!-- ==================== HEADER ==================== -->
+            <div class="main-header">
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-12">
+                        <div class="logo-container">
+                            <div class="logo">MG</div>
+                            <div>
+                                <h2 class="header-title">Empregados Terceirizados</h2>
+                                <span style="font-size: 12px; opacity: 0.9;">Governo de Minas Gerais</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="header-info">
+                            <span class="update-badge">
+                                <i class="material-icons" style="font-size: 14px;">update</i>
+                                Atualizado: <span id="data-atualizacao-header2">Carregando...</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
             <div class="nav-tabs-container">
@@ -1221,13 +1187,6 @@
                 <!-- ==================== DASHBOARD 1: VISÃO GERAL ==================== -->
                 <div class="tab-pane fade show active" id="dashboard1" role="tabpanel">
                     
-                    <div class="data-atualizacao-container">
-                        <div class="data-atualizacao-box">
-                            <i class="material-icons">update</i>
-                            Atualizado em: <span id="data-atualizacao-header2">Carregando...</span>
-                        </div>
-                    </div>
-
                     <!-- Filtros Dashboard 1 -->
                     <div class="filter-container">
                         <div class="row g-3">
@@ -1344,9 +1303,9 @@
                         </div>
                     </div>
 
-                    <!-- Tabela Dashboard 1 - VISÃO GERAL (COM SCROLL INTERNO) -->
+                    <!-- Tabela Dashboard 1 - SEM SCROLL INTERNO -->
                     <div class="table-container">
-                        <div class="table-fixed-header-container">
+                        <div class="table-responsive-wrapper">
                             <table class="table table-hover" id="visaoGeralTable">
                                 <thead>
                                     <tr>
@@ -1519,9 +1478,9 @@
                         </div>
                     </div>
 
-                    <!-- Tabela de Empregados Dashboard 2 (COM SCROLL INTERNO) -->
+                    <!-- Tabela de Empregados Dashboard 2 - SEM SCROLL INTERNO -->
                     <div class="table-container">
-                        <div class="table-fixed-header-container">
+                        <div class="table-responsive-wrapper">
                             <table class="table table-hover" id="empregadosTable">
                                 <thead>
                                     <tr>
@@ -1589,7 +1548,7 @@
                             <div class="row g-4">
                                 <div class="col-md-6 col-12">
                                     <div class="card-stats text-center">
-                                        <i class="fas fa-database fa-3x mb-3" style="color: var(--primary-dark);"></i>
+                                        <i class="fas fa-database fa-3x mb-3" style="color: #29435A;"></i>
                                         <h4>Fonte dos Dados</h4>
                                         <p class="text-muted" style="font-size: 13px;">Dados atualizados automaticamente do GitHub</p>
                                         <div class="mt-3">
@@ -1603,7 +1562,7 @@
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="card-stats text-center">
-                                        <i class="fas fa-external-link-alt fa-3x mb-3" style="color: var(--primary-dark);"></i>
+                                        <i class="fas fa-external-link-alt fa-3x mb-3" style="color: #29435A;"></i>
                                         <h4>Portal de Dados Abertos</h4>
                                         <p class="text-muted" style="font-size: 13px;">Acesse o conjunto de dados de empregados terceirizados do Estado de Minas Gerais</p>
                                         <div class="mt-3">
@@ -1687,7 +1646,7 @@
         </div>
     </div>
 
-    <!-- ==================== MODAL DE HISTÓRICO CRIATIVO ==================== -->
+    <!-- ==================== MODAL DE HISTÓRICO ==================== -->
     <div class="modal fade" id="historicModal" tabindex="-1" aria-labelledby="historicModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content modal-creative">
@@ -1745,7 +1704,8 @@
     
     <script>
         // ============================================
-        // VARIÁVEIS GLOBAIS
+        // SEU CÓDIGO JAVASCRIPT ORIGINAL PERMANECE IGUAL
+        // TODAS AS FUNÇÕES DE LÓGICA SÃO AS MESMAS
         // ============================================
         let terceirizadosData = [];
         let filteredData = [];
@@ -1761,7 +1721,6 @@
         let currentSortDashboard2 = { column: 'nome', order: 'asc' };
         let currentSearchTerm = '';
         
-        // ==================== PALETA DE CORES ====================
         const chartColors = {
             primaryDark: "#29435A",
             primaryDarker: "#0E2F44",
@@ -1906,7 +1865,7 @@
         function updateDataAtualizacao() {
             const now = new Date();
             const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
-            const elementosData = document.querySelectorAll('#data-atualizacao-header, #data-atualizacao-header2');
+            const elementosData = document.querySelectorAll('#data-atualizacao-header2');
             elementosData.forEach(el => {
                 if (el) el.textContent = dataFormatada;
             });
@@ -2195,7 +2154,6 @@
                 } catch (error) {
                     console.error('Erro no download:', error);
                     
-                    // Fallback: abrir em nova aba
                     window.open(url, '_blank');
                     alert('O download automático não funcionou. O arquivo foi aberto em uma nova aba.');
                 } finally {
@@ -2209,7 +2167,6 @@
 
         // ==================== CONFIGURAR EVENT LISTENERS ====================
         function setupEventListeners() {
-            // Filtros Dashboard 1
             const aplicarFiltrosBtn = document.getElementById('aplicarFiltros');
             const limparFiltrosBtn = document.getElementById('limparFiltros');
             
@@ -2225,7 +2182,6 @@
                 });
             }
             
-            // Filtros Dashboard 2
             const pesquisarEmpregadosBtn = document.getElementById('pesquisarEmpregados');
             const limparFiltrosDashboard2Btn = document.getElementById('limparFiltrosDashboard2');
             
@@ -2241,7 +2197,6 @@
                 });
             }
             
-            // Auto apply on change - Dashboard 1
             const anoSelect1 = document.getElementById('anoDashboard1');
             const mesSelect1 = document.getElementById('mesDashboard1');
             const orgaoInput1 = document.getElementById('orgaoDashboard1');
@@ -2264,7 +2219,6 @@
                 });
             }
             
-            // Auto apply on change - Dashboard 2
             const anoSelect2 = document.getElementById('anoDashboard2');
             const mesSelect2 = document.getElementById('mesDashboard2');
             const nomeInput = document.getElementById('nomeEmpregado');
@@ -2323,7 +2277,6 @@
                 });
             }
             
-            // Botões de exportação
             const exportCSVDashboard1Btn = document.getElementById('exportCSVDashboard1');
             const printDashboard1Btn = document.getElementById('printDashboard1');
             const shareDashboard1Btn = document.getElementById('shareDashboard1');
@@ -2356,13 +2309,11 @@
                 shareDashboard2Btn.addEventListener('click', () => toggleShareDropdown(2));
             }
             
-            // DOWNLOAD CSV COMPLETO - CORRIGIDO
             const downloadCSVBtn = document.getElementById('downloadCSV');
             if (downloadCSVBtn) {
                 downloadCSVBtn.addEventListener('click', downloadFullCSV);
             }
             
-            // Search empregados
             const searchEmpregadosInput = document.getElementById('searchEmpregados');
             if (searchEmpregadosInput) {
                 searchEmpregadosInput.addEventListener('input', function(e) {
@@ -2371,7 +2322,6 @@
                 });
             }
             
-            // Items per page
             const itemsPerPageDashboard1Select = document.getElementById('itemsPerPageDashboard1');
             if (itemsPerPageDashboard1Select) {
                 itemsPerPageDashboard1Select.addEventListener('change', function() {
@@ -2390,7 +2340,6 @@
                 });
             }
             
-            // Sorting
             setTimeout(() => {
                 document.querySelectorAll('#visaoGeralTable th[data-sort]').forEach(th => {
                     th.addEventListener('click', function() {
@@ -2405,7 +2354,6 @@
                 });
             }, 100);
             
-            // Share buttons
             document.querySelectorAll('.link-share').forEach(btn => {
                 btn.addEventListener('click', copiarLink);
             });
@@ -2426,7 +2374,6 @@
                 btn.addEventListener('click', compartilharWhatsApp);
             });
             
-            // Close share dropdown on click outside
             document.addEventListener('click', function(event) {
                 if (!event.target.closest('.share-dropdown')) {
                     document.querySelectorAll('.share-options').forEach(opt => {

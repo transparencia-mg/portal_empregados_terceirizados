@@ -44,15 +44,15 @@
             --dark: #212529;
         }
         
-        /* ==================== ESTILOS GERAIS - CORREÇÃO DA ROLAGEM ==================== */
+        /* ==================== ESTILOS GERAIS ==================== */
         body {
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
             padding-bottom: 15px;
             overflow-y: visible !important;
             overflow-x: hidden !important;
-            min-height: 100vh;
-            height: auto;
+            min-height: auto !important;
+            height: auto !important;
             position: relative;
         }
 
@@ -94,6 +94,7 @@
             overflow-y: auto;
             position: relative;
         }
+        
         /* ==================== HEADER MINIMALISTA ==================== */
         .main-header {
             background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);

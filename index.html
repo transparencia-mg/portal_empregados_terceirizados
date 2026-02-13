@@ -49,130 +49,130 @@
         
         /* ==================== ESTILOS GERAIS ==================== */
         body {
-    font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--background-light);
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow: hidden; /* PÁGINA PAI SEM SCROLL */
-}
+            font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-light);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-html {
-    height: 100%;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-}
+        html {
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
 
-.main-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* CONTAINER PRINCIPAL SEM SCROLL */
-    padding: 15px 30px 0 30px;
-}
+        .main-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 15px 30px 0 30px;
+        }
 
-.container.dashboard-spacing {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
+        .container.dashboard-spacing {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
 
-/* ÁREA DAS ABAS - SEM SCROLL */
-.nav-tabs-container {
-    flex-shrink: 0;
-    background: white;
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-    overflow-x: auto; /* SCROLL HORIZONTAL APENAS PARA AS ABAS */
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-}
+        /* ÁREA DAS ABAS - SEM SCROLL */
+        .nav-tabs-container {
+            flex-shrink: 0;
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
 
-/* CONTEÚDO DAS ABAS */
-.tab-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* SEM SCROLL - O CONTEÚDO INTERNO QUE TERÁ SCROLL */
-    min-height: 0;
-}
+        /* CONTEÚDO DAS ABAS */
+        .tab-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+        }
 
-/* CONTAINER DA TABELA/IFRAME - ESSE É O ELEMENTO QUE DEVE TER SCROLL */
-.table-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* EVITA SCROLL DUPLICADO */
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-    margin-bottom: 15px;
-    border: 1px solid #dee2e6;
-    min-height: 0; /* CRÍTICO PARA FUNCIONAR NO FLEXBOX */
-}
+        /* CONTAINER DA TABELA - ESSE É O ELEMENTO QUE DEVE TER SCROLL */
+        .table-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 15px;
+            border: 1px solid #dee2e6;
+            min-height: 0;
+        }
 
-/* IFRAME - DEVE TER SCROLL VERTICAL */
-iframe {
-    width: 100%;
-    flex: 1;
-    border: none;
-    overflow-y: auto !important; /* FORÇA SCROLL VERTICAL */
-    overflow-x: hidden;
-    min-height: 0;
-    display: block;
-    background: white;
-}
+        /* WRAPPER DA TABELA COM SCROLL VERTICAL */
+        .table-responsive-wrapper {
+            flex: 1;
+            overflow-y: auto !important;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            min-height: 0;
+            width: 100%;
+            position: relative;
+        }
 
-/* WRAPPER DA TABELA (QUANDO NÃO USA IFRAME) */
-.table-responsive-wrapper {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto !important; /* FORÇA SCROLL VERTICAL NA TABELA */
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    flex: 1;
-    min-height: 0;
-}
+        /* ELEMENTOS FIXOS - SEM SCROLL */
+        .filter-container,
+        .actions-container,
+        .main-header,
+        .metric-card,
+        .card-chart,
+        .table-header,
+        .pagination-container,
+        .nav-tabs-container {
+            flex-shrink: 0;
+        }
 
-/* ELEMENTOS FIXOS - SEM SCROLL */
-.filter-container,
-.actions-container,
-.main-header,
-.metric-card,
-.card-chart,
-.table-header,
-.pagination-container {
-    flex-shrink: 0;
-}
+        /* GARANTE QUE A TABELA OCUPE O ESPAÇO CORRETO */
+        .table {
+            margin: 0;
+            width: 100%;
+            font-size: 13px;
+            border-collapse: collapse;
+        }
 
-/* GARANTE QUE A TABELA OCUPE O ESPAÇO CORRETO */
-.table {
-    margin: 0;
-    width: 100%;
-    font-size: 13px;
-    border-collapse: collapse;
-}
+        /* PAGINAÇÃO FIXA NO RODAPÉ */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-top: 1px solid #dee2e6;
+            background-color: white;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-radius: 0 0 10px 10px;
+        }
 
-/* PAGINAÇÃO FIXA NO RODAPÉ */
-.pagination-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 15px;
-    border-top: 1px solid #dee2e6;
-    background-color: white;
-    flex-wrap: wrap;
-    gap: 10px;
-    border-radius: 0 0 10px 10px;
-}
+        /* IFRAME - DEVE TER SCROLL VERTICAL */
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            overflow-y: auto !important;
+            overflow-x: hidden;
+            display: block;
+            background: white;
+        }
         
         /* ==================== HEADER MINIMALISTA ==================== */
         .main-header {
@@ -468,18 +468,6 @@ iframe {
         }
         
         /* ==================== MENU DE NAVEGAÇÃO ==================== */
-        .nav-tabs-container {
-            background: white;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-            margin-top: 10px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            width: 100%;
-        }
-
         .nav-tabs {
             border: none !important;
             gap: 4px;
@@ -530,16 +518,6 @@ iframe {
         }
         
         /* ==================== TABELAS ==================== */
-        .table-container {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-            margin-bottom: 20px;
-            border: 1px solid #dee2e6;
-            width: 100%;
-        }
-        
         .table-header {
             background: linear-gradient(135deg, #29435A 0%, #0E2F44 100%);
             color: white;
@@ -549,6 +527,7 @@ iframe {
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
+            flex-shrink: 0;
         }
         
         .table-title {
@@ -564,14 +543,6 @@ iframe {
             border-radius: 15px;
             font-size: 12px;
             font-weight: 600;
-        }
-        
-        /* TABELA SEM SCROLL INTERNO - TODO SCROLL É NO IFRAME */
-        .table-responsive-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            padding: 0;
-            -webkit-overflow-scrolling: touch;
         }
         
         .table {
@@ -911,17 +882,6 @@ iframe {
         }
         
         /* ==================== PAGINAÇÃO ==================== */
-        .pagination-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            border-top: 1px solid #dee2e6;
-            background-color: white;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
         .pagination-info {
             font-size: 12px;
             color: #0E2F44;
@@ -1252,119 +1212,286 @@ iframe {
 </head>
 <body>
     <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
-    <div class="container">
+    <div class="container main-container">
             
-            <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
-            <div class="nav-tabs-container">
-                <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="dashboard1-tab" data-bs-toggle="tab" data-bs-target="#dashboard1" type="button" role="tab">
-                            <i class="material-icons me-2">bar_chart</i>Visão Geral
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="dashboard2-tab" data-bs-toggle="tab" data-bs-target="#dashboard2" type="button" role="tab">
-                            <i class="material-icons me-2">perm_identity</i>Consulta Individual
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="dashboard3-tab" data-bs-toggle="tab" data-bs-target="#dashboard3" type="button" role="tab">
-                            <i class="material-icons me-2">downloading</i>Downloads
-                        </button>
-                    </li>
-                </ul>
-            </div>
+        <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
+        <div class="nav-tabs-container">
+            <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="dashboard1-tab" data-bs-toggle="tab" data-bs-target="#dashboard1" type="button" role="tab">
+                        <i class="material-icons me-2">bar_chart</i>Visão Geral
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="dashboard2-tab" data-bs-toggle="tab" data-bs-target="#dashboard2" type="button" role="tab">
+                        <i class="material-icons me-2">perm_identity</i>Consulta Individual
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="dashboard3-tab" data-bs-toggle="tab" data-bs-target="#dashboard3" type="button" role="tab">
+                        <i class="material-icons me-2">downloading</i>Downloads
+                    </button>
+                </li>
+            </ul>
+        </div>
 
-            <!-- ==================== CONTEÚDO DAS ABAS ==================== -->
-            <div class="tab-content" id="dashboardTabsContent">
+        <!-- ==================== CONTEÚDO DAS ABAS ==================== -->
+        <div class="tab-content" id="dashboardTabsContent">
+            
+            <!-- ==================== DASHBOARD 1: VISÃO GERAL ==================== -->
+            <div class="tab-pane fade show active" id="dashboard1" role="tabpanel">
                 
-                <!-- ==================== DASHBOARD 1: VISÃO GERAL ==================== -->
-                <div class="tab-pane fade show active" id="dashboard1" role="tabpanel">
-                    
-                    <!-- Filtros Dashboard 1 -->
-                    <div class="filter-container">
-                        <div class="row g-3">
-                            <div class="col-md-3 col-6">
-                                <div>
-                                    <label for="anoDashboard1" class="form-label filter-label">Ano</label>
-                                    <select class="form-select" id="anoDashboard1">
-                                        <!-- Opções serão carregadas dinamicamente -->
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div>
-                                    <label for="mesDashboard1" class="form-label filter-label">Mês</label>
-                                    <select class="form-select" id="mesDashboard1">
-                                        <!-- Opções serão carregadas dinamicamente -->
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div>
-                                    <label for="orgaoDashboard1" class="form-label filter-label">Órgão</label>
-                                    <input type="text" class="form-control" list="orgaosListDashboard1" id="orgaoDashboard1" placeholder="Digite o nome do órgão...">
-                                    <datalist id="orgaosListDashboard1">
-                                        <!-- Opções serão carregadas dinamicamente -->
-                                    </datalist>
-                                </div>
+                <!-- Filtros Dashboard 1 -->
+                <div class="filter-container">
+                    <div class="row g-3">
+                        <div class="col-md-3 col-6">
+                            <div>
+                                <label for="anoDashboard1" class="form-label filter-label">Ano</label>
+                                <select class="form-select" id="anoDashboard1">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </select>
                             </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <div class="d-flex gap-3 flex-wrap">
-                                    <button type="button" class="btn-primary-custom" id="aplicarFiltros">
-                                        <span class="material-icons">search</span>Pesquisar
-                                    </button>
-                                    <button type="button" class="btn-secondary-custom" id="limparFiltros">
-                                        <span class="material-icons">clear</span>Limpar Filtros
-                                    </button>
-                                </div>
+                        <div class="col-md-3 col-6">
+                            <div>
+                                <label for="mesDashboard1" class="form-label filter-label">Mês</label>
+                                <select class="form-select" id="mesDashboard1">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div>
+                                <label for="orgaoDashboard1" class="form-label filter-label">Órgão</label>
+                                <input type="text" class="form-control" list="orgaosListDashboard1" id="orgaoDashboard1" placeholder="Digite o nome do órgão...">
+                                <datalist id="orgaosListDashboard1">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="d-flex gap-3 flex-wrap">
+                                <button type="button" class="btn-primary-custom" id="aplicarFiltros">
+                                    <span class="material-icons">search</span>Pesquisar
+                                </button>
+                                <button type="button" class="btn-secondary-custom" id="limparFiltros">
+                                    <span class="material-icons">clear</span>Limpar Filtros
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4" id="summaryCards">
+                    <!-- Cards serão carregados aqui -->
+                </div>
+
+                <!-- GRÁFICOS Dashboard 1 -->
+                <div class="dashboard-2">
+                    <div class="card-chart">
+                        <h3>Empregados por Órgão</h3>
+                        <div class="chart-row">
+                            <div class="chart-wrapper">
+                                <canvas id="chartOrgao"></canvas>
+                            </div>
+                            <div class="legend-compact" id="legendOrgao"></div>
+                        </div>
+                    </div>
+
+                    <div class="card-chart">
+                        <h3>Top Cargos</h3>
+                        <div class="chart-row">
+                            <div class="chart-wrapper">
+                                <canvas id="chartCargo"></canvas>
+                            </div>
+                            <div class="legend-compact" id="legendCargo"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ações Dashboard 1 -->
+                <div class="actions-container">
+                    <div class="export-buttons">
+                        <button type="button" class="btn-export" id="exportCSVDashboard1">
+                            <i class="fas fa-file-csv me-2"></i>Exportar CSV
+                        </button>
+                        <button type="button" class="btn-export" id="printDashboard1">
+                            <i class="fas fa-print me-2"></i>Imprimir
+                        </button>
+                        <div class="share-dropdown">
+                            <button type="button" class="btn-share" id="shareDashboard1">
+                                <i class="fas fa-share-alt me-2"></i> Compartilhar
+                            </button>
+                            <div class="share-options" id="shareOptionsDashboard1">
+                                <button type="button" class="share-option link-share">
+                                    <i class="fas fa-link"></i> Copiar Link
+                                </button>
+                                <button type="button" class="share-option facebook-share">
+                                    <i class="fab fa-facebook-f"></i> Facebook
+                                </button>
+                                <button type="button" class="share-option twitter-share">
+                                    <i class="fab fa-twitter"></i> Twitter
+                                </button>
+                                <button type="button" class="share-option linkedin-share">
+                                    <i class="fab fa-linkedin-in"></i> LinkedIn
+                                </button>
+                                <button type="button" class="share-option whatsapp-share">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </button>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="right-aligned-container">
+                        <div class="items-per-page">
+                            <span>Itens por página:</span>
+                            <select id="itemsPerPageDashboard1">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50" selected>50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                        <span class="table-badge" id="resumoCountDashboard1">0 órgãos</span>
+                    </div>
+                </div>
+
+                <!-- Tabela Dashboard 1 - COM SCROLL -->
+                <div class="table-container">
+                    <div class="table-responsive-wrapper">
+                        <table class="table table-hover" id="visaoGeralTable">
+                            <thead>
+                                <tr>
+                                    <th data-sort="orgao_nome" data-order="asc">
+                                        Órgão <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th data-sort="orgao_sigla" data-order="asc">
+                                        Sigla <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th data-sort="quantidade" data-order="desc">
+                                        Quantidade de Empregados <span class="sort-icon">▼</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="resumoTableBody">
+                                <!-- Dados serão carregados aqui -->
+                            </tbody>
+                            <tfoot id="resumoTableFooter">
+                                <!-- Total geral será carregado aqui -->
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- Paginação Dashboard 1 -->
+                    <div class="pagination-container">
+                        <div class="pagination-info" id="paginationInfoDashboard1">
+                            Mostrando 0-0 de 0 registros
+                        </div>
+                        <nav aria-label="Paginação">
+                            <ul class="pagination mb-0" id="paginationDashboard1">
+                                <!-- Paginação será gerada aqui -->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                
+            </div> <!-- Fim Dashboard 1 -->
+
+            <!-- ==================== DASHBOARD 2: CONSULTA INDIVIDUAL ==================== -->
+            <div class="tab-pane fade" id="dashboard2" role="tabpanel">
+                
+                <!-- Filtros Dashboard 2 -->
+                <div class="filter-container">
+                    <div class="row g-3">
+                        <div class="col-md-3 col-6">
+                            <div>
+                                <label for="anoDashboard2" class="form-label filter-label">Ano</label>
+                                <select class="form-select" id="anoDashboard2">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div>
+                                <label for="mesDashboard2" class="form-label filter-label">Mês Referência</label>
+                                <select class="form-select" id="mesDashboard2">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div>
+                                <label for="nomeEmpregado" class="form-label filter-label">Nome do Empregado</label>
+                                <input type="text" class="form-control" id="nomeEmpregado" placeholder="Digite o nome...">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div>
+                                <label for="matriculaDashboard2" class="form-label filter-label">Matrícula</label>
+                                <input type="text" class="form-control" id="matriculaDashboard2" placeholder="Digite a matrícula...">
                             </div>
                         </div>
                     </div>
 
-                    <div class="row mb-4" id="summaryCards">
-                        <!-- Cards serão carregados aqui -->
-                    </div>
-
-                    <!-- GRÁFICOS Dashboard 1 -->
-                    <div class="dashboard-2">
-                        <div class="card-chart">
-                            <h3>Empregados por Órgão</h3>
-                            <div class="chart-row">
-                                <div class="chart-wrapper">
-                                    <canvas id="chartOrgao"></canvas>
-                                </div>
-                                <div class="legend-compact" id="legendOrgao"></div>
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-4 col-12">
+                            <div>
+                                <label for="orgaoDashboard2" class="form-label filter-label">Órgão</label>
+                                <input type="text" class="form-control" list="orgaosListDashboard2" id="orgaoDashboard2" placeholder="Digite o nome do órgão...">
+                                <datalist id="orgaosListDashboard2">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </datalist>
                             </div>
                         </div>
-
-                        <div class="card-chart">
-                            <h3>Top Cargos</h3>
-                            <div class="chart-row">
-                                <div class="chart-wrapper">
-                                    <canvas id="chartCargo"></canvas>
-                                </div>
-                                <div class="legend-compact" id="legendCargo"></div>
+                        <div class="col-md-4 col-12">
+                            <div>
+                                <label for="cargoDashboard2" class="form-label filter-label">Cargo</label>
+                                <input type="text" class="form-control" list="cargosListDashboard2" id="cargoDashboard2" placeholder="Digite ou selecione...">
+                                <datalist id="cargosListDashboard2">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div>
+                                <label for="empresaDashboard2" class="form-label filter-label">Empresa</label>
+                                <input type="text" class="form-control" list="empresasListDashboard2" id="empresaDashboard2" placeholder="Digite ou selecione...">
+                                <datalist id="empresasListDashboard2">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </datalist>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Ações Dashboard 1 -->
-                    <div class="actions-container mb-4">
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="d-flex gap-3 flex-wrap">
+                                <button type="button" class="btn-primary-custom" id="pesquisarEmpregados">
+                                    <span class="material-icons">search</span>Pesquisar
+                                </button>
+                                <button type="button" class="btn-secondary-custom" id="limparFiltrosDashboard2">
+                                    <span class="material-icons">clear</span>Limpar Filtros
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ações Dashboard 2 -->
+                <div class="actions-container">
+                    <div class="d-flex align-items-center gap-3 w-100 flex-wrap">
                         <div class="export-buttons">
-                            <button type="button" class="btn-export" id="exportCSVDashboard1">
+                            <button type="button" class="btn-export" id="exportCSVDashboard2">
                                 <i class="fas fa-file-csv me-2"></i>Exportar CSV
                             </button>
-                            <button type="button" class="btn-export" id="printDashboard1">
+                            <button type="button" class="btn-export" id="printDashboard2">
                                 <i class="fas fa-print me-2"></i>Imprimir
                             </button>
                             <div class="share-dropdown">
-                                <button type="button" class="btn-share" id="shareDashboard1">
+                                <button type="button" class="btn-share" id="shareDashboard2">
                                     <i class="fas fa-share-alt me-2"></i> Compartilhar
                                 </button>
-                                <div class="share-options" id="shareOptionsDashboard1">
+                                <div class="share-options" id="shareOptionsDashboard2">
                                     <button type="button" class="share-option link-share">
                                         <i class="fas fa-link"></i> Copiar Link
                                     </button>
@@ -1382,361 +1509,193 @@ iframe {
                                     </button>
                                 </div>
                             </div>
-                        </div>                    
+                        </div>
+                        
                         <div class="right-aligned-container">
+                            <div class="search-box-container">
+                                <span>Buscar registros:</span>
+                                <input type="text" id="searchEmpregados" placeholder="Buscar por nome, cargo, empresa ou órgão...">
+                            </div>
+                            
                             <div class="items-per-page">
                                 <span>Itens por página:</span>
-                                <select id="itemsPerPageDashboard1">
+                                <select id="itemsPerPageDashboard2">
                                     <option value="10">10</option>
                                     <option value="25">25</option>
                                     <option value="50" selected>50</option>
                                     <option value="100">100</option>
                                 </select>
                             </div>
-                            <span class="table-badge" id="resumoCountDashboard1">0 órgãos</span>
+                            
+                            <span class="table-badge" id="resumoCountDashboard2">0 empregados</span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Tabela Dashboard 1 - SEM SCROLL INTERNO -->
-                    <div class="table-container">
-                        <div class="table-responsive-wrapper">
-                            <table class="table table-hover" id="visaoGeralTable">
-                                <thead>
-                                    <tr>
-                                        <th data-sort="orgao_nome" data-order="asc">
-                                            Órgão <span class="sort-icon">▼</span>
-                                        </th>
-                                        <th data-sort="orgao_sigla" data-order="asc">
-                                            Sigla <span class="sort-icon">▼</span>
-                                        </th>
-                                        <th data-sort="quantidade" data-order="desc">
-                                            Quantidade de Empregados <span class="sort-icon">▼</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="resumoTableBody">
-                                    <!-- Dados serão carregados aqui -->
-                                </tbody>
-                                <tfoot id="resumoTableFooter">
-                                    <!-- Total geral será carregado aqui -->
-                                </tfoot>
-                            </table>
-                        </div>
-                        <!-- Paginação Dashboard 1 -->
-                        <div class="pagination-container">
-                            <div class="pagination-info" id="paginationInfoDashboard1">
-                                Mostrando 0-0 de 0 registros
-                            </div>
-                            <nav aria-label="Paginação">
-                                <ul class="pagination mb-0" id="paginationDashboard1">
-                                    <!-- Paginação será gerada aqui -->
-                                </ul>
-                            </nav>
-                        </div>
+                <!-- Tabela de Empregados Dashboard 2 - COM SCROLL -->
+                <div class="table-container">
+                    <div class="table-responsive-wrapper">
+                        <table class="table table-hover" id="empregadosTable">
+                            <thead>
+                                <tr>
+                                    <th data-sort="nome" data-order="asc">Nome <span class="sort-icon">▼</span></th>
+                                    <th data-sort="matricula" data-order="asc">Matrícula <span class="sort-icon">▼</span></th>
+                                    <th data-sort="orgao" data-order="asc">Órgão <span class="sort-icon">▼</span></th>
+                                    <th data-sort="cargo" data-order="asc">Cargo <span class="sort-icon">▼</span></th>
+                                    <th data-sort="empresa" data-order="asc">Empresa <span class="sort-icon">▼</span></th>
+                                    <th data-sort="cnpj_empresa" data-order="asc">CNPJ Empresa <span class="sort-icon">▼</span></th>
+                                    <th class="actions-column">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="empregadosTableBody">
+                                <!-- Dados serão carregados aqui -->
+                            </tbody>
+                            <tfoot id="empregadosTableFooter">
+                                <!-- Total geral será carregado aqui -->
+                            </tfoot>
+                        </table>
                     </div>
                     
-                </div> <!-- Fim Dashboard 1 -->
+                    <!-- Paginação Dashboard 2 -->
+                    <div class="pagination-container">
+                        <div class="pagination-info" id="paginationInfoDashboard2">
+                            Mostrando 0-0 de 0 registros
+                        </div>
+                        <nav aria-label="Paginação">
+                            <ul class="pagination mb-0" id="paginationDashboard2">
+                                <!-- Paginação será gerada aqui -->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                
+            </div> <!-- Fim Dashboard 2 -->
 
-                <!-- ==================== DASHBOARD 2: CONSULTA INDIVIDUAL ==================== -->
-                <div class="tab-pane fade" id="dashboard2" role="tabpanel">
-                    
-                    <!-- Filtros Dashboard 2 -->
-                    <div class="filter-container">
-                        <div class="row g-3">
-                            <div class="col-md-3 col-6">
-                                <div>
-                                    <label for="anoDashboard2" class="form-label filter-label">Ano</label>
-                                    <select class="form-select" id="anoDashboard2">
-                                        <!-- Opções serão carregadas dinamicamente -->
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div>
-                                    <label for="mesDashboard2" class="form-label filter-label">Mês Referência</label>
-                                    <select class="form-select" id="mesDashboard2">
-                                        <!-- Opções serão carregadas dinamicamente -->
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div>
-                                    <label for="nomeEmpregado" class="form-label filter-label">Nome do Empregado</label>
-                                    <input type="text" class="form-control" id="nomeEmpregado" placeholder="Digite o nome...">
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div>
-                                    <label for="matriculaDashboard2" class="form-label filter-label">Matrícula</label>
-                                    <input type="text" class="form-control" id="matriculaDashboard2" placeholder="Digite a matrícula...">
-                                </div>
+            <!-- ==================== DASHBOARD 3: DOWNLOADS ==================== -->
+            <div class="tab-pane fade" id="dashboard3" role="tabpanel">
+                
+                <!-- Filtro de Download -->
+                <div class="filter-container">
+                    <div class="row align-items-end g-3">
+                        <div class="col-md-6">
+                            <div>
+                                <label for="anoDownload" class="form-label filter-label">Selecione o Ano para Download</label>
+                                <select class="form-select" id="anoDownload">
+                                    <!-- Opções serão carregadas dinamicamente -->
+                                </select>
                             </div>
                         </div>
-
-                        <div class="row g-3 mt-2">
-                            <div class="col-md-4 col-12">
-                                <div>
-                                    <label for="orgaoDashboard2" class="form-label filter-label">Órgão</label>
-                                    <input type="text" class="form-control" list="orgaosListDashboard2" id="orgaoDashboard2" placeholder="Digite o nome do órgão...">
-                                    <datalist id="orgaosListDashboard2">
-                                        <!-- Opções serão carregadas dinamicamente -->
-                                    </datalist>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div>
-                                    <label for="cargoDashboard2" class="form-label filter-label">Cargo</label>
-                                    <input type="text" class="form-control" list="cargosListDashboard2" id="cargoDashboard2" placeholder="Digite ou selecione...">
-                                    <datalist id="cargosListDashboard2">
-                                        <!-- Opções serão carregadas dinamicamente -->
-                                    </datalist>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div>
-                                    <label for="empresaDashboard2" class="form-label filter-label">Empresa</label>
-                                    <input type="text" class="form-control" list="empresasListDashboard2" id="empresaDashboard2" placeholder="Digite ou selecione...">
-                                    <datalist id="empresasListDashboard2">
-                                        <!-- Opções serão carregadas dinamicamente -->
-                                    </datalist>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <div class="d-flex gap-3 flex-wrap">
-                                    <button type="button" class="btn-primary-custom" id="pesquisarEmpregados">
-                                        <span class="material-icons">search</span>Pesquisar
-                                    </button>
-                                    <button type="button" class="btn-secondary-custom" id="limparFiltrosDashboard2">
-                                        <span class="material-icons">clear</span>Limpar Filtros
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="col-md-6 d-flex">
+                            <button type="button" class="btn-primary-custom w-100" id="downloadCSV" style="height: 42px;">
+                                <i class="fas fa-download me-2"></i>Baixar CSV Completo
+                            </button>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Ações Dashboard 2 -->
-                    <div class="actions-container mb-4">
-                        <div class="d-flex align-items-center gap-3 w-100 flex-wrap">
-                            <div class="export-buttons">
-                                <button type="button" class="btn-export" id="exportCSVDashboard2">
-                                    <i class="fas fa-file-csv me-2"></i>Exportar CSV
-                                </button>
-                                <button type="button" class="btn-export" id="printDashboard2">
-                                    <i class="fas fa-print me-2"></i>Imprimir
-                                </button>
-                                <div class="share-dropdown">
-                                    <button type="button" class="btn-share" id="shareDashboard2">
-                                        <i class="fas fa-share-alt me-2"></i> Compartilhar
-                                    </button>
-                                    <div class="share-options" id="shareOptionsDashboard2">
-                                        <button type="button" class="share-option link-share">
-                                            <i class="fas fa-link"></i> Copiar Link
-                                        </button>
-                                        <button type="button" class="share-option facebook-share">
-                                            <i class="fab fa-facebook-f"></i> Facebook
-                                        </button>
-                                        <button type="button" class="share-option twitter-share">
-                                            <i class="fab fa-twitter"></i> Twitter
-                                        </button>
-                                        <button type="button" class="share-option linkedin-share">
-                                            <i class="fab fa-linkedin-in"></i> LinkedIn
-                                        </button>
-                                        <button type="button" class="share-option whatsapp-share">
-                                            <i class="fab fa-whatsapp"></i> WhatsApp
-                                        </button>
+                <!-- Informações sobre os dados -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Informações sobre os Dados</h3>
+                    </div>
+                    <div class="table-responsive-wrapper p-4">
+                        <div class="row g-4">
+                            <div class="col-md-6 col-12">
+                                <div class="card-stats text-center">
+                                    <i class="fas fa-database fa-3x mb-3" style="color: #29435A;"></i>
+                                    <h4>Fonte dos Dados</h4>
+                                    <p class="text-muted" style="font-size: 13px;">Dados atualizados automaticamente do GitHub</p>
+                                    <div class="mt-3">
+                                        <a href="https://github.com/transparencia-mg/empregados_terceirizados" 
+                                           target="_blank" 
+                                           class="btn-export w-100 d-block text-decoration-none">
+                                            <i class="fab fa-github me-2"></i>Acessar Repositório
+                                        </a>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="card-stats text-center">
+                                    <i class="fas fa-external-link-alt fa-3x mb-3" style="color: #29435A;"></i>
+                                    <h4>Portal de Dados Abertos</h4>
+                                    <p class="text-muted" style="font-size: 13px;">Acesse o conjunto de dados de empregados terceirizados do Estado de Minas Gerais</p>
+                                    <div class="mt-3">
+                                        <a href="https://dados.mg.gov.br/dataset/empregados_terceirizados" 
+                                           target="_blank" 
+                                           class="btn-export w-100 d-block text-decoration-none">
+                                            <i class="fas fa-external-link-alt me-2"></i>Acessar Portal
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <h5 class="mb-3">Metadados - Estrutura dos Dados</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Campo</th>
+                                            <th>Descrição</th>
+                                            <th>Tipo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>matricula</td>
+                                            <td>Matrícula do empregado terceirizado</td>
+                                            <td>Texto/Número</td>
+                                        </tr>
+                                        <tr>
+                                            <td>nome</td>
+                                            <td>Nome completo do empregado terceirizado</td>
+                                            <td>Texto</td>
+                                        </tr>
+                                        <tr>
+                                            <td>orgao</td>
+                                            <td>Órgão de trabalho do empregado</td>
+                                            <td>Texto</td>
+                                        </tr>
+                                        <tr>
+                                            <td>cargo</td>
+                                            <td>Cargo exercido pelo empregado</td>
+                                            <td>Texto</td>
+                                        </tr>
+                                        <tr>
+                                            <td>empresa</td>
+                                            <td>Nome da empresa terceirizada</td>
+                                            <td>Texto</td>
+                                        </tr>
+                                        <tr>
+                                            <td>cnpj_empresa</td>
+                                            <td>CNPJ da empresa terceirizada</td>
+                                            <td>Texto (14 dígitos)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>mes_referencia</td>
+                                            <td>Mês do contrato de trabalho (formato abreviado)</td>
+                                            <td>Texto</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                             
-                            <div class="right-aligned-container">
-                                <div class="search-box-container">
-                                    <span>Buscar registros:</span>
-                                    <input type="text" id="searchEmpregados" placeholder="Buscar por nome, cargo, empresa ou órgão...">
-                                </div>
-                                
-                                <div class="items-per-page">
-                                    <span>Itens por página:</span>
-                                    <select id="itemsPerPageDashboard2">
-                                        <option value="10">10</option>
-                                        <option value="25">25</option>
-                                        <option value="50" selected>50</option>
-                                        <option value="100">100</option>
-                                    </select>
-                                </div>
-                                
-                                <span class="table-badge" id="resumoCountDashboard2">0 empregados</span>
+                            <div class="alert alert-info mt-3">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Fonte dos Dados:</strong> Os dados são carregados automaticamente do repositório GitHub 
+                                <a href="https://github.com/transparencia-mg/empregados_terceirizados" target="_blank">transparencia-mg/empregados_terceirizados</a>
+                            </div>
+                            
+                            <div class="alert alert-success mt-2">
+                                <i class="fas fa-sync-alt me-2"></i>
+                                <strong>Atualização Automática:</strong> Os dados são atualizados automaticamente quando novos arquivos são adicionados ao repositório GitHub.
                             </div>
                         </div>
                     </div>
-
-                    <!-- Tabela de Empregados Dashboard 2 - SEM SCROLL INTERNO -->
-                    <div class="table-container">
-                        <div class="table-responsive-wrapper">
-                            <table class="table table-hover" id="empregadosTable">
-                                <thead>
-                                    <tr>
-                                        <th data-sort="nome" data-order="asc">Nome <span class="sort-icon">▼</span></th>
-                                        <th data-sort="matricula" data-order="asc">Matrícula <span class="sort-icon">▼</span></th>
-                                        <th data-sort="orgao" data-order="asc">Órgão <span class="sort-icon">▼</span></th>
-                                        <th data-sort="cargo" data-order="asc">Cargo <span class="sort-icon">▼</span></th>
-                                        <th data-sort="empresa" data-order="asc">Empresa <span class="sort-icon">▼</span></th>
-                                        <th data-sort="cnpj_empresa" data-order="asc">CNPJ Empresa <span class="sort-icon">▼</span></th>
-                                        <th class="actions-column">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="empregadosTableBody">
-                                    <!-- Dados serão carregados aqui -->
-                                </tbody>
-                                <tfoot id="empregadosTableFooter">
-                                    <!-- Total geral será carregado aqui -->
-                                </tfoot>
-                            </table>
-                        </div>
-                        
-                        <!-- Paginação Dashboard 2 -->
-                        <div class="pagination-container">
-                            <div class="pagination-info" id="paginationInfoDashboard2">
-                                Mostrando 0-0 de 0 registros
-                            </div>
-                            <nav aria-label="Paginação">
-                                <ul class="pagination mb-0" id="paginationDashboard2">
-                                    <!-- Paginação será gerada aqui -->
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                    
-                </div> <!-- Fim Dashboard 2 -->
-
-                <!-- ==================== DASHBOARD 3: DOWNLOADS ==================== -->
-                <div class="tab-pane fade" id="dashboard3" role="tabpanel">
-                    
-                    <!-- Filtro de Download -->
-                    <div class="filter-container">
-                        <div class="row align-items-end g-3">
-                            <div class="col-md-6">
-                                <div>
-                                    <label for="anoDownload" class="form-label filter-label">Selecione o Ano para Download</label>
-                                    <select class="form-select" id="anoDownload">
-                                        <!-- Opções serão carregadas dinamicamente -->
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6 d-flex">
-                                <button type="button" class="btn-primary-custom w-100" id="downloadCSV" style="height: 42px;">
-                                    <i class="fas fa-download me-2"></i>Baixar CSV Completo
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Informações sobre os dados -->
-                    <div class="table-container">
-                        <div class="table-header">
-                            <h3 class="table-title">Informações sobre os Dados</h3>
-                        </div>
-                        <div class="p-4">
-                            <div class="row g-4">
-                                <div class="col-md-6 col-12">
-                                    <div class="card-stats text-center">
-                                        <i class="fas fa-database fa-3x mb-3" style="color: #29435A;"></i>
-                                        <h4>Fonte dos Dados</h4>
-                                        <p class="text-muted" style="font-size: 13px;">Dados atualizados automaticamente do GitHub</p>
-                                        <div class="mt-3">
-                                            <a href="https://github.com/transparencia-mg/empregados_terceirizados" 
-                                               target="_blank" 
-                                               class="btn-export w-100 d-block text-decoration-none">
-                                                <i class="fab fa-github me-2"></i>Acessar Repositório
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="card-stats text-center">
-                                        <i class="fas fa-external-link-alt fa-3x mb-3" style="color: #29435A;"></i>
-                                        <h4>Portal de Dados Abertos</h4>
-                                        <p class="text-muted" style="font-size: 13px;">Acesse o conjunto de dados de empregados terceirizados do Estado de Minas Gerais</p>
-                                        <div class="mt-3">
-                                            <a href="https://dados.mg.gov.br/dataset/empregados_terceirizados" 
-                                               target="_blank" 
-                                               class="btn-export w-100 d-block text-decoration-none">
-                                                <i class="fas fa-external-link-alt me-2"></i>Acessar Portal
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-4">
-                                <h5 class="mb-3">Metadados - Estrutura dos Dados</h5>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Campo</th>
-                                                <th>Descrição</th>
-                                                <th>Tipo</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>matricula</td>
-                                                <td>Matrícula do empregado terceirizado</td>
-                                                <td>Texto/Número</td>
-                                            </tr>
-                                            <tr>
-                                                <td>nome</td>
-                                                <td>Nome completo do empregado terceirizado</td>
-                                                <td>Texto</td>
-                                            </tr>
-                                            <tr>
-                                                <td>orgao</td>
-                                                <td>Órgão de trabalho do empregado</td>
-                                                <td>Texto</td>
-                                            </tr>
-                                            <tr>
-                                                <td>cargo</td>
-                                                <td>Cargo exercido pelo empregado</td>
-                                                <td>Texto</td>
-                                            </tr>
-                                            <tr>
-                                                <td>empresa</td>
-                                                <td>Nome da empresa terceirizada</td>
-                                                <td>Texto</td>
-                                            </tr>
-                                            <tr>
-                                                <td>cnpj_empresa</td>
-                                                <td>CNPJ da empresa terceirizada</td>
-                                                <td>Texto (14 dígitos)</td>
-                                            </tr>
-                                            <tr>
-                                                <td>mes_referencia</td>
-                                                <td>Mês do contrato de trabalho (formato abreviado)</td>
-                                                <td>Texto</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                
-                                <div class="alert alert-info mt-3">
-                                    <i class="fas fa-info-circle me-2"></i>
-                                    <strong>Fonte dos Dados:</strong> Os dados são carregados automaticamente do repositório GitHub 
-                                    <a href="https://github.com/transparencia-mg/empregados_terceirizados" target="_blank">transparencia-mg/empregados_terceirizados</a>
-                                </div>
-                                
-                                <div class="alert alert-success mt-2">
-                                    <i class="fas fa-sync-alt me-2"></i>
-                                    <strong>Atualização Automática:</strong> Os dados são atualizados automaticamente quando novos arquivos são adicionados ao repositório GitHub.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div> <!-- Fim Dashboard 3 -->
-            </div>
+                </div>
+                
+            </div> <!-- Fim Dashboard 3 -->
         </div>
     </div>
 
@@ -1799,7 +1758,6 @@ iframe {
     <script>
         // ============================================
         // SEU CÓDIGO JAVASCRIPT ORIGINAL PERMANECE IGUAL
-        // TODAS AS FUNÇÕES DE LÓGICA SÃO AS MESMAS
         // ============================================
         let terceirizadosData = [];
         let filteredData = [];

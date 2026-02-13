@@ -65,7 +65,7 @@
         }
 
         .main-container {
-            height: 100%;
+            height: calc(100vh - 20px);
             min-height: auto !important;
             overflow: hidden !important;
             position: relative;
@@ -73,14 +73,16 @@
 
         .container.dashboard-spacing {
             overflow: hidden !important;
-            height: 100%;
+            height: calc(100vh - 20px);
             min-height: auto !important;
             position: relative;
         }
 
         .tab-content {
+            display: flex;
+            flex-direction: column;
             overflow: hidden !important;
-            height: 100%;
+            height: calc(100vh - 20px);
             min-height: auto !important;
             position: relative;
         }
@@ -103,6 +105,8 @@
             height: 100%;
             border: none;
             overflow-y: auto;
+            flex: 1;
+            min-height: 0;
         }
 
         /* ==================== HEADER MINIMALISTA ==================== */

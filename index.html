@@ -100,13 +100,12 @@
         
         /* ==================== HEADER MINIMALISTA ==================== */
         .main-header {
-            background: linear-gradient(135deg, #0E2F44 0%, #29435A 100%);
+            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 12px 24px;
+            padding: 12px 0;
             margin-bottom: 15px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border-bottom: 3px solid #B93C42;
-            border-radius: 8px;
+            border-bottom: 3px solid var(--accent-red);
         }
         
         .logo-container {
@@ -118,7 +117,7 @@
         .logo {
             width: 45px;
             height: 45px;
-            background: linear-gradient(135deg, #B93C42 0%, #DB233F 100%);
+            background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-bright) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -159,12 +158,12 @@
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
             padding: 20px;
             margin-bottom: 20px;
-            border-left: 5px solid #B93C42;
+            border-left: 5px solid var(--accent-red);
         }
         
         .filter-label {
             font-weight: 600;
-            color: #29435A;
+            color: var(--primary-dark);
             margin-bottom: 6px;
             font-size: 12px;
             text-transform: uppercase;
@@ -176,12 +175,12 @@
             border-radius: 6px;
             padding: 10px 12px;
             font-size: 13px;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             height: 42px;
         }
         
         .form-control:focus, .form-select:focus {
-            border-color: #B93C42;
+            border-color: var(--accent-red);
             box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
         }
         
@@ -192,8 +191,8 @@
             padding: 20px 15px;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
             margin-bottom: 20px;
-            border-top: 4px solid #B93C42;
-            transition: all 0.2s ease;
+            border-top: 4px solid var(--accent-red);
+            transition: all 0.3s ease;
             height: 100%;
             position: relative;
             cursor: default;
@@ -205,193 +204,50 @@
         }
         
         .metric-card.primary {
-            border-top-color: #29435A;
+            border-top-color: var(--primary-dark);
         }
         
         .metric-card.success {
-            border-top-color: #28a745;
+            border-top-color: var(--success-green);
         }
         
         .metric-card.warning {
-            border-top-color: #ffc107;
+            border-top-color: var(--warning-yellow);
         }
         
         .metric-card.info {
-            border-top-color: #17a2b8;
+            border-top-color: var(--info-blue);
         }
         
         .metric-value {
             font-size: 24px;
             font-weight: 700;
-            color: #29435A;
+            color: var(--primary-dark);
             margin: 8px 0;
             line-height: 1;
         }
         
         .metric-label {
             font-size: 12px;
-            color: #0E2F44;
+            color: var(--primary-darker);
             font-weight: 600;
             margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
         
-        .metric-change {
-            font-size: 11px;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 15px;
-            display: inline-block;
-        }
-        
-        .metric-change.positive {
-            background-color: rgba(40, 167, 69, 0.1);
-            color: #28a745;
-        }
-        
-        /* ==================== GRÁFICOS ==================== */
-        .dashboard-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        @media (max-width: 1200px) {
-            .dashboard-2 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card-chart {
-            background: #fff;
-            border-radius: 14px;
-            border: 1px solid #e9ecef;
-            padding: 20px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-            height: 360px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-chart h3 {
-            margin: 0 0 16px 0;
-            color: #1a1f36;
-            font-size: 16px;
-            font-weight: 700;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #f1f3f9;
-        }
-
-        .chart-row {
-            display: flex;
-            gap: 20px;
-            flex: 1;
-            min-height: 0;
-            align-items: center;
-        }
-
-        .chart-wrapper {
-            width: 180px;
-            height: 180px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .legend-compact {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding: 0 4px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .legend-item-compact {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 10px;
-            border-radius: 6px;
-            background: #fafbfd;
-            border: 1px solid transparent;
-        }
-
-        .legend-dot-compact {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .legend-content-compact {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            min-width: 0;
-        }
-
-        .legend-label-compact {
-            font-size: 12px;
-            font-weight: 600;
-            color: #2d3748;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 120px;
-        }
-
-        .legend-stats-compact {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-        }
-
-        .legend-percent-compact {
-            font-size: 11px;
-            font-weight: 700;
-            color: #29435A;
-        }
-
-        .legend-count-compact {
-            font-size: 10px;
-            font-weight: 600;
-            color: #B93C42;
-            background-color: rgba(185, 60, 66, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        @media (max-width: 768px) {
-            .card-chart {
-                height: auto;
-                min-height: 340px;
-            }
-
-            .chart-row {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .chart-wrapper {
-                width: 160px;
-                height: 160px;
-            }
-
-            .legend-compact {
-                width: 100%;
-                max-height: none;
-            }
-        }
-        
         /* ==================== MENU DE NAVEGAÇÃO ==================== */
+        .nav-tabs-container {
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-top: 10px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
         .nav-tabs {
             border: none !important;
             gap: 4px;
@@ -410,8 +266,8 @@
             border-radius: 6px !important;
             padding: 10px 15px !important;
             font-weight: 600;
-            color: #29435A !important;
-            transition: all 0.2s ease;
+            color: var(--primary-dark) !important;
+            transition: all 0.3s ease;
             font-size: 13px;
             white-space: nowrap;
             display: inline-flex !important;
@@ -421,11 +277,11 @@
 
         .nav-tabs .nav-link:hover {
             background-color: rgba(41, 67, 90, 0.05) !important;
-            color: #B93C42 !important;
+            color: var(--accent-red) !important;
         }
 
         .nav-tabs .nav-link.active {
-            background: linear-gradient(135deg, #29435A 0%, #0E2F44 100%) !important;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%) !important;
             color: white !important;
             border: none !important;
         }
@@ -440,10 +296,46 @@
         .nav-tabs .nav-link.active .material-icons {
             color: white !important;
         }
+
+        .nav-tabs-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .nav-tabs-container::-webkit-scrollbar-track {
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .nav-tabs-container::-webkit-scrollbar-thumb {
+            background: #dee2e6;
+            border-radius: 4px;
+        }
+
+        .nav-tabs-container::-webkit-scrollbar-thumb:hover {
+            background: #adb5bd;
+        }
+
+        .nav-tabs-container {
+            scrollbar-width: thin;
+            scrollbar-color: #dee2e6 #f8f9fa;
+        }
+
+        .nav-tabs {
+            border-bottom: none !important;
+        }
         
-        /* ==================== TABELAS ==================== */
+        /* ==================== TABELAS COM BORDAS ==================== */
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+        }
+        
         .table-header {
-            background: linear-gradient(135deg, #29435A 0%, #0E2F44 100%);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
             color: white;
             padding: 15px 20px;
             display: flex;
@@ -451,7 +343,6 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
-            flex-shrink: 0;
         }
         
         .table-title {
@@ -461,7 +352,7 @@
         }
         
         .table-badge {
-            background: #B93C42;
+            background: var(--accent-red);
             color: white;
             padding: 4px 12px;
             border-radius: 15px;
@@ -469,15 +360,39 @@
             font-weight: 600;
         }
         
+        .table-fixed-header-container {
+            position: relative;
+            max-height: 500px;
+            overflow: auto;
+            padding: 0;
+        }
+        
+        .table-fixed-header-container table thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: var(--primary-dark) !important;
+        }
+        
+        .table-fixed-header-container table thead th {
+            background-color: var(--primary-dark) !important;
+            color: white !important;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+        
         .table {
             margin: 0;
             width: 100%;
             font-size: 13px;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid #dee2e6;
         }
         
         .table thead th {
-            background-color: #29435A !important;
+            background-color: var(--primary-dark) !important;
             color: white !important;
             font-weight: 600;
             border: none;
@@ -487,6 +402,10 @@
             letter-spacing: 0.3px;
             cursor: pointer;
             user-select: none;
+            transition: background-color 0.2s ease;
+            position: sticky;
+            top: 0;
+            z-index: 20;
             white-space: nowrap;
             border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
             border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -498,21 +417,6 @@
         
         .table thead th:last-child {
             border-right: none !important;
-        }
-        
-        .sort-icon {
-            opacity: 0.8;
-            margin-left: 4px;
-            font-size: 9px;
-            color: white;
-        }
-        
-        .table thead th:hover {
-            background-color: #0E2F44 !important;
-        }
-        
-        .table tbody tr {
-            border-bottom: 1px solid #f1f1f1;
         }
         
         .table tbody tr:hover {
@@ -547,161 +451,78 @@
             border-radius: 4px;
             border: none;
             cursor: pointer;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 3px;
         }
         
         .btn-history {
-            background-color: #0E2F44;
+            background-color: var(--primary-dark);
             color: white;
         }
         
         .btn-history:hover {
-            background-color: #29435A;
+            background-color: var(--primary-darker);
+            transform: translateY(-1px);
         }
         
-        /* ==================== BOTÕES ==================== */
+        /* ==================== BOTÕES  ==================== */
         .btn-primary-custom {
-            background: linear-gradient(to right, #B93C42, #DB233F);
+            background: linear-gradient(to right, var(--accent-red), var(--accent-bright));
             border: none;
             padding: 10px 20px;
             font-weight: 600;
             border-radius: 6px;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             font-size: 13px;
             color: white;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
         }
         
         .btn-primary-custom:hover {
-            background: linear-gradient(to right, #0E2F44, #29435A);
+            background: linear-gradient(to right, var(--primary-darker), var(--hover-blue));
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(14, 47, 68, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
             color: white;
         }
         
         .btn-secondary-custom {
             background: white;
-            border: 2px solid #0E2F44;
-            color: #0E2F44;
+            border: 2px solid var(--primary-darker);
+            color: var(--primary-dark);
             padding: 10px 20px;
             font-weight: 600;
             border-radius: 6px;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             font-size: 13px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
         }
         
         .btn-secondary-custom:hover {
-            background-color: #0E2F44;
+            background-color: var(--primary-dark);
             color: white;
-            border-color: #0E2F44;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(14, 47, 68, 0.2);
+            box-shadow: 0 4px 12px rgba(41, 67, 90, 0.15);
         }
         
         .btn-export {
             background: white;
-            border: 2px solid #0E2F44;
-            color: #0E2F44;
+            border: 2px solid var(--primary-darker);
+            color: var(--primary-dark);
             padding: 8px 15px;
             border-radius: 6px;
             font-weight: 600;
             font-size: 12px;
-            transition: all 0.2s ease;
-            display: inline-flex;
+            transition: all 0.3s ease;
+            display: flex;
             align-items: center;
             gap: 6px;
             cursor: pointer;
         }
         
         .btn-export:hover {
-            background: #0E2F44;
+            background: var(--primary-dark);
             color: white;
-            border-color: #0E2F44;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(14, 47, 68, 0.2);
-        }
-
-        .btn-share {
-            background: white;
-            border: 2px solid #0E2F44;
-            color: #0E2F44;
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 12px;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .btn-share:hover {
-            background: #0E2F44;
-            color: white;
-            border-color: #0E2F44;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(14, 47, 68, 0.2);
-        }
-        
-        .share-dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .share-options {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            border-radius: 6px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            min-width: 200px;
-            z-index: 1000;
-            display: none;
-            margin-top: 5px;
-            border: 1px solid #e9ecef;
-        }
-        
-        .share-options.show {
-            display: block;
-        }
-        
-        .share-option {
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #0E2F44;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-        }
-        
-        .share-option:hover {
-            background-color: #0E2F44;
-            color: white;
-        }
-        
-        .share-option i {
-            width: 20px;
-            text-align: center;
         }
 
         .btn-primary-custom .material-icons,
@@ -712,6 +533,69 @@
             line-height: 1;
         }
 
+        .btn-primary-custom,
+        .btn-secondary-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ==================== BOTÃO COMPARTILHAR COM HOVER ==================== */
+        .share-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .share-dropdown-content {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 10px;
+            z-index: 1000;
+            margin-bottom: 5px;
+            border: 1px solid #dee2e6;
+        }
+
+        .share-dropdown:hover .share-dropdown-content {
+            display: block;
+        }
+
+        .share-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: var(--primary-dark);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            font-size: 13px;
+        }
+
+        .share-option:hover {
+            background-color: #f8f9fa;
+            color: var(--accent-red);
+        }
+
+        .share-option i {
+            font-size: 16px;
+        }
+
+        .share-option.facebook i { color: #3b5998; }
+        .share-option.twitter i { color: #1da1f2; }
+        .share-option.whatsapp i { color: #25d366; }
+        .share-option.linkedin i { color: #0077b5; }
+        .share-option.email i { color: #ea4335; }
+        
         /* ==================== AÇÕES ==================== */
         .actions-container {
             background: white;
@@ -730,6 +614,9 @@
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
         }
         
         .right-aligned-container {
@@ -759,7 +646,7 @@
             height: 50px;
             border: 4px solid rgba(41, 67, 90, 0.1);
             border-radius: 50%;
-            border-top-color: #B93C42;
+            border-top-color: var(--accent-red);
             animation: spin 1s linear infinite;
         }
         
@@ -771,7 +658,7 @@
         .table-total-row {
             background-color: #f8f9fa !important;
             font-weight: 600;
-            color: #29435A;
+            color: var(--primary-dark);
         }
         
         .table-total-row td {
@@ -783,54 +670,83 @@
         }
 
         /* ==================== LINK CLICÁVEL ==================== */
-        .orgao-link {
-            color: #0E2F44;
+        .link-acao {
+            color: var(--primary-darker);
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
-            transition: color 0.2s ease;
+            transition: all 0.2s ease;
             display: inline-block;
             padding: 2px 4px;
             border-radius: 4px;
             font-size: 13px;
+            border-bottom: none !important;
+            text-transform: none;
         }
 
-        .orgao-link:hover {
-            color: #B93C42 !important;
+        .link-acao:hover {
+            color: var(--accent-red) !important;
             background-color: rgba(185, 60, 66, 0.05);
+            transform: translateY(-1px);
+            text-decoration: none !important;
         }
 
-        .orgao-link.selected {
-            color: #006a82 !important;
+        .link-acao.selected {
+            color: var(--hover-blue) !important;
             background-color: rgba(0, 106, 130, 0.1);
+        }
+
+        .link-acao:active {
+            transform: translateY(0);
+        }
+        
+        .siafi-link {
+            color: var(--accent-red);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .siafi-link:hover {
+            text-decoration: underline;
+            color: var(--accent-bright);
         }
         
         /* ==================== PAGINAÇÃO ==================== */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-top: 1px solid #dee2e6;
+            background-color: white;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
         .pagination-info {
             font-size: 12px;
-            color: #0E2F44;
+            color: var(--primary-darker);
             font-weight: 600;
         }
         
         .pagination .page-link {
             border: 1px solid #dee2e6;
-            color: #29435A;
+            color: var(--primary-dark);
             padding: 6px 10px;
             font-weight: 600;
             font-size: 12px;
-            cursor: pointer;
         }
 
         .pagination .page-item.active .page-link {
-            background-color: #29435A;
-            border-color: #29435A;
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
             color: white;
         }
         
         .pagination .page-link:hover {
-            background-color: #EEEFF5;
-            color: #B93C42;
-            border-color: #B93C42;
+            background-color: var(--background-light);
+            color: var(--primary-dark);
         }
         
         .items-per-page {
@@ -838,33 +754,62 @@
             align-items: center;
             gap: 8px;
             font-size: 12px;
-            color: #0E2F44;
+            color: var(--primary-dark);
             font-weight: 600;
         }
         
         .items-per-page select {
-            border: 2px solid #0E2F44;
+            border: 2px solid rgba(41, 67, 90, 0.3);
             border-radius: 6px;
             padding: 5px 10px;
             font-size: 12px;
             width: auto;
             min-width: 70px;
             background-color: white;
-            color: #0E2F44;
-            cursor: pointer;
+            color: var(--primary-dark);
         }
         
-        .items-per-page select:hover {
-            border-color: #B93C42;
+        .items-per-page select option {
+            background-color: white;
+            color: var(--primary-dark);
         }
         
-        .items-per-page select:focus {
-            border-color: #B93C42;
-            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
-            outline: none;
+        /* ==================== BUSCA RÁPIDA ==================== */
+        .search-box-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
         }
         
-        /* ==================== MODAL ==================== */
+        .search-box-container label {
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        
+        .search-box-container input {
+            border: 2px solid var(--primary-dark) !important;
+            border-radius: 6px !important;
+            padding: 8px 12px !important;
+            font-size: 13px !important;
+            transition: all 0.3s ease !important;
+            width: 100% !important;
+            max-width: 300px !important;
+            background: white;
+        }
+        
+        .search-box-container input:focus {
+            border-color: var(--accent-red) !important;
+            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15) !important;
+            outline: none !important;
+        }
+        
+        /* ==================== MODAL CRIATIVO ==================== */
         .modal-creative {
             border-radius: 15px;
             overflow: hidden;
@@ -873,7 +818,7 @@
         }
         
         .modal-creative .modal-header {
-            background: linear-gradient(135deg, #29435A 0%, #0E2F44 100%);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
             color: white;
             padding: 20px 30px;
             border-bottom: none;
@@ -888,7 +833,7 @@
             transform: translateX(-50%);
             width: 80px;
             height: 3px;
-            background: linear-gradient(90deg, #B93C42, #28a745);
+            background: linear-gradient(90deg, var(--accent-red), var(--success-green));
             border-radius: 2px;
         }
         
@@ -897,6 +842,7 @@
             font-size: 1.4rem;
             display: flex;
             align-items: center;
+            justify-content: flex-start;
             gap: 10px;
         }
         
@@ -904,7 +850,7 @@
             background: rgba(255, 255, 255, 0.2) url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
             border-radius: 50%;
             padding: 8px;
-            transition: transform 0.2s ease;
+            transition: all 0.3s ease;
             opacity: 0.8;
         }
         
@@ -916,13 +862,11 @@
         
         .modal-creative .modal-body {
             padding: 30px;
-            background: white;
-            max-height: 70vh;
-            overflow-y: auto;
+            background: linear-gradient(to bottom, #ffffff, #f8fafc);
         }
         
         .modal-creative .modal-footer {
-            background: #EEEFF5;
+            background: var(--background-light);
             border-top: 1px solid rgba(0, 0, 0, 0.05);
             padding: 20px 30px;
             display: flex;
@@ -943,23 +887,28 @@
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #B93C42;
+            border-left: 4px solid var(--accent-red);
+            transition: transform 0.3s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
         }
         
         .info-card.primary {
-            border-left-color: #29435A;
+            border-left-color: var(--primary-dark);
         }
         
         .info-card.success {
-            border-left-color: #28a745;
+            border-left-color: var(--success-green);
         }
         
         .info-card.warning {
-            border-left-color: #ffc107;
+            border-left-color: var(--warning-yellow);
         }
         
         .info-card.danger {
-            border-left-color: #B93C42;
+            border-left-color: var(--accent-red);
         }
         
         .info-label {
@@ -974,14 +923,44 @@
         .info-value {
             font-size: 14px;
             font-weight: 600;
-            color: #29435A;
+            color: var(--primary-dark);
             word-break: break-word;
         }
         
         .info-value.highlight {
             font-size: 18px;
-            color: #B93C42;
+            color: var(--accent-red);
             font-weight: 700;
+        }
+        
+        .objeto-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--success-green);
+        }
+        
+        .objeto-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+        
+        .objeto-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #495057;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-red);
         }
         
         /* ==================== DATA ATUALIZAÇÃO ==================== */
@@ -990,6 +969,7 @@
             justify-content: center;
             align-items: center;
             margin-bottom: 20px;
+            padding: 10px 0;
         }
         
         .data-atualizacao-box {
@@ -999,56 +979,123 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             font-size: 12px;
-            color: #29435A;
+            color: var(--primary-dark);
             font-weight: 600;
         }
         
         .data-atualizacao-box i {
             font-size: 14px;
-            color: #B93C42;
+            color: var(--accent-red);
         }
         
-        /* ==================== SEARCH BOX ==================== */
-        .search-box-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 0;
+        /* ==================== CARDS DE DOWNLOAD ==================== */
+        .card-stats {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            text-align: center;
+            height: 100%;
+        }
+
+        .card-stats .value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-red);
+            margin: 8px 0;
+        }
+
+        .card-stats .label {
             font-size: 12px;
-            color: #0E2F44;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* ==================== TABELA DE DICIONÁRIO ==================== */
+        .dicionario-tabela {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .dicionario-tabela th {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 12px 10px;
+            font-size: 13px;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
-
-        #searchEmpregados {
-            border: 2px solid #0E2F44;
-            border-radius: 6px;
-            padding: 5px 10px;
-            font-size: 12px;
-            min-width: 200px;
-            background-color: white;
+        
+        .dicionario-tabela td {
+            padding: 10px;
+            font-size: 13px;
+            border: 1px solid #dee2e6;
+            vertical-align: top;
         }
-
-        #searchEmpregados:focus {
-            border-color: #B93C42;
-            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
-            outline: none;
+        
+        .dicionario-tabela tr:nth-child(even) {
+            background-color: #f8f9fa;
         }
-
+        
+        .dicionario-tabela tr:hover {
+            background-color: rgba(41, 67, 90, 0.05);
+        }
+        
+        .dicionario-secao {
+            background-color: var(--primary-darker) !important;
+            color: white;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .dicionario-secao td {
+            background-color: var(--primary-darker);
+            color: white;
+            font-weight: 700;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
-            .main-container {
-                padding: 15px 20px;
+            body, html {
+                overflow-y: visible !important;
+            }
+            
+            .main-container, 
+            .container.dashboard-spacing,
+            .tab-content {
+                overflow: visible !important;
+            }
+            
+            .table-fixed-header-container {
+                max-height: 400px;
             }
             
             .main-header {
-                padding: 12px 16px;
+                padding: 15px 0;
+                margin-bottom: 20px;
             }
             
             .logo-container {
                 flex-direction: column;
                 text-align: center;
+                gap: 10px;
+            }
+            
+            .header-title {
+                font-size: 18px;
+            }
+            
+            .header-info {
+                justify-content: center;
             }
             
             .metric-value {
@@ -1058,24 +1105,59 @@
             .actions-container {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 10px;
             }
             
             .export-buttons {
                 width: 100%;
+                justify-content: flex-start;
             }
             
             .right-aligned-container {
                 width: 100%;
+                justify-content: flex-start;
                 margin-left: 0;
-                flex-wrap: wrap;
+            }
+            
+            .nav-tabs .nav-link {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            .table-responsive {
+                font-size: 12px;
+            }
+            
+            .table thead th,
+            .table tbody td {
+                padding: 8px 6px;
+                font-size: 11px;
+            }
+            
+            .actions-column {
+                width: 80px;
+            }
+            
+            .btn-action {
+                padding: 3px 6px;
+                font-size: 10px;
+            }
+            
+            .pagination-container {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+            
+            .btn-primary-custom,
+            .btn-secondary-custom {
+                padding: 8px 15px;
+                font-size: 12px;
             }
             
             .search-box-container {
                 width: 100%;
-            }
-            
-            #searchEmpregados {
-                max-width: 100%;
+                justify-content: flex-start;
             }
             
             .modal-creative .modal-body {
@@ -1086,58 +1168,52 @@
                 grid-template-columns: 1fr;
             }
             
-            .chart-wrapper {
-                width: 160px;
-                height: 160px;
-                margin: 0 auto;
-            }
-            
-            .legend-label-compact {
-                max-width: 120px;
+            .data-atualizacao-container {
+                justify-content: center;
             }
         }
         
         @media (max-width: 576px) {
-            .main-container {
-                padding: 10px 15px;
+            .table-fixed-header-container {
+                max-height: 350px;
             }
             
             .filter-container .row > div {
                 margin-bottom: 10px;
             }
             
-            .card-chart {
-                min-height: 380px;
-            }
-            
-            .chart-wrapper {
-                width: 140px;
-                height: 140px;
-            }
-            
-            .legend-label-compact {
-                max-width: 100px;
-            }
-            
             .actions-column {
                 width: 70px;
+            }
+            
+            .btn-action {
+                padding: 2px 4px;
+                font-size: 9px;
             }
             
             .btn-action span {
                 display: none;
             }
             
-            .pagination-container {
+            .right-aligned-container {
                 flex-direction: column;
-                text-align: center;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .items-per-page-container {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
 </head>
 <body>
+
     <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
     <div class="container main-container">
             
+       
         <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
         <div class="nav-tabs-container">
             <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
@@ -1157,6 +1233,14 @@
                     </button>
                 </li>
             </ul>
+        </div>
+
+        <!-- ==================== DATA ATUALIZAÇÃO CENTRALIZADA ==================== -->
+        <div class="data-atualizacao-container">
+            <div class="data-atualizacao-box">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Última atualização: <span id="data-atualizacao-central">Carregando...</span></span>
+            </div>
         </div>
 
         <!-- ==================== CONTEÚDO DAS ABAS ==================== -->
@@ -1248,7 +1332,7 @@
                             <button type="button" class="btn-share" id="shareDashboard1">
                                 <i class="fas fa-share-alt me-2"></i> Compartilhar
                             </button>
-                            <div class="share-options" id="shareOptionsDashboard1">
+                            <div class="share-dropdown-content" id="shareOptionsDashboard1">
                                 <button type="button" class="share-option link-share">
                                     <i class="fas fa-link"></i> Copiar Link
                                 </button>
@@ -1283,7 +1367,7 @@
 
                 <!-- Tabela Dashboard 1 - COM SCROLL -->
                 <div class="table-container">
-                    <div class="table-responsive-wrapper">
+                    <div class="table-fixed-header-container">
                         <table class="table table-hover" id="visaoGeralTable">
                             <thead>
                                 <tr>
@@ -1415,7 +1499,7 @@
                                 <button type="button" class="btn-share" id="shareDashboard2">
                                     <i class="fas fa-share-alt me-2"></i> Compartilhar
                                 </button>
-                                <div class="share-options" id="shareOptionsDashboard2">
+                                <div class="share-dropdown-content" id="shareOptionsDashboard2">
                                     <button type="button" class="share-option link-share">
                                         <i class="fas fa-link"></i> Copiar Link
                                     </button>
@@ -1437,8 +1521,8 @@
                         
                         <div class="right-aligned-container">
                             <div class="search-box-container">
-                                <span>Buscar registros:</span>
-                                <input type="text" id="searchEmpregados" placeholder="Buscar por nome, cargo, empresa ou órgão...">
+                                <label for="searchEmpregados">Buscar:</label>
+                                <input type="text" id="searchEmpregados" placeholder="Nome, cargo, empresa ou órgão...">
                             </div>
                             
                             <div class="items-per-page">
@@ -1458,7 +1542,7 @@
 
                 <!-- Tabela de Empregados Dashboard 2 - COM SCROLL -->
                 <div class="table-container">
-                    <div class="table-responsive-wrapper">
+                    <div class="table-fixed-header-container">
                         <table class="table table-hover" id="empregadosTable">
                             <thead>
                                 <tr>
@@ -1522,11 +1606,11 @@
                     <div class="table-header">
                         <h3 class="table-title">Informações sobre os Dados</h3>
                     </div>
-                    <div class="table-responsive-wrapper p-4">
+                    <div class="table-fixed-header-container p-4">
                         <div class="row g-4">
                             <div class="col-md-6 col-12">
                                 <div class="card-stats text-center">
-                                    <i class="fas fa-database fa-3x mb-3" style="color: #29435A;"></i>
+                                    <i class="fas fa-database fa-3x mb-3" style="color: var(--primary-dark);"></i>
                                     <h4>Fonte dos Dados</h4>
                                     <p class="text-muted" style="font-size: 13px;">Dados atualizados automaticamente do GitHub</p>
                                     <div class="mt-3">
@@ -1540,7 +1624,7 @@
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="card-stats text-center">
-                                    <i class="fas fa-external-link-alt fa-3x mb-3" style="color: #29435A;"></i>
+                                    <i class="fas fa-external-link-alt fa-3x mb-3" style="color: var(--primary-dark);"></i>
                                     <h4>Portal de Dados Abertos</h4>
                                     <p class="text-muted" style="font-size: 13px;">Acesse o conjunto de dados de empregados terceirizados do Estado de Minas Gerais</p>
                                     <div class="mt-3">
@@ -1681,7 +1765,7 @@
     
     <script>
         // ============================================
-        // SEU CÓDIGO JAVASCRIPT ORIGINAL PERMANECE IGUAL
+        // CÓDIGO JAVASCRIPT (mantido igual ao anterior)
         // ============================================
         let terceirizadosData = [];
         let filteredData = [];
@@ -1691,7 +1775,7 @@
         let itemsPerPageDashboard1 = 50;
         let itemsPerPageDashboard2 = 50;
         let charts = {};
-        let currentYear = '';
+        let currentYear = '2025';
         let currentMonth = '';
         let currentSortDashboard1 = { column: 'orgao_nome', order: 'asc' };
         let currentSortDashboard2 = { column: 'nome', order: 'asc' };
@@ -1740,7 +1824,23 @@
             '10': 'Outubro', '11': 'Novembro', '12': 'Dezembro'
         };
 
-        // ==================== FUNÇÕES DE COMPARTILHAMENTO ====================
+        // Função para atualizar data/hora
+        function updateDateTime() {
+            const now = new Date();
+            const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
+            
+            const elementosHeader = document.querySelectorAll('#data-atualizacao-header2');
+            elementosHeader.forEach(el => {
+                if (el) el.textContent = dataFormatada;
+            });
+            
+            const elementosCentral = document.querySelectorAll('#data-atualizacao-central');
+            elementosCentral.forEach(el => {
+                if (el) el.textContent = dataFormatada;
+            });
+        }
+
+        // Funções de compartilhamento
         function copiarLink(e) {
             e.preventDefault();
             const currentUrl = window.location.href;
@@ -1749,26 +1849,16 @@
                 alert('Link copiado para a área de transferência!');
             }).catch(err => {
                 console.error('Erro ao copiar:', err);
-                copiarFallback(currentUrl);
-            });
-        }
-
-        function copiarFallback(texto) {
-            const textarea = document.createElement('textarea');
-            textarea.value = texto;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
-            
-            try {
+                const textarea = document.createElement('textarea');
+                textarea.value = currentUrl;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
                 document.execCommand('copy');
+                document.body.removeChild(textarea);
                 alert('Link copiado para a área de transferência!');
-            } catch (err) {
-                alert('Não foi possível copiar o link. Tente selecionar e copiar manualmente: ' + texto);
-            }
-            
-            document.body.removeChild(textarea);
+            });
         }
 
         function compartilharFacebook(e) {
@@ -1797,24 +1887,6 @@
             window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
         }
 
-        function toggleShareDropdown(dashboard) {
-            const dropdownId = dashboard === 1 ? 'shareOptionsDashboard1' : 'shareOptionsDashboard2';
-            const dropdown = document.getElementById(dropdownId);
-            
-            if (dropdown) {
-                const isShowing = dropdown.classList.contains('show');
-                
-                document.querySelectorAll('.share-options').forEach(opt => {
-                    opt.classList.remove('show');
-                });
-                
-                if (!isShowing) {
-                    dropdown.classList.add('show');
-                }
-            }
-        }
-
-        // ==================== FUNÇÕES DE UTILIDADE ====================
         function showLoading(show) {
             const overlay = document.getElementById('loadingOverlay');
             if (overlay) {
@@ -1823,7 +1895,7 @@
         }
 
         function showError(message) {
-            const container = document.querySelector('.content-wrapper');
+            const container = document.querySelector('.main-container');
             const errorDiv = document.createElement('div');
             errorDiv.className = 'alert alert-danger alert-dismissible fade show';
             errorDiv.innerHTML = `
@@ -1838,24 +1910,6 @@
             }, 5000);
         }
 
-        function updateDataAtualizacao() {
-            const now = new Date();
-            const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
-            const elementosData = document.querySelectorAll('#data-atualizacao-header2');
-            elementosData.forEach(el => {
-                if (el) el.textContent = dataFormatada;
-            });
-        }
-
-        function formatDate(dateString) {
-            if (!dateString) return '-';
-            const date = new Date(dateString);
-            if (isNaN(date.getTime())) {
-                return dateString;
-            }
-            return date.toLocaleDateString('pt-BR');
-        }
-
         function destroyChart(chart) {
             if (chart) chart.destroy();
         }
@@ -1866,21 +1920,10 @@
             return label.substring(0, maxLength - 3) + '...';
         }
 
-        // ==================== FUNÇÕES DE ÓRGÃOS ====================
+        // Função para obter nome completo do órgão
         function getOrgaoExtenso(orgaoSigla) {
             if (!orgaoSigla || orgaoSigla.trim() === '') {
                 return '';
-            }
-            
-            if (orgaoSigla.includes('SECRETARIA') || 
-                orgaoSigla.includes('POLÍCIA') || 
-                orgaoSigla.includes('CORPO') ||
-                orgaoSigla.includes('FUNDAÇÃO') ||
-                orgaoSigla.includes('INSTITUTO') ||
-                orgaoSigla.includes('UNIVERSIDADE') ||
-                orgaoSigla.includes('COMPANHIA') ||
-                orgaoSigla.length > 10) {
-                return orgaoSigla;
             }
             
             const mapaOrgaos = {
@@ -1941,7 +1984,7 @@
             return orgaoSigla;
         }
 
-        // ==================== FUNÇÕES DE CARREGAMENTO DE ANO ====================
+        // Funções de carregamento de dados
         async function loadYearData(year) {
             return new Promise((resolve, reject) => {
                 const filename = CSV_FILES_BY_YEAR[year];
@@ -2060,16 +2103,23 @@
             }
         }
 
-        // ==================== FUNÇÃO PRINCIPAL DE CARREGAMENTO ====================
+        // Função principal de carregamento
         async function loadData() {
             showLoading(true);
             
             try {
-                const initialYear = '2025';
-                await loadYearData(initialYear);
+                const years = Object.keys(CSV_FILES_BY_YEAR).sort((a, b) => b - a);
                 
-                terceirizadosData = allData[initialYear];
-                currentYear = initialYear;
+                await loadYearData(years[0]);
+                
+                const otherYears = years.slice(1);
+                await Promise.all(otherYears.map(year => loadYearData(year).catch(err => {
+                    console.warn(`Erro ao carregar ano ${year}:`, err);
+                    return [];
+                })));
+                
+                terceirizadosData = allData[years[0]];
+                currentYear = years[0];
                 
                 const competencias = [...new Set(
                     terceirizadosData
@@ -2091,347 +2141,21 @@
                 } else {
                     filteredData = terceirizadosData;
                 }
+                
+                updateFilterOptions();
+                updateDashboard1();
+                updateDashboard2();
+                updateDateTime();
+                
             } catch (error) {
+                console.error('Erro ao carregar dados:', error);
                 showError('Erro ao carregar dados. Por favor, recarregue a página.');
             } finally {
                 showLoading(false);
             }
         }
 
-        // ==================== CORREÇÃO: DOWNLOAD DO CSV COMPLETO ====================
-        async function downloadFullCSV() {
-            const yearSelect = document.getElementById('anoDownload');
-            const year = yearSelect ? yearSelect.value : '';
-            
-            if (!year) {
-                alert('Selecione um ano para baixar o arquivo.');
-                return;
-            }
-            
-            if (CSV_FILES_BY_YEAR[year]) {
-                const url = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR[year]}`;
-                
-                try {
-                    showLoading(true);
-                    
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error('Erro ao baixar o arquivo');
-                    
-                    const blob = await response.blob();
-                    const downloadUrl = window.URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = downloadUrl;
-                    link.download = CSV_FILES_BY_YEAR[year];
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    window.URL.revokeObjectURL(downloadUrl);
-                    
-                } catch (error) {
-                    console.error('Erro no download:', error);
-                    
-                    window.open(url, '_blank');
-                    alert('O download automático não funcionou. O arquivo foi aberto em uma nova aba.');
-                } finally {
-                    showLoading(false);
-                }
-            } else {
-                alert('Para baixar todos os anos, visite o repositório GitHub diretamente.');
-                window.open('https://github.com/transparencia-mg/empregados_terceirizados', '_blank');
-            }
-        }
-
-        // ==================== CONFIGURAR EVENT LISTENERS ====================
-        function setupEventListeners() {
-            const aplicarFiltrosBtn = document.getElementById('aplicarFiltros');
-            const limparFiltrosBtn = document.getElementById('limparFiltros');
-            
-            if (aplicarFiltrosBtn) {
-                aplicarFiltrosBtn.addEventListener('click', function() {
-                    applyFilters('dashboard1');
-                });
-            }
-            
-            if (limparFiltrosBtn) {
-                limparFiltrosBtn.addEventListener('click', function() {
-                    clearAllFilters();
-                });
-            }
-            
-            const pesquisarEmpregadosBtn = document.getElementById('pesquisarEmpregados');
-            const limparFiltrosDashboard2Btn = document.getElementById('limparFiltrosDashboard2');
-            
-            if (pesquisarEmpregadosBtn) {
-                pesquisarEmpregadosBtn.addEventListener('click', function() {
-                    applyFilters('dashboard2');
-                });
-            }
-            
-            if (limparFiltrosDashboard2Btn) {
-                limparFiltrosDashboard2Btn.addEventListener('click', function() {
-                    clearDashboard2Filters();
-                });
-            }
-            
-            const anoSelect1 = document.getElementById('anoDashboard1');
-            const mesSelect1 = document.getElementById('mesDashboard1');
-            const orgaoInput1 = document.getElementById('orgaoDashboard1');
-            
-            if (anoSelect1) {
-                anoSelect1.addEventListener('change', function() {
-                    applyFilters('dashboard1');
-                });
-            }
-            
-            if (mesSelect1) {
-                mesSelect1.addEventListener('change', function() {
-                    applyFilters('dashboard1');
-                });
-            }
-            
-            if (orgaoInput1) {
-                orgaoInput1.addEventListener('change', function() {
-                    applyFilters('dashboard1');
-                });
-            }
-            
-            const anoSelect2 = document.getElementById('anoDashboard2');
-            const mesSelect2 = document.getElementById('mesDashboard2');
-            const nomeInput = document.getElementById('nomeEmpregado');
-            const matriculaInput = document.getElementById('matriculaDashboard2');
-            const orgaoInput2 = document.getElementById('orgaoDashboard2');
-            const cargoInput = document.getElementById('cargoDashboard2');
-            const empresaInput = document.getElementById('empresaDashboard2');
-            
-            if (anoSelect2) {
-                anoSelect2.addEventListener('change', function() {
-                    applyFilters('dashboard2');
-                });
-            }
-            
-            if (mesSelect2) {
-                mesSelect2.addEventListener('change', function() {
-                    applyFilters('dashboard2');
-                });
-            }
-            
-            let searchTimeout;
-            function debounceFilter(dashboard) {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    applyFilters(dashboard);
-                }, 500);
-            }
-            
-            if (nomeInput) {
-                nomeInput.addEventListener('input', function() {
-                    debounceFilter('dashboard2');
-                });
-            }
-            
-            if (matriculaInput) {
-                matriculaInput.addEventListener('input', function() {
-                    debounceFilter('dashboard2');
-                });
-            }
-            
-            if (orgaoInput2) {
-                orgaoInput2.addEventListener('change', function() {
-                    applyFilters('dashboard2');
-                });
-            }
-            
-            if (cargoInput) {
-                cargoInput.addEventListener('change', function() {
-                    applyFilters('dashboard2');
-                });
-            }
-            
-            if (empresaInput) {
-                empresaInput.addEventListener('change', function() {
-                    applyFilters('dashboard2');
-                });
-            }
-            
-            const exportCSVDashboard1Btn = document.getElementById('exportCSVDashboard1');
-            const printDashboard1Btn = document.getElementById('printDashboard1');
-            const shareDashboard1Btn = document.getElementById('shareDashboard1');
-            
-            if (exportCSVDashboard1Btn) {
-                exportCSVDashboard1Btn.addEventListener('click', () => exportToCSV('dashboard1'));
-            }
-            
-            if (printDashboard1Btn) {
-                printDashboard1Btn.addEventListener('click', () => printDashboard('dashboard1'));
-            }
-            
-            if (shareDashboard1Btn) {
-                shareDashboard1Btn.addEventListener('click', () => toggleShareDropdown(1));
-            }
-            
-            const exportCSVDashboard2Btn = document.getElementById('exportCSVDashboard2');
-            const printDashboard2Btn = document.getElementById('printDashboard2');
-            const shareDashboard2Btn = document.getElementById('shareDashboard2');
-            
-            if (exportCSVDashboard2Btn) {
-                exportCSVDashboard2Btn.addEventListener('click', () => exportToCSV('dashboard2'));
-            }
-            
-            if (printDashboard2Btn) {
-                printDashboard2Btn.addEventListener('click', () => printDashboard('dashboard2'));
-            }
-            
-            if (shareDashboard2Btn) {
-                shareDashboard2Btn.addEventListener('click', () => toggleShareDropdown(2));
-            }
-            
-            const downloadCSVBtn = document.getElementById('downloadCSV');
-            if (downloadCSVBtn) {
-                downloadCSVBtn.addEventListener('click', downloadFullCSV);
-            }
-            
-            const searchEmpregadosInput = document.getElementById('searchEmpregados');
-            if (searchEmpregadosInput) {
-                searchEmpregadosInput.addEventListener('input', function(e) {
-                    currentSearchTerm = e.target.value.toLowerCase();
-                    filterEmpregadosTable(currentSearchTerm);
-                });
-            }
-            
-            const itemsPerPageDashboard1Select = document.getElementById('itemsPerPageDashboard1');
-            if (itemsPerPageDashboard1Select) {
-                itemsPerPageDashboard1Select.addEventListener('change', function() {
-                    itemsPerPageDashboard1 = parseInt(this.value);
-                    currentPageDashboard1 = 1;
-                    updateResumoTable();
-                });
-            }
-            
-            const itemsPerPageDashboard2Select = document.getElementById('itemsPerPageDashboard2');
-            if (itemsPerPageDashboard2Select) {
-                itemsPerPageDashboard2Select.addEventListener('change', function() {
-                    itemsPerPageDashboard2 = parseInt(this.value);
-                    currentPageDashboard2 = 1;
-                    updateEmpregadosTable();
-                });
-            }
-            
-            setTimeout(() => {
-                document.querySelectorAll('#visaoGeralTable th[data-sort]').forEach(th => {
-                    th.addEventListener('click', function() {
-                        sortTable('visaoGeral', this.getAttribute('data-sort'));
-                    });
-                });
-                
-                document.querySelectorAll('#empregadosTable th[data-sort]').forEach(th => {
-                    th.addEventListener('click', function() {
-                        sortTable('empregados', this.getAttribute('data-sort'));
-                    });
-                });
-            }, 100);
-            
-            document.querySelectorAll('.link-share').forEach(btn => {
-                btn.addEventListener('click', copiarLink);
-            });
-            
-            document.querySelectorAll('.facebook-share').forEach(btn => {
-                btn.addEventListener('click', compartilharFacebook);
-            });
-            
-            document.querySelectorAll('.twitter-share').forEach(btn => {
-                btn.addEventListener('click', compartilharTwitter);
-            });
-            
-            document.querySelectorAll('.linkedin-share').forEach(btn => {
-                btn.addEventListener('click', compartilharLinkedIn);
-            });
-            
-            document.querySelectorAll('.whatsapp-share').forEach(btn => {
-                btn.addEventListener('click', compartilharWhatsApp);
-            });
-            
-            document.addEventListener('click', function(event) {
-                if (!event.target.closest('.share-dropdown')) {
-                    document.querySelectorAll('.share-options').forEach(opt => {
-                        opt.classList.remove('show');
-                    });
-                }
-            });
-        }
-
-        // ==================== FUNÇÕES DE FILTRO ====================
-        function filterEmpregadosTable(searchTerm) {
-            currentSearchTerm = searchTerm.toLowerCase();
-            currentPageDashboard2 = 1;
-            updateEmpregadosTable();
-        }
-
-        function clearAllFilters() {
-            const anoSelect1 = document.getElementById('anoDashboard1');
-            const mesSelect1 = document.getElementById('mesDashboard1');
-            const orgaoInput1 = document.getElementById('orgaoDashboard1');
-            
-            if (anoSelect1) anoSelect1.value = currentYear;
-            if (mesSelect1 && currentMonth) mesSelect1.value = currentMonth;
-            if (orgaoInput1) orgaoInput1.value = '';
-            
-            filteredData = terceirizadosData.filter(
-                e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
-            );
-            
-            updateDashboard1();
-        }
-
-        function clearDashboard2Filters() {
-            const anoSelect2 = document.getElementById('anoDashboard2');
-            const mesSelect2 = document.getElementById('mesDashboard2');
-            const nomeInput = document.getElementById('nomeEmpregado');
-            const cargoInput = document.getElementById('cargoDashboard2');
-            const empresaInput = document.getElementById('empresaDashboard2');
-            const orgaoInput2 = document.getElementById('orgaoDashboard2');
-            const matriculaInput = document.getElementById('matriculaDashboard2');
-            const searchInput = document.getElementById('searchEmpregados');
-            
-            if (anoSelect2) anoSelect2.value = currentYear;
-            if (mesSelect2 && currentMonth) mesSelect2.value = currentMonth;
-            if (nomeInput) nomeInput.value = '';
-            if (cargoInput) cargoInput.value = '';
-            if (empresaInput) empresaInput.value = '';
-            if (orgaoInput2) orgaoInput2.value = '';
-            if (matriculaInput) matriculaInput.value = '';
-            if (searchInput) searchInput.value = '';
-            
-            currentSearchTerm = '';
-            
-            filteredData = terceirizadosData.filter(
-                e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
-            );
-            
-            updateDashboard2();
-        }
-
-        // ==================== FUNÇÕES DE ORDENAÇÃO ====================
-        function sortTable(tableType, column) {
-            if (tableType === 'visaoGeral') {
-                if (currentSortDashboard1.column === column) {
-                    currentSortDashboard1.order = currentSortDashboard1.order === 'asc' ? 'desc' : 'asc';
-                } else {
-                    currentSortDashboard1.column = column;
-                    currentSortDashboard1.order = column === 'quantidade' ? 'desc' : 'asc';
-                }
-                updateResumoTable();
-            } else if (tableType === 'empregados') {
-                if (currentSortDashboard2.column === column) {
-                    currentSortDashboard2.order = currentSortDashboard2.order === 'asc' ? 'desc' : 'asc';
-                } else {
-                    currentSortDashboard2.column = column;
-                    currentSortDashboard2.order = 'asc';
-                }
-                updateEmpregadosTable();
-            }
-        }
-
-        // ==================== FUNÇÕES DE ATUALIZAÇÃO DAS ABAS ====================
+        // Funções de atualização dos dashboards
         function updateDashboard1() {
             updateDatalists();
             updateSummaryCards();
@@ -2444,7 +2168,6 @@
             updateEmpregadosTable();
         }
 
-        // ==================== FUNÇÕES PARA CARDS DE RESUMO ====================
         function updateSummaryCards() {
             const summaryCards = document.getElementById('summaryCards');
             if (!summaryCards || !filteredData) return;
@@ -2509,7 +2232,6 @@
             `;
         }
 
-        // ==================== FUNÇÕES PARA GRÁFICOS ====================
         function updateCharts() {
             if (!filteredData || filteredData.length === 0) return;
             
@@ -2671,7 +2393,6 @@
             });
         }
 
-        // ==================== FUNÇÕES PARA TABELAS ====================
         function updateResumoTable() {
             if (!filteredData || filteredData.length === 0) {
                 document.getElementById('resumoTableBody').innerHTML = `
@@ -2749,7 +2470,7 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>
-                        <a href="#" class="orgao-link" data-orgao="${item.nome}">
+                        <a href="#" class="link-acao" data-orgao="${item.nome}">
                             ${item.nome}
                         </a>
                     </td>
@@ -2760,12 +2481,12 @@
             });
             
             setTimeout(() => {
-                document.querySelectorAll('#visaoGeralTable .orgao-link').forEach(link => {
+                document.querySelectorAll('#visaoGeralTable .link-acao').forEach(link => {
                     link.addEventListener('click', function(e) {
                         e.preventDefault();
                         const orgaoNome = this.getAttribute('data-orgao');
                         
-                        document.querySelectorAll('.orgao-link').forEach(l => {
+                        document.querySelectorAll('.link-acao').forEach(l => {
                             l.classList.remove('selected');
                         });
                         
@@ -2942,7 +2663,93 @@
             }, 10);
         }
 
-        // ==================== PAGINAÇÃO ====================
+        function showEmployeeHistory(matricula, nome, orgaoAtual, cargoAtual, empresaAtual, cnpjAtual) {
+            let historico = [];
+            
+            for (const [year, yearData] of Object.entries(allData)) {
+                const empregadoNoAno = yearData.filter(e => e.matricula === matricula);
+                historico.push(...empregadoNoAno);
+            }
+            
+            historico.sort((a, b) => {
+                const dateA = a.COMPETENCIA ? new Date(a.COMPETENCIA + '-01') : new Date(0);
+                const dateB = b.COMPETENCIA ? new Date(b.COMPETENCIA + '-01') : new Date(0);
+                return dateB - dateA;
+            });
+            
+            document.getElementById('historicModalLabel').innerHTML = `
+                <i class="material-icons me-2">person</i> ${nome || 'Histórico do Empregado'}
+            `;
+            
+            const employeeInfo = document.getElementById('employeeInfo');
+            const historicTableBody = document.getElementById('historicTableBody');
+            
+            const mesAtual = monthNames[currentMonth] || currentMonth;
+            const periodoAtual = `${mesAtual}/${currentYear}`;
+            
+            employeeInfo.innerHTML = `
+                <div class="info-grid">
+                    <div class="info-card primary">
+                        <div class="info-label">Matrícula</div>
+                        <div class="info-value">${matricula || 'Não informada'}</div>
+                    </div>
+                    <div class="info-card success">
+                        <div class="info-label">Órgão Atual</div>
+                        <div class="info-value">${getOrgaoExtenso(orgaoAtual || '') || 'Não informado'}</div>
+                    </div>
+                    <div class="info-card warning">
+                        <div class="info-label">Cargo Atual</div>
+                        <div class="info-value">${cargoAtual || 'Não informado'}</div>
+                    </div>
+                    <div class="info-card info">
+                        <div class="info-label">Período Atual</div>
+                        <div class="info-value">${periodoAtual}</div>
+                    </div>
+                </div>
+            `;
+            
+            historicTableBody.innerHTML = '';
+            
+            if (historico.length === 0) {
+                historicTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center py-3">
+                            Nenhum histórico encontrado para este empregado.
+                        </td>
+                    </tr>
+                `;
+            } else {
+                historico.forEach(registro => {
+                    const row = document.createElement('tr');
+                    
+                    let mesFormatado = 'Não informado';
+                    if (registro.mes_referencia) {
+                        if (registro.mes_referencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                            const [ano, mes] = registro.mes_referencia.split('-');
+                            mesFormatado = `${monthNames[mes] || mes}/${ano}`;
+                        } else {
+                            mesFormatado = registro.mes_referencia;
+                        }
+                    } else if (registro.COMPETENCIA) {
+                        const [ano, mes] = registro.COMPETENCIA.split('-');
+                        mesFormatado = `${monthNames[mes] || mes}/${ano}`;
+                    }
+                    
+                    row.innerHTML = `
+                        <td>${mesFormatado}</td>
+                        <td>${getOrgaoExtenso(registro.orgao || '')}</td>
+                        <td>${registro.cargo || 'Não informado'}</td>
+                        <td>${registro.empresa || 'Não informada'}</td>
+                        <td>${registro.cnpj_empresa || 'Não informado'}</td>
+                    `;
+                    historicTableBody.appendChild(row);
+                });
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('historicModal'));
+            modal.show();
+        }
+
         function updatePagination(elementId, currentPage, totalPages, dashboard) {
             const paginationElement = document.getElementById(elementId);
             if (!paginationElement) return;
@@ -3064,95 +2871,215 @@
             });
         }
 
-        // ==================== HISTÓRICO DO EMPREGADO ====================
-        function showEmployeeHistory(matricula, nome, orgaoAtual, cargoAtual, empresaAtual, cnpjAtual) {
-            let historico = [];
+        function updateDatalists() {
+            if (!filteredData || filteredData.length === 0) return;
             
-            for (const [year, yearData] of Object.entries(allData)) {
-                const empregadoNoAno = yearData.filter(e => e.matricula === matricula);
-                historico.push(...empregadoNoAno);
-            }
+            const orgaosNomesUnicos = [...new Set(
+                filteredData
+                    .map(e => getOrgaoExtenso(e.orgao))
+                    .filter(Boolean)
+            )].sort();
             
-            historico.sort((a, b) => {
-                const dateA = a.COMPETENCIA ? new Date(a.COMPETENCIA + '-01') : new Date(0);
-                const dateB = b.COMPETENCIA ? new Date(b.COMPETENCIA + '-01') : new Date(0);
-                return dateB - dateA;
-            });
-            
-            document.getElementById('historicModalLabel').innerHTML = `
-                <i class="material-icons me-2">person</i> ${nome || 'Histórico do Empregado'}
-            `;
-            
-            const employeeInfo = document.getElementById('employeeInfo');
-            const historicTableBody = document.getElementById('historicTableBody');
-            
-            const mesAtual = monthNames[currentMonth] || currentMonth;
-            const periodoAtual = `${mesAtual}/${currentYear}`;
-            
-            employeeInfo.innerHTML = `
-                <div class="info-grid">
-                    <div class="info-card primary">
-                        <div class="info-label">Matrícula</div>
-                        <div class="info-value">${matricula || 'Não informada'}</div>
-                    </div>
-                    <div class="info-card success">
-                        <div class="info-label">Órgão Atual</div>
-                        <div class="info-value">${getOrgaoExtenso(orgaoAtual || '') || 'Não informado'}</div>
-                    </div>
-                    <div class="info-card warning">
-                        <div class="info-label">Cargo Atual</div>
-                        <div class="info-value">${cargoAtual || 'Não informado'}</div>
-                    </div>
-                    <div class="info-card info">
-                        <div class="info-label">Período Atual</div>
-                        <div class="info-value">${periodoAtual}</div>
-                    </div>
-                </div>
-            `;
-            
-            historicTableBody.innerHTML = '';
-            
-            if (historico.length === 0) {
-                historicTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="text-center py-3">
-                            Nenhum histórico encontrado para este empregado.
-                        </td>
-                    </tr>
-                `;
-            } else {
-                historico.forEach(registro => {
-                    const row = document.createElement('tr');
-                    
-                    let mesFormatado = 'Não informado';
-                    if (registro.mes_referencia) {
-                        if (registro.mes_referencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                            const [ano, mes] = registro.mes_referencia.split('-');
-                            mesFormatado = `${monthNames[mes] || mes}/${ano}`;
-                        } else {
-                            mesFormatado = registro.mes_referencia;
-                        }
-                    } else if (registro.COMPETENCIA) {
-                        const [ano, mes] = registro.COMPETENCIA.split('-');
-                        mesFormatado = `${monthNames[mes] || mes}/${ano}`;
+            const orgaoDatalist1 = document.getElementById('orgaosListDashboard1');
+            if (orgaoDatalist1) {
+                orgaoDatalist1.innerHTML = '';
+                orgaosNomesUnicos.forEach(orgaoNome => {
+                    if (orgaoNome) {
+                        const option = document.createElement('option');
+                        option.value = orgaoNome;
+                        orgaoDatalist1.appendChild(option);
                     }
-                    
-                    row.innerHTML = `
-                        <td>${mesFormatado}</td>
-                        <td>${getOrgaoExtenso(registro.orgao || '')}</td>
-                        <td>${registro.cargo || 'Não informado'}</td>
-                        <td>${registro.empresa || 'Não informada'}</td>
-                        <td>${registro.cnpj_empresa || 'Não informado'}</td>
-                    `;
-                    historicTableBody.appendChild(row);
                 });
             }
             
-            const modal = new bootstrap.Modal(document.getElementById('historicModal'));
-            modal.show();
+            const orgaoDatalist2 = document.getElementById('orgaosListDashboard2');
+            if (orgaoDatalist2) {
+                orgaoDatalist2.innerHTML = '';
+                orgaosNomesUnicos.forEach(orgaoNome => {
+                    if (orgaoNome) {
+                        const option = document.createElement('option');
+                        option.value = orgaoNome;
+                        orgaoDatalist2.appendChild(option);
+                    }
+                });
+            }
+            
+            const cargosUnicos = [...new Set(filteredData.map(e => e.cargo))].sort();
+            
+            const cargoDatalist2 = document.getElementById('cargosListDashboard2');
+            if (cargoDatalist2) {
+                cargoDatalist2.innerHTML = '';
+                cargosUnicos.forEach(cargo => {
+                    if (cargo) {
+                        const option = document.createElement('option');
+                        option.value = cargo;
+                        cargoDatalist2.appendChild(option);
+                    }
+                });
+            }
+            
+            const empresasUnicas = [...new Set(filteredData.map(e => e.empresa))].sort();
+            
+            const empresaDatalist2 = document.getElementById('empresasListDashboard2');
+            if (empresaDatalist2) {
+                empresaDatalist2.innerHTML = '';
+                empresasUnicas.forEach(empresa => {
+                    if (empresa) {
+                        const option = document.createElement('option');
+                        option.value = empresa;
+                        empresaDatalist2.appendChild(option);
+                    }
+                });
+            }
         }
 
-        // ==================== EXPORTAÇÃO ====================
+        function updateFilterOptions() {
+            const anoSelect1 = document.getElementById('anoDashboard1');
+            if (anoSelect1) {
+                anoSelect1.innerHTML = '';
+                Object.keys(CSV_FILES_BY_YEAR).sort((a, b) => b - a).forEach(ano => {
+                    const option = document.createElement('option');
+                    option.value = ano;
+                    option.textContent = ano;
+                    if (ano === currentYear) option.selected = true;
+                    anoSelect1.appendChild(option);
+                });
+            }
+            
+            const mesSelect1 = document.getElementById('mesDashboard1');
+            if (mesSelect1 && currentYear && allData[currentYear]) {
+                const mesesDoAno = [...new Set(
+                    allData[currentYear]
+                        .map(e => e.MES_NUM)
+                        .filter(Boolean)
+                )].sort((a, b) => parseInt(b) - parseInt(a));
+                
+                mesSelect1.innerHTML = '';
+                mesesDoAno.forEach(mesNum => {
+                    const mesStr = mesNum.toString().padStart(2, '0');
+                    const option = document.createElement('option');
+                    option.value = mesStr;
+                    option.textContent = monthNames[mesStr] || mesStr;
+                    if (mesStr === currentMonth) option.selected = true;
+                    mesSelect1.appendChild(option);
+                });
+            }
+            
+            const anoSelect2 = document.getElementById('anoDashboard2');
+            if (anoSelect2) {
+                anoSelect2.innerHTML = '';
+                Object.keys(CSV_FILES_BY_YEAR).sort((a, b) => b - a).forEach(ano => {
+                    const option = document.createElement('option');
+                    option.value = ano;
+                    option.textContent = ano;
+                    if (ano === currentYear) option.selected = true;
+                    anoSelect2.appendChild(option);
+                });
+            }
+            
+            const mesSelect2 = document.getElementById('mesDashboard2');
+            if (mesSelect2 && currentYear && allData[currentYear]) {
+                const mesesDoAno = [...new Set(
+                    allData[currentYear]
+                        .map(e => e.MES_NUM)
+                        .filter(Boolean)
+                )].sort((a, b) => parseInt(b) - parseInt(a));
+                
+                mesSelect2.innerHTML = '';
+                mesesDoAno.forEach(mesNum => {
+                    const mesStr = mesNum.toString().padStart(2, '0');
+                    const option = document.createElement('option');
+                    option.value = mesStr;
+                    option.textContent = monthNames[mesStr] || mesStr;
+                    if (mesStr === currentMonth) option.selected = true;
+                    mesSelect2.appendChild(option);
+                });
+            }
+            
+            updateDatalists();
+            
+            const anoDownload = document.getElementById('anoDownload');
+            if (anoDownload) {
+                anoDownload.innerHTML = '<option value="">Selecione um ano</option>';
+                Object.keys(CSV_FILES_BY_YEAR).sort((a, b) => b - a).forEach(ano => {
+                    const option = document.createElement('option');
+                    option.value = ano;
+                    option.textContent = ano;
+                    anoDownload.appendChild(option);
+                });
+            }
+        }
+
+        function filterEmpregadosTable(searchTerm) {
+            currentSearchTerm = searchTerm.toLowerCase();
+            currentPageDashboard2 = 1;
+            updateEmpregadosTable();
+        }
+
+        function clearAllFilters() {
+            const anoSelect1 = document.getElementById('anoDashboard1');
+            const mesSelect1 = document.getElementById('mesDashboard1');
+            const orgaoInput1 = document.getElementById('orgaoDashboard1');
+            
+            if (anoSelect1) anoSelect1.value = currentYear;
+            if (mesSelect1 && currentMonth) mesSelect1.value = currentMonth;
+            if (orgaoInput1) orgaoInput1.value = '';
+            
+            filteredData = terceirizadosData.filter(
+                e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
+            );
+            
+            updateDashboard1();
+        }
+
+        function clearDashboard2Filters() {
+            const anoSelect2 = document.getElementById('anoDashboard2');
+            const mesSelect2 = document.getElementById('mesDashboard2');
+            const nomeInput = document.getElementById('nomeEmpregado');
+            const cargoInput = document.getElementById('cargoDashboard2');
+            const empresaInput = document.getElementById('empresaDashboard2');
+            const orgaoInput2 = document.getElementById('orgaoDashboard2');
+            const matriculaInput = document.getElementById('matriculaDashboard2');
+            const searchInput = document.getElementById('searchEmpregados');
+            
+            if (anoSelect2) anoSelect2.value = currentYear;
+            if (mesSelect2 && currentMonth) mesSelect2.value = currentMonth;
+            if (nomeInput) nomeInput.value = '';
+            if (cargoInput) cargoInput.value = '';
+            if (empresaInput) empresaInput.value = '';
+            if (orgaoInput2) orgaoInput2.value = '';
+            if (matriculaInput) matriculaInput.value = '';
+            if (searchInput) searchInput.value = '';
+            
+            currentSearchTerm = '';
+            
+            filteredData = terceirizadosData.filter(
+                e => e.COMPETENCIA === `${currentYear}-${currentMonth}`
+            );
+            
+            updateDashboard2();
+        }
+
+        function sortTable(tableType, column) {
+            if (tableType === 'visaoGeral') {
+                if (currentSortDashboard1.column === column) {
+                    currentSortDashboard1.order = currentSortDashboard1.order === 'asc' ? 'desc' : 'asc';
+                } else {
+                    currentSortDashboard1.column = column;
+                    currentSortDashboard1.order = column === 'quantidade' ? 'desc' : 'asc';
+                }
+                updateResumoTable();
+            } else if (tableType === 'empregados') {
+                if (currentSortDashboard2.column === column) {
+                    currentSortDashboard2.order = currentSortDashboard2.order === 'asc' ? 'desc' : 'asc';
+                } else {
+                    currentSortDashboard2.column = column;
+                    currentSortDashboard2.order = 'asc';
+                }
+                updateEmpregadosTable();
+            }
+        }
+
         function exportToCSV(dashboard) {
             let dataToExport = [];
             let filename = '';
@@ -3214,7 +3141,6 @@
             URL.revokeObjectURL(url);
         }
 
-        // ==================== IMPRESSÃO ====================
         function printDashboard(dashboard) {
             const printWindow = window.open('', '_blank');
             const title = dashboard === 'dashboard1' ? 'Visão Geral' : 'Consulta Individual';
@@ -3352,7 +3278,6 @@
             printWindow.focus();
         }
 
-        // ==================== FUNÇÕES DE FILTRO ====================
         async function applyFilters(dashboard) {
             showLoading(true);
             
@@ -3454,158 +3379,279 @@
             }
         }
 
-        // ==================== ATUALIZAR DATALISTS ====================
-        function updateDatalists() {
-            if (!filteredData || filteredData.length === 0) return;
+        async function downloadFullCSV() {
+            const yearSelect = document.getElementById('anoDownload');
+            const year = yearSelect ? yearSelect.value : '';
             
-            const orgaosNomesUnicos = [...new Set(
-                filteredData
-                    .map(e => getOrgaoExtenso(e.orgao))
-                    .filter(Boolean)
-            )].sort();
-            
-            const orgaoDatalist1 = document.getElementById('orgaosListDashboard1');
-            if (orgaoDatalist1) {
-                orgaoDatalist1.innerHTML = '';
-                orgaosNomesUnicos.forEach(orgaoNome => {
-                    if (orgaoNome) {
-                        const option = document.createElement('option');
-                        option.value = orgaoNome;
-                        orgaoDatalist1.appendChild(option);
-                    }
-                });
+            if (!year) {
+                alert('Selecione um ano para baixar o arquivo.');
+                return;
             }
             
-            const orgaoDatalist2 = document.getElementById('orgaosListDashboard2');
-            if (orgaoDatalist2) {
-                orgaoDatalist2.innerHTML = '';
-                orgaosNomesUnicos.forEach(orgaoNome => {
-                    if (orgaoNome) {
-                        const option = document.createElement('option');
-                        option.value = orgaoNome;
-                        orgaoDatalist2.appendChild(option);
-                    }
-                });
-            }
-            
-            const cargosUnicos = [...new Set(filteredData.map(e => e.cargo))].sort();
-            
-            const cargoDatalist2 = document.getElementById('cargosListDashboard2');
-            if (cargoDatalist2) {
-                cargoDatalist2.innerHTML = '';
-                cargosUnicos.forEach(cargo => {
-                    if (cargo) {
-                        const option = document.createElement('option');
-                        option.value = cargo;
-                        cargoDatalist2.appendChild(option);
-                    }
-                });
-            }
-            
-            const empresasUnicas = [...new Set(filteredData.map(e => e.empresa))].sort();
-            
-            const empresaDatalist2 = document.getElementById('empresasListDashboard2');
-            if (empresaDatalist2) {
-                empresaDatalist2.innerHTML = '';
-                empresasUnicas.forEach(empresa => {
-                    if (empresa) {
-                        const option = document.createElement('option');
-                        option.value = empresa;
-                        empresaDatalist2.appendChild(option);
-                    }
-                });
+            if (CSV_FILES_BY_YEAR[year]) {
+                const url = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR[year]}`;
+                
+                try {
+                    showLoading(true);
+                    
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('Erro ao baixar o arquivo');
+                    
+                    const blob = await response.blob();
+                    const downloadUrl = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = CSV_FILES_BY_YEAR[year];
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(downloadUrl);
+                    
+                } catch (error) {
+                    console.error('Erro no download:', error);
+                    window.open(url, '_blank');
+                    alert('O download automático não funcionou. O arquivo foi aberto em uma nova aba.');
+                } finally {
+                    showLoading(false);
+                }
+            } else {
+                alert('Para baixar todos os anos, visite o repositório GitHub diretamente.');
+                window.open('https://github.com/transparencia-mg/empregados_terceirizados', '_blank');
             }
         }
 
-        // ==================== ATUALIZAR OPÇÕES DE FILTRO ====================
-        function updateFilterOptions() {
-            const anoSelect1 = document.getElementById('anoDashboard1');
-            if (anoSelect1) {
-                anoSelect1.innerHTML = '';
-                Object.keys(CSV_FILES_BY_YEAR).sort((a, b) => b - a).forEach(ano => {
-                    const option = document.createElement('option');
-                    option.value = ano;
-                    option.textContent = ano;
-                    if (ano === currentYear) option.selected = true;
-                    anoSelect1.appendChild(option);
+        function setupEventListeners() {
+            const aplicarFiltrosBtn = document.getElementById('aplicarFiltros');
+            const limparFiltrosBtn = document.getElementById('limparFiltros');
+            
+            if (aplicarFiltrosBtn) {
+                aplicarFiltrosBtn.addEventListener('click', function() {
+                    applyFilters('dashboard1');
                 });
             }
             
+            if (limparFiltrosBtn) {
+                limparFiltrosBtn.addEventListener('click', function() {
+                    clearAllFilters();
+                });
+            }
+            
+            const pesquisarEmpregadosBtn = document.getElementById('pesquisarEmpregados');
+            const limparFiltrosDashboard2Btn = document.getElementById('limparFiltrosDashboard2');
+            
+            if (pesquisarEmpregadosBtn) {
+                pesquisarEmpregadosBtn.addEventListener('click', function() {
+                    applyFilters('dashboard2');
+                });
+            }
+            
+            if (limparFiltrosDashboard2Btn) {
+                limparFiltrosDashboard2Btn.addEventListener('click', function() {
+                    clearDashboard2Filters();
+                });
+            }
+            
+            const anoSelect1 = document.getElementById('anoDashboard1');
             const mesSelect1 = document.getElementById('mesDashboard1');
-            if (mesSelect1 && currentYear && allData[currentYear]) {
-                const mesesDoAno = [...new Set(
-                    allData[currentYear]
-                        .map(e => e.MES_NUM)
-                        .filter(Boolean)
-                )].sort((a, b) => parseInt(b) - parseInt(a));
-                
-                mesSelect1.innerHTML = '';
-                mesesDoAno.forEach(mesNum => {
-                    const mesStr = mesNum.toString().padStart(2, '0');
-                    const option = document.createElement('option');
-                    option.value = mesStr;
-                    option.textContent = monthNames[mesStr] || mesStr;
-                    if (mesStr === currentMonth) option.selected = true;
-                    mesSelect1.appendChild(option);
+            const orgaoInput1 = document.getElementById('orgaoDashboard1');
+            
+            if (anoSelect1) {
+                anoSelect1.addEventListener('change', function() {
+                    applyFilters('dashboard1');
+                });
+            }
+            
+            if (mesSelect1) {
+                mesSelect1.addEventListener('change', function() {
+                    applyFilters('dashboard1');
+                });
+            }
+            
+            if (orgaoInput1) {
+                orgaoInput1.addEventListener('change', function() {
+                    applyFilters('dashboard1');
                 });
             }
             
             const anoSelect2 = document.getElementById('anoDashboard2');
-            if (anoSelect2) {
-                anoSelect2.innerHTML = '';
-                Object.keys(CSV_FILES_BY_YEAR).sort((a, b) => b - a).forEach(ano => {
-                    const option = document.createElement('option');
-                    option.value = ano;
-                    option.textContent = ano;
-                    if (ano === currentYear) option.selected = true;
-                    anoSelect2.appendChild(option);
-                });
-            }
-            
             const mesSelect2 = document.getElementById('mesDashboard2');
-            if (mesSelect2 && currentYear && allData[currentYear]) {
-                const mesesDoAno = [...new Set(
-                    allData[currentYear]
-                        .map(e => e.MES_NUM)
-                        .filter(Boolean)
-                )].sort((a, b) => parseInt(b) - parseInt(a));
+            const nomeInput = document.getElementById('nomeEmpregado');
+            const matriculaInput = document.getElementById('matriculaDashboard2');
+            const orgaoInput2 = document.getElementById('orgaoDashboard2');
+            const cargoInput = document.getElementById('cargoDashboard2');
+            const empresaInput = document.getElementById('empresaDashboard2');
+            
+            if (anoSelect2) {
+                anoSelect2.addEventListener('change', function() {
+                    applyFilters('dashboard2');
+                });
+            }
+            
+            if (mesSelect2) {
+                mesSelect2.addEventListener('change', function() {
+                    applyFilters('dashboard2');
+                });
+            }
+            
+            let searchTimeout;
+            function debounceFilter(dashboard) {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    applyFilters(dashboard);
+                }, 500);
+            }
+            
+            if (nomeInput) {
+                nomeInput.addEventListener('input', function() {
+                    debounceFilter('dashboard2');
+                });
+            }
+            
+            if (matriculaInput) {
+                matriculaInput.addEventListener('input', function() {
+                    debounceFilter('dashboard2');
+                });
+            }
+            
+            if (orgaoInput2) {
+                orgaoInput2.addEventListener('change', function() {
+                    applyFilters('dashboard2');
+                });
+            }
+            
+            if (cargoInput) {
+                cargoInput.addEventListener('change', function() {
+                    applyFilters('dashboard2');
+                });
+            }
+            
+            if (empresaInput) {
+                empresaInput.addEventListener('change', function() {
+                    applyFilters('dashboard2');
+                });
+            }
+            
+            const exportCSVDashboard1Btn = document.getElementById('exportCSVDashboard1');
+            const printDashboard1Btn = document.getElementById('printDashboard1');
+            const shareDashboard1Btn = document.getElementById('shareDashboard1');
+            
+            if (exportCSVDashboard1Btn) {
+                exportCSVDashboard1Btn.addEventListener('click', () => exportToCSV('dashboard1'));
+            }
+            
+            if (printDashboard1Btn) {
+                printDashboard1Btn.addEventListener('click', () => printDashboard('dashboard1'));
+            }
+            
+            if (shareDashboard1Btn) {
+                shareDashboard1Btn.addEventListener('mouseenter', () => {
+                    document.getElementById('shareOptionsDashboard1').style.display = 'block';
+                });
+                shareDashboard1Btn.addEventListener('mouseleave', () => {
+                    document.getElementById('shareOptionsDashboard1').style.display = 'none';
+                });
+            }
+            
+            const exportCSVDashboard2Btn = document.getElementById('exportCSVDashboard2');
+            const printDashboard2Btn = document.getElementById('printDashboard2');
+            const shareDashboard2Btn = document.getElementById('shareDashboard2');
+            
+            if (exportCSVDashboard2Btn) {
+                exportCSVDashboard2Btn.addEventListener('click', () => exportToCSV('dashboard2'));
+            }
+            
+            if (printDashboard2Btn) {
+                printDashboard2Btn.addEventListener('click', () => printDashboard('dashboard2'));
+            }
+            
+            if (shareDashboard2Btn) {
+                shareDashboard2Btn.addEventListener('mouseenter', () => {
+                    document.getElementById('shareOptionsDashboard2').style.display = 'block';
+                });
+                shareDashboard2Btn.addEventListener('mouseleave', () => {
+                    document.getElementById('shareOptionsDashboard2').style.display = 'none';
+                });
+            }
+            
+            const downloadCSVBtn = document.getElementById('downloadCSV');
+            if (downloadCSVBtn) {
+                downloadCSVBtn.addEventListener('click', downloadFullCSV);
+            }
+            
+            const searchEmpregadosInput = document.getElementById('searchEmpregados');
+            if (searchEmpregadosInput) {
+                searchEmpregadosInput.addEventListener('input', function(e) {
+                    currentSearchTerm = e.target.value.toLowerCase();
+                    filterEmpregadosTable(currentSearchTerm);
+                });
+            }
+            
+            const itemsPerPageDashboard1Select = document.getElementById('itemsPerPageDashboard1');
+            if (itemsPerPageDashboard1Select) {
+                itemsPerPageDashboard1Select.addEventListener('change', function() {
+                    itemsPerPageDashboard1 = parseInt(this.value);
+                    currentPageDashboard1 = 1;
+                    updateResumoTable();
+                });
+            }
+            
+            const itemsPerPageDashboard2Select = document.getElementById('itemsPerPageDashboard2');
+            if (itemsPerPageDashboard2Select) {
+                itemsPerPageDashboard2Select.addEventListener('change', function() {
+                    itemsPerPageDashboard2 = parseInt(this.value);
+                    currentPageDashboard2 = 1;
+                    updateEmpregadosTable();
+                });
+            }
+            
+            setTimeout(() => {
+                document.querySelectorAll('#visaoGeralTable th[data-sort]').forEach(th => {
+                    th.addEventListener('click', function() {
+                        sortTable('visaoGeral', this.getAttribute('data-sort'));
+                    });
+                });
                 
-                mesSelect2.innerHTML = '';
-                mesesDoAno.forEach(mesNum => {
-                    const mesStr = mesNum.toString().padStart(2, '0');
-                    const option = document.createElement('option');
-                    option.value = mesStr;
-                    option.textContent = monthNames[mesStr] || mesStr;
-                    if (mesStr === currentMonth) option.selected = true;
-                    mesSelect2.appendChild(option);
+                document.querySelectorAll('#empregadosTable th[data-sort]').forEach(th => {
+                    th.addEventListener('click', function() {
+                        sortTable('empregados', this.getAttribute('data-sort'));
+                    });
                 });
-            }
+            }, 100);
             
-            updateDatalists();
+            document.querySelectorAll('.link-share').forEach(btn => {
+                btn.addEventListener('click', copiarLink);
+            });
             
-            const anoDownload = document.getElementById('anoDownload');
-            if (anoDownload) {
-                anoDownload.innerHTML = '<option value="">Selecione um ano</option>';
-                Object.keys(CSV_FILES_BY_YEAR).sort((a, b) => b - a).forEach(ano => {
-                    const option = document.createElement('option');
-                    option.value = ano;
-                    option.textContent = ano;
-                    anoDownload.appendChild(option);
-                });
-            }
+            document.querySelectorAll('.facebook-share').forEach(btn => {
+                btn.addEventListener('click', compartilharFacebook);
+            });
+            
+            document.querySelectorAll('.twitter-share').forEach(btn => {
+                btn.addEventListener('click', compartilharTwitter);
+            });
+            
+            document.querySelectorAll('.linkedin-share').forEach(btn => {
+                btn.addEventListener('click', compartilharLinkedIn);
+            });
+            
+            document.querySelectorAll('.whatsapp-share').forEach(btn => {
+                btn.addEventListener('click', compartilharWhatsApp);
+            });
         }
 
-        // ==================== INICIALIZAÇÃO ====================
         async function initializeDashboard() {
             showLoading(true);
             
             try {
-                updateDataAtualizacao();
                 await loadData();
                 updateFilterOptions();
                 updateDashboard1();
+                updateDashboard2();
                 setupEventListeners();
+                updateDateTime();
+                
             } catch (error) {
+                console.error('Erro na inicialização:', error);
                 showError('Erro ao carregar dados. Por favor, recarregue a página.');
             } finally {
                 showLoading(false);
@@ -3614,7 +3660,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             initializeDashboard();
-            setInterval(updateDataAtualizacao, 60000);
+            setInterval(updateDateTime, 60000);
         });
 
         document.addEventListener('shown.bs.tab', function(event) {

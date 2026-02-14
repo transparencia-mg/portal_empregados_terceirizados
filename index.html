@@ -48,67 +48,54 @@
         }
         
         /* ==================== ESTILOS GERAIS ==================== */
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden !important;
-        }
-
         body {
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
-            overflow: hidden !important;
-            position: relative;
-        }
-
-        /* Container principal com scroll apenas no iframe */
-        .main-container {
-            height: 100vh;
-            overflow-y: auto !important;
+            padding-bottom: 15px;
+            overflow-y: visible !important;
             overflow-x: hidden !important;
-            padding: 15px 25px;
+            min-height: auto !important;
+            height: auto !important;
             position: relative;
-            scroll-behavior: smooth;
         }
 
-        /* Remove scroll duplicado */
-        .container.dashboard-spacing,
-        .tab-content,
-        .table-container {
+        html {
+            overflow-y: visible !important;
+            height: auto !important;
+        }
+
+        .main-container {
+            height: auto !important;
+            min-height: auto !important;
             overflow: visible !important;
-        }
-
-        /* Espaço antes do menu de navegação */
-        .nav-tabs-container {
-            margin-top: 5px;
-            margin-bottom: 20px;
-        }
-
-        /* Scroll apenas nas tabelas */
-        .table-responsive-wrapper {
-            max-height: 450px;
-            overflow-y: auto;
-            overflow-x: auto;
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
             position: relative;
-            background: white;
         }
 
-        /* Fixar cabeçalho da tabela */
-        .table thead th {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background-color: var(--primary-dark) !important;
-            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+        .container.dashboard-spacing {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
         }
 
-        /* Ajuste para o sticky funcionar corretamente */
-        .table {
-            margin-bottom: 0;
-            width: 100%;
+        .tab-content {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
+        }
+
+        .table-container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            position: relative;
+        }
+
+        .table-fixed-header-container {
+            max-height: 500px;
+            overflow-y: auto;
+            position: relative;
         }
         
         /* ==================== HEADER MINIMALISTA ==================== */

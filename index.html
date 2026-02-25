@@ -47,21 +47,25 @@
             --chart-brown: #9C6B4A;
         }
         
-        /* ==================== ESTILOS GERAIS ==================== */
+        /* ==================== ESTILOS GERAIS - CORRIGIDO PARA IFRAME ==================== */
+        html {
+            overflow-y: hidden !important;
+            overflow-x: hidden !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
+        }
+
         body {
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
             padding-bottom: 15px;
-            overflow-y: visible !important;
+            overflow-y: hidden !important;
             overflow-x: hidden !important;
             min-height: auto !important;
             height: auto !important;
             position: relative;
-        }
-
-        html {
-            overflow-y: visible !important;
-            height: auto !important;
+            margin: 0;
         }
 
         .main-container {
@@ -71,14 +75,21 @@
             position: relative;
         }
 
-        .container.dashboard-spacing {
+        .container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            position: relative;
+        }
+
+        .tab-content {
             overflow: visible !important;
             height: auto !important;
             min-height: auto !important;
             position: relative;
         }
 
-        .tab-content {
+        .tab-pane {
             overflow: visible !important;
             height: auto !important;
             min-height: auto !important;
@@ -90,6 +101,10 @@
             min-height: auto !important;
             overflow: visible !important;
             position: relative;
+        }
+
+        .row, .col, .col-*, .col-md-* {
+            overflow: visible !important;
         }
 
         .table-fixed-header-container {
@@ -1118,6 +1133,10 @@
         
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
+            body, html {
+                overflow-y: hidden !important;
+            }
+            
             .main-container {
                 padding: 10px 15px;
             }
@@ -1225,14 +1244,7 @@
     <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
     <div class="container main-container">
             
-        <!-- ==================== DATA ATUALIZAÇÃO CENTRALIZADA ==================== -->
-        <div class="data-atualizacao-container">
-            <div class="data-atualizacao-box">
-                <i class="fas fa-calendar-alt"></i>
-                <span>Última atualização: <span id="data-atualizacao-central">Carregando...</span></span>
-            </div>
-        </div>
-        
+       
         <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
         <div class="nav-tabs-container">
             <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
@@ -1252,6 +1264,14 @@
                     </button>
                 </li>
             </ul>
+        </div>
+
+        <!-- ==================== DATA ATUALIZAÇÃO CENTRALIZADA ==================== -->
+        <div class="data-atualizacao-container">
+            <div class="data-atualizacao-box">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Última atualização: <span id="data-atualizacao-central">Carregando...</span></span>
+            </div>
         </div>
 
         <!-- ==================== CONTEÚDO DAS ABAS ==================== -->
@@ -1776,7 +1796,74 @@
     
     <script>
         // ============================================
-        // CÓDIGO JAVASCRIPT (com gráficos corrigidos)
+        // FUNÇÕES DE SCROLL E IFRAME
+        // ============================================
+        function removeAllScrollIssues() {
+            console.log('Removendo problemas de scroll duplo...');
+            
+            const elements = [
+                document.body,
+                document.documentElement,
+                document.querySelector('.main-container'),
+                document.querySelector('.container'),
+                document.querySelector('.tab-content'),
+                ...document.querySelectorAll('.tab-pane'),
+                ...document.querySelectorAll('.table-container'),
+                ...document.querySelectorAll('.row'),
+                ...document.querySelectorAll('.col'),
+                ...document.querySelectorAll('.container'),
+                ...document.querySelectorAll('.container-fluid')
+            ];
+            
+            elements.forEach(el => {
+                if (el && el.style) {
+                    el.style.overflowY = 'visible';
+                    el.style.overflowX = 'visible';
+                    el.style.overflow = 'visible';
+                }
+            });
+            
+            document.body.classList.remove('overflow-auto');
+            document.documentElement.classList.remove('overflow-auto');
+            
+            document.documentElement.style.height = 'auto';
+            document.body.style.height = 'auto';
+        }
+
+        function iframeUpdateHeight() {
+            console.log('Atualizando altura do iframe...');
+            
+            document.body.style.display = 'none';
+            document.body.offsetHeight;
+            document.body.style.display = '';
+            
+            const html = document.documentElement;
+            const body = document.body;
+            
+            const scrollHeight = Math.max(
+                body.scrollHeight, 
+                html.scrollHeight,
+                body.offsetHeight, 
+                html.offsetHeight
+            );
+            
+            const finalHeight = scrollHeight + 10;
+            
+            console.log('Altura calculada:', finalHeight);
+            
+            try {
+                window.parent.postMessage({ 
+                    iframeHeight: finalHeight 
+                }, '*');
+            } catch (error) {
+                // Ignora erro se não estiver em iframe
+            }
+            
+            return finalHeight;
+        }
+
+        // ============================================
+        // CÓDIGO JAVASCRIPT ORIGINAL (com gráficos corrigidos)
         // ============================================
         let terceirizadosData = [];
         let filteredData = [];
@@ -1844,6 +1931,9 @@
             elementosCentral.forEach(el => {
                 if (el) el.textContent = dataFormatada;
             });
+            
+            // Atualiza altura do iframe periodicamente
+            iframeUpdateHeight();
         }
 
         // Funções de compartilhamento
@@ -2167,11 +2257,17 @@
             updateSummaryCards();
             updateCharts();
             updateResumoTable();
+            
+            // Atualiza altura do iframe após atualizar dashboard
+            setTimeout(iframeUpdateHeight, 300);
         }
 
         function updateDashboard2() {
             updateDatalists();
             updateEmpregadosTable();
+            
+            // Atualiza altura do iframe após atualizar dashboard
+            setTimeout(iframeUpdateHeight, 300);
         }
 
         function updateSummaryCards() {
@@ -3650,12 +3746,30 @@
             showLoading(true);
             
             try {
+                // Remover problemas de scroll
+                removeAllScrollIssues();
+                
                 await loadData();
                 updateFilterOptions();
                 updateDashboard1();
                 updateDashboard2();
                 setupEventListeners();
                 updateDateTime();
+                
+                // Atualiza altura do iframe após carregar
+                setTimeout(() => {
+                    iframeUpdateHeight();
+                }, 1000);
+                
+                // Atualiza altura sempre que uma aba for alterada
+                const tabButtons = document.querySelectorAll('[data-bs-toggle="tab"]');
+                tabButtons.forEach(button => {
+                    button.addEventListener('shown.bs.tab', function() {
+                        setTimeout(() => {
+                            iframeUpdateHeight();
+                        }, 100);
+                    });
+                });
                 
             } catch (error) {
                 console.error('Erro na inicialização:', error);
@@ -3675,8 +3789,12 @@
                 window.dispatchEvent(new Event('resize'));
                 if (charts.chartOrgao) charts.chartOrgao.resize();
                 if (charts.chartCargo) charts.chartCargo.resize();
+                iframeUpdateHeight();
             }, 100);
         });
+        
+        // ========== ATUALIZAÇÃO PERIÓDICA ==========
+        setInterval(iframeUpdateHeight, 3000); // Atualiza altura a cada 3 segundos
     </script>
 </body>
 </html>

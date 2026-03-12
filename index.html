@@ -121,6 +121,53 @@
             box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
         }
 
+        /* ==================== AUTOCOMPLETE ==================== */
+        .autocomplete-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        .autocomplete-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 250px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .autocomplete-suggestions.show {
+            display: block;
+        }
+        
+        .autocomplete-suggestion {
+            padding: 10px 12px;
+            cursor: pointer;
+            font-size: 13px;
+            border-bottom: 1px solid #f1f1f1;
+            transition: background 0.2s;
+        }
+        
+        .autocomplete-suggestion:hover {
+            background-color: var(--background-light);
+            color: var(--accent-red);
+        }
+        
+        .autocomplete-suggestion:last-child {
+            border-bottom: none;
+        }
+        
+        .autocomplete-suggestion strong {
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
         /* ==================== CARDS DE MÉTRICAS ==================== */
         .metric-card {
             background: white;
@@ -386,6 +433,28 @@
         .share-options a:hover { background-color: var(--background-light); color: var(--accent-red); }
         .share-options a i { font-size: 18px; width: 20px; text-align: center; }
 
+        /* ==================== BUSCA NA TABELA ==================== */
+        .table-search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .table-search-input {
+            border: 2px solid var(--primary-dark) !important;
+            border-radius: 6px !important;
+            padding: 8px 12px !important;
+            font-size: 13px !important;
+            width: 250px !important;
+            background-color: white;
+            color: var(--primary-dark);
+        }
+        .table-search-input:focus {
+            border-color: var(--accent-red) !important;
+            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
+            outline: none;
+        }
+
         /* ==================== NAVEGAÇÃO ==================== */
         .nav-tabs-container {
             background: white;
@@ -476,24 +545,9 @@
             font-weight: 600;
             cursor: pointer;
         }
-        
-        .search-box {
-            border: 2px solid var(--primary-dark) !important;
-            border-radius: 6px !important;
-            padding: 8px 12px !important;
-            font-size: 13px !important;
-            width: 250px !important;
-            background-color: white;
-            color: var(--primary-dark);
-        }
-        .search-box:focus {
-            border-color: var(--accent-red) !important;
-            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
-            outline: none;
-        }
 
-        /* ==================== INDICADOR DE CARREGAMENTO EM SEGUNDO PLANO ==================== */
-        .background-loading-indicator {
+        /* ==================== INDICADOR DE CARREGAMENTO ==================== */
+        .loading-indicator {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -508,16 +562,9 @@
             align-items: center;
             gap: 10px;
             z-index: 9999;
-            animation: pulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.8; }
-            100% { opacity: 1; }
-        }
-
-        .background-loading-indicator.show {
+        .loading-indicator.show {
             display: flex;
         }
 
@@ -584,10 +631,10 @@
         </div>
     </div>
 
-    <!-- ==================== INDICADOR DE CARREGAMENTO EM SEGUNDO PLANO ==================== -->
-    <div class="background-loading-indicator" id="backgroundLoading">
+    <!-- ==================== INDICADOR DE CARREGAMENTO ==================== -->
+    <div class="loading-indicator" id="loadingIndicator">
         <div class="spinner-small"></div>
-        <span>Carregando dados históricos...</span>
+        <span>Carregando dados...</span>
     </div>
 
     <!-- ==================== MODAL DE DETALHES ==================== -->
@@ -628,25 +675,42 @@
             '2025': 'terceirizados_2025.csv'
         };
 
-        let allData = {};
-        let dadosCompletos = [];
-        let dadosFiltrados = [];
-        let metricaGeral = { totalEmpregados: 0, totalOrgaos: 0, totalEmpresas: 0, periodo: '' };
+        // Cache de dados por ano e mês
+        const dataCache = {
+            '2025': {}  // Inicializa cache para 2025
+        };
 
-        // Variáveis de estado
-        let currentYear = '2025';
-        let currentMonth = '12'; // Fixo como dezembro, o mês mais recente
-        
-        // Variáveis de paginação
+        // Estado atual - APENAS Dezembro/2025 inicialmente
+        let currentDisplayData = {
+            ano: '2025',
+            mes: '12',
+            dados: [],          // Dados completos do mês atual
+            metrica: {
+                totalEmpregados: 0,
+                totalOrgaos: 0,
+                totalEmpresas: 0,
+                periodo: 'Dezembro/2025'
+            },
+            empregadosUnicos: [] // Lista única de empregados para consulta
+        };
+
+        // Variáveis de estado para UI
         let paginaAtualCI = 1;
         let itensPorPaginaCI = 50;
-        let totalPaginasCI = 1;
-        let todosEmpregados = [];
-        let empregadosFiltrados = [];
+        let empregadosFiltradosCI = [];
+        let filtrosAtivosCI = {
+            nome: '',
+            matricula: '',
+            cargo: '',
+            buscaTabela: ''
+        };
 
-        // Controle de carregamento em segundo plano
-        let backgroundLoadingCount = 0;
-        let totalBackgroundYears = 0;
+        // Cache de opções para autocomplete
+        let opcoesCache = {
+            nomes: [],
+            matriculas: [],
+            cargos: []
+        };
 
         const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
         const monthNames = {
@@ -662,7 +726,7 @@
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
-            carregarDadosOtimizado(); // Versão otimizada
+            carregarDadosIniciais();
             setupAtualizacaoData();
         });
 
@@ -699,36 +763,23 @@
                 if (!e.target.closest('.share-dropdown')) {
                     document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
                 }
+                
+                // Fecha autocomplete se clicar fora
+                if (!e.target.closest('.autocomplete-container')) {
+                    document.querySelectorAll('.autocomplete-suggestions').forEach(s => s.classList.remove('show'));
+                }
             });
         }
 
-        function mostrarLoading(show) {
-            const overlay = document.getElementById('loadingOverlay');
-            if (overlay) {
-                overlay.style.display = show ? 'flex' : 'none';
-            }
-        }
-
-        function showBackgroundLoading(show) {
-            const indicator = document.getElementById('backgroundLoading');
+        function showLoading(show, message = 'Carregando dados...') {
+            const indicator = document.getElementById('loadingIndicator');
             if (indicator) {
+                indicator.querySelector('span').textContent = message;
                 if (show) {
                     indicator.classList.add('show');
                 } else {
-                    // Só esconde se todos os anos foram carregados
-                    if (backgroundLoadingCount >= totalBackgroundYears) {
-                        indicator.classList.remove('show');
-                    }
+                    indicator.classList.remove('show');
                 }
-            }
-        }
-
-        function updateBackgroundLoadingProgress() {
-            backgroundLoadingCount++;
-            if (backgroundLoadingCount >= totalBackgroundYears) {
-                setTimeout(() => {
-                    showBackgroundLoading(false);
-                }, 1000);
             }
         }
 
@@ -780,36 +831,11 @@
             return mapaOrgaos[siglaUpper] || orgaoSigla;
         }
 
-        function formatarLinha(linha, year) {
-            // Tenta encontrar a data em diferentes formatos
-            let competencia = '';
-            let mesNum = '';
+        function formatarLinha(linha, year, mes) {
+            let competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
             
-            // Procura por campos de data
-            const camposData = ['mes_referencia', 'MÊS REFERÊNCIA', 'MÊS_REFERENCIA', 'data_referencia', 'DATA REFERÊNCIA'];
-            for (const campo of camposData) {
-                if (linha[campo]) {
-                    competencia = linha[campo];
-                    break;
-                }
-            }
-            
-            // Extrai ano e mês da data
-            if (competencia) {
-                if (competencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                    const [ano, mes] = competencia.split('-');
-                    competencia = `${ano}-${mes}`;
-                    mesNum = mes;
-                } else if (competencia.match(/^\d{4}-\d{2}$/)) {
-                    const [ano, mes] = competencia.split('-');
-                    mesNum = mes;
-                }
-            }
-            
-            // Se não conseguiu extrair mês, tenta extrair do ano
-            if (!mesNum && year) {
-                mesNum = '12'; // Assume dezembro como padrão para o ano mais recente
-                competencia = `${year}-12`;
+            if (!competencia && year && mes) {
+                competencia = `${year}-${mes}`;
             }
             
             return {
@@ -823,20 +849,19 @@
                 mes_referencia: competencia,
                 ano_mes: competencia,
                 ANO: year,
-                MES_NUM: mesNum
+                MES_NUM: mes
             };
         }
 
         // ============================================
-        // FUNÇÃO OTIMIZADA - CARREGA APENAS DEZ/2025 PRIMEIRO
+        // FUNÇÃO PRINCIPAL - CARREGA APENAS DEZEMBRO/2025
         // ============================================
-        async function carregarDadosOtimizado() {
-            mostrarLoading(true);
+        async function carregarDadosIniciais() {
+            showLoading(true, 'Carregando Dezembro/2025...');
             
             try {
-                console.log('🚀 Modo otimizado: Carregando apenas Dezembro/2025...');
+                console.log('🚀 Carregando apenas Dezembro/2025...');
                 
-                // 1. Carrega apenas os dados de 2025 primeiro
                 const url2025 = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR['2025']}`;
                 
                 const dados2025 = await new Promise((resolve) => {
@@ -848,10 +873,7 @@
                         delimiter: ";",
                         complete: function(results) {
                             if (results.data && results.data.length > 0) {
-                                const data = results.data
-                                    .map(linha => formatarLinha(linha, '2025'))
-                                    .filter(item => item.nome || item.matricula);
-                                resolve(data);
+                                resolve(results.data);
                             } else {
                                 resolve([]);
                             }
@@ -866,159 +888,184 @@
                     throw new Error('Não foi possível carregar os dados de 2025');
                 }
                 
-                // 2. Filtra apenas DEZEMBRO/2025 (mês 12) para exibição inicial
-                const dadosDez2025 = dados2025.filter(item => item.MES_NUM === '12');
+                // Processa e separa por mês
+                const dadosPorMes = {};
                 
-                console.log(`✅ Carregados ${dadosDez2025.length} registros de Dez/2025`);
-                console.log(`📊 Total de registros em 2025: ${dados2025.length}`);
+                dados2025.forEach(linha => {
+                    let mes = '';
+                    const competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
+                    
+                    if (competencia) {
+                        if (competencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                            mes = competencia.split('-')[1];
+                        } else if (competencia.match(/^\d{4}-\d{2}$/)) {
+                            mes = competencia.split('-')[1];
+                        }
+                    }
+                    
+                    if (!mes) {
+                        for (const key in linha) {
+                            if (key.toLowerCase().includes('mes') || key.toLowerCase().includes('mês')) {
+                                const valor = linha[key];
+                                if (valor && valor.toString().match(/^\d{1,2}$/)) {
+                                    mes = valor.toString().padStart(2, '0');
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (!mes) return;
+                    
+                    if (!dadosPorMes[mes]) {
+                        dadosPorMes[mes] = [];
+                    }
+                    
+                    dadosPorMes[mes].push(formatarLinha(linha, '2025', mes));
+                });
                 
-                // 3. Armazena todos os dados de 2025
-                allData['2025'] = dados2025;
+                // Armazena no cache
+                dataCache['2025'] = dadosPorMes;
                 
-                // 4. Configura o estado inicial com apenas Dez/2025
-                currentYear = '2025';
-                currentMonth = '12';
+                // Verifica se temos Dezembro
+                if (!dadosPorMes['12'] || dadosPorMes['12'].length === 0) {
+                    console.warn('Dezembro não encontrado. Usando o mês com mais dados...');
+                    let melhorMes = '12';
+                    let maiorQuantidade = 0;
+                    
+                    for (const mes in dadosPorMes) {
+                        if (dadosPorMes[mes].length > maiorQuantidade) {
+                            maiorQuantidade = dadosPorMes[mes].length;
+                            melhorMes = mes;
+                        }
+                    }
+                    
+                    currentDisplayData.mes = melhorMes;
+                }
                 
-                // IMPORTANTE: dadosCompletos tem TODOS os meses de 2025
-                dadosCompletos = dados2025;
+                // Atualiza o estado com Dezembro
+                currentDisplayData.dados = dataCache['2025'][currentDisplayData.mes] || [];
                 
-                // dadosFiltrados começa com apenas Dez/2025 para performance
-                dadosFiltrados = dadosDez2025;
+                console.log(`✅ Carregados ${currentDisplayData.dados.length} registros de ${monthNames[currentDisplayData.mes]}/2025`);
                 
-                // 5. Calcula métricas com os dados de Dez/2025
-                metricaGeral = calcularMetricas(dadosFiltrados);
+                // Calcula métricas
+                currentDisplayData.metrica = calcularMetricas(currentDisplayData.dados, currentDisplayData.mes);
                 
-                // 6. Prepara lista de empregados únicos (baseado em TODOS os dados de 2025)
-                todosEmpregados = obterEmpregadosUnicos();
-                empregadosFiltrados = [...todosEmpregados];
+                // Gera lista de empregados únicos
+                currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(currentDisplayData.dados);
+                empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
                 
-                // 7. RENDERIZA IMEDIATAMENTE (super rápido!)
+                // Atualiza cache de opções
+                atualizarOpcoesCache();
+                
+                // Renderiza
                 renderizarVisaoGeral();
                 renderizarConsulta();
                 renderizarDownloads();
                 
-                // 8. Atualiza altura do iframe
                 setTimeout(iframeUpdateHeight, 300);
                 
-                // 9. CARREGA OS OUTROS ANOS EM SEGUNDO PLANO
-                console.log('🔄 Iniciando carregamento em segundo plano dos anos anteriores...');
-                
-                const outrosAnos = ['2024', '2023', '2022', '2021'];
-                totalBackgroundYears = outrosAnos.length;
-                backgroundLoadingCount = 0;
-                
-                if (totalBackgroundYears > 0) {
-                    showBackgroundLoading(true);
+            } catch (erro) {
+                console.error('Erro no carregamento inicial:', erro);
+                showError('Erro ao carregar dados. Tente novamente mais tarde.');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // ============================================
+        // FUNÇÃO PARA CARREGAR MÊS SOB DEMANDA
+        // ============================================
+        async function carregarMes(ano, mes) {
+            if (dataCache[ano] && dataCache[ano][mes]) {
+                return dataCache[ano][mes];
+            }
+            
+            showLoading(true, `Carregando ${monthNames[mes]}/${ano}...`);
+            
+            try {
+                if (!dataCache[ano]) {
+                    dataCache[ano] = {};
                     
-                    for (const ano of outrosAnos) {
-                        loadYearData(ano).then(dados => {
-                            if (dados && dados.length > 0) {
-                                allData[ano] = dados;
-                                console.log(`✅ Ano ${ano} carregado em segundo plano (${dados.length} registros)`);
+                    const url = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR[ano]}`;
+                    
+                    const dadosAno = await new Promise((resolve) => {
+                        Papa.parse(url, {
+                            download: true,
+                            header: true,
+                            skipEmptyLines: true,
+                            encoding: 'UTF-8',
+                            delimiter: ";",
+                            complete: function(results) {
+                                if (results.data && results.data.length > 0) {
+                                    resolve(results.data);
+                                } else {
+                                    resolve([]);
+                                }
+                            },
+                            error: function() {
+                                resolve([]);
                             }
-                            updateBackgroundLoadingProgress();
-                        }).catch(() => {
-                            updateBackgroundLoadingProgress();
                         });
+                    });
+                    
+                    if (dadosAno.length === 0) {
+                        throw new Error(`Não foi possível carregar dados de ${ano}`);
                     }
+                    
+                    dadosAno.forEach(linha => {
+                        let linhaMes = '';
+                        const competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
+                        
+                        if (competencia) {
+                            if (competencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                                linhaMes = competencia.split('-')[1];
+                            } else if (competencia.match(/^\d{4}-\d{2}$/)) {
+                                linhaMes = competencia.split('-')[1];
+                            }
+                        }
+                        
+                        if (!linhaMes) {
+                            for (const key in linha) {
+                                if (key.toLowerCase().includes('mes') || key.toLowerCase().includes('mês')) {
+                                    const valor = linha[key];
+                                    if (valor && valor.toString().match(/^\d{1,2}$/)) {
+                                        linhaMes = valor.toString().padStart(2, '0');
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if (!linhaMes) return;
+                        
+                        if (!dataCache[ano][linhaMes]) {
+                            dataCache[ano][linhaMes] = [];
+                        }
+                        
+                        dataCache[ano][linhaMes].push(formatarLinha(linha, ano, linhaMes));
+                    });
                 }
+                
+                return dataCache[ano][mes] || [];
                 
             } catch (erro) {
-                console.error('Erro no carregamento otimizado:', erro);
-                showError('Erro ao carregar dados. Tentando modo fallback...');
-                
-                // Fallback: tenta carregar qualquer ano disponível
-                await carregarDadosFallback();
+                console.error(`Erro ao carregar ${ano}/${mes}:`, erro);
+                showError(`Erro ao carregar dados de ${monthNames[mes]}/${ano}`);
+                return [];
             } finally {
-                mostrarLoading(false);
+                showLoading(false);
             }
         }
 
-        // Função fallback caso o carregamento otimizado falhe
-        async function carregarDadosFallback() {
-            console.log('⚠️ Modo fallback: tentando carregar qualquer ano disponível...');
-            
-            const anos = ['2025', '2024', '2023', '2022', '2021'];
-            
-            for (const ano of anos) {
-                try {
-                    const dados = await loadYearData(ano);
-                    if (dados && dados.length > 0) {
-                        allData[ano] = dados;
-                        currentYear = ano;
-                        dadosCompletos = dados;
-                        
-                        // Tenta pegar o mês mais recente
-                        const mesesDisponiveis = [...new Set(dados.map(i => i.MES_NUM).filter(Boolean))].sort((a,b) => b - a);
-                        currentMonth = mesesDisponiveis.length > 0 ? mesesDisponiveis[0] : '12';
-                        
-                        dadosFiltrados = dados.filter(i => i.MES_NUM === currentMonth);
-                        if (dadosFiltrados.length === 0) {
-                            dadosFiltrados = dados.slice(0, 1000); // Limita para não travar
-                        }
-                        
-                        metricaGeral = calcularMetricas(dadosFiltrados);
-                        todosEmpregados = obterEmpregadosUnicos();
-                        empregadosFiltrados = [...todosEmpregados];
-                        
-                        renderizarVisaoGeral();
-                        renderizarConsulta();
-                        renderizarDownloads();
-                        
-                        setTimeout(iframeUpdateHeight, 300);
-                        console.log(`✅ Modo fallback: carregado ano ${ano} com ${dados.length} registros`);
-                        return;
-                    }
-                } catch (e) {
-                    console.warn(`Falha ao carregar ${ano} no fallback`);
-                }
-            }
-            
-            showError('Não foi possível carregar nenhum dado. Verifique sua conexão.');
-        }
-
-        async function loadYearData(year) {
-            return new Promise((resolve) => {
-                const filename = CSV_FILES_BY_YEAR[year];
-                if (!filename) {
-                    resolve([]);
-                    return;
-                }
-                
-                const url = `${GITHUB_BASE_URL}${filename}`;
-                
-                Papa.parse(url, {
-                    download: true,
-                    header: true,
-                    skipEmptyLines: true,
-                    encoding: 'UTF-8',
-                    delimiter: ";",
-                    complete: function(results) {
-                        if (results.data && results.data.length > 0) {
-                            const data = results.data
-                                .map(linha => formatarLinha(linha, year))
-                                .filter(item => item.nome || item.matricula);
-                            resolve(data);
-                        } else {
-                            resolve([]);
-                        }
-                    },
-                    error: function() {
-                        resolve([]);
-                    }
-                });
-            });
-        }
-
-        function calcularMetricas(dados) {
+        function calcularMetricas(dados, mes) {
             const totalEmpregados = dados.length;
             const orgaos = new Set(dados.map(i => i.orgao_sigla).filter(Boolean)).size;
             const empresas = new Set(dados.map(i => i.empresa).filter(Boolean)).size;
             
-            let periodo = 'Dezembro/2025'; // Valor padrão
-            
-            if (dados.length > 0 && currentMonth) {
-                periodo = `${monthNames[currentMonth] || 'Dezembro'}/${currentYear}`;
+            let periodo = 'Dezembro/2025';
+            if (mes && currentDisplayData.ano) {
+                periodo = `${monthNames[mes] || 'Dezembro'}/${currentDisplayData.ano}`;
             }
             
             return {
@@ -1029,120 +1076,76 @@
             };
         }
 
-        function obterOpcoesFiltro() {
-            const anos = Object.keys(CSV_FILES_BY_YEAR).sort().reverse();
+        function obterEmpregadosUnicos(dados) {
+            if (!dados || dados.length === 0) return [];
             
-            // Para os meses, usa os meses disponíveis nos dados ATUAIS
-            const mesesDisponiveis = dadosCompletos && dadosCompletos.length > 0 
-                ? [...new Set(dadosCompletos.map(i => i.MES_NUM).filter(Boolean))].sort((a,b) => b - a)
-                : ['12']; // Pelo menos dezembro
-            
-            const orgaos = dadosCompletos && dadosCompletos.length > 0
-                ? [...new Set(dadosCompletos.map(i => i.orgao_sigla))].filter(Boolean).sort()
-                : [];
-                
-            const cargos = dadosCompletos && dadosCompletos.length > 0
-                ? [...new Set(dadosCompletos.map(i => i.cargo_descricao))].filter(Boolean).sort()
-                : [];
-                
-            const empresas = dadosCompletos && dadosCompletos.length > 0
-                ? [...new Set(dadosCompletos.map(i => i.empresa))].filter(Boolean).sort()
-                : [];
-                
-            return { anos, meses: mesesDisponiveis, orgaos, cargos, empresas };
-        }
-
-        function agruparPorOrgao(dados) {
             const mapa = new Map();
             for (const i of dados) {
-                const sigla = i.orgao_sigla || 'Não informado';
-                if (!mapa.has(sigla)) {
-                    mapa.set(sigla, { sigla: sigla, orgao: i.orgao || sigla, total: 0 });
-                }
-                mapa.get(sigla).total += 1;
-            }
-            return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
-        }
-
-        function agruparPorCargo(dados) {
-            const mapa = new Map();
-            for (const i of dados) {
-                const cargo = i.cargo_descricao || 'Não informado';
-                if (!mapa.has(cargo)) {
-                    mapa.set(cargo, { cargo: cargo, total: 0 });
-                }
-                mapa.get(cargo).total += 1;
-            }
-            return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
-        }
-
-        function obterEmpregadosUnicos() {
-            if (!dadosCompletos || dadosCompletos.length === 0) return [];
-            
-            const mapa = new Map();
-            for (const i of dadosCompletos) {
                 if (i.matricula && !mapa.has(i.matricula)) {
-                    mapa.set(i.matricula, { 
-                        ...i, 
-                        historico: [i],
-                        ultimoAnoMes: i.ano_mes
-                    });
-                } else if (i.matricula) {
-                    const existente = mapa.get(i.matricula);
-                    if (existente) {
-                        existente.historico.push(i);
-                        if (i.ano_mes && (!existente.ultimoAnoMes || i.ano_mes > existente.ultimoAnoMes)) {
-                            existente.ultimoAnoMes = i.ano_mes;
-                            existente.orgao_sigla = i.orgao_sigla;
-                            existente.orgao = i.orgao;
-                            existente.cargo_descricao = i.cargo_descricao;
-                            existente.empresa = i.empresa;
-                            existente.cnpj_empresa = i.cnpj_empresa;
-                        }
-                    }
+                    mapa.set(i.matricula, { ...i });
                 }
             }
-            return Array.from(mapa.values()).map(s => ({
-                ...s,
-                historico: s.historico ? s.historico.sort((a,b) => (b.ano_mes || '').localeCompare(a.ano_mes || '')) : []
-            }));
+            return Array.from(mapa.values()).sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
         }
 
-        async function mudarAno(ano) {
-            mostrarLoading(true);
-            try {
-                if (!allData[ano]) {
-                    const dados = await loadYearData(ano);
-                    allData[ano] = dados;
-                }
-                
-                if (allData[ano] && allData[ano].length > 0) {
-                    currentYear = ano;
-                    dadosCompletos = allData[ano];
-                    
-                    const mesesDisponiveis = [...new Set(dadosCompletos.map(i => i.MES_NUM).filter(Boolean))].sort((a,b) => b - a);
-                    currentMonth = mesesDisponiveis.length > 0 ? mesesDisponiveis[0] : '12';
-                    
-                    dadosFiltrados = dadosCompletos.filter(i => i.MES_NUM === currentMonth);
-                    if (dadosFiltrados.length === 0) {
-                        dadosFiltrados = dadosCompletos.slice(0, 1000);
-                    }
-                    
-                    metricaGeral = calcularMetricas(dadosFiltrados);
-                    todosEmpregados = obterEmpregadosUnicos();
-                    empregadosFiltrados = [...todosEmpregados];
-                    
-                    renderizarVisaoGeral();
-                    renderizarConsulta();
-                    renderizarDownloads();
-                }
-            } catch (erro) {
-                console.error('Erro ao mudar ano:', erro);
-                showError('Erro ao mudar de ano.');
-            } finally {
-                mostrarLoading(false);
+        function atualizarOpcoesCache() {
+            if (currentDisplayData.empregadosUnicos.length > 0) {
+                opcoesCache.nomes = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.nome).filter(Boolean))].sort();
+                opcoesCache.matriculas = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.matricula).filter(Boolean))].sort();
+                opcoesCache.cargos = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.cargo_descricao).filter(Boolean))].sort();
             }
         }
+
+        // ============================================
+        // FUNÇÕES DE AUTOCOMPLETE
+        // ============================================
+        function setupAutocomplete(inputId, suggestionsId, opcoes, campo) {
+            const input = document.getElementById(inputId);
+            const suggestions = document.getElementById(suggestionsId);
+            
+            if (!input || !suggestions) return;
+            
+            input.addEventListener('input', function() {
+                const valor = this.value.toLowerCase();
+                if (valor.length < 1) {
+                    suggestions.classList.remove('show');
+                    return;
+                }
+                
+                const filtradas = opcoes.filter(op => op.toLowerCase().includes(valor)).slice(0, 20);
+                
+                if (filtradas.length === 0) {
+                    suggestions.classList.remove('show');
+                    return;
+                }
+                
+                suggestions.innerHTML = filtradas.map(op => 
+                    `<div class="autocomplete-suggestion" onclick="selecionarSugestao('${inputId}', '${campo}', '${op.replace(/'/g, "\\'")}')">
+                        ${op.replace(new RegExp(valor, 'gi'), match => `<strong>${match}</strong>`)}
+                    </div>`
+                ).join('');
+                
+                suggestions.classList.add('show');
+            });
+            
+            input.addEventListener('blur', function() {
+                setTimeout(() => {
+                    suggestions.classList.remove('show');
+                }, 200);
+            });
+        }
+
+        window.selecionarSugestao = function(inputId, campo, valor) {
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.value = valor;
+                filtrosAtivosCI[campo] = valor;
+                aplicarTodosFiltrosCI();
+            }
+            
+            // Fecha sugestões
+            document.querySelectorAll('.autocomplete-suggestions').forEach(s => s.classList.remove('show'));
+        };
 
         // ============================================
         // RENDERIZAÇÃO VISÃO GERAL
@@ -1151,54 +1154,55 @@
             const container = document.getElementById('visao-geral-content');
             if (!container) return;
             
-            const dadosOrgao = agruparPorOrgao(dadosFiltrados);
-            const dadosCargo = agruparPorCargo(dadosFiltrados).slice(0, 10);
-            const opcoes = obterOpcoesFiltro();
+            const dadosOrgao = agruparPorOrgao(currentDisplayData.dados);
+            const dadosCargo = agruparPorCargo(currentDisplayData.dados).slice(0, 10);
             
             let html = `
                 <!-- Filtros -->
                 <div class="filter-container">
                     <div class="row g-3">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="filter-label"><i class="material-icons">calendar_today</i>Ano</label>
-                            <select class="form-select" id="filtroAnoVG" onchange="aplicarFiltrosVG()">
-                                <option value="">Selecione</option>
-                                ${opcoes.anos.map(a => `<option value="${a}" ${a === currentYear ? 'selected' : ''}>${a}</option>`).join('')}
+                            <select class="form-select" id="filtroAnoVG">
+                                <option value="2025" selected>2025</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="filter-label"><i class="material-icons">date_range</i>Mês</label>
                             <select class="form-select" id="filtroMesVG">
-                                <option value="todos">Todos os meses</option>
-                                ${opcoes.meses.map(m => `<option value="${m}" ${m === currentMonth ? 'selected' : ''}>${monthNames[m.toString().padStart(2,'0')] || m}</option>`).join('')}
+                                <option value="01">Janeiro</option>
+                                <option value="02">Fevereiro</option>
+                                <option value="03">Março</option>
+                                <option value="04">Abril</option>
+                                <option value="05">Maio</option>
+                                <option value="06">Junho</option>
+                                <option value="07">Julho</option>
+                                <option value="08">Agosto</option>
+                                <option value="09">Setembro</option>
+                                <option value="10">Outubro</option>
+                                <option value="11">Novembro</option>
+                                <option value="12" selected>Dezembro</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
-                            <label class="filter-label"><i class="material-icons">business</i>Órgão</label>
-                            <select class="form-select" id="filtroOrgaoVG">
-                                <option value="">Todos</option>
-                                ${opcoes.orgaos.map(o => `<option value="${o}">${o}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="filter-label"><i class="material-icons">work</i>Cargo</label>
-                            <select class="form-select" id="filtroCargoVG">
-                                <option value="">Todos</option>
-                                ${opcoes.cargos.map(c => `<option value="${c}">${c.length > 30 ? c.substring(0,30)+'...' : c}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="col-md-2 d-flex align-items-end">
-                            <button class="btn-pesquisa w-100" onclick="aplicarFiltrosVG()"><i class="material-icons me-2">search</i>Filtrar</button>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12 d-flex gap-2">
+                            <button class="btn-pesquisa" onclick="aplicarFiltrosVG()"><i class="material-icons me-2">search</i>Pesquisar</button>
+                            <button class="btn-secondary-custom" onclick="limparFiltrosVG()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Cards -->
                 <div class="row mb-4">
-                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Total de Empregados</div><div class="metric-value">${metricaGeral.totalEmpregados.toLocaleString('pt-BR')}</div></div></div>
-                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Órgãos</div><div class="metric-value">${metricaGeral.totalOrgaos.toLocaleString('pt-BR')}</div></div></div>
-                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Empresas</div><div class="metric-value">${metricaGeral.totalEmpresas.toLocaleString('pt-BR')}</div></div></div>
-                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Período</div><div class="metric-value">${metricaGeral.periodo}</div></div></div>
+                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Total de Empregados</div><div class="metric-value">${currentDisplayData.metrica.totalEmpregados.toLocaleString('pt-BR')}</div></div></div>
+                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Órgãos</div><div class="metric-value">${currentDisplayData.metrica.totalOrgaos.toLocaleString('pt-BR')}</div></div></div>
+                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Empresas</div><div class="metric-value">${currentDisplayData.metrica.totalEmpresas.toLocaleString('pt-BR')}</div></div></div>
+                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Período</div><div class="metric-value">${currentDisplayData.metrica.periodo}</div></div></div>
                 </div>
 
                 <!-- Gráficos -->
@@ -1248,13 +1252,19 @@
             
             container.innerHTML = html;
             
+            // Atualiza selects com valores atuais
+            const selectAno = document.getElementById('filtroAnoVG');
+            const selectMes = document.getElementById('filtroMesVG');
+            if (selectAno) selectAno.value = currentDisplayData.ano;
+            if (selectMes) selectMes.value = currentDisplayData.mes;
+            
             // Destruir gráficos antigos
             if (window.orgaoChart) window.orgaoChart.destroy();
             if (window.cargoChart) window.cargoChart.destroy();
             
             // Criar novos gráficos
             const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
-            if (ctxOrgao) {
+            if (ctxOrgao && dadosOrgao.length > 0) {
                 window.orgaoChart = new Chart(ctxOrgao, {
                     type: 'bar',
                     data: { 
@@ -1275,7 +1285,7 @@
             }
             
             const ctxCargo = document.getElementById('chartCargo')?.getContext('2d');
-            if (ctxCargo) {
+            if (ctxCargo && dadosCargo.length > 0) {
                 window.cargoChart = new Chart(ctxCargo, {
                     type: 'bar',
                     data: { 
@@ -1298,47 +1308,89 @@
             setTimeout(iframeUpdateHeight, 300);
         }
 
-        window.aplicarFiltrosVG = function() {
-            const ano = document.getElementById('filtroAnoVG')?.value;
-            const mes = document.getElementById('filtroMesVG')?.value;
-            const orgao = document.getElementById('filtroOrgaoVG')?.value;
-            const cargo = document.getElementById('filtroCargoVG')?.value;
+        window.aplicarFiltrosVG = async function() {
+            const ano = document.getElementById('filtroAnoVG')?.value || '2025';
+            const mes = document.getElementById('filtroMesVG')?.value || '12';
             
-            if (ano && ano !== currentYear) {
-                mudarAno(ano).then(() => {
-                    aplicarFiltrosVGAposCarregar(mes, orgao, cargo);
-                });
+            const dadosMes = await carregarMes(ano, mes);
+            
+            if (dadosMes.length > 0) {
+                currentDisplayData.ano = ano;
+                currentDisplayData.mes = mes;
+                currentDisplayData.dados = dadosMes;
+                currentDisplayData.metrica = calcularMetricas(dadosMes, mes);
+                currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(dadosMes);
+                
+                // Atualiza cache de opções
+                atualizarOpcoesCache();
+                
+                // Atualiza consulta
+                empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
+                paginaAtualCI = 1;
+                
+                renderizarVisaoGeral();
+                renderizarConsulta();
             } else {
-                aplicarFiltrosVGAposCarregar(mes, orgao, cargo);
+                showError(`Nenhum dado encontrado para ${monthNames[mes]}/${ano}`);
             }
         };
 
-        function aplicarFiltrosVGAposCarregar(mes, orgao, cargo) {
-            dadosFiltrados = dadosCompletos.filter(i => {
-                if (mes && mes !== 'todos' && i.MES_NUM !== mes) return false;
-                if (orgao && i.orgao_sigla !== orgao) return false;
-                if (cargo && i.cargo_descricao !== cargo) return false;
-                return true;
-            });
+        window.limparFiltrosVG = function() {
+            const selectAno = document.getElementById('filtroAnoVG');
+            const selectMes = document.getElementById('filtroMesVG');
             
-            if (dadosFiltrados.length === 0) {
-                dadosFiltrados = dadosCompletos.filter(i => i.MES_NUM === '12');
-                if (dadosFiltrados.length === 0) {
-                    dadosFiltrados = dadosCompletos.slice(0, 1000);
-                }
-            }
+            if (selectAno) selectAno.value = '2025';
+            if (selectMes) selectMes.value = '12';
             
-            metricaGeral = calcularMetricas(dadosFiltrados);
+            // Recarrega os dados iniciais
+            currentDisplayData.ano = '2025';
+            currentDisplayData.mes = '12';
+            currentDisplayData.dados = dataCache['2025']['12'] || [];
+            currentDisplayData.metrica = calcularMetricas(currentDisplayData.dados, '12');
+            currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(currentDisplayData.dados);
+            
+            // Atualiza cache de opções
+            atualizarOpcoesCache();
+            
+            empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
+            paginaAtualCI = 1;
+            
             renderizarVisaoGeral();
+            renderizarConsulta();
+        };
+
+        function agruparPorOrgao(dados) {
+            const mapa = new Map();
+            for (const i of dados) {
+                const sigla = i.orgao_sigla || 'Não informado';
+                if (!mapa.has(sigla)) {
+                    mapa.set(sigla, { sigla: sigla, orgao: i.orgao || sigla, total: 0 });
+                }
+                mapa.get(sigla).total += 1;
+            }
+            return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
+        }
+
+        function agruparPorCargo(dados) {
+            const mapa = new Map();
+            for (const i of dados) {
+                const cargo = i.cargo_descricao || 'Não informado';
+                if (!mapa.has(cargo)) {
+                    mapa.set(cargo, { cargo: cargo, total: 0 });
+                }
+                mapa.get(cargo).total += 1;
+            }
+            return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
         }
 
         window.irParaConsulta = function(sigla) {
             document.getElementById('consulta-tab').click();
             setTimeout(() => {
-                const select = document.getElementById('filtroOrgaoCI');
-                if (select) { 
-                    select.value = sigla; 
-                    aplicarFiltrosCI(); 
+                const inputCargo = document.getElementById('filtroCargoCI');
+                if (inputCargo) { 
+                    inputCargo.value = ''; // Limpa primeiro
+                    // Foca na busca da tabela para o usuário digitar
+                    document.getElementById('buscaTabelaCI').focus();
                 }
             }, 300);
         };
@@ -1350,61 +1402,36 @@
             const container = document.getElementById('consulta-content');
             if (!container) return;
             
-            const opcoes = obterOpcoesFiltro();
-            
             container.innerHTML = `
                 <!-- Filtros -->
                 <div class="filter-container">
                     <div class="row g-3">
-                        <div class="col-md-2">
-                            <label class="filter-label"><i class="material-icons">calendar_today</i>Ano</label>
-                            <select class="form-select" id="filtroAnoCI" onchange="aplicarFiltrosCI()">
-                                <option value="">Todos</option>
-                                ${opcoes.anos.map(a => `<option value="${a}" ${a === currentYear ? 'selected' : ''}>${a}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="filter-label"><i class="material-icons">date_range</i>Mês</label>
-                            <select class="form-select" id="filtroMesCI">
-                                <option value="">Todos</option>
-                                ${opcoes.meses.map(m => `<option value="${m}" ${m === currentMonth ? 'selected' : ''}>${monthNames[m.toString().padStart(2,'0')] || m}</option>`).join('')}
-                            </select>
+                        <div class="col-md-4">
+                            <label class="filter-label"><i class="material-icons">person</i>Nome</label>
+                            <div class="autocomplete-container">
+                                <input type="text" class="form-control" id="filtroNomeCI" placeholder="Digite para buscar nome..." autocomplete="off">
+                                <div class="autocomplete-suggestions" id="sugestoesNome"></div>
+                            </div>
                         </div>
                         <div class="col-md-3">
-                            <label class="filter-label"><i class="material-icons">business</i>Órgão</label>
-                            <select class="form-select" id="filtroOrgaoCI">
-                                <option value="">Todos</option>
-                                ${opcoes.orgaos.map(o => `<option value="${o}">${o}</option>`).join('')}
-                            </select>
+                            <label class="filter-label"><i class="material-icons">badge</i>Matrícula</label>
+                            <div class="autocomplete-container">
+                                <input type="text" class="form-control" id="filtroMatriculaCI" placeholder="Digite para buscar matrícula..." autocomplete="off">
+                                <div class="autocomplete-suggestions" id="sugestoesMatricula"></div>
+                            </div>
                         </div>
                         <div class="col-md-3">
                             <label class="filter-label"><i class="material-icons">work</i>Cargo</label>
-                            <select class="form-select" id="filtroCargoCI">
-                                <option value="">Todos</option>
-                                ${opcoes.cargos.map(c => `<option value="${c}">${c.length > 30 ? c.substring(0,30)+'...' : c}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="filter-label"><i class="material-icons">domain</i>Empresa</label>
-                            <select class="form-select" id="filtroEmpresaCI">
-                                <option value="">Todas</option>
-                                ${opcoes.empresas.map(e => `<option value="${e}">${e.length > 30 ? e.substring(0,30)+'...' : e}</option>`).join('')}
-                            </select>
+                            <div class="autocomplete-container">
+                                <input type="text" class="form-control" id="filtroCargoCI" placeholder="Digite para buscar cargo..." autocomplete="off">
+                                <div class="autocomplete-suggestions" id="sugestoesCargo"></div>
+                            </div>
                         </div>
                     </div>
-                    
                     <div class="row mt-3">
-                        <div class="col-md-4">
-                            <label class="filter-label"><i class="material-icons">badge</i>Matrícula</label>
-                            <input type="text" class="form-control" id="filtroMatriculaCI" placeholder="Digite a matrícula...">
-                        </div>
-                        <div class="col-md-4">
-                            <label class="filter-label"><i class="material-icons">search</i>Busca Geral</label>
-                            <input type="text" class="form-control" id="buscaNomeCI" placeholder="Nome, cargo, empresa ou órgão...">
-                        </div>
-                        <div class="col-md-4 d-flex align-items-end gap-2">
+                        <div class="col-12 d-flex gap-2">
                             <button class="btn-pesquisa" onclick="aplicarFiltrosCI()"><i class="material-icons me-2">search</i>Pesquisar</button>
-                            <button class="btn-secondary-custom" onclick="limparFiltrosCI()"><i class="material-icons me-2">clear</i>Limpar</button>
+                            <button class="btn-secondary-custom" onclick="limparFiltrosCI()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
                         </div>
                     </div>
                 </div>
@@ -1423,14 +1450,17 @@
                                 <a href="#" onclick="compartilharWhatsApp(event,2)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                             </div>
                         </div>
+                        <div class="table-search-container">
+                            <input type="text" class="table-search-input" id="buscaTabelaCI" placeholder="Buscar na tabela..." onkeyup="aplicarBuscaTabelaCI()">
+                        </div>
                     </div>
                     <div class="d-flex align-items-center gap-3">
-                        <span class="table-badge" id="totalServidoresBadge">${todosEmpregados.length} empregados</span>
+                        <span class="table-badge" id="totalServidoresBadge">${currentDisplayData.empregadosUnicos.length} empregados</span>
                         <select class="items-per-page" id="itensPorPaginaCI" onchange="alterarItensPorPaginaCI()">
                             <option value="25">25</option>
                             <option value="50" selected>50</option>
                             <option value="100">100</option>
-                            <option value="${todosEmpregados.length}">Todos</option>
+                            <option value="${currentDisplayData.empregadosUnicos.length}">Todos</option>
                         </select>
                     </div>
                 </div>
@@ -1446,39 +1476,56 @@
                 </div>
             `;
             
+            // Configura autocompletes
+            setupAutocomplete('filtroNomeCI', 'sugestoesNome', opcoesCache.nomes, 'nome');
+            setupAutocomplete('filtroMatriculaCI', 'sugestoesMatricula', opcoesCache.matriculas, 'matricula');
+            setupAutocomplete('filtroCargoCI', 'sugestoesCargo', opcoesCache.cargos, 'cargo');
+            
             aplicarFiltrosCI();
         }
 
-        window.aplicarFiltrosCI = async function() {
-            const ano = document.getElementById('filtroAnoCI')?.value;
-            const mes = document.getElementById('filtroMesCI')?.value;
-            const orgao = document.getElementById('filtroOrgaoCI')?.value;
-            const cargo = document.getElementById('filtroCargoCI')?.value;
-            const empresa = document.getElementById('filtroEmpresaCI')?.value;
-            const matricula = (document.getElementById('filtroMatriculaCI')?.value || '').toLowerCase();
-            const buscaNome = (document.getElementById('buscaNomeCI')?.value || '').toLowerCase();
+        window.aplicarFiltrosCI = function() {
+            const nome = document.getElementById('filtroNomeCI')?.value || '';
+            const matricula = document.getElementById('filtroMatriculaCI')?.value || '';
+            const cargo = document.getElementById('filtroCargoCI')?.value || '';
             
-            if (ano && ano !== currentYear) {
-                await mudarAno(ano);
-            }
+            filtrosAtivosCI.nome = nome;
+            filtrosAtivosCI.matricula = matricula;
+            filtrosAtivosCI.cargo = cargo;
             
-            empregadosFiltrados = todosEmpregados.filter(s => {
-                const dadosServidor = dadosCompletos.filter(d => d.matricula === s.matricula);
+            aplicarTodosFiltrosCI();
+        };
+
+        window.aplicarBuscaTabelaCI = function() {
+            filtrosAtivosCI.buscaTabela = document.getElementById('buscaTabelaCI')?.value || '';
+            aplicarTodosFiltrosCI();
+        };
+
+        function aplicarTodosFiltrosCI() {
+            empregadosFiltradosCI = currentDisplayData.empregadosUnicos.filter(s => {
+                // Filtro por nome
+                if (filtrosAtivosCI.nome && !s.nome.toLowerCase().includes(filtrosAtivosCI.nome.toLowerCase())) return false;
                 
-                if (ano && !dadosServidor.some(d => d.ANO === ano)) return false;
-                if (mes && !dadosServidor.some(d => d.MES_NUM === mes)) return false;
-                if (orgao && s.orgao_sigla !== orgao) return false;
-                if (cargo && s.cargo_descricao !== cargo) return false;
-                if (empresa && s.empresa !== empresa) return false;
-                if (matricula && !s.matricula.toLowerCase().includes(matricula)) return false;
+                // Filtro por matrícula
+                if (filtrosAtivosCI.matricula && !s.matricula.toLowerCase().includes(filtrosAtivosCI.matricula.toLowerCase())) return false;
                 
-                if (buscaNome) {
-                    const nomeMatch = s.nome && s.nome.toLowerCase().includes(buscaNome);
-                    const cargoMatch = s.cargo_descricao && s.cargo_descricao.toLowerCase().includes(buscaNome);
-                    const empresaMatch = s.empresa && s.empresa.toLowerCase().includes(buscaNome);
-                    const orgaoMatch = s.orgao && s.orgao.toLowerCase().includes(buscaNome);
-                    const siglaMatch = s.orgao_sigla && s.orgao_sigla.toLowerCase().includes(buscaNome);
-                    if (!(nomeMatch || cargoMatch || empresaMatch || orgaoMatch || siglaMatch)) return false;
+                // Filtro por cargo
+                if (filtrosAtivosCI.cargo && !s.cargo_descricao.toLowerCase().includes(filtrosAtivosCI.cargo.toLowerCase())) return false;
+                
+                // Busca na tabela (busca geral em todos os campos)
+                if (filtrosAtivosCI.buscaTabela) {
+                    const termo = filtrosAtivosCI.buscaTabela.toLowerCase();
+                    const nomeMatch = s.nome && s.nome.toLowerCase().includes(termo);
+                    const matriculaMatch = s.matricula && s.matricula.toLowerCase().includes(termo);
+                    const cargoMatch = s.cargo_descricao && s.cargo_descricao.toLowerCase().includes(termo);
+                    const empresaMatch = s.empresa && s.empresa.toLowerCase().includes(termo);
+                    const orgaoMatch = s.orgao && s.orgao.toLowerCase().includes(termo);
+                    const siglaMatch = s.orgao_sigla && s.orgao_sigla.toLowerCase().includes(termo);
+                    const cnpjMatch = s.cnpj_empresa && s.cnpj_empresa.includes(termo);
+                    
+                    if (!(nomeMatch || matriculaMatch || cargoMatch || empresaMatch || orgaoMatch || siglaMatch || cnpjMatch)) {
+                        return false;
+                    }
                 }
                 
                 return true;
@@ -1486,25 +1533,32 @@
             
             paginaAtualCI = 1;
             atualizarTabelaConsulta();
-        };
+        }
 
         window.limparFiltrosCI = function() {
-            document.getElementById('filtroAnoCI').value = '';
-            document.getElementById('filtroMesCI').value = '';
-            document.getElementById('filtroOrgaoCI').value = '';
-            document.getElementById('filtroCargoCI').value = '';
-            document.getElementById('filtroEmpresaCI').value = '';
+            // Limpa inputs
+            document.getElementById('filtroNomeCI').value = '';
             document.getElementById('filtroMatriculaCI').value = '';
-            document.getElementById('buscaNomeCI').value = '';
-            empregadosFiltrados = [...todosEmpregados];
+            document.getElementById('filtroCargoCI').value = '';
+            document.getElementById('buscaTabelaCI').value = '';
+            
+            // Limpa filtros ativos
+            filtrosAtivosCI = {
+                nome: '',
+                matricula: '',
+                cargo: '',
+                buscaTabela: ''
+            };
+            
+            empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
             paginaAtualCI = 1;
             atualizarTabelaConsulta();
         };
 
         function atualizarTabelaConsulta() {
             const inicio = (paginaAtualCI - 1) * itensPorPaginaCI;
-            const fim = Math.min(inicio + itensPorPaginaCI, empregadosFiltrados.length);
-            const dadosPagina = empregadosFiltrados.slice(inicio, fim);
+            const fim = Math.min(inicio + itensPorPaginaCI, empregadosFiltradosCI.length);
+            const dadosPagina = empregadosFiltradosCI.slice(inicio, fim);
             
             const tbody = document.getElementById('empregadosTableBody');
             if (tbody) {
@@ -1519,27 +1573,27 @@
                 </tr>`).join('');
             }
             
-            document.getElementById('totalServidoresBadge').innerText = empregadosFiltrados.length + ' empregados';
+            document.getElementById('totalServidoresBadge').innerText = empregadosFiltradosCI.length + ' empregados';
             
-            totalPaginasCI = Math.ceil(empregadosFiltrados.length / itensPorPaginaCI);
-            renderizarPaginacaoCI();
+            const totalPaginas = Math.ceil(empregadosFiltradosCI.length / itensPorPaginaCI);
+            renderizarPaginacaoCI(totalPaginas);
         }
 
-        function renderizarPaginacaoCI() {
+        function renderizarPaginacaoCI(totalPaginas) {
             const container = document.getElementById('paginacaoContainerCI');
             if (!container) return;
             
-            if (empregadosFiltrados.length === 0) {
+            if (empregadosFiltradosCI.length === 0) {
                 container.innerHTML = '<div class="pagination-info">Nenhum registro encontrado</div>';
                 return;
             }
             
             const inicio = (paginaAtualCI - 1) * itensPorPaginaCI + 1;
-            const fim = Math.min(paginaAtualCI * itensPorPaginaCI, empregadosFiltrados.length);
+            const fim = Math.min(paginaAtualCI * itensPorPaginaCI, empregadosFiltradosCI.length);
             
             let html = `
                 <div class="pagination-info">
-                    Mostrando ${inicio}-${fim} de ${empregadosFiltrados.length.toLocaleString('pt-BR')} registros
+                    Mostrando ${inicio}-${fim} de ${empregadosFiltradosCI.length.toLocaleString('pt-BR')} registros
                 </div>
                 <nav>
                     <ul class="pagination mb-0">
@@ -1550,7 +1604,7 @@
             </li>`;
             
             let inicioPaginas = Math.max(1, paginaAtualCI - 2);
-            let fimPaginas = Math.min(totalPaginasCI, inicioPaginas + 4);
+            let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
             
             for (let i = inicioPaginas; i <= fimPaginas; i++) {
                 html += `<li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
@@ -1558,7 +1612,7 @@
                 </li>`;
             }
             
-            html += `<li class="page-item ${paginaAtualCI === totalPaginasCI ? 'disabled' : ''}">
+            html += `<li class="page-item ${paginaAtualCI === totalPaginas ? 'disabled' : ''}">
                 <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">&raquo;</a>
             </li>`;
             
@@ -1567,7 +1621,8 @@
         }
 
         window.mudarPaginaCI = function(pagina) {
-            if (pagina < 1 || pagina > totalPaginasCI) return;
+            const totalPaginas = Math.ceil(empregadosFiltradosCI.length / itensPorPaginaCI);
+            if (pagina < 1 || pagina > totalPaginas) return;
             paginaAtualCI = pagina;
             atualizarTabelaConsulta();
         };
@@ -1578,48 +1633,74 @@
             atualizarTabelaConsulta();
         };
 
-        window.verDetalhes = function(matricula) {
-            const historico = dadosCompletos.filter(i => i.matricula === matricula).sort((a,b) => (b.ano_mes || '').localeCompare(a.ano_mes || ''));
-            if (!historico.length) return;
-            const emp = historico[0];
+        window.verDetalhes = async function(matricula) {
+            showLoading(true, 'Carregando histórico...');
             
-            document.getElementById('modalContent').innerHTML = `
-                <div class="row">
-                    <div class="col-md-6"><div class="info-card primary"><div class="info-label">Empregado</div><div class="info-value highlight">${emp.nome}</div><div class="info-label mt-3">Matrícula</div><div class="info-value">${emp.matricula || '-'}</div></div></div>
-                    <div class="col-md-6"><div class="info-card"><div class="info-label">Órgão</div><div class="info-value">${emp.orgao_sigla} - ${emp.orgao}</div><div class="info-label mt-3">Cargo</div><div class="info-value">${emp.cargo_descricao || '-'}</div></div></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6"><div class="info-card"><div class="info-label">Empresa</div><div class="info-value">${emp.empresa || '-'}</div></div></div>
-                    <div class="col-md-6"><div class="info-card"><div class="info-label">CNPJ</div><div class="info-value">${emp.cnpj_empresa ? emp.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-'}</div></div></div>
-                </div>
-                <h6 class="mt-4 fw-bold">Histórico por Mês</h6>
-                <div style="max-height:250px; overflow-y:auto;">
-                    <table class="table table-sm"><thead class="bg-light"><tr><th>Mês/Ano</th><th>Órgão</th><th>Cargo</th><th>Empresa</th><th>CNPJ</th></tr></thead><tbody>
-                        ${historico.map(i=>`<tr><td>${formatarMesAno(i.ano_mes)}</td><td>${i.orgao_sigla}</td><td>${i.cargo_descricao||'-'}</td><td>${i.empresa ? (i.empresa.length > 30 ? i.empresa.substring(0,30)+'...' : i.empresa) : '-'}</td><td>${i.cnpj_empresa || '-'}</td></tr>`).join('')}
-                    </tbody></table>
-                </div>
-            `;
-            new bootstrap.Modal(document.getElementById('detailModal')).show();
+            try {
+                let historico = [];
+                
+                // Adiciona dados do mês atual
+                const dadosAtuais = currentDisplayData.dados.filter(i => i.matricula === matricula);
+                historico = [...dadosAtuais];
+                
+                // Se o cache já tem outros meses, carrega deles também
+                if (dataCache['2025']) {
+                    for (const mes in dataCache['2025']) {
+                        if (mes !== currentDisplayData.mes) {
+                            const dadosMes = dataCache['2025'][mes].filter(i => i.matricula === matricula);
+                            historico = [...historico, ...dadosMes];
+                        }
+                    }
+                }
+                
+                if (historico.length === 0) {
+                    showError('Histórico não encontrado');
+                    return;
+                }
+                
+                historico.sort((a,b) => (b.ano_mes || '').localeCompare(a.ano_mes || ''));
+                const emp = historico[0];
+                
+                document.getElementById('modalContent').innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6"><div class="info-card primary"><div class="info-label">Empregado</div><div class="info-value highlight">${emp.nome}</div><div class="info-label mt-3">Matrícula</div><div class="info-value">${emp.matricula || '-'}</div></div></div>
+                        <div class="col-md-6"><div class="info-card"><div class="info-label">Órgão</div><div class="info-value">${emp.orgao_sigla} - ${emp.orgao}</div><div class="info-label mt-3">Cargo</div><div class="info-value">${emp.cargo_descricao || '-'}</div></div></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6"><div class="info-card"><div class="info-label">Empresa</div><div class="info-value">${emp.empresa || '-'}</div></div></div>
+                        <div class="col-md-6"><div class="info-card"><div class="info-label">CNPJ</div><div class="info-value">${emp.cnpj_empresa ? emp.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-'}</div></div></div>
+                    </div>
+                    <h6 class="mt-4 fw-bold">Histórico por Mês</h6>
+                    <div style="max-height:250px; overflow-y:auto;">
+                        <table class="table table-sm"><thead class="bg-light"><tr><th>Mês/Ano</th><th>Órgão</th><th>Cargo</th><th>Empresa</th><th>CNPJ</th></tr></thead><tbody>
+                            ${historico.map(i=>`<tr><td>${formatarMesAno(i.ano_mes)}</td><td>${i.orgao_sigla}</td><td>${i.cargo_descricao||'-'}</td><td>${i.empresa ? (i.empresa.length > 30 ? i.empresa.substring(0,30)+'...' : i.empresa) : '-'}</td><td>${i.cnpj_empresa || '-'}</td></tr>`).join('')}
+                        </tbody></table>
+                    </div>
+                `;
+                new bootstrap.Modal(document.getElementById('detailModal')).show();
+            } finally {
+                showLoading(false);
+            }
         };
 
         // ============================================
         // EXPORTAÇÕES
         // ============================================
         window.exportarTabelaVisaoGeralCSV = function() {
-            const dados = agruparPorOrgao(dadosFiltrados);
+            const dados = agruparPorOrgao(currentDisplayData.dados);
             const linhas = dados.map(i => [i.orgao, i.sigla, i.total]).map(l => l.map(c => `"${String(c).replace(/"/g,'""')}"`).join(';'));
             const csv = ['Órgão;Sigla;Empregados', ...linhas].join('\n');
             const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `visao_geral_orgaos_${currentYear}.csv`;
+            link.download = `visao_geral_orgaos_${currentDisplayData.ano}_${currentDisplayData.mes}.csv`;
             link.click();
         };
 
         window.exportarTabelaVisaoGeralPDF = function() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: 'landscape' });
-            const dados = agruparPorOrgao(dadosFiltrados).map(i => [i.orgao, i.sigla, i.total.toLocaleString('pt-BR')]);
+            const dados = agruparPorOrgao(currentDisplayData.dados).map(i => [i.orgao, i.sigla, i.total.toLocaleString('pt-BR')]);
             doc.autoTable({
                 head: [['Órgão', 'Sigla', 'Empregados']],
                 body: dados,
@@ -1630,23 +1711,23 @@
                     doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
                 }
             });
-            doc.save(`visao_geral_orgaos_${currentYear}.pdf`);
+            doc.save(`visao_geral_orgaos_${currentDisplayData.ano}_${currentDisplayData.mes}.pdf`);
         };
 
         window.exportarTabelaConsultaCSV = function() {
-            const linhas = empregadosFiltrados.map(s => [s.matricula, s.nome, s.orgao_sigla, s.cargo_descricao||'', s.empresa||'', s.cnpj_empresa||''].map(c => `"${String(c).replace(/"/g,'""')}"`).join(';'));
+            const linhas = empregadosFiltradosCI.map(s => [s.matricula, s.nome, s.orgao_sigla, s.cargo_descricao||'', s.empresa||'', s.cnpj_empresa||''].map(c => `"${String(c).replace(/"/g,'""')}"`).join(';'));
             const csv = ['Matrícula;Nome;Órgão;Cargo;Empresa;CNPJ', ...linhas].join('\n');
             const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `consulta_empregados_${currentYear}.csv`;
+            link.download = `consulta_empregados_${currentDisplayData.ano}_${currentDisplayData.mes}.csv`;
             link.click();
         };
 
         window.exportarTabelaConsultaPDF = function() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: 'landscape' });
-            const dados = empregadosFiltrados.map(s => [s.matricula||'-', s.nome||'-', s.orgao_sigla||'-', s.cargo_descricao||'-', s.empresa||'-', s.cnpj_empresa||'-']);
+            const dados = empregadosFiltradosCI.map(s => [s.matricula||'-', s.nome||'-', s.orgao_sigla||'-', s.cargo_descricao||'-', s.empresa||'-', s.cnpj_empresa||'-']);
             doc.autoTable({
                 head: [['Matrícula', 'Nome', 'Órgão', 'Cargo', 'Empresa', 'CNPJ']],
                 body: dados,
@@ -1656,7 +1737,7 @@
                     doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
                 }
             });
-            doc.save(`consulta_empregados_${currentYear}.pdf`);
+            doc.save(`consulta_empregados_${currentDisplayData.ano}_${currentDisplayData.mes}.pdf`);
         };
 
         // ============================================
@@ -1754,50 +1835,79 @@
             `;
         }
 
-        window.baixarCSVAno = function() {
+        window.baixarCSVAno = async function() {
             const ano = document.getElementById('anoDownload')?.value;
             if (!ano) {
                 alert('Selecione um ano para baixar.');
                 return;
             }
             
-            const dados = allData[ano];
-            if (!dados || dados.length === 0) {
-                alert('Dados não encontrados para o ano selecionado.');
-                return;
-            }
+            showLoading(true, `Preparando download de ${ano}...`);
             
-            const cabecalhos = ['matricula','nome','orgao','cargo','empresa','cnpj_empresa','mes_referencia'];
-            const linhas = dados.map(item => cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';'));
-            const csv = [cabecalhos.join(';'), ...linhas].join('\n');
-            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `terceirizados_${ano}.csv`;
-            link.click();
+            try {
+                if (!dataCache[ano]) {
+                    await carregarMes(ano, '12');
+                }
+                
+                let todosDados = [];
+                if (dataCache[ano]) {
+                    for (const mes in dataCache[ano]) {
+                        todosDados = todosDados.concat(dataCache[ano][mes]);
+                    }
+                }
+                
+                if (todosDados.length === 0) {
+                    alert('Dados não encontrados para o ano selecionado.');
+                    return;
+                }
+                
+                const cabecalhos = ['matricula','nome','orgao','cargo','empresa','cnpj_empresa','mes_referencia'];
+                const linhas = todosDados.map(item => cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';'));
+                const csv = [cabecalhos.join(';'), ...linhas].join('\n');
+                const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `terceirizados_${ano}.csv`;
+                link.click();
+            } finally {
+                showLoading(false);
+            }
         };
 
-        window.baixarTodosCSV = function() {
-            let todosDados = [];
-            for (const ano in allData) {
-                if (allData[ano] && allData[ano].length > 0) {
-                    todosDados = todosDados.concat(allData[ano]);
+        window.baixarTodosCSV = async function() {
+            showLoading(true, 'Preparando download completo...');
+            
+            try {
+                let todosDados = [];
+                
+                for (const ano of Object.keys(CSV_FILES_BY_YEAR)) {
+                    if (!dataCache[ano]) {
+                        await carregarMes(ano, '12');
+                    }
+                    
+                    if (dataCache[ano]) {
+                        for (const mes in dataCache[ano]) {
+                            todosDados = todosDados.concat(dataCache[ano][mes]);
+                        }
+                    }
                 }
+                
+                if (todosDados.length === 0) {
+                    alert('Nenhum dado carregado.');
+                    return;
+                }
+                
+                const cabecalhos = ['matricula','nome','orgao','cargo','empresa','cnpj_empresa','mes_referencia'];
+                const linhas = todosDados.map(item => cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';'));
+                const csv = [cabecalhos.join(';'), ...linhas].join('\n');
+                const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'terceirizados_completo.csv';
+                link.click();
+            } finally {
+                showLoading(false);
             }
-            
-            if (todosDados.length === 0) {
-                alert('Nenhum dado carregado.');
-                return;
-            }
-            
-            const cabecalhos = ['matricula','nome','orgao','cargo','empresa','cnpj_empresa','mes_referencia'];
-            const linhas = todosDados.map(item => cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';'));
-            const csv = [cabecalhos.join(';'), ...linhas].join('\n');
-            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'terceirizados_completo.csv';
-            link.click();
         };
     </script>
 </body>

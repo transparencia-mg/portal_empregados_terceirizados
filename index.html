@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Terceirizados - Governo de Minas Gerais</title>
 
-    <!-- ==================== ESTILOS E BIBLIOTECAS (COPIADOS DO PRIMEIRO DASHBOARD) ==================== -->
+    <!-- ==================== ESTILOS E BIBLIOTECAS ==================== -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -22,7 +22,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <style>
-        /* ==================== VARIÁVEIS DE CORES (COPIADAS) ==================== */
+        /* ==================== VARIÁVEIS DE CORES ==================== */
         :root {
             --primary-dark: #1a3a5c;
             --primary-darker: #0f2a44;
@@ -34,20 +34,19 @@
             --info-blue: #17a2b8;
         }
 
-        /* ==================== ESTILOS GERAIS (COPIADOS E ADAPTADOS) ==================== */
         body {
             font-family: 'Montserrat', 'Open Sans', sans-serif;
             background-color: var(--background-light);
             padding-bottom: 15px;
-            overflow-y: hidden !important;
+            overflow-y: auto !important;
             overflow-x: hidden !important;
-            min-height: auto !important;
+            min-height: 100vh !important;
             height: auto !important;
             position: relative;
         }
 
         html {
-            overflow-y: hidden !important;
+            overflow-y: auto !important;
             height: auto !important;
         }
 
@@ -55,20 +54,6 @@
             height: auto !important;
             min-height: auto !important;
             overflow: visible !important;
-            position: relative;
-        }
-
-        .container.dashboard-spacing {
-            overflow: visible !important;
-            height: auto !important;
-            min-height: auto !important;
-            position: relative;
-        }
-
-        .tab-content {
-            overflow: visible !important;
-            height: auto !important;
-            min-height: auto !important;
             position: relative;
         }
 
@@ -282,16 +267,6 @@
             cursor: pointer;
         }
         .orgao-link:hover { color: var(--accent-red); }
-
-        .badge-situacao {
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-        .badge-andamento { background-color: #d4edda; color: #155724; }
-        .badge-encerrado { background-color: #f8d7da; color: #721c24; }
 
         /* ==================== BOTÕES ==================== */
         .btn-primary-custom, .btn-pesquisa {
@@ -517,6 +492,48 @@
             outline: none;
         }
 
+        /* ==================== INDICADOR DE CARREGAMENTO EM SEGUNDO PLANO ==================== */
+        .background-loading-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-dark);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 9999;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .background-loading-indicator.show {
+            display: flex;
+        }
+
+        .spinner-small {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* ==================== METADADOS ==================== */
         .metadata-card {
             background: white;
@@ -567,6 +584,12 @@
         </div>
     </div>
 
+    <!-- ==================== INDICADOR DE CARREGAMENTO EM SEGUNDO PLANO ==================== -->
+    <div class="background-loading-indicator" id="backgroundLoading">
+        <div class="spinner-small"></div>
+        <span>Carregando dados históricos...</span>
+    </div>
+
     <!-- ==================== MODAL DE DETALHES ==================== -->
     <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -595,7 +618,8 @@
         // ============================================
         // CONFIGURAÇÕES E VARIÁVEIS GLOBAIS
         // ============================================
-        const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/transparencia-mg/empregados_terceirizados/main/dataset/data/';
+        const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/transparencia-mg/portal_empregados_terceirizados/refs/heads/main/dataset/data/';
+        
         const CSV_FILES_BY_YEAR = {
             '2021': 'terceirizados_2021.csv',
             '2022': 'terceirizados_2022.csv',
@@ -605,20 +629,24 @@
         };
 
         let allData = {};
-        let dadosCompletos = []; // Todos os dados do ano selecionado
+        let dadosCompletos = [];
         let dadosFiltrados = [];
-        let metricaGeral = {};
+        let metricaGeral = { totalEmpregados: 0, totalOrgaos: 0, totalEmpresas: 0, periodo: '' };
 
         // Variáveis de estado
         let currentYear = '2025';
-        let currentMonth = '';
-
-        // Variáveis de paginação para Consulta Individual
+        let currentMonth = '12'; // Fixo como dezembro, o mês mais recente
+        
+        // Variáveis de paginação
         let paginaAtualCI = 1;
         let itensPorPaginaCI = 50;
         let totalPaginasCI = 1;
         let todosEmpregados = [];
         let empregadosFiltrados = [];
+
+        // Controle de carregamento em segundo plano
+        let backgroundLoadingCount = 0;
+        let totalBackgroundYears = 0;
 
         const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
         const monthNames = {
@@ -627,54 +655,18 @@
             '07': 'Julho', '08': 'Agosto', '09': 'Setembro',
             '10': 'Outubro', '11': 'Novembro', '12': 'Dezembro'
         };
-        const chartPalette = ['#1a3a5c','#2c5f8a','#3a7cb8','#5a9fd4','#7ab8e0','#9dd1ec','#bde4f5','#d4a017','#c0392b','#27ae60'];
+        const chartPalette = ['#1a3a5c','#2c5f8a','#3a7cb8','#5a9fd4','#7ab8e0','#9dd1ec','#bde4f5','#d4a017','#c0392b','#27ae10'];
 
         // ============================================
         // FUNÇÕES DE INICIALIZAÇÃO
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
-            carregarDados();
+            carregarDadosOtimizado(); // Versão otimizada
             setupAtualizacaoData();
-            removeAllScrollIssues();
-            console.log('Dashboard de Terceirizados carregado com sucesso!');
         });
 
-        function removeAllScrollIssues() {
-            console.log('Removendo problemas de scroll duplo...');
-            const elements = [
-                document.body,
-                document.documentElement,
-                document.querySelector('.main-container'),
-                document.querySelector('.container.dashboard-spacing'),
-                document.querySelector('.tab-content'),
-                ...document.querySelectorAll('.tab-pane'),
-                ...document.querySelectorAll('.table-container'),
-                ...document.querySelectorAll('.row'),
-                ...document.querySelectorAll('.col'),
-                ...document.querySelectorAll('.container')
-            ];
-            
-            elements.forEach(el => {
-                if (el && el.style) {
-                    el.style.overflowY = 'visible';
-                    el.style.overflowX = 'visible';
-                    el.style.overflow = 'visible';
-                }
-            });
-            
-            document.body.classList.remove('overflow-auto');
-            document.documentElement.classList.remove('overflow-auto');
-            document.documentElement.style.height = 'auto';
-            document.body.style.height = 'auto';
-        }
-
         function iframeUpdateHeight() {
-            console.log('Atualizando altura do iframe...');
-            document.body.style.display = 'none';
-            document.body.offsetHeight;
-            document.body.style.display = '';
-            
             const html = document.documentElement;
             const body = document.body;
             const scrollHeight = Math.max(
@@ -685,7 +677,6 @@
             );
             
             const finalHeight = scrollHeight + 10;
-            console.log('Altura calculada:', finalHeight);
             
             try {
                 window.parent.postMessage({ iframeHeight: finalHeight }, '*');
@@ -701,7 +692,6 @@
             if (elementoData) {
                 elementoData.textContent = dataFormatada;
             }
-            console.log('Data de atualização definida:', dataFormatada);
         }
 
         function setupEventListeners() {
@@ -716,6 +706,29 @@
             const overlay = document.getElementById('loadingOverlay');
             if (overlay) {
                 overlay.style.display = show ? 'flex' : 'none';
+            }
+        }
+
+        function showBackgroundLoading(show) {
+            const indicator = document.getElementById('backgroundLoading');
+            if (indicator) {
+                if (show) {
+                    indicator.classList.add('show');
+                } else {
+                    // Só esconde se todos os anos foram carregados
+                    if (backgroundLoadingCount >= totalBackgroundYears) {
+                        indicator.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        function updateBackgroundLoadingProgress() {
+            backgroundLoadingCount++;
+            if (backgroundLoadingCount >= totalBackgroundYears) {
+                setTimeout(() => {
+                    showBackgroundLoading(false);
+                }, 1000);
             }
         }
 
@@ -740,13 +753,8 @@
         // ============================================
         // FUNÇÕES AUXILIARES
         // ============================================
-        function formatarMoeda(valor) {
-            return 'R$ ' + valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-        
         function formatarMesAno(anoMes) {
             if (!anoMes || anoMes.length < 7) return anoMes;
-            // Espera formato YYYY-MM
             const partes = anoMes.split('-');
             if (partes.length === 2) {
                 return `${meses[parseInt(partes[1])-1] || partes[1]}/${partes[0]}`;
@@ -772,267 +780,364 @@
             return mapaOrgaos[siglaUpper] || orgaoSigla;
         }
 
-async function loadYearData(year) {
-    return new Promise((resolve, reject) => {
-        const filename = CSV_FILES_BY_YEAR[year];
-        if (!filename) {
-            reject(new Error(`Arquivo para o ano ${year} não encontrado.`));
-            return;
-        }
-        
-        const url = `${GITHUB_BASE_URL}${filename}`;
-        console.log(`Carregando dados de ${year}: ${url}`);
-        
-        Papa.parse(url, {
-            download: true,
-            header: true,
-            skipEmptyLines: true,
-            encoding: 'UTF-8',
-            delimiter: ";",
-            complete: function (results) {
-                // results.data já é um array de objetos
-                const data = results.data.map(linha => {
-                    let competencia = linha['mes_referencia'] || '';
-                    let mesNum = '';
-                    if (competencia && competencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                        const [ano, mes] = competencia.split('-');
-                        competencia = `${ano}-${mes}`;
-                        mesNum = mes;
-                    } else if (linha['MÊS REFERÊNCIA']) {
-                        competencia = linha['MÊS REFERÊNCIA'];
-                    }
-                    
-                    return {
-                        matricula: linha['matricula'] || linha['MAT'] || '',
-                        nome: linha['nome'] || linha['NOME'] || '',
-                        orgao_sigla: linha['orgao'] || linha['ÓRGÃO'] || '',
-                        orgao: getOrgaoExtenso(linha['orgao'] || linha['ÓRGÃO'] || ''),
-                        cargo_descricao: linha['cargo'] || linha['CARGO'] || '',
-                        empresa: linha['empresa'] || linha['EMPRESA'] || '',
-                        cnpj_empresa: linha['cnpj_empresa'] || linha['CNPJ EMPRESA'] || '',
-                        mes_referencia: competencia,
-                        ano_mes: competencia,
-                        ANO: year,
-                        MES_NUM: mesNum
-                    };
-                }).filter(item => item.ano_mes); // remove itens sem data
-                
-                allData[year] = data;
-                resolve(data);
-            },
-            error: function (err) {
-                reject(err);
-            }
-        });
-    });
-}
-
-function calcularMetricas(dados) {
-    const totalEmpregados = dados.length;
-    const orgaos = new Set(dados.map(i => i.orgao_sigla)).size;
-    const empresas = new Set(dados.map(i => i.empresa)).size;
-    return {
-        totalEmpregados,
-        totalOrgaos: orgaos,
-        totalEmpresas: empresas,
-        periodo: `${monthNames[currentMonth] || currentMonth}/${currentYear}`
-    };
-}
-
-function obterOpcoesFiltro() {
-    const anos = Object.keys(CSV_FILES_BY_YEAR).sort().reverse();
-    const mesesDisponiveis = dadosCompletos.length > 0 
-        ? [...new Set(dadosCompletos.map(i => i.MES_NUM).filter(Boolean))].sort((a,b) => b - a)
-        : [];
-    const orgaos = [...new Set(dadosCompletos.map(i => i.orgao_sigla))].filter(Boolean).sort();
-    const cargos = [...new Set(dadosCompletos.map(i => i.cargo_descricao))].filter(Boolean).sort();
-    const empresas = [...new Set(dadosCompletos.map(i => i.empresa))].filter(Boolean).sort();
-    return { anos, meses: mesesDisponiveis, orgaos, cargos, empresas };
-}
-
-function agruparPorOrgao(dados) {
-    const mapa = new Map();
-    for (const i of dados) {
-        const sigla = i.orgao_sigla || 'Não informado';
-        if (!mapa.has(sigla)) {
-            mapa.set(sigla, { sigla: sigla, orgao: i.orgao || sigla, total: 0 });
-        }
-        mapa.get(sigla).total += 1;
-    }
-    return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
-}
-
-function agruparPorCargo(dados) {
-    const mapa = new Map();
-    for (const i of dados) {
-        const cargo = i.cargo_descricao || 'Não informado';
-        if (!mapa.has(cargo)) {
-            mapa.set(cargo, { cargo: cargo, total: 0 });
-        }
-        mapa.get(cargo).total += 1;
-    }
-    return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
-}
-
-function obterEmpregadosUnicos() {
-    const mapa = new Map();
-    for (const i of dadosCompletos) {
-        if (!mapa.has(i.matricula)) {
-            mapa.set(i.matricula, { 
-                ...i, 
-                historico: [i],
-                ultimoAnoMes: i.ano_mes,
-                ultimoValor: 1 // Placeholder, já que não há valor monetário
-            });
-        } else {
-            const existente = mapa.get(i.matricula);
-            existente.historico.push(i);
-            if (i.ano_mes > existente.ultimoAnoMes) {
-                existente.ultimoAnoMes = i.ano_mes;
-                existente.orgao_sigla = i.orgao_sigla;
-                existente.orgao = i.orgao;
-                existente.cargo_descricao = i.cargo_descricao;
-                existente.empresa = i.empresa;
-                existente.cnpj_empresa = i.cnpj_empresa;
-            }
-        }
-    }
-    return Array.from(mapa.values()).map(s => ({
-        ...s,
-        historico: s.historico.sort((a,b) => b.ano_mes.localeCompare(a.ano_mes))
-    }));
-}
-
-// Função auxiliar de formatação (igual à que você já tem no map)
-function formatarLinha(linha, year) {
-    let competencia = linha['mes_referencia'] || '';
-    let mesNum = '';
-    if (competencia && competencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
-        const [ano, mes] = competencia.split('-');
-        competencia = `${ano}-${mes}`;
-        mesNum = mes;
-    } else if (linha['MÊS REFERÊNCIA']) {
-        competencia = linha['MÊS REFERÊNCIA'];
-    }
-    
-    return {
-        matricula: linha['matricula'] || linha['MAT'] || '',
-        nome: linha['nome'] || linha['NOME'] || '',
-        orgao_sigla: linha['orgao'] || linha['ÓRGÃO'] || '',
-        orgao: getOrgaoExtenso(linha['orgao'] || linha['ÓRGÃO'] || ''),
-        cargo_descricao: linha['cargo'] || linha['CARGO'] || '',
-        empresa: linha['empresa'] || linha['EMPRESA'] || '',
-        cnpj_empresa: linha['cnpj_empresa'] || linha['CNPJ EMPRESA'] || '',
-        mes_referencia: competencia,
-        ano_mes: competencia,
-        ANO: year,
-        MES_NUM: mesNum
-    };
-}
-
-// ============================================
-// CARREGAMENTO DE DADOS - VERSÃO OTIMIZADA
-// ============================================
-async function carregarDados() {
-    mostrarLoading(true);
-    try {
-        const years = Object.keys(CSV_FILES_BY_YEAR).sort((a, b) => b - a);
-        currentYear = years[0];
-        
-        // 1. Carrega o ano atual com stream para não travar a UI
-        console.log(`Carregando dados completos de ${currentYear}...`);
-        
-        // Usando PapaParse com chunk para processar em partes
-        const dadosAnoAtual = await new Promise((resolve, reject) => {
-            const todosDados = [];
-            Papa.parse(`${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR[currentYear]}`, {
-                download: true,
-                header: true,
-                skipEmptyLines: true,
-                encoding: 'UTF-8',
-                delimiter: ";",
-                chunk: function(results, parser) {
-                    // Processa cada chunk e já formata
-                    const chunkData = results.data.map(linha => formatarLinha(linha, currentYear));
-                    todosDados.push(...chunkData);
-                    
-                    // Atualiza progresso (opcional)
-                    console.log(`Processados ${todosDados.length} registros...`);
-                },
-                complete: function() {
-                    resolve(todosDados);
-                },
-                error: function(err) {
-                    reject(err);
+        function formatarLinha(linha, year) {
+            // Tenta encontrar a data em diferentes formatos
+            let competencia = '';
+            let mesNum = '';
+            
+            // Procura por campos de data
+            const camposData = ['mes_referencia', 'MÊS REFERÊNCIA', 'MÊS_REFERENCIA', 'data_referencia', 'DATA REFERÊNCIA'];
+            for (const campo of camposData) {
+                if (linha[campo]) {
+                    competencia = linha[campo];
+                    break;
                 }
-            });
-        });
-        
-        // 2. Armazena todos os dados do ano atual
-        allData[currentYear] = dadosAnoAtual;
-        dadosCompletos = dadosAnoAtual;
-        
-        // 3. Define o mês atual (mais recente)
-        const mesesDisponiveis = [...new Set(dadosCompletos.map(i => i.MES_NUM).filter(Boolean))].sort((a,b) => b - a);
-        currentMonth = mesesDisponiveis.length > 0 ? mesesDisponiveis[0].toString().padStart(2, '0') : '01';
-        
-        // 4. Filtra para o mês atual (para a visão geral)
-        dadosFiltrados = dadosCompletos.filter(i => i.MES_NUM === currentMonth);
-        metricaGeral = calcularMetricas(dadosFiltrados);
-        
-        // 5. Prepara dados para consulta (todos os empregados únicos do ano)
-        todosEmpregados = obterEmpregadosUnicos();
-        empregadosFiltrados = [...todosEmpregados];
-        
-        // 6. RENDERIZA AGORA (já tem todos os dados de 2025)
-        renderizarVisaoGeral();
-        renderizarConsulta();
-        renderizarDownloads();
-        
-        // 7. Carrega os OUTROS ANOS em segundo plano (sem bloquear)
-        for (let i = 1; i < years.length; i++) {
-            loadYearData(years[i])
-                .then(data => {
-                    console.log(`Ano ${years[i]} carregado em segundo plano (${data.length} registros)`);
-                })
-                .catch(err => console.warn(`Erro ao carregar ano ${years[i]}:`, err));
+            }
+            
+            // Extrai ano e mês da data
+            if (competencia) {
+                if (competencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                    const [ano, mes] = competencia.split('-');
+                    competencia = `${ano}-${mes}`;
+                    mesNum = mes;
+                } else if (competencia.match(/^\d{4}-\d{2}$/)) {
+                    const [ano, mes] = competencia.split('-');
+                    mesNum = mes;
+                }
+            }
+            
+            // Se não conseguiu extrair mês, tenta extrair do ano
+            if (!mesNum && year) {
+                mesNum = '12'; // Assume dezembro como padrão para o ano mais recente
+                competencia = `${year}-12`;
+            }
+            
+            return {
+                matricula: linha['matricula'] || linha['MAT'] || linha['Matrícula'] || linha['mat'] || '',
+                nome: linha['nome'] || linha['NOME'] || linha['Nome'] || '',
+                orgao_sigla: linha['orgao'] || linha['ÓRGÃO'] || linha['orgao_sigla'] || linha['Orgao'] || '',
+                orgao: getOrgaoExtenso(linha['orgao'] || linha['ÓRGÃO'] || linha['orgao_sigla'] || ''),
+                cargo_descricao: linha['cargo'] || linha['CARGO'] || linha['Cargo'] || '',
+                empresa: linha['empresa'] || linha['EMPRESA'] || linha['Empresa'] || '',
+                cnpj_empresa: linha['cnpj_empresa'] || linha['CNPJ EMPRESA'] || linha['cnpj'] || linha['CNPJ'] || '',
+                mes_referencia: competencia,
+                ano_mes: competencia,
+                ANO: year,
+                MES_NUM: mesNum
+            };
         }
-        
-        setTimeout(iframeUpdateHeight, 500);
-        console.log(`Dashboard carregado com ${dadosCompletos.length} registros de ${currentYear}`);
-        
-    } catch (erro) {
-        console.error('Erro detalhado:', erro);
-        showError('Erro ao carregar dados. Tente novamente mais tarde.');
-    } finally {
-        mostrarLoading(false);
-    }
-}
 
+        // ============================================
+        // FUNÇÃO OTIMIZADA - CARREGA APENAS DEZ/2025 PRIMEIRO
+        // ============================================
+        async function carregarDadosOtimizado() {
+            mostrarLoading(true);
+            
+            try {
+                console.log('🚀 Modo otimizado: Carregando apenas Dezembro/2025...');
+                
+                // 1. Carrega apenas os dados de 2025 primeiro
+                const url2025 = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR['2025']}`;
+                
+                const dados2025 = await new Promise((resolve) => {
+                    Papa.parse(url2025, {
+                        download: true,
+                        header: true,
+                        skipEmptyLines: true,
+                        encoding: 'UTF-8',
+                        delimiter: ";",
+                        complete: function(results) {
+                            if (results.data && results.data.length > 0) {
+                                const data = results.data
+                                    .map(linha => formatarLinha(linha, '2025'))
+                                    .filter(item => item.nome || item.matricula);
+                                resolve(data);
+                            } else {
+                                resolve([]);
+                            }
+                        },
+                        error: function() {
+                            resolve([]);
+                        }
+                    });
+                });
+                
+                if (dados2025.length === 0) {
+                    throw new Error('Não foi possível carregar os dados de 2025');
+                }
+                
+                // 2. Filtra apenas DEZEMBRO/2025 (mês 12) para exibição inicial
+                const dadosDez2025 = dados2025.filter(item => item.MES_NUM === '12');
+                
+                console.log(`✅ Carregados ${dadosDez2025.length} registros de Dez/2025`);
+                console.log(`📊 Total de registros em 2025: ${dados2025.length}`);
+                
+                // 3. Armazena todos os dados de 2025
+                allData['2025'] = dados2025;
+                
+                // 4. Configura o estado inicial com apenas Dez/2025
+                currentYear = '2025';
+                currentMonth = '12';
+                
+                // IMPORTANTE: dadosCompletos tem TODOS os meses de 2025
+                dadosCompletos = dados2025;
+                
+                // dadosFiltrados começa com apenas Dez/2025 para performance
+                dadosFiltrados = dadosDez2025;
+                
+                // 5. Calcula métricas com os dados de Dez/2025
+                metricaGeral = calcularMetricas(dadosFiltrados);
+                
+                // 6. Prepara lista de empregados únicos (baseado em TODOS os dados de 2025)
+                todosEmpregados = obterEmpregadosUnicos();
+                empregadosFiltrados = [...todosEmpregados];
+                
+                // 7. RENDERIZA IMEDIATAMENTE (super rápido!)
+                renderizarVisaoGeral();
+                renderizarConsulta();
+                renderizarDownloads();
+                
+                // 8. Atualiza altura do iframe
+                setTimeout(iframeUpdateHeight, 300);
+                
+                // 9. CARREGA OS OUTROS ANOS EM SEGUNDO PLANO
+                console.log('🔄 Iniciando carregamento em segundo plano dos anos anteriores...');
+                
+                const outrosAnos = ['2024', '2023', '2022', '2021'];
+                totalBackgroundYears = outrosAnos.length;
+                backgroundLoadingCount = 0;
+                
+                if (totalBackgroundYears > 0) {
+                    showBackgroundLoading(true);
+                    
+                    for (const ano of outrosAnos) {
+                        loadYearData(ano).then(dados => {
+                            if (dados && dados.length > 0) {
+                                allData[ano] = dados;
+                                console.log(`✅ Ano ${ano} carregado em segundo plano (${dados.length} registros)`);
+                            }
+                            updateBackgroundLoadingProgress();
+                        }).catch(() => {
+                            updateBackgroundLoadingProgress();
+                        });
+                    }
+                }
+                
+            } catch (erro) {
+                console.error('Erro no carregamento otimizado:', erro);
+                showError('Erro ao carregar dados. Tentando modo fallback...');
+                
+                // Fallback: tenta carregar qualquer ano disponível
+                await carregarDadosFallback();
+            } finally {
+                mostrarLoading(false);
+            }
+        }
 
+        // Função fallback caso o carregamento otimizado falhe
+        async function carregarDadosFallback() {
+            console.log('⚠️ Modo fallback: tentando carregar qualquer ano disponível...');
+            
+            const anos = ['2025', '2024', '2023', '2022', '2021'];
+            
+            for (const ano of anos) {
+                try {
+                    const dados = await loadYearData(ano);
+                    if (dados && dados.length > 0) {
+                        allData[ano] = dados;
+                        currentYear = ano;
+                        dadosCompletos = dados;
+                        
+                        // Tenta pegar o mês mais recente
+                        const mesesDisponiveis = [...new Set(dados.map(i => i.MES_NUM).filter(Boolean))].sort((a,b) => b - a);
+                        currentMonth = mesesDisponiveis.length > 0 ? mesesDisponiveis[0] : '12';
+                        
+                        dadosFiltrados = dados.filter(i => i.MES_NUM === currentMonth);
+                        if (dadosFiltrados.length === 0) {
+                            dadosFiltrados = dados.slice(0, 1000); // Limita para não travar
+                        }
+                        
+                        metricaGeral = calcularMetricas(dadosFiltrados);
+                        todosEmpregados = obterEmpregadosUnicos();
+                        empregadosFiltrados = [...todosEmpregados];
+                        
+                        renderizarVisaoGeral();
+                        renderizarConsulta();
+                        renderizarDownloads();
+                        
+                        setTimeout(iframeUpdateHeight, 300);
+                        console.log(`✅ Modo fallback: carregado ano ${ano} com ${dados.length} registros`);
+                        return;
+                    }
+                } catch (e) {
+                    console.warn(`Falha ao carregar ${ano} no fallback`);
+                }
+            }
+            
+            showError('Não foi possível carregar nenhum dado. Verifique sua conexão.');
+        }
 
+        async function loadYearData(year) {
+            return new Promise((resolve) => {
+                const filename = CSV_FILES_BY_YEAR[year];
+                if (!filename) {
+                    resolve([]);
+                    return;
+                }
+                
+                const url = `${GITHUB_BASE_URL}${filename}`;
+                
+                Papa.parse(url, {
+                    download: true,
+                    header: true,
+                    skipEmptyLines: true,
+                    encoding: 'UTF-8',
+                    delimiter: ";",
+                    complete: function(results) {
+                        if (results.data && results.data.length > 0) {
+                            const data = results.data
+                                .map(linha => formatarLinha(linha, year))
+                                .filter(item => item.nome || item.matricula);
+                            resolve(data);
+                        } else {
+                            resolve([]);
+                        }
+                    },
+                    error: function() {
+                        resolve([]);
+                    }
+                });
+            });
+        }
+
+        function calcularMetricas(dados) {
+            const totalEmpregados = dados.length;
+            const orgaos = new Set(dados.map(i => i.orgao_sigla).filter(Boolean)).size;
+            const empresas = new Set(dados.map(i => i.empresa).filter(Boolean)).size;
+            
+            let periodo = 'Dezembro/2025'; // Valor padrão
+            
+            if (dados.length > 0 && currentMonth) {
+                periodo = `${monthNames[currentMonth] || 'Dezembro'}/${currentYear}`;
+            }
+            
+            return {
+                totalEmpregados,
+                totalOrgaos: orgaos,
+                totalEmpresas: empresas,
+                periodo: periodo
+            };
+        }
+
+        function obterOpcoesFiltro() {
+            const anos = Object.keys(CSV_FILES_BY_YEAR).sort().reverse();
+            
+            // Para os meses, usa os meses disponíveis nos dados ATUAIS
+            const mesesDisponiveis = dadosCompletos && dadosCompletos.length > 0 
+                ? [...new Set(dadosCompletos.map(i => i.MES_NUM).filter(Boolean))].sort((a,b) => b - a)
+                : ['12']; // Pelo menos dezembro
+            
+            const orgaos = dadosCompletos && dadosCompletos.length > 0
+                ? [...new Set(dadosCompletos.map(i => i.orgao_sigla))].filter(Boolean).sort()
+                : [];
+                
+            const cargos = dadosCompletos && dadosCompletos.length > 0
+                ? [...new Set(dadosCompletos.map(i => i.cargo_descricao))].filter(Boolean).sort()
+                : [];
+                
+            const empresas = dadosCompletos && dadosCompletos.length > 0
+                ? [...new Set(dadosCompletos.map(i => i.empresa))].filter(Boolean).sort()
+                : [];
+                
+            return { anos, meses: mesesDisponiveis, orgaos, cargos, empresas };
+        }
+
+        function agruparPorOrgao(dados) {
+            const mapa = new Map();
+            for (const i of dados) {
+                const sigla = i.orgao_sigla || 'Não informado';
+                if (!mapa.has(sigla)) {
+                    mapa.set(sigla, { sigla: sigla, orgao: i.orgao || sigla, total: 0 });
+                }
+                mapa.get(sigla).total += 1;
+            }
+            return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
+        }
+
+        function agruparPorCargo(dados) {
+            const mapa = new Map();
+            for (const i of dados) {
+                const cargo = i.cargo_descricao || 'Não informado';
+                if (!mapa.has(cargo)) {
+                    mapa.set(cargo, { cargo: cargo, total: 0 });
+                }
+                mapa.get(cargo).total += 1;
+            }
+            return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
+        }
+
+        function obterEmpregadosUnicos() {
+            if (!dadosCompletos || dadosCompletos.length === 0) return [];
+            
+            const mapa = new Map();
+            for (const i of dadosCompletos) {
+                if (i.matricula && !mapa.has(i.matricula)) {
+                    mapa.set(i.matricula, { 
+                        ...i, 
+                        historico: [i],
+                        ultimoAnoMes: i.ano_mes
+                    });
+                } else if (i.matricula) {
+                    const existente = mapa.get(i.matricula);
+                    if (existente) {
+                        existente.historico.push(i);
+                        if (i.ano_mes && (!existente.ultimoAnoMes || i.ano_mes > existente.ultimoAnoMes)) {
+                            existente.ultimoAnoMes = i.ano_mes;
+                            existente.orgao_sigla = i.orgao_sigla;
+                            existente.orgao = i.orgao;
+                            existente.cargo_descricao = i.cargo_descricao;
+                            existente.empresa = i.empresa;
+                            existente.cnpj_empresa = i.cnpj_empresa;
+                        }
+                    }
+                }
+            }
+            return Array.from(mapa.values()).map(s => ({
+                ...s,
+                historico: s.historico ? s.historico.sort((a,b) => (b.ano_mes || '').localeCompare(a.ano_mes || '')) : []
+            }));
+        }
 
         async function mudarAno(ano) {
             mostrarLoading(true);
             try {
                 if (!allData[ano]) {
-                    await loadYearData(ano);
+                    const dados = await loadYearData(ano);
+                    allData[ano] = dados;
                 }
-                currentYear = ano;
-                dadosCompletos = allData[ano] || [];
                 
-                const mesesDisponiveis = [...new Set(dadosCompletos.map(i => i.MES_NUM).filter(Boolean))].sort((a,b) => b - a);
-                currentMonth = mesesDisponiveis.length > 0 ? mesesDisponiveis[0].toString().padStart(2, '0') : '01';
-                
-                dadosFiltrados = dadosCompletos.filter(i => i.MES_NUM === currentMonth);
-                metricaGeral = calcularMetricas(dadosFiltrados);
-                todosEmpregados = obterEmpregadosUnicos();
-                empregadosFiltrados = [...todosEmpregados];
-                
-                renderizarVisaoGeral();
-                renderizarConsulta();
-                renderizarDownloads();
+                if (allData[ano] && allData[ano].length > 0) {
+                    currentYear = ano;
+                    dadosCompletos = allData[ano];
+                    
+                    const mesesDisponiveis = [...new Set(dadosCompletos.map(i => i.MES_NUM).filter(Boolean))].sort((a,b) => b - a);
+                    currentMonth = mesesDisponiveis.length > 0 ? mesesDisponiveis[0] : '12';
+                    
+                    dadosFiltrados = dadosCompletos.filter(i => i.MES_NUM === currentMonth);
+                    if (dadosFiltrados.length === 0) {
+                        dadosFiltrados = dadosCompletos.slice(0, 1000);
+                    }
+                    
+                    metricaGeral = calcularMetricas(dadosFiltrados);
+                    todosEmpregados = obterEmpregadosUnicos();
+                    empregadosFiltrados = [...todosEmpregados];
+                    
+                    renderizarVisaoGeral();
+                    renderizarConsulta();
+                    renderizarDownloads();
+                }
             } catch (erro) {
+                console.error('Erro ao mudar ano:', erro);
                 showError('Erro ao mudar de ano.');
             } finally {
                 mostrarLoading(false);
@@ -1044,6 +1149,8 @@ async function carregarDados() {
         // ============================================
         function renderizarVisaoGeral() {
             const container = document.getElementById('visao-geral-content');
+            if (!container) return;
+            
             const dadosOrgao = agruparPorOrgao(dadosFiltrados);
             const dadosCargo = agruparPorCargo(dadosFiltrados).slice(0, 10);
             const opcoes = obterOpcoesFiltro();
@@ -1054,15 +1161,15 @@ async function carregarDados() {
                     <div class="row g-3">
                         <div class="col-md-2">
                             <label class="filter-label"><i class="material-icons">calendar_today</i>Ano</label>
-                            <select class="form-select" id="filtroAnoVG">
-                                <option value="">Todos</option>
+                            <select class="form-select" id="filtroAnoVG" onchange="aplicarFiltrosVG()">
+                                <option value="">Selecione</option>
                                 ${opcoes.anos.map(a => `<option value="${a}" ${a === currentYear ? 'selected' : ''}>${a}</option>`).join('')}
                             </select>
                         </div>
                         <div class="col-md-2">
                             <label class="filter-label"><i class="material-icons">date_range</i>Mês</label>
                             <select class="form-select" id="filtroMesVG">
-                                <option value="">Todos</option>
+                                <option value="todos">Todos os meses</option>
                                 ${opcoes.meses.map(m => `<option value="${m}" ${m === currentMonth ? 'selected' : ''}>${monthNames[m.toString().padStart(2,'0')] || m}</option>`).join('')}
                             </select>
                         </div>
@@ -1077,18 +1184,11 @@ async function carregarDados() {
                             <label class="filter-label"><i class="material-icons">work</i>Cargo</label>
                             <select class="form-select" id="filtroCargoVG">
                                 <option value="">Todos</option>
-                                ${opcoes.cargos.map(c => `<option value="${c}">${c}</option>`).join('')}
+                                ${opcoes.cargos.map(c => `<option value="${c}">${c.length > 30 ? c.substring(0,30)+'...' : c}</option>`).join('')}
                             </select>
                         </div>
-                        <div class="col-md-2">
-                            <!-- Espaço vazio -->
-                        </div>
-                    </div>
-                    
-                    <div class="row mt-3">
-                        <div class="col-12 d-flex justify-content-start gap-2">
-                            <button class="btn-pesquisa" onclick="aplicarFiltrosVG()"><i class="material-icons me-2">search</i>Pesquisar</button>
-                            <button class="btn-secondary-custom" onclick="limparFiltrosVG()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button class="btn-pesquisa w-100" onclick="aplicarFiltrosVG()"><i class="material-icons me-2">search</i>Filtrar</button>
                         </div>
                     </div>
                 </div>
@@ -1123,36 +1223,79 @@ async function carregarDados() {
                             </div>
                         </div>
                     </div>
-                    <span class="table-badge" id="totalOrgaosBadge">${dadosOrgao.length} órgãos</span>
+                    <span class="table-badge">${dadosOrgao.length} órgãos</span>
                 </div>
 
                 <!-- Tabela -->
                 <div class="table-container">
                     <div class="table-fixed-header-container">
-                        <table class="table" id="orgaosTable">
+                        <table class="table">
                             <thead><tr><th>Órgão</th><th>Sigla</th><th class="text-center">Empregados</th></tr></thead>
-                            <tbody id="orgaosTableBody">${gerarLinhasTabelaOrgaos(dadosOrgao)}</tbody>
+                            <tbody>
+                                ${dadosOrgao.map(item => `
+                                    <tr>
+                                        <td><a href="#" class="orgao-link" onclick="irParaConsulta('${item.sigla}'); return false;">${item.orgao}</a></td>
+                                        <td><strong>${item.sigla}</strong></td>
+                                        <td class="text-center">${item.total.toLocaleString()}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
                             <tfoot><tr><td colspan="2" class="fw-bold">Total Geral</td><td class="text-center fw-bold">${dadosOrgao.reduce((a,i)=>a+i.total,0).toLocaleString()}</td></tr></tfoot>
                         </table>
                     </div>
                 </div>
             `;
+            
             container.innerHTML = html;
             
-            criarGraficoOrgao(dadosOrgao.slice(0, 10));
-            criarGraficoCargo(dadosCargo);
+            // Destruir gráficos antigos
+            if (window.orgaoChart) window.orgaoChart.destroy();
+            if (window.cargoChart) window.cargoChart.destroy();
+            
+            // Criar novos gráficos
+            const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
+            if (ctxOrgao) {
+                window.orgaoChart = new Chart(ctxOrgao, {
+                    type: 'bar',
+                    data: { 
+                        labels: dadosOrgao.slice(0, 10).map(i => i.sigla), 
+                        datasets: [{ 
+                            label: 'Empregados', 
+                            data: dadosOrgao.slice(0, 10).map(i => i.total), 
+                            backgroundColor: chartPalette, 
+                            borderRadius: 4 
+                        }] 
+                    },
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+            
+            const ctxCargo = document.getElementById('chartCargo')?.getContext('2d');
+            if (ctxCargo) {
+                window.cargoChart = new Chart(ctxCargo, {
+                    type: 'bar',
+                    data: { 
+                        labels: dadosCargo.map(i => i.cargo.length > 20 ? i.cargo.substring(0,20)+'...' : i.cargo), 
+                        datasets: [{ 
+                            label: 'Empregados', 
+                            data: dadosCargo.map(i => i.total), 
+                            backgroundColor: chartPalette.slice().reverse(), 
+                            borderRadius: 4 
+                        }] 
+                    },
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
             
             setTimeout(iframeUpdateHeight, 300);
-        }
-
-        function gerarLinhasTabelaOrgaos(dados) {
-            return dados.map(item => `
-                <tr>
-                    <td><a href="#" class="orgao-link" onclick="irParaConsulta('${item.sigla}')">${item.orgao}</a></td>
-                    <td><strong>${item.sigla}</strong></td>
-                    <td class="text-center">${item.total.toLocaleString()}</td>
-                </tr>
-            `).join('');
         }
 
         window.aplicarFiltrosVG = function() {
@@ -1161,7 +1304,6 @@ async function carregarDados() {
             const orgao = document.getElementById('filtroOrgaoVG')?.value;
             const cargo = document.getElementById('filtroCargoVG')?.value;
             
-            // Se mudou o ano, carregar novos dados
             if (ano && ano !== currentYear) {
                 mudarAno(ano).then(() => {
                     aplicarFiltrosVGAposCarregar(mes, orgao, cargo);
@@ -1173,21 +1315,22 @@ async function carregarDados() {
 
         function aplicarFiltrosVGAposCarregar(mes, orgao, cargo) {
             dadosFiltrados = dadosCompletos.filter(i => {
-                if (mes && i.MES_NUM !== mes) return false;
+                if (mes && mes !== 'todos' && i.MES_NUM !== mes) return false;
                 if (orgao && i.orgao_sigla !== orgao) return false;
                 if (cargo && i.cargo_descricao !== cargo) return false;
                 return true;
             });
+            
+            if (dadosFiltrados.length === 0) {
+                dadosFiltrados = dadosCompletos.filter(i => i.MES_NUM === '12');
+                if (dadosFiltrados.length === 0) {
+                    dadosFiltrados = dadosCompletos.slice(0, 1000);
+                }
+            }
+            
             metricaGeral = calcularMetricas(dadosFiltrados);
-            if (mes) currentMonth = mes;
             renderizarVisaoGeral();
         }
-
-        window.limparFiltrosVG = function() {
-            dadosFiltrados = dadosCompletos.filter(i => i.MES_NUM === currentMonth);
-            metricaGeral = calcularMetricas(dadosFiltrados);
-            renderizarVisaoGeral();
-        };
 
         window.irParaConsulta = function(sigla) {
             document.getElementById('consulta-tab').click();
@@ -1200,96 +1343,22 @@ async function carregarDados() {
             }, 300);
         };
 
-        function criarGraficoOrgao(dados) {
-            const ctx = document.getElementById('chartOrgao')?.getContext('2d');
-            if (!ctx) return;
-            new Chart(ctx, {
-                type: 'bar',
-                data: { 
-                    labels: dados.map(i => i.sigla), 
-                    datasets: [{ 
-                        label: 'Empregados', 
-                        data: dados.map(i => i.total), 
-                        backgroundColor: chartPalette, 
-                        borderRadius: 4 
-                    }] 
-                },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { 
-                        legend: { display: false }, 
-                        tooltip: { 
-                            callbacks: { 
-                                label: ctx => ctx.raw.toLocaleString('pt-BR') + ' empregados' 
-                            } 
-                        } 
-                    }, 
-                    scales: { 
-                        y: { 
-                            beginAtZero: true, 
-                            ticks: { 
-                                callback: v => v.toLocaleString('pt-BR') 
-                            } 
-                        } 
-                    } 
-                }
-            });
-        }
-        
-        function criarGraficoCargo(dados) {
-            const ctx = document.getElementById('chartCargo')?.getContext('2d');
-            if (!ctx) return;
-            new Chart(ctx, {
-                type: 'bar',
-                data: { 
-                    labels: dados.map(i => i.cargo.length > 20 ? i.cargo.substring(0,20)+'...' : i.cargo), 
-                    datasets: [{ 
-                        label: 'Empregados', 
-                        data: dados.map(i => i.total), 
-                        backgroundColor: chartPalette.slice().reverse(), 
-                        borderRadius: 4 
-                    }] 
-                },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { 
-                        legend: { display: false }, 
-                        tooltip: { 
-                            callbacks: { 
-                                label: ctx => ctx.raw.toLocaleString('pt-BR') + ' empregados' 
-                            } 
-                        } 
-                    }, 
-                    scales: { 
-                        y: { 
-                            beginAtZero: true, 
-                            ticks: { 
-                                callback: v => v.toLocaleString('pt-BR') 
-                            } 
-                        } 
-                    } 
-                }
-            });
-        }
-
         // ============================================
         // RENDERIZAÇÃO CONSULTA INDIVIDUAL
         // ============================================
         function renderizarConsulta() {
-            const opcoes = obterOpcoesFiltro();
-            todosEmpregados = obterEmpregadosUnicos();
-            empregadosFiltrados = [...todosEmpregados];
-            
             const container = document.getElementById('consulta-content');
+            if (!container) return;
+            
+            const opcoes = obterOpcoesFiltro();
+            
             container.innerHTML = `
                 <!-- Filtros -->
                 <div class="filter-container">
                     <div class="row g-3">
                         <div class="col-md-2">
                             <label class="filter-label"><i class="material-icons">calendar_today</i>Ano</label>
-                            <select class="form-select" id="filtroAnoCI">
+                            <select class="form-select" id="filtroAnoCI" onchange="aplicarFiltrosCI()">
                                 <option value="">Todos</option>
                                 ${opcoes.anos.map(a => `<option value="${a}" ${a === currentYear ? 'selected' : ''}>${a}</option>`).join('')}
                             </select>
@@ -1312,36 +1381,30 @@ async function carregarDados() {
                             <label class="filter-label"><i class="material-icons">work</i>Cargo</label>
                             <select class="form-select" id="filtroCargoCI">
                                 <option value="">Todos</option>
-                                ${opcoes.cargos.map(c => `<option value="${c}">${c}</option>`).join('')}
+                                ${opcoes.cargos.map(c => `<option value="${c}">${c.length > 30 ? c.substring(0,30)+'...' : c}</option>`).join('')}
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <!-- Espaço vazio -->
-                        </div>
-                    </div>
-                    
-                    <div class="row mt-3">
-                        <div class="col-md-4">
                             <label class="filter-label"><i class="material-icons">domain</i>Empresa</label>
                             <select class="form-select" id="filtroEmpresaCI">
                                 <option value="">Todas</option>
                                 ${opcoes.empresas.map(e => `<option value="${e}">${e.length > 30 ? e.substring(0,30)+'...' : e}</option>`).join('')}
                             </select>
                         </div>
+                    </div>
+                    
+                    <div class="row mt-3">
                         <div class="col-md-4">
                             <label class="filter-label"><i class="material-icons">badge</i>Matrícula</label>
                             <input type="text" class="form-control" id="filtroMatriculaCI" placeholder="Digite a matrícula...">
                         </div>
                         <div class="col-md-4">
                             <label class="filter-label"><i class="material-icons">search</i>Busca Geral</label>
-                            <input type="text" class="search-box" id="buscaNomeCI" placeholder="Nome, cargo, empresa ou órgão..." style="width:100% !important;" onkeyup="aplicarFiltrosCI()">
+                            <input type="text" class="form-control" id="buscaNomeCI" placeholder="Nome, cargo, empresa ou órgão...">
                         </div>
-                    </div>
-                    
-                    <div class="row mt-3">
-                        <div class="col-12 d-flex justify-content-start gap-2">
+                        <div class="col-md-4 d-flex align-items-end gap-2">
                             <button class="btn-pesquisa" onclick="aplicarFiltrosCI()"><i class="material-icons me-2">search</i>Pesquisar</button>
-                            <button class="btn-secondary-custom" onclick="limparFiltrosCI()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
+                            <button class="btn-secondary-custom" onclick="limparFiltrosCI()"><i class="material-icons me-2">clear</i>Limpar</button>
                         </div>
                     </div>
                 </div>
@@ -1374,7 +1437,7 @@ async function carregarDados() {
 
                 <div class="table-container">
                     <div class="table-fixed-header-container">
-                        <table class="table" id="empregadosTable">
+                        <table class="table">
                             <thead><tr><th>Matrícula</th><th>Nome</th><th>Órgão</th><th>Cargo</th><th>Empresa</th><th>CNPJ</th><th class="text-center">Ações</th></tr></thead>
                             <tbody id="empregadosTableBody"></tbody>
                         </table>
@@ -1384,19 +1447,6 @@ async function carregarDados() {
             `;
             
             aplicarFiltrosCI();
-            setTimeout(iframeUpdateHeight, 300);
-        }
-
-        function gerarLinhasTabelaEmpregados(empregados) {
-            return empregados.map(s => `<tr>
-                <td>${s.matricula || '-'}</td>
-                <td>${s.nome || '-'}</td>
-                <td>${s.orgao_sigla || '-'}</td>
-                <td>${s.cargo_descricao || '-'}</td>
-                <td>${s.empresa ? (s.empresa.length > 30 ? s.empresa.substring(0,30)+'...' : s.empresa) : '-'}</td>
-                <td>${s.cnpj_empresa ? s.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-'}</td>
-                <td class="text-center"><button class="btn-action" onclick="verDetalhes('${s.matricula}')"><i class="material-icons">visibility</i></button></td>
-            </tr>`).join('');
         }
 
         window.aplicarFiltrosCI = async function() {
@@ -1408,12 +1458,10 @@ async function carregarDados() {
             const matricula = (document.getElementById('filtroMatriculaCI')?.value || '').toLowerCase();
             const buscaNome = (document.getElementById('buscaNomeCI')?.value || '').toLowerCase();
             
-            // Se mudou o ano, carregar novos dados
             if (ano && ano !== currentYear) {
                 await mudarAno(ano);
             }
             
-            // Filtrar empregados com base nos critérios
             empregadosFiltrados = todosEmpregados.filter(s => {
                 const dadosServidor = dadosCompletos.filter(d => d.matricula === s.matricula);
                 
@@ -1429,7 +1477,8 @@ async function carregarDados() {
                     const cargoMatch = s.cargo_descricao && s.cargo_descricao.toLowerCase().includes(buscaNome);
                     const empresaMatch = s.empresa && s.empresa.toLowerCase().includes(buscaNome);
                     const orgaoMatch = s.orgao && s.orgao.toLowerCase().includes(buscaNome);
-                    if (!(nomeMatch || cargoMatch || empresaMatch || orgaoMatch)) return false;
+                    const siglaMatch = s.orgao_sigla && s.orgao_sigla.toLowerCase().includes(buscaNome);
+                    if (!(nomeMatch || cargoMatch || empresaMatch || orgaoMatch || siglaMatch)) return false;
                 }
                 
                 return true;
@@ -1452,23 +1501,28 @@ async function carregarDados() {
             atualizarTabelaConsulta();
         };
 
-        window.alterarItensPorPaginaCI = function() {
-            itensPorPaginaCI = parseInt(document.getElementById('itensPorPaginaCI').value);
-            paginaAtualCI = 1;
-            atualizarTabelaConsulta();
-        };
-
         function atualizarTabelaConsulta() {
             const inicio = (paginaAtualCI - 1) * itensPorPaginaCI;
             const fim = Math.min(inicio + itensPorPaginaCI, empregadosFiltrados.length);
             const dadosPagina = empregadosFiltrados.slice(inicio, fim);
             
-            document.getElementById('empregadosTableBody').innerHTML = gerarLinhasTabelaEmpregados(dadosPagina);
+            const tbody = document.getElementById('empregadosTableBody');
+            if (tbody) {
+                tbody.innerHTML = dadosPagina.map(s => `<tr>
+                    <td>${s.matricula || '-'}</td>
+                    <td>${s.nome || '-'}</td>
+                    <td>${s.orgao_sigla || '-'}</td>
+                    <td>${s.cargo_descricao || '-'}</td>
+                    <td>${s.empresa ? (s.empresa.length > 30 ? s.empresa.substring(0,30)+'...' : s.empresa) : '-'}</td>
+                    <td>${s.cnpj_empresa ? s.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-'}</td>
+                    <td class="text-center"><button class="btn-action" onclick="verDetalhes('${s.matricula}')"><i class="material-icons">visibility</i></button></td>
+                </tr>`).join('');
+            }
+            
             document.getElementById('totalServidoresBadge').innerText = empregadosFiltrados.length + ' empregados';
             
             totalPaginasCI = Math.ceil(empregadosFiltrados.length / itensPorPaginaCI);
             renderizarPaginacaoCI();
-            setTimeout(iframeUpdateHeight, 100);
         }
 
         function renderizarPaginacaoCI() {
@@ -1491,17 +1545,12 @@ async function carregarDados() {
                     <ul class="pagination mb-0">
             `;
             
-            // Botão anterior
             html += `<li class="page-item ${paginaAtualCI === 1 ? 'disabled' : ''}">
                 <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI - 1}); return false;">&laquo;</a>
             </li>`;
             
-            // Páginas
             let inicioPaginas = Math.max(1, paginaAtualCI - 2);
             let fimPaginas = Math.min(totalPaginasCI, inicioPaginas + 4);
-            if (fimPaginas - inicioPaginas < 4) {
-                inicioPaginas = Math.max(1, fimPaginas - 4);
-            }
             
             for (let i = inicioPaginas; i <= fimPaginas; i++) {
                 html += `<li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
@@ -1509,7 +1558,6 @@ async function carregarDados() {
                 </li>`;
             }
             
-            // Botão próximo
             html += `<li class="page-item ${paginaAtualCI === totalPaginasCI ? 'disabled' : ''}">
                 <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">&raquo;</a>
             </li>`;
@@ -1524,8 +1572,14 @@ async function carregarDados() {
             atualizarTabelaConsulta();
         };
 
+        window.alterarItensPorPaginaCI = function() {
+            itensPorPaginaCI = parseInt(document.getElementById('itensPorPaginaCI').value);
+            paginaAtualCI = 1;
+            atualizarTabelaConsulta();
+        };
+
         window.verDetalhes = function(matricula) {
-            const historico = dadosCompletos.filter(i => i.matricula === matricula).sort((a,b) => b.ano_mes.localeCompare(a.ano_mes));
+            const historico = dadosCompletos.filter(i => i.matricula === matricula).sort((a,b) => (b.ano_mes || '').localeCompare(a.ano_mes || ''));
             if (!historico.length) return;
             const emp = historico[0];
             
@@ -1548,8 +1602,6 @@ async function carregarDados() {
             new bootstrap.Modal(document.getElementById('detailModal')).show();
         };
 
-
-
         // ============================================
         // EXPORTAÇÕES
         // ============================================
@@ -1560,7 +1612,7 @@ async function carregarDados() {
             const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `visao_geral_orgaos_${currentMonth}_${currentYear}.csv`;
+            link.download = `visao_geral_orgaos_${currentYear}.csv`;
             link.click();
         };
 
@@ -1575,10 +1627,10 @@ async function carregarDados() {
                 didDrawPage: (data) => {
                     doc.setFontSize(10);
                     doc.text('Visão Geral - Empregados Terceirizados', 14, 10);
-                    doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')} - ${window.location.href}`, 14, doc.internal.pageSize.height - 5);
+                    doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
                 }
             });
-            doc.save(`visao_geral_orgaos_${currentMonth}_${currentYear}.pdf`);
+            doc.save(`visao_geral_orgaos_${currentYear}.pdf`);
         };
 
         window.exportarTabelaConsultaCSV = function() {
@@ -1587,7 +1639,7 @@ async function carregarDados() {
             const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `consulta_empregados_${currentMonth}_${currentYear}.csv`;
+            link.download = `consulta_empregados_${currentYear}.csv`;
             link.click();
         };
 
@@ -1601,10 +1653,10 @@ async function carregarDados() {
                 didDrawPage: (data) => {
                     doc.setFontSize(10);
                     doc.text('Consulta de Empregados Terceirizados', 14, 10);
-                    doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')} - ${window.location.href}`, 14, doc.internal.pageSize.height - 5);
+                    doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
                 }
             });
-            doc.save(`consulta_empregados_${currentMonth}_${currentYear}.pdf`);
+            doc.save(`consulta_empregados_${currentYear}.pdf`);
         };
 
         // ============================================
@@ -1655,21 +1707,23 @@ async function carregarDados() {
                 <div class="filter-container">
                     <h3 class="filter-label mb-3"><i class="material-icons">download</i> Downloads</h3>
                     <div class="row align-items-end g-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="filter-label"><i class="material-icons">calendar_today</i>Selecione o Ano</label>
                             <select class="form-select" id="anoDownload">
                                 <option value="">Selecione um ano</option>
                                 ${anos.map(a => `<option value="${a}">${a}</option>`).join('')}
                             </select>
                         </div>
-                        <div class="col-md-6">
-                            <button class="btn-primary-custom w-100" onclick="baixarCSVAno()"><i class="material-icons me-2">download</i>Baixar CSV do Ano Selecionado</button>
+                        <div class="col-md-4">
+                            <button class="btn-primary-custom w-100" onclick="baixarCSVAno()"><i class="material-icons me-2">download</i>Baixar CSV</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn-primary-custom w-100" onclick="baixarTodosCSV()"><i class="material-icons me-2">download</i>Baixar Todos</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                   
                     <div class="col-md-6 mb-3">
                         <div class="card-stats p-4 bg-white rounded shadow-sm h-100">
                             <h4 class="fw-bold text-start mb-3"><i class="material-icons me-2">open_in_new</i> Portal de Dados Abertos</h4>
@@ -1679,9 +1733,8 @@ async function carregarDados() {
                             <div class="mt-4 text-end">
                                 <a href="https://dados.mg.gov.br/dataset/empregados_terceirizados" 
                                    target="_blank" 
-                                   class="btn-export text-decoration-none fw-bold d-inline-block px-4 py-2"
-                                   style="color: var(--primary-dark); background-color: white; border: 1px solid var(--primary-dark); border-radius: 4px; transition: all 0.3s ease;">
-                                    <i class="material-icons me-2" style="font-size: 16px; vertical-align: middle;">launch</i>Acessar Portal de Dados MG
+                                   class="btn-export text-decoration-none fw-bold d-inline-block px-4 py-2">
+                                    <i class="material-icons me-2" style="font-size: 16px; vertical-align: middle;">launch</i>Acessar Portal
                                 </a>
                             </div>
                         </div>
@@ -1689,17 +1742,16 @@ async function carregarDados() {
                 </div>
 
                 <div class="metadata-card">
-                    <h6 class="fw-bold mb-3"><i class="material-icons me-2">info</i> Metadados da Tabela</h6>
+                    <h6 class="fw-bold mb-3"><i class="material-icons me-2">info</i> Metadados</h6>
                     <div class="metadata-item"><strong>matricula:</strong> Matrícula do empregado terceirizado</div>
-                    <div class="metadata-item"><strong>nome:</strong> Nome completo do empregado terceirizado</div>
-                    <div class="metadata-item"><strong>orgao:</strong> Órgão de trabalho do empregado</div>
-                    <div class="metadata-item"><strong>cargo:</strong> Cargo exercido pelo empregado</div>
+                    <div class="metadata-item"><strong>nome:</strong> Nome completo do empregado</div>
+                    <div class="metadata-item"><strong>orgao:</strong> Órgão de trabalho</div>
+                    <div class="metadata-item"><strong>cargo:</strong> Cargo exercido</div>
                     <div class="metadata-item"><strong>empresa:</strong> Nome da empresa terceirizada</div>
-                    <div class="metadata-item"><strong>cnpj_empresa:</strong> CNPJ da empresa terceirizada</div>
-                    <div class="metadata-item"><strong>mes_referencia:</strong> Mês do contrato de trabalho (formato YYYY-MM-DD)</div>
+                    <div class="metadata-item"><strong>cnpj_empresa:</strong> CNPJ da empresa</div>
+                    <div class="metadata-item"><strong>mes_referencia:</strong> Mês de referência</div>
                 </div>
             `;
-            setTimeout(iframeUpdateHeight, 300);
         }
 
         window.baixarCSVAno = function() {
@@ -1728,7 +1780,9 @@ async function carregarDados() {
         window.baixarTodosCSV = function() {
             let todosDados = [];
             for (const ano in allData) {
-                todosDados = todosDados.concat(allData[ano]);
+                if (allData[ano] && allData[ano].length > 0) {
+                    todosDados = todosDados.concat(allData[ano]);
+                }
             }
             
             if (todosDados.length === 0) {

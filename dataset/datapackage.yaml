@@ -15,18 +15,32 @@ resources:
       fields:
         - name: matricula
           type: integer
+          title: Matrícula
+          description: Matrícula do empregado terceirizado utilizado para controle e referência do registro.
         - name: nome
           type: string
+          title: Nome
+          description: Nome completo do empregado terceirizado vinculado à empresa prestadora de serviços e alocado no órgão ou entidade do Poder Executivo.
         - name: orgao
           type: string
+          title: Órgão
+          description: Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
         - name: cargo
           type: string
+          title: Cargo
+          description: Função ou atividade desempenhada pelo empregado terceirizado no âmbito do contrato de prestação de serviços.
         - name: empresa
           type: string
+          title: Empresa
+          description: Nome da empresa contratada pelo órgão ou entidade para a prestação de serviços terceirizados.
         - name: cnpj_empresa
           type: string
+          title: CNPJ da Empresa
+          description: Número de inscrição da empresa prestadora de serviços no Cadastro Nacional da Pessoa Jurídica (CNPJ)
         - name: mes_referencia
           type: date
+          title: Data
+          description: Mês e ano de referência das informações apresentadas no registro, indicando o período ao qual os dados se referem.
     scheme: file
     title: Terceirizados 2021
   - description: Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2022.
@@ -42,18 +56,32 @@ resources:
       fields:
         - name: matricula
           type: integer
+          title: Matrícula
+          description: Matrícula do empregado terceirizado utilizado para controle e referência do registro.
         - name: nome
           type: string
+          title: Nome
+          description: Nome completo do empregado terceirizado vinculado à empresa prestadora de serviços e alocado no órgão ou entidade do Poder Executivo.
         - name: orgao
           type: string
+          title: Órgão
+          description: Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
         - name: cargo
           type: string
+          title: Cargo
+          description: Função ou atividade desempenhada pelo empregado terceirizado no âmbito do contrato de prestação de serviços.
         - name: empresa
           type: string
+          title: Empresa
+          description: Nome da empresa contratada pelo órgão ou entidade para a prestação de serviços terceirizados.
         - name: cnpj_empresa
           type: string
+          title: CNPJ da Empresa
+          description: Número de inscrição da empresa prestadora de serviços no Cadastro Nacional da Pessoa Jurídica (CNPJ)
         - name: mes_referencia
           type: date
+          title: Data
+          description: Mês e ano de referência das informações apresentadas no registro, indicando o período ao qual os dados se referem.
     scheme: file
     title: Terceirizados 2022
   - description: Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2023.
@@ -69,18 +97,32 @@ resources:
       fields:
         - name: matricula
           type: integer
+          title: Matrícula
+          description: Matrícula do empregado terceirizado utilizado para controle e referência do registro.
         - name: nome
           type: string
+          title: Nome
+          description: Nome completo do empregado terceirizado vinculado à empresa prestadora de serviços e alocado no órgão ou entidade do Poder Executivo.
         - name: orgao
           type: string
+          title: Órgão
+          description: Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
         - name: cargo
           type: string
+          title: Cargo
+          description: Função ou atividade desempenhada pelo empregado terceirizado no âmbito do contrato de prestação de serviços.
         - name: empresa
           type: string
+          title: Empresa
+          description: Nome da empresa contratada pelo órgão ou entidade para a prestação de serviços terceirizados.
         - name: cnpj_empresa
           type: string
+          title: CNPJ da Empresa
+          description: Número de inscrição da empresa prestadora de serviços no Cadastro Nacional da Pessoa Jurídica (CNPJ)
         - name: mes_referencia
           type: date
+          title: Data
+          description: Mês e ano de referência das informações apresentadas no registro, indicando o período ao qual os dados se referem.
     scheme: file
     title: Terceirizados 2023
   - description: Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2024.
@@ -96,18 +138,32 @@ resources:
       fields:
         - name: matricula
           type: integer
+          title: Matrícula
+          description: Matrícula do empregado terceirizado utilizado para controle e referência do registro.
         - name: nome
           type: string
+          title: Nome
+          description: Nome completo do empregado terceirizado vinculado à empresa prestadora de serviços e alocado no órgão ou entidade do Poder Executivo.
         - name: orgao
           type: string
+          title: Órgão
+          description: Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
         - name: cargo
           type: string
+          title: Cargo
+          description: Função ou atividade desempenhada pelo empregado terceirizado no âmbito do contrato de prestação de serviços.
         - name: empresa
           type: string
+          title: Empresa
+          description: Nome da empresa contratada pelo órgão ou entidade para a prestação de serviços terceirizados.
         - name: cnpj_empresa
           type: string
+          title: CNPJ da Empresa
+          description: Número de inscrição da empresa prestadora de serviços no Cadastro Nacional da Pessoa Jurídica (CNPJ)
         - name: mes_referencia
           type: date
+          title: Data
+          description: Mês e ano de referência das informações apresentadas no registro, indicando o período ao qual os dados se referem.
     scheme: file
     title: Terceirizados 2024
   - description: Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2025.
@@ -123,18 +179,32 @@ resources:
       fields:
         - name: matricula
           type: integer
+          title: Matrícula
+          description: Matrícula do empregado terceirizado utilizado para controle e referência do registro.
         - name: nome
           type: string
+          title: Nome
+          description: Nome completo do empregado terceirizado vinculado à empresa prestadora de serviços e alocado no órgão ou entidade do Poder Executivo.
         - name: orgao
           type: string
+          title: Órgão
+          description: Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
         - name: cargo
           type: string
+          title: Cargo
+          description: Função ou atividade desempenhada pelo empregado terceirizado no âmbito do contrato de prestação de serviços.
         - name: empresa
           type: string
+          title: Empresa
+          description: Nome da empresa contratada pelo órgão ou entidade para a prestação de serviços terceirizados.
         - name: cnpj_empresa
           type: string
+          title: CNPJ da Empresa
+          description: Número de inscrição da empresa prestadora de serviços no Cadastro Nacional da Pessoa Jurídica (CNPJ)
         - name: mes_referencia
           type: date
+          title: Data
+          description: Mês e ano de referência das informações apresentadas no registro, indicando o período ao qual os dados se referem.
     scheme: file
     title: Terceirizados 2025
 title: Empregados Terceirizados

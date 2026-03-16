@@ -285,7 +285,7 @@
             z-index: 10;
             font-weight: 600;
             padding: 12px 10px;
-            font-size: 14px;
+            font-size: 15px;
             text-transform: uppercase;
             white-space: nowrap;
         }
@@ -1877,10 +1877,9 @@
             
             document.getElementById('downloads-content').innerHTML = `
                 <div class="filter-container">
-                    <h3 class="filter-label mb-3"><i class="material-icons">download</i> Downloads</h3>
-                    <div class="row align-items-end g-3">
+                     <div class="row align-items-end g-3">
                         <div class="col-md-4">
-                            <label class="filter-label"><i class="material-icons">calendar_today</i>Selecione o Ano</label>
+                            <label class="filter-label"><i class="material-icons"></i>Selecione o Ano</label>
                             <select class="form-select" id="anoDownload">
                                 <option value="">Selecione um ano</option>
                                 ${anos.map(a => `<option value="${a}">${a}</option>`).join('')}

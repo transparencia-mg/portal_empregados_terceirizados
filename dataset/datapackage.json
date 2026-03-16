@@ -4,7 +4,6 @@
   "profile": "data-package",
   "resources": [
     {
-      "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2021.",
       "dialect": {
         "delimiter": ";"
       },
@@ -64,7 +63,6 @@
       "title": "Terceirizados 2021"
     },
     {
-      "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2022.",
       "dialect": {
         "delimiter": ";"
       },
@@ -124,7 +122,6 @@
       "title": "Terceirizados 2022"
     },
     {
-      "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2023.",
       "dialect": {
         "delimiter": ";"
       },
@@ -184,7 +181,6 @@
       "title": "Terceirizados 2023"
     },
     {
-      "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2024.",
       "dialect": {
         "delimiter": ";"
       },
@@ -244,7 +240,6 @@
       "title": "Terceirizados 2024"
     },
     {
-      "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2025.",
       "dialect": {
         "delimiter": ";"
       },

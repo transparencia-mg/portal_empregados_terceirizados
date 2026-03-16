@@ -589,8 +589,99 @@
             margin-top: 20px;
             border-left: 4px solid var(--info-blue);
         }
-        .metadata-item { font-size: 13px; padding: 8px 0; border-bottom: 1px dashed #eee; }
-        .metadata-item strong { color: var(--primary-dark); width: 180px; display: inline-block; }
+        .metadata-item { 
+            font-size: 13px; 
+            padding: 8px 0; 
+            border-bottom: 1px dashed #eee; 
+        }
+        .metadata-item strong { 
+            color: var(--primary-dark); 
+            width: 180px; 
+            display: inline-block; 
+        }
+        
+        /* Estilos para a tabela de metadados */
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            background-color: transparent;
+            border-collapse: collapse;
+        }
+        
+        .table-bordered {
+            border: 1px solid #dee2e6;
+        }
+        
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            vertical-align: top;
+        }
+        
+        /* CABEÇALHO DA TABELA - Primary Dark */
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+            background-color: var(--primary-dark) !important;  /* Primary Dark */
+            color: white !important;  /* Texto branco para contraste */
+            font-weight: 600;
+        }
+        
+        /* CORPO DA TABELA - Fundo branco */
+        .table tbody tr {
+            background-color: white !important;
+        }
+        
+        .table tbody tr:hover {
+            background-color: #f5f8ff !important;  /* Hover suave */
+            transition: 0.2s;
+        }
+        
+        .table tbody td {
+            background-color: white;
+        }
+        
+        .fw-bold {
+            font-weight: 700;
+        }
+        
+        .mb-3 {
+            margin-bottom: 1rem;
+        }
+        
+        .mt-4 {
+            margin-top: 2rem;
+        }
+        
+        .me-2 {
+            margin-right: 0.5rem;
+        }
+        
+        /* Cores personalizadas */
+        :root {
+            --info-blue: #3498db;
+            --primary-dark: #2c3e50;  /* Azul escuro */
+        }
+        
+        .material-icons {
+            font-size: 20px;
+            vertical-align: middle;
+        }
+        
+        .table-responsive {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        h5 {
+            font-size: 1.25rem;
+            color: var(--primary-dark);
+            border-bottom: 2px solid var(--info-blue);
+            padding-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -1822,16 +1913,57 @@
                     </div>
                 </div>
 
-                <div class="metadata-card">
-                    <h6 class="fw-bold mb-3"><i class="material-icons me-2">info</i> Metadados</h6>
-                    <div class="metadata-item"><strong>matricula:</strong> Matrícula do empregado terceirizado</div>
-                    <div class="metadata-item"><strong>nome:</strong> Nome completo do empregado</div>
-                    <div class="metadata-item"><strong>orgao:</strong> Órgão de trabalho</div>
-                    <div class="metadata-item"><strong>cargo:</strong> Cargo exercido</div>
-                    <div class="metadata-item"><strong>empresa:</strong> Nome da empresa terceirizada</div>
-                    <div class="metadata-item"><strong>cnpj_empresa:</strong> CNPJ da empresa</div>
-                    <div class="metadata-item"><strong>mes_referencia:</strong> Mês de referência</div>
-                </div>
+<div class="mt-4">
+    <h5 class="mb-3">Metadados - Estrutura dos Dados</h5>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Campo</th>
+                    <th>Descrição</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>matricula</td>
+                    <td>Matrícula do empregado terceirizado</td>
+                    <td>Texto/Número</td>
+                </tr>
+                <tr>
+                    <td>nome</td>
+                    <td>Nome completo do empregado</td>
+                    <td>Texto</td>
+                </tr>
+                <tr>
+                    <td>orgao</td>
+                    <td>Órgão de trabalho</td>
+                    <td>Texto</td>
+                </tr>
+                <tr>
+                    <td>cargo</td>
+                    <td>Cargo exercido</td>
+                    <td>Texto</td>
+                </tr>
+                <tr>
+                    <td>empresa</td>
+                    <td>Nome da empresa terceirizada</td>
+                    <td>Texto</td>
+                </tr>
+                <tr>
+                    <td>cnpj_empresa</td>
+                    <td>CNPJ da empresa</td>
+                    <td>Texto/Número</td>
+                </tr>
+                <tr>
+                    <td>mes_referencia</td>
+                    <td>Mês de referência</td>
+                    <td>Texto/Data</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
             `;
         }
 

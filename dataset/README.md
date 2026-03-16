@@ -1,61 +1,26 @@
-Dashboard interativo para visualização, consulta e download de dados públicos sobre **empregados terceirizados** do Governo do Estado de Minas Gerais, com base em arquivos CSV padronizados e publicação em dados abertos.
+Conjunto de dados que reúne informações cadastrais, contratuais e funcionais dos empregados terceirizados vinculados aos órgãos e entidades do Poder Executivo do Estado de Minas Gerais, disponibilizado em conformidade com a política estadual de transparência e de dados abertos.
 
----
+Os dados são organizados em arquivos anuais e seguem um padrão estruturado, facilitando o uso por cidadãos, pesquisadores, órgãos de controle e desenvolvedores para consulta, análise e reutilização das informações.
 
-## 🔍 Visão Geral
+Periodicidade de Atualização: Mensal.
 
-Este projeto disponibiliza um **dashboard web público** para consulta e análise dos dados de empregados terceirizados do Governo de Minas Gerais. A solução permite o acompanhamento transparente das informações, com foco em organização, atualização e reutilização dos dados.
+## Como participar
 
-Principais funcionalidades:
+Saiba como contribuir com a documentação deste conjunto de dados!
 
-- Visualização agregada por **órgão**, **empresa** e **cargo**
-- Consulta individual de empregados terceirizados
-- Carregamento automático de dados a partir de arquivos CSV
-- Exportação dos dados filtrados
-- Integração com repositório GitHub e dados abertos (CKAN)
-- Atualização contínua conforme novos arquivos são adicionados
+A documentação deste conjunto de dados está sendo feita de forma aberta e colaborativa no [Github](https://github.com/transparencia-mg/bens-tombados). Para enviar sua contribuição, por favor acesse:
 
----
+- [Pull requests](https://github.com/transparencia-mg/bens-tombados/pulls), no caso de sugerir uma alteração na documentação.
 
-## 🌐 Acesso Online
+Todas as contribuições são bem vindas. Alguns exemplos são:
 
-O dashboard está disponível publicamente em:
+* Indicação de expressões imprecisas presentes na documentação;
+* Sugestões para inclusão de descrições em campos específicos;
+* Sugestões para clareza na organização das ideias;
+* Correção de erros de ortografia e gramática.
 
-👉 **https://transparencia-mg.github.io/empregados_terceirizados/**
+Além disso, fique a vontade para utilizar os demais canais oficiais de atendimento do Poder Executivo Estadual:
 
-Não é necessário login ou autenticação para acesso aos dados.
-
----
-
-## 🗂️ Estrutura dos Dados
-
-Os dados são organizados em arquivos CSV anuais.
-
-Cada arquivo representa os empregados terceirizados referentes ao respectivo ano.
-
----
-
-## ⚙️ Atualização dos Dados
-
-A atualização do dashboard ocorre a partir da inclusão ou substituição de arquivos CSV na pasta `data/`.
-
-Fluxo padrão de atualização:
-
-1. Inclusão ou atualização do arquivo CSV
-2. Geração automática do `datapackage.json`
-3. Versionamento no GitHub
-4. Atualização automática do dashboard
-
-Esse fluxo garante rastreabilidade, transparência e consistência dos dados publicados.
-
----
-
-## 📦 Dados Abertos
-
-Os dados deste projeto seguem o padrão **Data Package**, permitindo:
-
-- Versionamento dos recursos
-- Reutilização por outros sistemas
-- Publicação em plataformas de dados abertos (CKAN)
-
----
+- [Fale Conosco](https://www.mg.gov.br/planejamento/pagina/atendimento/fale-conosco/fale-conosco): Dúvidas
+- [Manifestações de Ouvidoria](http://www.ouvidoriageral.mg.gov.br/): Denúncia, Reclamação, Crítica, Elogio ou Sugestões
+- [Pedido de Acesso à Informação](http://www.acessoainformacao.mg.gov.br/sistema/site/index.html): Acesso às informações dos órgãos e entidades estaduais que não estejam publicamente disponíveis.

@@ -8,9 +8,9 @@ Periodicidade de Atualização: Mensal.
 
 Saiba como contribuir com a documentação deste conjunto de dados!
 
-A documentação deste conjunto de dados está sendo feita de forma aberta e colaborativa no [Github](https://github.com/transparencia-mg/bens-tombados). Para enviar sua contribuição, por favor acesse:
+A documentação deste conjunto de dados está sendo feita de forma aberta e colaborativa no [Github](https://github.com/transparencia-mg/portal_empregados_terceirizados). Para enviar sua contribuição, por favor acesse:
 
-- [Pull requests](https://github.com/transparencia-mg/bens-tombados/pulls), no caso de sugerir uma alteração na documentação.
+- [https://github.com/transparencia-mg/portal_empregados_terceirizados/pulls), no caso de sugerir uma alteração na documentação.
 
 Todas as contribuições são bem vindas. Alguns exemplos são:
 

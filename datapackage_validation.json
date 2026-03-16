@@ -1,11 +1,10 @@
 {
   "version": "4.16.6",
-  "time": 21.198,
+  "time": 21.308,
   "errors": [],
   "tasks": [
     {
       "resource": {
-        "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2021.",
         "dialect": {
           "delimiter": ";"
         },
@@ -70,7 +69,7 @@
           "rows": 140455
         }
       },
-      "time": 3.946,
+      "time": 3.996,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -100,7 +99,6 @@
     },
     {
       "resource": {
-        "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2022.",
         "dialect": {
           "delimiter": ";"
         },
@@ -165,7 +163,7 @@
           "rows": 135574
         }
       },
-      "time": 3.811,
+      "time": 3.86,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -195,7 +193,6 @@
     },
     {
       "resource": {
-        "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2023.",
         "dialect": {
           "delimiter": ";"
         },
@@ -260,7 +257,7 @@
           "rows": 152938
         }
       },
-      "time": 4.359,
+      "time": 4.286,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -290,7 +287,6 @@
     },
     {
       "resource": {
-        "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2024.",
         "dialect": {
           "delimiter": ";"
         },
@@ -355,7 +351,7 @@
           "rows": 159967
         }
       },
-      "time": 4.43,
+      "time": 4.484,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -385,7 +381,6 @@
     },
     {
       "resource": {
-        "description": "Dados sobre empregados terceirizados do Governo do Estado de Minas Gerais de 2025.",
         "dialect": {
           "delimiter": ";"
         },
@@ -450,7 +445,7 @@
           "rows": 166139
         }
       },
-      "time": 4.595,
+      "time": 4.619,
       "scope": [
         "hash-count-error",
         "byte-count-error",

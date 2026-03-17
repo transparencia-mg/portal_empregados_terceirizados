@@ -897,6 +897,9 @@
             setupEventListeners();
             carregarDadosIniciais();
             setupAtualizacaoData();
+            
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
         });
 
         function iframeUpdateHeight() {
@@ -1133,6 +1136,8 @@
                 renderizarDownloads();
                 
                 setTimeout(iframeUpdateHeight, 300);
+                const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
                 
             } catch (erro) {
                 console.error('Erro no carregamento inicial:', erro);

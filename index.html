@@ -34,27 +34,59 @@
             --info-blue: #17a2b8;
         }
 
+        /* ==================== RESET E CONFIGURAÇÕES GLOBAIS ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Montserrat', sans-serif !important;
             background-color: var(--background-light);
-            padding-bottom: 15px;
-            overflow-y: auto !important;
-            overflow-x: hidden !important;
-            min-height: 100vh !important;
-            height: auto !important;
             position: relative;
-        }
-
-        html {
-            overflow-y: auto !important;
-            height: auto !important;
+            display: flex;
+            flex-direction: column;
         }
 
         .main-container {
-            height: auto !important;
-            min-height: auto !important;
-            overflow: visible !important;
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
             position: relative;
+        }
+
+        .container-fluid {
+            width: 100%;
+            max-width: 100% !important;
+            padding: 0 20px;
+            margin: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==================== DASHBOARD CONTAINER ==================== */
+        .dashboard-container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0 20px;
+            margin: 0 auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         /* ==================== DATA ATUALIZAÇÃO ==================== */
@@ -62,7 +94,7 @@
             display: flex;
             justify-content: left;
             align-items: center;
-            margin: 20px 0;
+            margin: 15px 0;
         }
         
         .data-atualizacao-box {
@@ -84,23 +116,23 @@
         }
 
         /* ==================== FILTROS ==================== */
-       .filter-container {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-    padding: 20px;
-    margin-bottom: 20px;
-    border-left: none;
-}
+        .filter-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: none;
+            width: 100%;
         }
         
         .filter-label {
             font-size: 16px;
-    font-weight: 600;
-    color: #1a3a5c;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+            font-weight: 600;
+            color: #1a3a5c;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .filter-label i { font-size: 18px; color: var(--accent-red); }
@@ -112,6 +144,7 @@
             font-size: 13px;
             transition: all 0.3s ease;
             height: 42px;
+            width: 100%;
         }
         
         .form-control:focus, .form-select:focus {
@@ -168,36 +201,34 @@
 
         /* ==================== CARDS DE MÉTRICAS ==================== */
         .metric-card {
-    background: white;
-    border-radius: 8px;
-    border: 1px solid #e5e9ef;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-    overflow: hidden;
-    height: 100%;
-}
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e9ef;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            height: 100%;
+        }
 
-/* faixa azul (cabeçalho) */
-.metric-header {
-    background: #20445d;
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    padding: 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .metric-header {
+            background: #20445d;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-/* valor */
-.metric-body {
-    padding: 12px 15px;
-}
+        .metric-body {
+            padding: 12px 15px;
+        }
 
-.metric-value {
-    font-size: 26px;
-    font-weight: 600;
-    color: #1a3a5c;
-}
+        .metric-value {
+            font-size: 26px;
+            font-weight: 600;
+            color: #1a3a5c;
+        }
 
         /* ==================== CONTAINER DE GRÁFICOS ==================== */
         .chart-container {
@@ -232,7 +263,7 @@
             width: 100%;
         }
 
-        /* ==================== TABELAS ==================== */
+        /* ==================== TABELAS - OCUPANDO TODO ESPAÇO ==================== */
         .table-container {
             background: white;
             border-radius: 10px;
@@ -240,6 +271,11 @@
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
             margin-bottom: 20px;
             border: 1px solid #dee2e6;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 300px;
         }
         
         .table-header {
@@ -270,8 +306,11 @@
         
         .table-fixed-header-container {
             position: relative;
-            max-height: 500px;
+            flex: 1;
             overflow: auto;
+            max-height: calc(100vh - 400px);
+            min-height: 300px;
+            width: 100%;
         }
         
         .table-fixed-header-container table thead th {
@@ -292,6 +331,7 @@
             font-size: 15px;
             border-collapse: separate;
             border-spacing: 0;
+            table-layout: auto;
         }
         
         .table tbody td {
@@ -305,12 +345,32 @@
         }
 
         .orgao-link {
-            color: var(#006a82);
+            color: #006a82;
             text-decoration: none;
             font-weight: 400;
             cursor: pointer;
         }
         .orgao-link:hover { color: var(--accent-red); }
+
+        /* ==================== SORTABLE HEADERS ==================== */
+        .sortable-header {
+            cursor: pointer;
+            position: relative;
+            padding-right: 25px !important;
+        }
+        
+        .sortable-header:hover {
+            background-color: #2a4a6e !important;
+        }
+        
+        .sortable-header i {
+            font-size: 18px;
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.8;
+        }
 
         /* ==================== BOTÕES ==================== */
         .btn-primary-custom, .btn-pesquisa {
@@ -327,6 +387,7 @@
             gap: 6px;
             cursor: pointer;
             height: 42px;
+            white-space: nowrap;
         }
         .btn-primary-custom:hover, .btn-pesquisa:hover {
             background: linear-gradient(to right, var(--accent-red), #a32c32);
@@ -349,6 +410,7 @@
             gap: 6px;
             cursor: pointer;
             height: 42px;
+            white-space: nowrap;
         }
         .btn-secondary-custom:hover {
             background-color: #132837  !important;
@@ -370,6 +432,7 @@
             gap: 6px;
             cursor: pointer;
             height: 38px;
+            white-space: nowrap;
         }
         .btn-export:hover {
             background: var(--primary-darker);
@@ -457,53 +520,44 @@
         .nav-tabs-container {
             background: transparent;
             padding: 10px 0;
-            margin-top: 30px;
-            margin-bottom: 20px;
-     }
-       .nav-tabs{
-    border:none !important;
-    gap:10px;
-}
+            margin-top: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        
+        .nav-tabs {
+            border: none !important;
+            gap: 10px;
+            width: 100%;
+        }
 
-.nav-tabs .nav-link{
-    border:none !important;
-    background:#ffffff !important;
-    border-radius:10px !important;
-    padding:8px 18px !important;
-    font-weight:500;
-    font-size:18px;
-    color:#1a3a5c !important;
-    display:inline-flex !important;
-    align-items:center;
-    gap:6px;
-    transition:all .25s ease;
-}
+        .nav-tabs .nav-link {
+            border: none !important;
+            background: #ffffff !important;
+            border-radius: 10px !important;
+            padding: 8px 18px !important;
+            font-weight: 500;
+            font-size: 18px;
+            color: #1a3a5c !important;
+            display: inline-flex !important;
+            align-items: center;
+            gap: 6px;
+            transition: all .25s ease;
+        }
 
-.nav-tabs .nav-link:hover{
-    background:#e6e9ed !important;
-   }
+        .nav-tabs .nav-link:hover {
+            background: #e6e9ed !important;
+        }
 
-.nav-tabs .nav-link.active{
-    background:#234c63 !important;
-    color:#fff !important;
-    box-shadow:0 4px 10px rgba(0,0,0,0.15);
-}
+        .nav-tabs .nav-link.active {
+            background: #234c63 !important;
+            color: #fff !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
 
-.nav-tabs .material-icons{
-    font-size:18px !important;
-}
-.nav-tabs .nav-link.active {
-    background: linear-gradient(135deg, var(#20445d) 0%, var(--primary-darker) 100%) !important;
-    color: white !important;
-}
-
-.nav-tabs .nav-link .material-icons {
-    font-size: 18px !important;
-    margin-right: 8px !important;
-}
-.container{
-    max-width: 85% !important;
-}
+        .nav-tabs .material-icons {
+            font-size: 18px !important;
+        }
 
         /* ==================== MODAL ==================== */
         .modal-creative .modal-header {
@@ -534,6 +588,7 @@
             padding: 15px 20px;
             background: white;
             border-top: 1px solid #dee2e6;
+            width: 100%;
         }
         
         .pagination-info {
@@ -622,16 +677,9 @@
             display: inline-block; 
         }
         
-        /* Estilos para a tabela de metadados */
-        .table {
-            width: 100%;
-            margin-bottom: 1rem;
-            background-color: transparent;
-            border-collapse: collapse;
-        }
-        
         .table-bordered {
             border: 1px solid #dee2e6;
+            width: 100%;
         }
         
         .table-bordered th,
@@ -641,22 +689,20 @@
             vertical-align: top;
         }
         
-        /* CABEÇALHO DA TABELA - Primary Dark */
         .table thead th {
             vertical-align: bottom;
             border-bottom: 2px solid #dee2e6;
-            background-color: var(--primary-dark) !important;  /* Primary Dark */
-            color: white !important;  /* Texto branco para contraste */
+            background-color: var(--primary-dark) !important;
+            color: white !important;
             font-weight: 600;
         }
         
-        /* CORPO DA TABELA - Fundo branco */
         .table tbody tr {
             background-color: white !important;
         }
         
         .table tbody tr:hover {
-            background-color: #f5f8ff !important;  /* Hover suave */
+            background-color: #f5f8ff !important;
             transition: 0.2s;
         }
         
@@ -680,12 +726,6 @@
             margin-right: 0.5rem;
         }
         
-        /* Cores personalizadas */
-        :root {
-            --info-blue: #3498db;
-            --primary-dark: #2c3e50;  /* Azul escuro */
-        }
-        
         .material-icons {
             font-size: 20px;
             vertical-align: middle;
@@ -704,354 +744,616 @@
             border-bottom: 2px solid var(--info-blue);
             padding-bottom: 10px;
         }
-   body {
-    font-family: 'Montserrat', sans-serif !important;
-}
-        body {
-    line-height: 1.2;
-}
-/* ===== NOVO ESTILO DOS FILTROS ===== */
-
-.filter-label{
-    font-size: 16px;
-    font-weight: 600;
-    color: #1a3a5c;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.modern-select{
-    border: 1.5px solid #dfe5ec !important;
-    border-radius: 8px !important;
-    padding: 10px 12px !important;
-    font-size: 16px !important;
-    height: 48px !important;       
-    line-height: 1.5 !important;
-    background-color: #fff;
-    transition: all 0.2s ease;
-}
-.modern-select:focus{
-    border-color: #1a3a5c !important;
-    box-shadow: 0 0 0 2px rgba(26,58,92,0.1);
-}
-    /* ===== TOOLTIP CUSTOM ===== */
-.tooltip-inner {
-    background-color: #2f3b45 !important;
-    color: #fff;
-    font-size: 13px;
-    padding: 8px 10px;
-    border-radius: 6px;
-    max-width: 250px;
-}
-
-.tooltip.bs-tooltip-top .tooltip-arrow::before {
-    border-top-color: #2f3b45 !important;
-}
-
-.tooltip.bs-tooltip-bottom .tooltip-arrow::before {
-    border-bottom-color: #2f3b45 !important;
-}
-
-.tooltip.bs-tooltip-start .tooltip-arrow::before {
-    border-left-color: #2f3b45 !important;
-}
-
-.tooltip.bs-tooltip-end .tooltip-arrow::before {
-    border-right-color: #2f3b45 !important;
-}    
-/* ===== ÍCONE INFO ===== */
-.info-icon {
-    font-size: 18px;
-    color: white;
-    background-color: #1a3a5c;
-    border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1; 
-}
         
-      </style>
+        body {
+            line-height: 1.2;
+        }
+
+        .filter-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a3a5c;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .modern-select {
+            border: 1.5px solid #dfe5ec !important;
+            border-radius: 8px !important;
+            padding: 10px 12px !important;
+            font-size: 16px !important;
+            height: 48px !important;       
+            line-height: 1.5 !important;
+            background-color: #fff;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .modern-select:focus {
+            border-color: #1a3a5c !important;
+            box-shadow: 0 0 0 2px rgba(26,58,92,0.1);
+        }
+        
+        .tooltip-inner {
+            background-color: #2f3b45 !important;
+            color: #fff;
+            font-size: 13px;
+            padding: 8px 10px;
+            border-radius: 6px;
+            max-width: 250px;
+        }
+
+        .tooltip.bs-tooltip-top .tooltip-arrow::before {
+            border-top-color: #2f3b45 !important;
+        }
+
+        .tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+            border-bottom-color: #2f3b45 !important;
+        }
+
+        .tooltip.bs-tooltip-start .tooltip-arrow::before {
+            border-left-color: #2f3b45 !important;
+        }
+
+        .tooltip.bs-tooltip-end .tooltip-arrow::before {
+            border-right-color: #2f3b45 !important;
+        }    
+        
+        .info-icon {
+            font-size: 18px;
+            color: white;
+            background-color: #1a3a5c;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1; 
+        }
+        
+        /* ==================== FILTROS LAYOUT ==================== */
+        .filters-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 15px;
+            width: 100%;
+        }
+        
+        .filter-group {
+            flex: 1 1 auto;
+            min-width: 180px;
+        }
+        
+        .filter-buttons-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-left: auto;
+        }
+        
+        .consulta-filters-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            width: 100%;
+        }
+        
+        .consulta-filter-group {
+            flex: 1 1 calc(33.333% - 15px);
+            min-width: 250px;
+        }
+        
+        .consulta-buttons-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            margin-top: 15px;
+            justify-content: flex-start;
+        }
+        
+        .consulta-buttons-row .btn-pesquisa,
+        .consulta-buttons-row .btn-secondary-custom {
+            min-width: 150px;
+        }
+        
+        /* ==================== TAB CONTENT ==================== */
+        .tab-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tab-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tab-pane.active {
+            display: flex !important;
+        }
+        
+        #visao-geral-content,
+        #consulta-content,
+        #downloads-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* ==================== RESPONSIVIDADE ==================== */
+        @media (max-width: 1200px) {
+            .consulta-filter-group {
+                flex: 1 1 calc(50% - 15px);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .container-fluid {
+                padding: 0 15px;
+            }
+            
+            .dashboard-container {
+                padding: 0 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .filters-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-buttons-group {
+                margin-left: 0;
+                width: 100%;
+                justify-content: stretch;
+            }
+            
+            .filter-buttons-group button {
+                flex: 1;
+            }
+            
+            .consulta-filter-group {
+                flex: 1 1 100%;
+            }
+            
+            .consulta-buttons-row button {
+                flex: 1;
+            }
+            
+            .d-flex.justify-content-between {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start !important;
+            }
+            
+            .d-flex.gap-2 {
+                flex-wrap: wrap;
+            }
+            
+            .table-search-input {
+                width: 100% !important;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <div class="main-container">
-        <div class="container dashboard-spacing">          
-            <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
-            <div class="nav-tabs-container">
-                <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
-                    <li class="nav-item"><button class="nav-link active" id="visao-geral-tab" data-bs-toggle="tab" data-bs-target="#visao-geral"><i class="material-icons">bar_chart</i>Visão Geral</button></li>
-                    <li class="nav-item"><button class="nav-link" id="consulta-tab" data-bs-toggle="tab" data-bs-target="#consulta"><i class="material-icons">person</i>Consulta Individual</button></li>
-                    <li class="nav-item"><button class="nav-link" id="downloads-tab" data-bs-toggle="tab" data-bs-target="#downloads"><i class="material-icons">download</i>Downloads</button></li>
-                </ul>
-            </div>
+    <div class="container-fluid dashboard-container">          
+        <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
+        <div class="nav-tabs-container">
+            <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+                <li class="nav-item"><button class="nav-link active" id="visao-geral-tab" data-bs-toggle="tab" data-bs-target="#visao-geral"><i class="material-icons">bar_chart</i>Visão Geral</button></li>
+                <li class="nav-item"><button class="nav-link" id="consulta-tab" data-bs-toggle="tab" data-bs-target="#consulta"><i class="material-icons">person</i>Consulta Individual</button></li>
+                <li class="nav-item"><button class="nav-link" id="downloads-tab" data-bs-toggle="tab" data-bs-target="#downloads"><i class="material-icons">download</i>Downloads</button></li>
+            </ul>
+        </div>
 
-            <!-- ==================== DATA DE ATUALIZAÇÃO ==================== -->
-            <div class="data-atualizacao-container">
-                <div class="data-atualizacao-box">
-                    <i class="material-icons">update</i> Atualizado em: <span id="data-atualizacao-header">Carregando...</span>
-                </div>
+        <!-- ==================== DATA DE ATUALIZAÇÃO ==================== -->
+        <div class="data-atualizacao-container">
+            <div class="data-atualizacao-box">
+                <i class="material-icons">update</i> Atualizado em: <span id="data-atualizacao-header">Carregando...</span>
             </div>
+        </div>
 
-            <!-- ==================== CONTEÚDO DAS ABAS ==================== -->
-            <div class="tab-content" id="dashboardTabsContent">
-                <!-- ABA 1: VISÃO GERAL -->
-                <div class="tab-pane fade show active" id="visao-geral" role="tabpanel">
-                    <div id="visao-geral-content"></div>
-                </div>
-                <!-- ABA 2: CONSULTA INDIVIDUAL -->
-                <div class="tab-pane fade" id="consulta" role="tabpanel">
-                    <div id="consulta-content"></div>
-                </div>
-                <!-- ABA 3: DOWNLOADS -->
-                <div class="tab-pane fade" id="downloads" role="tabpanel">
-                    <div id="downloads-content"></div>
-                </div>
+        <!-- ==================== CONTEÚDO DAS ABAS ==================== -->
+        <div class="tab-content" id="dashboardTabsContent">
+            <!-- ABA 1: VISÃO GERAL -->
+            <div class="tab-pane fade show active" id="visao-geral" role="tabpanel">
+                <div id="visao-geral-content"></div>
+            </div>
+            <!-- ABA 2: CONSULTA INDIVIDUAL -->
+            <div class="tab-pane fade" id="consulta" role="tabpanel">
+                <div id="consulta-content"></div>
+            </div>
+            <!-- ABA 3: DOWNLOADS -->
+            <div class="tab-pane fade" id="downloads" role="tabpanel">
+                <div id="downloads-content"></div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- ==================== INDICADOR DE CARREGAMENTO ==================== -->
-    <div class="loading-indicator" id="loadingIndicator">
-        <div class="spinner-small"></div>
-        <span>Carregando dados...</span>
-    </div>
+<!-- ==================== INDICADOR DE CARREGAMENTO ==================== -->
+<div class="loading-indicator" id="loadingIndicator">
+    <div class="spinner-small"></div>
+    <span>Carregando dados...</span>
+</div>
 
-    <!-- ==================== MODAL DE DETALHES ==================== -->
-    <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content modal-creative">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="material-icons me-2">person</i> Histórico do Empregado</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="modalContent"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal"><i class="material-icons me-2">close</i>Fechar</button>
-                </div>
+<!-- ==================== MODAL DE DETALHES ==================== -->
+<div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content modal-creative">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="material-icons me-2">person</i> Histórico do Empregado</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalContent"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal"><i class="material-icons me-2">close</i>Fechar</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- ==================== LOADING OVERLAY ==================== -->
-    <div class="loading-overlay" id="loadingOverlay" style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.9); z-index:9999; justify-content:center; align-items:center;">
-        <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Carregando...</span></div>
-    </div>
+<!-- ==================== LOADING OVERLAY ==================== -->
+<div class="loading-overlay" id="loadingOverlay" style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.9); z-index:9999; justify-content:center; align-items:center;">
+    <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Carregando...</span></div>
+</div>
 
-    <!-- ==================== SCRIPTS ==================== -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- ==================== SCRIPTS ==================== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // ============================================
+    // CONFIGURAÇÕES E VARIÁVEIS GLOBAIS
+    // ============================================
+    const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/transparencia-mg/portal_empregados_terceirizados/refs/heads/main/dataset/data/';
     
-    <script>
-        // ============================================
-        // CONFIGURAÇÕES E VARIÁVEIS GLOBAIS
-        // ============================================
-        const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/transparencia-mg/portal_empregados_terceirizados/refs/heads/main/dataset/data/';
+    const CSV_FILES_BY_YEAR = {
+        '2021': 'terceirizados_2021.csv',
+        '2022': 'terceirizados_2022.csv',
+        '2023': 'terceirizados_2023.csv',
+        '2024': 'terceirizados_2024.csv',
+        '2025': 'terceirizados_2025.csv'
+    };
+
+    // Cache de dados por ano e mês
+    const dataCache = {
+        '2025': {}  // Inicializa cache para 2025
+    };
+
+    // Estado atual - APENAS Dezembro/2025 inicialmente
+    let currentDisplayData = {
+        ano: '2025',
+        mes: '12',
+        dados: [],          // Dados completos do mês atual
+        metrica: {
+            totalEmpregados: 0,
+            totalOrgaos: 0,
+            totalEmpresas: 0,
+            periodo: 'Dezembro/2025'
+        },
+        empregadosUnicos: [] // Lista única de empregados para consulta
+    };
+
+    // Variáveis de estado para UI
+    let paginaAtualCI = 1;
+    let itensPorPaginaCI = 50;
+    let empregadosFiltradosCI = [];
+    let filtrosAtivosCI = {
+        nome: '',
+        matricula: '',
+        cargo: '',
+        buscaTabela: ''
+    };
+
+    // Cache de opções para autocomplete
+    let opcoesCache = {
+        nomes: [],
+        matriculas: [],
+        cargos: [],
+        orgaos: []
+    };
+
+    // Estado de ordenação
+    let sortConfig = {
+        coluna: '',
+        direcao: 'asc' // 'asc' ou 'desc'
+    };
+
+    const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    const monthNames = {
+        '01': 'Janeiro', '02': 'Fevereiro', '03': 'Março',
+        '04': 'Abril', '05': 'Maio', '06': 'Junho',
+        '07': 'Julho', '08': 'Agosto', '09': 'Setembro',
+        '10': 'Outubro', '11': 'Novembro', '12': 'Dezembro'
+    };
+    const chartPalette = ['#1a3a5c','#2c5f8a','#3a7cb8','#5a9fd4','#7ab8e0','#9dd1ec','#bde4f5','#d4a017','#c0392b','#27ae10'];
+
+    // ============================================
+    // FUNÇÕES DE INICIALIZAÇÃO
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        setupEventListeners();
+        carregarDadosIniciais();
+        setupAtualizacaoData();
         
-        const CSV_FILES_BY_YEAR = {
-            '2021': 'terceirizados_2021.csv',
-            '2022': 'terceirizados_2022.csv',
-            '2023': 'terceirizados_2023.csv',
-            '2024': 'terceirizados_2024.csv',
-            '2025': 'terceirizados_2025.csv'
-        };
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+        
+        // Ajusta altura do iframe após carregamento
+        setTimeout(iframeUpdateHeight, 500);
+        window.addEventListener('resize', iframeUpdateHeight);
+    });
 
-        // Cache de dados por ano e mês
-        const dataCache = {
-            '2025': {}  // Inicializa cache para 2025
-        };
+    function iframeUpdateHeight() {
+        const html = document.documentElement;
+        const body = document.body;
+        const scrollHeight = Math.max(
+            body.scrollHeight,
+            html.scrollHeight,
+            body.offsetHeight,
+            html.offsetHeight
+        );
+        
+        const finalHeight = scrollHeight + 5;
+        
+        try {
+            window.parent.postMessage({ iframeHeight: finalHeight }, '*');
+            console.log('Altura do iframe atualizada:', finalHeight);
+        } catch (error) {}
+        
+        return finalHeight;
+    }
 
-        // Estado atual - APENAS Dezembro/2025 inicialmente
-        let currentDisplayData = {
-            ano: '2025',
-            mes: '12',
-            dados: [],          // Dados completos do mês atual
-            metrica: {
-                totalEmpregados: 0,
-                totalOrgaos: 0,
-                totalEmpresas: 0,
-                periodo: 'Dezembro/2025'
-            },
-            empregadosUnicos: [] // Lista única de empregados para consulta
-        };
+    function setupAtualizacaoData() {
+        const now = new Date();
+        const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
+        const elementoData = document.getElementById('data-atualizacao-header');
+        if (elementoData) {
+            elementoData.textContent = dataFormatada;
+        }
+    }
 
-        // Variáveis de estado para UI
-        let paginaAtualCI = 1;
-        let itensPorPaginaCI = 50;
-        let empregadosFiltradosCI = [];
-        let filtrosAtivosCI = {
-            nome: '',
-            matricula: '',
-            cargo: '',
-            buscaTabela: ''
-        };
-
-        // Cache de opções para autocomplete
-        let opcoesCache = {
-            nomes: [],
-            matriculas: [],
-            cargos: []
-        };
-
-        const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-        const monthNames = {
-            '01': 'Janeiro', '02': 'Fevereiro', '03': 'Março',
-            '04': 'Abril', '05': 'Maio', '06': 'Junho',
-            '07': 'Julho', '08': 'Agosto', '09': 'Setembro',
-            '10': 'Outubro', '11': 'Novembro', '12': 'Dezembro'
-        };
-        const chartPalette = ['#1a3a5c','#2c5f8a','#3a7cb8','#5a9fd4','#7ab8e0','#9dd1ec','#bde4f5','#d4a017','#c0392b','#27ae10'];
-
-        // ============================================
-        // FUNÇÕES DE INICIALIZAÇÃO
-        // ============================================
-        document.addEventListener('DOMContentLoaded', function() {
-            setupEventListeners();
-            carregarDadosIniciais();
-            setupAtualizacaoData();
+    function setupEventListeners() {
+        window.addEventListener('click', (e) => {
+            if (!e.target.closest('.share-dropdown')) {
+                document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
+            }
             
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+            // Fecha autocomplete se clicar fora
+            if (!e.target.closest('.autocomplete-container')) {
+                document.querySelectorAll('.autocomplete-suggestions').forEach(s => s.classList.remove('show'));
+            }
         });
+    }
 
-        function iframeUpdateHeight() {
-            const html = document.documentElement;
-            const body = document.body;
-            const scrollHeight = Math.max(
-                body.scrollHeight,
-                html.scrollHeight,
-                body.offsetHeight,
-                html.offsetHeight
-            );
-            
-            const finalHeight = scrollHeight + 10;
-            
-            try {
-                window.parent.postMessage({ iframeHeight: finalHeight }, '*');
-            } catch (error) {}
-            
-            return finalHeight;
-        }
-
-        function setupAtualizacaoData() {
-            const now = new Date();
-            const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
-            const elementoData = document.getElementById('data-atualizacao-header');
-            if (elementoData) {
-                elementoData.textContent = dataFormatada;
+    function showLoading(show, message = 'Carregando dados...') {
+        const indicator = document.getElementById('loadingIndicator');
+        if (indicator) {
+            indicator.querySelector('span').textContent = message;
+            if (show) {
+                indicator.classList.add('show');
+            } else {
+                indicator.classList.remove('show');
             }
         }
+    }
 
-        function setupEventListeners() {
-            window.addEventListener('click', (e) => {
-                if (!e.target.closest('.share-dropdown')) {
-                    document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
-                }
-                
-                // Fecha autocomplete se clicar fora
-                if (!e.target.closest('.autocomplete-container')) {
-                    document.querySelectorAll('.autocomplete-suggestions').forEach(s => s.classList.remove('show'));
-                }
-            });
+    function showError(message) {
+        const container = document.querySelector('.main-container');
+        if (!container) return;
+        
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'alert alert-danger alert-dismissible fade show';
+        errorDiv.innerHTML = `
+            <i class="material-icons me-2" style="vertical-align: middle;">warning</i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        container.prepend(errorDiv);
+        
+        setTimeout(() => {
+            errorDiv.remove();
+        }, 5000);
+    }
+
+    // ============================================
+    // FUNÇÕES AUXILIARES
+    // ============================================
+    function formatarMesAno(anoMes) {
+        if (!anoMes || anoMes.length < 7) return anoMes;
+        const partes = anoMes.split('-');
+        if (partes.length === 2) {
+            return `${meses[parseInt(partes[1])-1] || partes[1]}/${partes[0]}`;
         }
+        return anoMes;
+    }
+    
+    function getOrgaoExtenso(orgaoSigla) {
+        if (!orgaoSigla || orgaoSigla.trim() === '') return '';
+        const mapaOrgaos = {
+            'SES': 'SECRETARIA DE ESTADO DE SAÚDE',
+            'SEE': 'SECRETARIA DE ESTADO DE EDUCAÇÃO',
+            'SEPLAG': 'SECRETARIA DE ESTADO DE PLANEJAMENTO E GESTÃO',
+            'SEF': 'SECRETARIA DE ESTADO DE FAZENDA',
+            'SEJUSP': 'SECRETARIA DE ESTADO DE JUSTIÇA E SEGURANÇA PÚBLICA',
+            'SEMAD': 'SECRETARIA DE ESTADO DE MEIO AMBIENTE E DESENVOLVIMENTO SUSTENTÁVEL',
+            'PCMG': 'POLÍCIA CIVIL DE MINAS GERAIS',
+            'PMMG': 'POLÍCIA MILITAR DE MINAS GERAIS',
+            'CBMMG': 'CORPO DE BOMBEIROS MILITAR DE MINAS GERAIS',
+            'FHEMIG': 'FUNDAÇÃO HOSPITALAR DO ESTADO DE MINAS GERAIS'
+        };
+        const siglaUpper = orgaoSigla.toUpperCase().trim();
+        return mapaOrgaos[siglaUpper] || orgaoSigla;
+    }
 
-        function showLoading(show, message = 'Carregando dados...') {
-            const indicator = document.getElementById('loadingIndicator');
-            if (indicator) {
-                indicator.querySelector('span').textContent = message;
-                if (show) {
-                    indicator.classList.add('show');
-                } else {
-                    indicator.classList.remove('show');
-                }
-            }
-        }
-
-        function showError(message) {
-            const container = document.querySelector('.main-container');
-            if (!container) return;
-            
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'alert alert-danger alert-dismissible fade show';
-            errorDiv.innerHTML = `
-                <i class="material-icons me-2" style="vertical-align: middle;">warning</i>
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            `;
-            container.prepend(errorDiv);
-            
-            setTimeout(() => {
-                errorDiv.remove();
-            }, 5000);
-        }
-
-        // ============================================
-        // FUNÇÕES AUXILIARES
-        // ============================================
-        function formatarMesAno(anoMes) {
-            if (!anoMes || anoMes.length < 7) return anoMes;
-            const partes = anoMes.split('-');
-            if (partes.length === 2) {
-                return `${meses[parseInt(partes[1])-1] || partes[1]}/${partes[0]}`;
-            }
-            return anoMes;
+    function formatarLinha(linha, year, mes) {
+        let competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
+        
+        if (!competencia && year && mes) {
+            competencia = `${year}-${mes}`;
         }
         
-        function getOrgaoExtenso(orgaoSigla) {
-            if (!orgaoSigla || orgaoSigla.trim() === '') return '';
-            const mapaOrgaos = {
-                'SES': 'SECRETARIA DE ESTADO DE SAÚDE',
-                'SEE': 'SECRETARIA DE ESTADO DE EDUCAÇÃO',
-                'SEPLAG': 'SECRETARIA DE ESTADO DE PLANEJAMENTO E GESTÃO',
-                'SEF': 'SECRETARIA DE ESTADO DE FAZENDA',
-                'SEJUSP': 'SECRETARIA DE ESTADO DE JUSTIÇA E SEGURANÇA PÚBLICA',
-                'SEMAD': 'SECRETARIA DE ESTADO DE MEIO AMBIENTE E DESENVOLVIMENTO SUSTENTÁVEL',
-                'PCMG': 'POLÍCIA CIVIL DE MINAS GERAIS',
-                'PMMG': 'POLÍCIA MILITAR DE MINAS GERAIS',
-                'CBMMG': 'CORPO DE BOMBEIROS MILITAR DE MINAS GERAIS',
-                'FHEMIG': 'FUNDAÇÃO HOSPITALAR DO ESTADO DE MINAS GERAIS'
-            };
-            const siglaUpper = orgaoSigla.toUpperCase().trim();
-            return mapaOrgaos[siglaUpper] || orgaoSigla;
-        }
+        return {
+            matricula: linha['matricula'] || linha['MAT'] || linha['Matrícula'] || linha['mat'] || '',
+            nome: linha['nome'] || linha['NOME'] || linha['Nome'] || '',
+            orgao_sigla: linha['orgao'] || linha['ÓRGÃO'] || linha['orgao_sigla'] || linha['Orgao'] || '',
+            orgao: getOrgaoExtenso(linha['orgao'] || linha['ÓRGÃO'] || linha['orgao_sigla'] || ''),
+            cargo_descricao: linha['cargo'] || linha['CARGO'] || linha['Cargo'] || '',
+            empresa: linha['empresa'] || linha['EMPRESA'] || linha['Empresa'] || '',
+            cnpj_empresa: linha['cnpj_empresa'] || linha['CNPJ EMPRESA'] || linha['cnpj'] || linha['CNPJ'] || '',
+            mes_referencia: competencia,
+            ano_mes: competencia,
+            ANO: year,
+            MES_NUM: mes
+        };
+    }
 
-        function formatarLinha(linha, year, mes) {
-            let competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
+    // ============================================
+    // FUNÇÃO PRINCIPAL - CARREGA APENAS DEZEMBRO/2025
+    // ============================================
+    async function carregarDadosIniciais() {
+        showLoading(true, 'Carregando Dezembro/2025...');
+        
+        try {
+            console.log('🚀 Carregando apenas Dezembro/2025...');
             
-            if (!competencia && year && mes) {
-                competencia = `${year}-${mes}`;
+            const url2025 = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR['2025']}`;
+            
+            const dados2025 = await new Promise((resolve) => {
+                Papa.parse(url2025, {
+                    download: true,
+                    header: true,
+                    skipEmptyLines: true,
+                    encoding: 'UTF-8',
+                    delimiter: ";",
+                    complete: function(results) {
+                        if (results.data && results.data.length > 0) {
+                            resolve(results.data);
+                        } else {
+                            resolve([]);
+                        }
+                    },
+                    error: function() {
+                        resolve([]);
+                    }
+                });
+            });
+            
+            if (dados2025.length === 0) {
+                throw new Error('Não foi possível carregar os dados de 2025');
             }
             
-            return {
-                matricula: linha['matricula'] || linha['MAT'] || linha['Matrícula'] || linha['mat'] || '',
-                nome: linha['nome'] || linha['NOME'] || linha['Nome'] || '',
-                orgao_sigla: linha['orgao'] || linha['ÓRGÃO'] || linha['orgao_sigla'] || linha['Orgao'] || '',
-                orgao: getOrgaoExtenso(linha['orgao'] || linha['ÓRGÃO'] || linha['orgao_sigla'] || ''),
-                cargo_descricao: linha['cargo'] || linha['CARGO'] || linha['Cargo'] || '',
-                empresa: linha['empresa'] || linha['EMPRESA'] || linha['Empresa'] || '',
-                cnpj_empresa: linha['cnpj_empresa'] || linha['CNPJ EMPRESA'] || linha['cnpj'] || linha['CNPJ'] || '',
-                mes_referencia: competencia,
-                ano_mes: competencia,
-                ANO: year,
-                MES_NUM: mes
-            };
-        }
-
-        // ============================================
-        // FUNÇÃO PRINCIPAL - CARREGA APENAS DEZEMBRO/2025
-        // ============================================
-        async function carregarDadosIniciais() {
-            showLoading(true, 'Carregando Dezembro/2025...');
+            // Processa e separa por mês
+            const dadosPorMes = {};
             
-            try {
-                console.log('🚀 Carregando apenas Dezembro/2025...');
+            dados2025.forEach(linha => {
+                let mes = '';
+                const competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
                 
-                const url2025 = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR['2025']}`;
+                if (competencia) {
+                    if (competencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                        mes = competencia.split('-')[1];
+                    } else if (competencia.match(/^\d{4}-\d{2}$/)) {
+                        mes = competencia.split('-')[1];
+                    }
+                }
                 
-                const dados2025 = await new Promise((resolve) => {
-                    Papa.parse(url2025, {
+                if (!mes) {
+                    for (const key in linha) {
+                        if (key.toLowerCase().includes('mes') || key.toLowerCase().includes('mês')) {
+                            const valor = linha[key];
+                            if (valor && valor.toString().match(/^\d{1,2}$/)) {
+                                mes = valor.toString().padStart(2, '0');
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                if (!mes) return;
+                
+                if (!dadosPorMes[mes]) {
+                    dadosPorMes[mes] = [];
+                }
+                
+                dadosPorMes[mes].push(formatarLinha(linha, '2025', mes));
+            });
+            
+            // Armazena no cache
+            dataCache['2025'] = dadosPorMes;
+            
+            // Verifica se temos Dezembro
+            if (!dadosPorMes['12'] || dadosPorMes['12'].length === 0) {
+                console.warn('Dezembro não encontrado. Usando o mês com mais dados...');
+                let melhorMes = '12';
+                let maiorQuantidade = 0;
+                
+                for (const mes in dadosPorMes) {
+                    if (dadosPorMes[mes].length > maiorQuantidade) {
+                        maiorQuantidade = dadosPorMes[mes].length;
+                        melhorMes = mes;
+                    }
+                }
+                
+                currentDisplayData.mes = melhorMes;
+            }
+            
+            // Atualiza o estado com Dezembro
+            currentDisplayData.dados = dataCache['2025'][currentDisplayData.mes] || [];
+            
+            console.log(`✅ Carregados ${currentDisplayData.dados.length} registros de ${monthNames[currentDisplayData.mes]}/2025`);
+            
+            // Calcula métricas
+            currentDisplayData.metrica = calcularMetricas(currentDisplayData.dados, currentDisplayData.mes);
+            
+            // Gera lista de empregados únicos
+            currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(currentDisplayData.dados);
+            empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
+            
+            // Atualiza cache de opções
+            atualizarOpcoesCache();
+            
+            // Renderiza
+            renderizarVisaoGeral();
+            renderizarConsulta();
+            renderizarDownloads();
+            
+            setTimeout(iframeUpdateHeight, 300);
+            
+        } catch (erro) {
+            console.error('Erro no carregamento inicial:', erro);
+            showError('Erro ao carregar dados. Tente novamente mais tarde.');
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // ============================================
+    // FUNÇÃO PARA CARREGAR MÊS SOB DEMANDA
+    // ============================================
+    async function carregarMes(ano, mes) {
+        if (dataCache[ano] && dataCache[ano][mes]) {
+            return dataCache[ano][mes];
+        }
+        
+        showLoading(true, `Carregando ${monthNames[mes]}/${ano}...`);
+        
+        try {
+            if (!dataCache[ano]) {
+                dataCache[ano] = {};
+                
+                const url = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR[ano]}`;
+                
+                const dadosAno = await new Promise((resolve) => {
+                    Papa.parse(url, {
                         download: true,
                         header: true,
                         skipEmptyLines: true,
@@ -1070,1130 +1372,1096 @@
                     });
                 });
                 
-                if (dados2025.length === 0) {
-                    throw new Error('Não foi possível carregar os dados de 2025');
+                if (dadosAno.length === 0) {
+                    throw new Error(`Não foi possível carregar dados de ${ano}`);
                 }
                 
-                // Processa e separa por mês
-                const dadosPorMes = {};
-                
-                dados2025.forEach(linha => {
-                    let mes = '';
+                dadosAno.forEach(linha => {
+                    let linhaMes = '';
                     const competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
                     
                     if (competencia) {
                         if (competencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                            mes = competencia.split('-')[1];
+                            linhaMes = competencia.split('-')[1];
                         } else if (competencia.match(/^\d{4}-\d{2}$/)) {
-                            mes = competencia.split('-')[1];
+                            linhaMes = competencia.split('-')[1];
                         }
                     }
                     
-                    if (!mes) {
+                    if (!linhaMes) {
                         for (const key in linha) {
                             if (key.toLowerCase().includes('mes') || key.toLowerCase().includes('mês')) {
                                 const valor = linha[key];
                                 if (valor && valor.toString().match(/^\d{1,2}$/)) {
-                                    mes = valor.toString().padStart(2, '0');
+                                    linhaMes = valor.toString().padStart(2, '0');
                                     break;
                                 }
                             }
                         }
                     }
                     
-                    if (!mes) return;
+                    if (!linhaMes) return;
                     
-                    if (!dadosPorMes[mes]) {
-                        dadosPorMes[mes] = [];
+                    if (!dataCache[ano][linhaMes]) {
+                        dataCache[ano][linhaMes] = [];
                     }
                     
-                    dadosPorMes[mes].push(formatarLinha(linha, '2025', mes));
+                    dataCache[ano][linhaMes].push(formatarLinha(linha, ano, linhaMes));
                 });
-                
-                // Armazena no cache
-                dataCache['2025'] = dadosPorMes;
-                
-                // Verifica se temos Dezembro
-                if (!dadosPorMes['12'] || dadosPorMes['12'].length === 0) {
-                    console.warn('Dezembro não encontrado. Usando o mês com mais dados...');
-                    let melhorMes = '12';
-                    let maiorQuantidade = 0;
-                    
-                    for (const mes in dadosPorMes) {
-                        if (dadosPorMes[mes].length > maiorQuantidade) {
-                            maiorQuantidade = dadosPorMes[mes].length;
-                            melhorMes = mes;
-                        }
-                    }
-                    
-                    currentDisplayData.mes = melhorMes;
-                }
-                
-                // Atualiza o estado com Dezembro
-                currentDisplayData.dados = dataCache['2025'][currentDisplayData.mes] || [];
-                
-                console.log(`✅ Carregados ${currentDisplayData.dados.length} registros de ${monthNames[currentDisplayData.mes]}/2025`);
-                
-                // Calcula métricas
-                currentDisplayData.metrica = calcularMetricas(currentDisplayData.dados, currentDisplayData.mes);
-                
-                // Gera lista de empregados únicos
-                currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(currentDisplayData.dados);
-                empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
-                
-                // Atualiza cache de opções
-                atualizarOpcoesCache();
-                
-                // Renderiza
-                renderizarVisaoGeral();
-                renderizarConsulta();
-                renderizarDownloads();
-                
-                setTimeout(iframeUpdateHeight, 300);
-                const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
-                
-            } catch (erro) {
-                console.error('Erro no carregamento inicial:', erro);
-                showError('Erro ao carregar dados. Tente novamente mais tarde.');
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        // ============================================
-        // FUNÇÃO PARA CARREGAR MÊS SOB DEMANDA
-        // ============================================
-        async function carregarMes(ano, mes) {
-            if (dataCache[ano] && dataCache[ano][mes]) {
-                return dataCache[ano][mes];
             }
             
-            showLoading(true, `Carregando ${monthNames[mes]}/${ano}...`);
+            return dataCache[ano][mes] || [];
             
-            try {
-                if (!dataCache[ano]) {
-                    dataCache[ano] = {};
-                    
-                    const url = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR[ano]}`;
-                    
-                    const dadosAno = await new Promise((resolve) => {
-                        Papa.parse(url, {
-                            download: true,
-                            header: true,
-                            skipEmptyLines: true,
-                            encoding: 'UTF-8',
-                            delimiter: ";",
-                            complete: function(results) {
-                                if (results.data && results.data.length > 0) {
-                                    resolve(results.data);
-                                } else {
-                                    resolve([]);
-                                }
-                            },
-                            error: function() {
-                                resolve([]);
-                            }
-                        });
-                    });
-                    
-                    if (dadosAno.length === 0) {
-                        throw new Error(`Não foi possível carregar dados de ${ano}`);
-                    }
-                    
-                    dadosAno.forEach(linha => {
-                        let linhaMes = '';
-                        const competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
-                        
-                        if (competencia) {
-                            if (competencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                                linhaMes = competencia.split('-')[1];
-                            } else if (competencia.match(/^\d{4}-\d{2}$/)) {
-                                linhaMes = competencia.split('-')[1];
-                            }
-                        }
-                        
-                        if (!linhaMes) {
-                            for (const key in linha) {
-                                if (key.toLowerCase().includes('mes') || key.toLowerCase().includes('mês')) {
-                                    const valor = linha[key];
-                                    if (valor && valor.toString().match(/^\d{1,2}$/)) {
-                                        linhaMes = valor.toString().padStart(2, '0');
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        
-                        if (!linhaMes) return;
-                        
-                        if (!dataCache[ano][linhaMes]) {
-                            dataCache[ano][linhaMes] = [];
-                        }
-                        
-                        dataCache[ano][linhaMes].push(formatarLinha(linha, ano, linhaMes));
-                    });
-                }
-                
-                return dataCache[ano][mes] || [];
-                
-            } catch (erro) {
-                console.error(`Erro ao carregar ${ano}/${mes}:`, erro);
-                showError(`Erro ao carregar dados de ${monthNames[mes]}/${ano}`);
-                return [];
-            } finally {
-                showLoading(false);
+        } catch (erro) {
+            console.error(`Erro ao carregar ${ano}/${mes}:`, erro);
+            showError(`Erro ao carregar dados de ${monthNames[mes]}/${ano}`);
+            return [];
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    function calcularMetricas(dados, mes) {
+        const totalEmpregados = dados.length;
+        const orgaos = new Set(dados.map(i => i.orgao_sigla).filter(Boolean)).size;
+        const empresas = new Set(dados.map(i => i.empresa).filter(Boolean)).size;
+        
+        let periodo = 'Dezembro/2025';
+        if (mes && currentDisplayData.ano) {
+            periodo = `${monthNames[mes] || 'Dezembro'}/${currentDisplayData.ano}`;
+        }
+        
+        return {
+            totalEmpregados,
+            totalOrgaos: orgaos,
+            totalEmpresas: empresas,
+            periodo: periodo
+        };
+    }
+
+    function obterEmpregadosUnicos(dados) {
+        if (!dados || dados.length === 0) return [];
+        
+        const mapa = new Map();
+        for (const i of dados) {
+            if (i.matricula && !mapa.has(i.matricula)) {
+                mapa.set(i.matricula, { ...i });
             }
         }
+        return Array.from(mapa.values()).sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
+    }
 
-        function calcularMetricas(dados, mes) {
-            const totalEmpregados = dados.length;
-            const orgaos = new Set(dados.map(i => i.orgao_sigla).filter(Boolean)).size;
-            const empresas = new Set(dados.map(i => i.empresa).filter(Boolean)).size;
-            
-            let periodo = 'Dezembro/2025';
-            if (mes && currentDisplayData.ano) {
-                periodo = `${monthNames[mes] || 'Dezembro'}/${currentDisplayData.ano}`;
+    function atualizarOpcoesCache() {
+        if (currentDisplayData.empregadosUnicos.length > 0) {
+            opcoesCache.nomes = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.nome).filter(Boolean))].sort();
+            opcoesCache.matriculas = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.matricula).filter(Boolean))].sort();
+            opcoesCache.cargos = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.cargo_descricao).filter(Boolean))].sort();
+            opcoesCache.orgaos = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.orgao_sigla).filter(Boolean))].sort();
+        }
+    }
+
+    // ============================================
+    // FUNÇÕES DE AUTOCOMPLETE E DROPDOWN COMBINADOS
+    // ============================================
+    function setupCombobox(inputId, suggestionsId, selectId, opcoes, campo) {
+        const input = document.getElementById(inputId);
+        const suggestions = document.getElementById(suggestionsId);
+        const select = document.getElementById(selectId);
+        
+        if (!input || !suggestions || !select) return;
+        
+        // Preenche o dropdown
+        select.innerHTML = '<option value="">Selecione...</option>' + 
+            opcoes.map(op => `<option value="${op.replace(/"/g, '&quot;')}">${op}</option>`).join('');
+        
+        // Evento do input para autocomplete
+        input.addEventListener('input', function() {
+            const valor = this.value.toLowerCase();
+            if (valor.length < 1) {
+                suggestions.classList.remove('show');
+                return;
             }
             
-            return {
-                totalEmpregados,
-                totalOrgaos: orgaos,
-                totalEmpresas: empresas,
-                periodo: periodo
-            };
-        }
-
-        function obterEmpregadosUnicos(dados) {
-            if (!dados || dados.length === 0) return [];
+            const filtradas = opcoes.filter(op => op.toLowerCase().includes(valor)).slice(0, 20);
             
-            const mapa = new Map();
-            for (const i of dados) {
-                if (i.matricula && !mapa.has(i.matricula)) {
-                    mapa.set(i.matricula, { ...i });
-                }
+            if (filtradas.length === 0) {
+                suggestions.classList.remove('show');
+                return;
             }
-            return Array.from(mapa.values()).sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
-        }
-
-        function atualizarOpcoesCache() {
-            if (currentDisplayData.empregadosUnicos.length > 0) {
-                opcoesCache.nomes = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.nome).filter(Boolean))].sort();
-                opcoesCache.matriculas = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.matricula).filter(Boolean))].sort();
-                opcoesCache.cargos = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.cargo_descricao).filter(Boolean))].sort();
-            }
-        }
-
-        // ============================================
-        // FUNÇÕES DE AUTOCOMPLETE
-        // ============================================
-        function setupAutocomplete(inputId, suggestionsId, opcoes, campo) {
-            const input = document.getElementById(inputId);
-            const suggestions = document.getElementById(suggestionsId);
             
-            if (!input || !suggestions) return;
+            suggestions.innerHTML = filtradas.map(op => 
+                `<div class="autocomplete-suggestion" onclick="selecionarSugestao('${inputId}', '${campo}', '${op.replace(/'/g, "\\'")}')">
+                    ${op.replace(new RegExp(valor, 'gi'), match => `<strong>${match}</strong>`)}
+                </div>`
+            ).join('');
             
-            input.addEventListener('input', function() {
-                const valor = this.value.toLowerCase();
-                if (valor.length < 1) {
-                    suggestions.classList.remove('show');
-                    return;
-                }
-                
-                const filtradas = opcoes.filter(op => op.toLowerCase().includes(valor)).slice(0, 20);
-                
-                if (filtradas.length === 0) {
-                    suggestions.classList.remove('show');
-                    return;
-                }
-                
-                suggestions.innerHTML = filtradas.map(op => 
-                    `<div class="autocomplete-suggestion" onclick="selecionarSugestao('${inputId}', '${campo}', '${op.replace(/'/g, "\\'")}')">
-                        ${op.replace(new RegExp(valor, 'gi'), match => `<strong>${match}</strong>`)}
-                    </div>`
-                ).join('');
-                
-                suggestions.classList.add('show');
-            });
-            
-            input.addEventListener('blur', function() {
-                setTimeout(() => {
-                    suggestions.classList.remove('show');
-                }, 200);
-            });
-        }
-
-        window.selecionarSugestao = function(inputId, campo, valor) {
-            const input = document.getElementById(inputId);
-            if (input) {
+            suggestions.classList.add('show');
+        });
+        
+        // Evento do dropdown
+        select.addEventListener('change', function() {
+            const valor = this.value;
+            if (valor) {
                 input.value = valor;
                 filtrosAtivosCI[campo] = valor;
                 aplicarTodosFiltrosCI();
             }
-            
-            // Fecha sugestões
-            document.querySelectorAll('.autocomplete-suggestions').forEach(s => s.classList.remove('show'));
-        };
+        });
+        
+        input.addEventListener('blur', function() {
+            setTimeout(() => {
+                suggestions.classList.remove('show');
+            }, 200);
+        });
+    }
 
-        // ============================================
-        // RENDERIZAÇÃO VISÃO GERAL
-        // ============================================
-        function renderizarVisaoGeral() {
-            const container = document.getElementById('visao-geral-content');
-            if (!container) return;
+    window.selecionarSugestao = function(inputId, campo, valor) {
+        const input = document.getElementById(inputId);
+        if (input) {
+            input.value = valor;
+            filtrosAtivosCI[campo] = valor;
+            aplicarTodosFiltrosCI();
+        }
+        
+        // Fecha sugestões
+        document.querySelectorAll('.autocomplete-suggestions').forEach(s => s.classList.remove('show'));
+    };
+
+    // ============================================
+    // FUNÇÕES DE ORDENAÇÃO
+    // ============================================
+    window.ordenarTabela = function(coluna, tipo) {
+        if (sortConfig.coluna === coluna) {
+            sortConfig.direcao = sortConfig.direcao === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortConfig.coluna = coluna;
+            sortConfig.direcao = 'asc';
+        }
+        
+        empregadosFiltradosCI.sort((a, b) => {
+            let valorA = a[coluna] || '';
+            let valorB = b[coluna] || '';
             
-            const dadosOrgao = agruparPorOrgao(currentDisplayData.dados);
-            const dadosCargo = agruparPorCargo(currentDisplayData.dados).slice(0, 10);
+            if (tipo === 'number') {
+                valorA = parseFloat(valorA) || 0;
+                valorB = parseFloat(valorB) || 0;
+            } else {
+                valorA = valorA.toString().toLowerCase();
+                valorB = valorB.toString().toLowerCase();
+            }
             
-            let html = `
-                <!-- Filtros -->
-                <div class="filter-container">
-                    <div class="row g-3">
-                        <div class="col-md-3">
-                            <label class="filter-label"><i class="material-icons"></i>ANO</label>
-                            <select class="form-select modern-select" id="filtroAnoVG">
-                                <option value="2025" selected>2025</option>
-                                <option value="2024">2024</option>
-                                <option value="2023">2023</option>
-                                <option value="2022">2022</option>
-                                <option value="2021">2021</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="filter-label"><i class="material-icons"></i>MÊS</label>
-                            <select class="form-select modern-select" id="filtroMesVG">
-                                <option value="01">Janeiro</option>
-                                <option value="02">Fevereiro</option>
-                                <option value="03">Março</option>
-                                <option value="04">Abril</option>
-                                <option value="05">Maio</option>
-                                <option value="06">Junho</option>
-                                <option value="07">Julho</option>
-                                <option value="08">Agosto</option>
-                                <option value="09">Setembro</option>
-                                <option value="10">Outubro</option>
-                                <option value="11">Novembro</option>
-                                <option value="12" selected>Dezembro</option>
-                            </select>
-                        </div>
+            if (valorA < valorB) return sortConfig.direcao === 'asc' ? -1 : 1;
+            if (valorA > valorB) return sortConfig.direcao === 'asc' ? 1 : -1;
+            return 0;
+        });
+        
+        paginaAtualCI = 1;
+        atualizarTabelaConsulta();
+        
+        // Re-renderiza os cabeçalhos para atualizar os ícones
+        renderizarConsulta();
+    };
+
+    // ============================================
+    // RENDERIZAÇÃO VISÃO GERAL
+    // ============================================
+    function renderizarVisaoGeral() {
+        const container = document.getElementById('visao-geral-content');
+        if (!container) return;
+        
+        const dadosOrgao = agruparPorOrgao(currentDisplayData.dados);
+        const dadosCargo = agruparPorCargo(currentDisplayData.dados).slice(0, 10);
+        
+        let html = `
+            <!-- Filtros em uma linha -->
+            <div class="filter-container">
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="material-icons">calendar_today</i>ANO</label>
+                        <select class="form-select modern-select" id="filtroAnoVG">
+                            <option value="2025" selected>2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                        </select>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-12 d-flex gap-2">
-                            <button class="btn-pesquisa" onclick="aplicarFiltrosVG()"><i class="material-icons me-2">search</i>Pesquisar</button>
-                            <button class="btn-secondary-custom" onclick="limparFiltrosVG()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
-                        </div>
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="material-icons">date_range</i>MÊS</label>
+                        <select class="form-select modern-select" id="filtroMesVG">
+                            <option value="01">Janeiro</option>
+                            <option value="02">Fevereiro</option>
+                            <option value="03">Março</option>
+                            <option value="04">Abril</option>
+                            <option value="05">Maio</option>
+                            <option value="06">Junho</option>
+                            <option value="07">Julho</option>
+                            <option value="08">Agosto</option>
+                            <option value="09">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12" selected>Dezembro</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="material-icons">business</i>ÓRGÃO</label>
+                        <select class="form-select modern-select" id="filtroOrgaoVG">
+                            <option value="">Todos os órgãos</option>
+                            ${opcoesCache.orgaos.map(org => `<option value="${org}">${org}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="filter-buttons-group">
+                        <button class="btn-pesquisa" onclick="aplicarFiltrosVG()"><i class="material-icons me-2">search</i>Pesquisar</button>
+                        <button class="btn-secondary-custom" onclick="limparFiltrosVG()"><i class="material-icons me-2">clear</i>Limpar</button>
                     </div>
                 </div>
-
-<div class="row mb-4">
-
-    <div class="col-md-3 col-6">
-        <div class="metric-card">
-            <div class="metric-header">
-                Total de Empregados
-               <i class="material-icons"
-   data-bs-toggle="tooltip"
-   title="Quantidade total de empregados no período selecionado">
-   info_outline
-</i>
-</i>
             </div>
-            <div class="metric-body">
-                <div class="metric-value">
-                    ${currentDisplayData.metrica.totalEmpregados.toLocaleString('pt-BR')}
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-md-3 col-6">
-        <div class="metric-card">
-            <div class="metric-header">
-                Órgãos
-                <i class="material-icons" style="font-size:16px;">info</i>
-            </div>
-            <div class="metric-body">
-                <div class="metric-value">
-                    ${currentDisplayData.metrica.totalOrgaos.toLocaleString('pt-BR')}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3 col-6">
-        <div class="metric-card">
-            <div class="metric-header">
-                Empresas
-                <i class="material-icons" style="font-size:16px;">info</i>
-            </div>
-            <div class="metric-body">
-                <div class="metric-value">
-                    ${currentDisplayData.metrica.totalEmpresas.toLocaleString('pt-BR')}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3 col-6">
-        <div class="metric-card">
-            <div class="metric-header">
-                Período
-                <i class="material-icons" style="font-size:16px;">info</i>
-            </div>
-            <div class="metric-body">
-                <div class="metric-value">
-                    ${currentDisplayData.metrica.periodo}
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-                <!-- Gráficos -->
-                <div class="row mb-4">
-                    <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Empregados por Órgão</h4></div><div class="chart-wrapper"><canvas id="chartOrgao"></canvas></div></div></div>
-                    <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Top 10 Cargos</h4></div><div class="chart-wrapper"><canvas id="chartCargo"></canvas></div></div></div>
-                </div>
-
-                <!-- Ações -->
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="d-flex gap-2">
-                        <button class="btn-export" onclick="exportarTabelaVisaoGeralCSV()"><i class="material-icons me-2">description</i>CSV</button>
-                        <button class="btn-export" onclick="exportarTabelaVisaoGeralPDF()"><i class="material-icons me-2">print</i>PDF</button>
-                        <div class="share-dropdown">
-                            <button class="btn-export" onclick="toggleShare(1)"><i class="material-icons me-2">share</i>Compartilhar</button>
-                            <div class="share-options" id="shareOptions1">
-                                <a href="#" onclick="copiarLink(event,1)"><i class="fas fa-link"></i> Copiar Link</a>
-                                <a href="#" onclick="compartilharFacebook(event,1)"><i class="fab fa-facebook-f"></i> Facebook</a>
-                                <a href="#" onclick="compartilharTwitter(event,1)"><i class="fab fa-twitter"></i> Twitter</a>
-                                <a href="#" onclick="compartilharLinkedIn(event,1)"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-                                <a href="#" onclick="compartilharWhatsApp(event,1)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <div class="row mb-4">
+                <div class="col-md-3 col-6">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            Total de Empregados
+                            <i class="material-icons" data-bs-toggle="tooltip" title="Quantidade total de empregados no período selecionado">info_outline</i>
+                        </div>
+                        <div class="metric-body">
+                            <div class="metric-value">
+                                ${currentDisplayData.metrica.totalEmpregados.toLocaleString('pt-BR')}
                             </div>
                         </div>
                     </div>
-                    <span class="table-badge">${dadosOrgao.length} órgãos</span>
                 </div>
-
-                <!-- Tabela -->
-                <div class="table-container">
-                    <div class="table-fixed-header-container">
-                        <table class="table">
-                            <thead><tr><th>Órgão</th><th>Sigla</th><th class="text-center">Empregados</th></tr></thead>
-                            <tbody>
-                                ${dadosOrgao.map(item => `
-                                    <tr>
-                                        <td><a href="#" class="orgao-link" onclick="irParaConsulta('${item.sigla}'); return false;">${item.orgao}</a></td>
-                                        <td><strong>${item.sigla}</strong></td>
-                                        <td class="text-center">${item.total.toLocaleString()}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                            <tfoot><tr><td colspan="2" class="fw-bold">Total Geral</td><td class="text-center fw-bold">${dadosOrgao.reduce((a,i)=>a+i.total,0).toLocaleString()}</td></tr></tfoot>
-                        </table>
+                <div class="col-md-3 col-6">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            Órgãos
+                            <i class="material-icons" data-bs-toggle="tooltip" title="Quantidade de órgãos com empregados">info_outline</i>
+                        </div>
+                        <div class="metric-body">
+                            <div class="metric-value">
+                                ${currentDisplayData.metrica.totalOrgaos.toLocaleString('pt-BR')}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            `;
-            
-            container.innerHTML = html;
-            
-            // Atualiza selects com valores atuais
-            const selectAno = document.getElementById('filtroAnoVG');
-            const selectMes = document.getElementById('filtroMesVG');
-            if (selectAno) selectAno.value = currentDisplayData.ano;
-            if (selectMes) selectMes.value = currentDisplayData.mes;
-            
-            // Destruir gráficos antigos
-            if (window.orgaoChart) window.orgaoChart.destroy();
-            if (window.cargoChart) window.cargoChart.destroy();
-            
-            // Criar novos gráficos
-            const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
-            if (ctxOrgao && dadosOrgao.length > 0) {
-                window.orgaoChart = new Chart(ctxOrgao, {
-                    type: 'bar',
-                    data: { 
-                        labels: dadosOrgao.slice(0, 10).map(i => i.sigla), 
-                        datasets: [{ 
-                            label: 'Empregados', 
-                            data: dadosOrgao.slice(0, 10).map(i => i.total), 
-                            backgroundColor: chartPalette, 
-                            borderRadius: 4 
-                        }] 
-                    },
-                    options: { 
-                        responsive: true, 
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } }
-                    }
-                });
-            }
-            
-            const ctxCargo = document.getElementById('chartCargo')?.getContext('2d');
-            if (ctxCargo && dadosCargo.length > 0) {
-                window.cargoChart = new Chart(ctxCargo, {
-                    type: 'bar',
-                    data: { 
-                        labels: dadosCargo.map(i => i.cargo.length > 20 ? i.cargo.substring(0,20)+'...' : i.cargo), 
-                        datasets: [{ 
-                            label: 'Empregados', 
-                            data: dadosCargo.map(i => i.total), 
-                            backgroundColor: chartPalette.slice().reverse(), 
-                            borderRadius: 4 
-                        }] 
-                    },
-                    options: { 
-                        responsive: true, 
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } }
-                    }
-                });
-            }
-            
-            setTimeout(iframeUpdateHeight, 300);
+                <div class="col-md-3 col-6">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            Empresas
+                            <i class="material-icons" data-bs-toggle="tooltip" title="Quantidade de empresas terceirizadas">info_outline</i>
+                        </div>
+                        <div class="metric-body">
+                            <div class="metric-value">
+                                ${currentDisplayData.metrica.totalEmpresas.toLocaleString('pt-BR')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            Período
+                            <i class="material-icons" data-bs-toggle="tooltip" title="Mês/ano dos dados exibidos">info_outline</i>
+                        </div>
+                        <div class="metric-body">
+                            <div class="metric-value">
+                                ${currentDisplayData.metrica.periodo}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="row mb-4">
+                <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Empregados por Órgão</h4></div><div class="chart-wrapper"><canvas id="chartOrgao"></canvas></div></div></div>
+                <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Top 10 Cargos</h4></div><div class="chart-wrapper"><canvas id="chartCargo"></canvas></div></div></div>
+            </div>
+
+            <!-- Ações -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex gap-2">
+                    <button class="btn-export" onclick="exportarTabelaVisaoGeralCSV()"><i class="material-icons me-2">description</i>CSV</button>
+                    <button class="btn-export" onclick="exportarTabelaVisaoGeralPDF()"><i class="material-icons me-2">print</i>PDF</button>
+                    <div class="share-dropdown">
+                        <button class="btn-export" onclick="toggleShare(1)"><i class="material-icons me-2">share</i>Compartilhar</button>
+                        <div class="share-options" id="shareOptions1">
+                            <a href="#" onclick="copiarLink(event,1)"><i class="fas fa-link"></i> Copiar Link</a>
+                            <a href="#" onclick="compartilharFacebook(event,1)"><i class="fab fa-facebook-f"></i> Facebook</a>
+                            <a href="#" onclick="compartilharTwitter(event,1)"><i class="fab fa-twitter"></i> Twitter</a>
+                            <a href="#" onclick="compartilharLinkedIn(event,1)"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                            <a href="#" onclick="compartilharWhatsApp(event,1)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+                <span class="table-badge">${dadosOrgao.length} órgãos</span>
+            </div>
+
+            <!-- Tabela -->
+            <div class="table-container">
+                <div class="table-fixed-header-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="sortable-header" onclick="ordenarTabelaVisaoGeral('orgao')">Órgão <i class="material-icons">unfold_more</i></th>
+                                <th class="sortable-header" onclick="ordenarTabelaVisaoGeral('sigla')">Sigla <i class="material-icons">unfold_more</i></th>
+                                <th class="text-center sortable-header" onclick="ordenarTabelaVisaoGeral('total')">Empregados <i class="material-icons">unfold_more</i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${dadosOrgao.map(item => `
+                                <tr>
+                                    <td><a href="#" class="orgao-link" onclick="irParaConsulta('${item.sigla}'); return false;">${item.orgao}</a></td>
+                                    <td><strong>${item.sigla}</strong></td>
+                                    <td class="text-center">${item.total.toLocaleString()}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                        <tfoot><tr><td colspan="2" class="fw-bold">Total Geral</td><td class="text-center fw-bold">${dadosOrgao.reduce((a,i)=>a+i.total,0).toLocaleString()}</td></tr></tfoot>
+                    </table>
+                </div>
+            </div>
+        `;
+        
+        container.innerHTML = html;
+        
+        // Atualiza selects com valores atuais
+        const selectAno = document.getElementById('filtroAnoVG');
+        const selectMes = document.getElementById('filtroMesVG');
+        const selectOrgao = document.getElementById('filtroOrgaoVG');
+        if (selectAno) selectAno.value = currentDisplayData.ano;
+        if (selectMes) selectMes.value = currentDisplayData.mes;
+        if (selectOrgao) selectOrgao.value = '';
+        
+        // Destruir gráficos antigos
+        if (window.orgaoChart) window.orgaoChart.destroy();
+        if (window.cargoChart) window.cargoChart.destroy();
+        
+        // Criar novos gráficos
+        const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
+        if (ctxOrgao && dadosOrgao.length > 0) {
+            window.orgaoChart = new Chart(ctxOrgao, {
+                type: 'bar',
+                data: { 
+                    labels: dadosOrgao.slice(0, 10).map(i => i.sigla), 
+                    datasets: [{ 
+                        label: 'Empregados', 
+                        data: dadosOrgao.slice(0, 10).map(i => i.total), 
+                        backgroundColor: chartPalette, 
+                        borderRadius: 4 
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
         }
+        
+        const ctxCargo = document.getElementById('chartCargo')?.getContext('2d');
+        if (ctxCargo && dadosCargo.length > 0) {
+            window.cargoChart = new Chart(ctxCargo, {
+                type: 'bar',
+                data: { 
+                    labels: dadosCargo.map(i => i.cargo.length > 20 ? i.cargo.substring(0,20)+'...' : i.cargo), 
+                    datasets: [{ 
+                        label: 'Empregados', 
+                        data: dadosCargo.map(i => i.total), 
+                        backgroundColor: chartPalette.slice().reverse(), 
+                        borderRadius: 4 
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+        
+        // Reaplicar tooltips
+        setTimeout(() => {
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+        }, 100);
+        
+        setTimeout(iframeUpdateHeight, 300);
+    }
 
-        window.aplicarFiltrosVG = async function() {
-            const ano = document.getElementById('filtroAnoVG')?.value || '2025';
-            const mes = document.getElementById('filtroMesVG')?.value || '12';
-            
-            const dadosMes = await carregarMes(ano, mes);
-            
-            if (dadosMes.length > 0) {
-                currentDisplayData.ano = ano;
-                currentDisplayData.mes = mes;
-                currentDisplayData.dados = dadosMes;
-                currentDisplayData.metrica = calcularMetricas(dadosMes, mes);
-                currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(dadosMes);
-                
-                // Atualiza cache de opções
-                atualizarOpcoesCache();
-                
-                // Atualiza consulta
-                empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
-                paginaAtualCI = 1;
-                
-                renderizarVisaoGeral();
-                renderizarConsulta();
-            } else {
-                showError(`Nenhum dado encontrado para ${monthNames[mes]}/${ano}`);
+    window.aplicarFiltrosVG = async function() {
+        const ano = document.getElementById('filtroAnoVG')?.value || '2025';
+        const mes = document.getElementById('filtroMesVG')?.value || '12';
+        const orgao = document.getElementById('filtroOrgaoVG')?.value || '';
+        
+        const dadosMes = await carregarMes(ano, mes);
+        
+        if (dadosMes.length > 0) {
+            let dadosFiltrados = dadosMes;
+            if (orgao) {
+                dadosFiltrados = dadosMes.filter(d => d.orgao_sigla === orgao);
             }
-        };
-
-        window.limparFiltrosVG = function() {
-            const selectAno = document.getElementById('filtroAnoVG');
-            const selectMes = document.getElementById('filtroMesVG');
             
-            if (selectAno) selectAno.value = '2025';
-            if (selectMes) selectMes.value = '12';
-            
-            // Recarrega os dados iniciais
-            currentDisplayData.ano = '2025';
-            currentDisplayData.mes = '12';
-            currentDisplayData.dados = dataCache['2025']['12'] || [];
-            currentDisplayData.metrica = calcularMetricas(currentDisplayData.dados, '12');
-            currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(currentDisplayData.dados);
+            currentDisplayData.ano = ano;
+            currentDisplayData.mes = mes;
+            currentDisplayData.dados = dadosFiltrados;
+            currentDisplayData.metrica = calcularMetricas(dadosFiltrados, mes);
+            currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(dadosFiltrados);
             
             // Atualiza cache de opções
             atualizarOpcoesCache();
             
+            // Atualiza consulta
             empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
             paginaAtualCI = 1;
             
             renderizarVisaoGeral();
             renderizarConsulta();
-        };
-
-        function agruparPorOrgao(dados) {
-            const mapa = new Map();
-            for (const i of dados) {
-                const sigla = i.orgao_sigla || 'Não informado';
-                if (!mapa.has(sigla)) {
-                    mapa.set(sigla, { sigla: sigla, orgao: i.orgao || sigla, total: 0 });
-                }
-                mapa.get(sigla).total += 1;
-            }
-            return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
+        } else {
+            showError(`Nenhum dado encontrado para ${monthNames[mes]}/${ano}`);
         }
+    };
 
-        function agruparPorCargo(dados) {
-            const mapa = new Map();
-            for (const i of dados) {
-                const cargo = i.cargo_descricao || 'Não informado';
-                if (!mapa.has(cargo)) {
-                    mapa.set(cargo, { cargo: cargo, total: 0 });
-                }
-                mapa.get(cargo).total += 1;
+    window.limparFiltrosVG = function() {
+        const selectAno = document.getElementById('filtroAnoVG');
+        const selectMes = document.getElementById('filtroMesVG');
+        const selectOrgao = document.getElementById('filtroOrgaoVG');
+        
+        if (selectAno) selectAno.value = '2025';
+        if (selectMes) selectMes.value = '12';
+        if (selectOrgao) selectOrgao.value = '';
+        
+        // Recarrega os dados iniciais
+        currentDisplayData.ano = '2025';
+        currentDisplayData.mes = '12';
+        currentDisplayData.dados = dataCache['2025']['12'] || [];
+        currentDisplayData.metrica = calcularMetricas(currentDisplayData.dados, '12');
+        currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(currentDisplayData.dados);
+        
+        // Atualiza cache de opções
+        atualizarOpcoesCache();
+        
+        empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
+        paginaAtualCI = 1;
+        
+        renderizarVisaoGeral();
+        renderizarConsulta();
+    };
+
+    window.ordenarTabelaVisaoGeral = function(coluna) {
+        // Implementar ordenação para tabela da visão geral
+        console.log('Ordenar por:', coluna);
+    };
+
+    function agruparPorOrgao(dados) {
+        const mapa = new Map();
+        for (const i of dados) {
+            const sigla = i.orgao_sigla || 'Não informado';
+            if (!mapa.has(sigla)) {
+                mapa.set(sigla, { sigla: sigla, orgao: i.orgao || sigla, total: 0 });
             }
-            return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
+            mapa.get(sigla).total += 1;
         }
+        return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
+    }
 
-        window.irParaConsulta = function(sigla) {
-            document.getElementById('consulta-tab').click();
-            setTimeout(() => {
-                const inputCargo = document.getElementById('filtroCargoCI');
-                if (inputCargo) { 
-                    inputCargo.value = ''; // Limpa primeiro
-                    // Foca na busca da tabela para o usuário digitar
-                    document.getElementById('buscaTabelaCI').focus();
-                }
-            }, 300);
-        };
+    function agruparPorCargo(dados) {
+        const mapa = new Map();
+        for (const i of dados) {
+            const cargo = i.cargo_descricao || 'Não informado';
+            if (!mapa.has(cargo)) {
+                mapa.set(cargo, { cargo: cargo, total: 0 });
+            }
+            mapa.get(cargo).total += 1;
+        }
+        return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
+    }
 
-        // ============================================
-        // RENDERIZAÇÃO CONSULTA INDIVIDUAL
-        // ============================================
-        function renderizarConsulta() {
-            const container = document.getElementById('consulta-content');
-            if (!container) return;
-            
-            container.innerHTML = `
-                <!-- Filtros -->
-                <div class="filter-container">
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <label class="filter-label"><i class="material-icons"></i>Nome</label>
-                            <div class="autocomplete-container">
-                                <input type="text" class="form-control" id="filtroNomeCI" placeholder="Digite para buscar nome..." autocomplete="off">
-                                <div class="autocomplete-suggestions" id="sugestoesNome"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="filter-label"><i class="material-icons"></i>Matrícula</label>
-                            <div class="autocomplete-container">
-                                <input type="text" class="form-control" id="filtroMatriculaCI" placeholder="Digite para buscar matrícula..." autocomplete="off">
-                                <div class="autocomplete-suggestions" id="sugestoesMatricula"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="filter-label"><i class="material-icons"></i>Cargo</label>
-                            <div class="autocomplete-container">
-                                <input type="text" class="form-control" id="filtroCargoCI" placeholder="Digite para buscar cargo..." autocomplete="off">
-                                <div class="autocomplete-suggestions" id="sugestoesCargo"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-12 d-flex gap-2">
-                            <button class="btn-pesquisa" onclick="aplicarFiltrosCI()"><i class="material-icons me-2">search</i>Pesquisar</button>
-                            <button class="btn-secondary-custom" onclick="limparFiltrosCI()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
-                        </div>
-                    </div>
-                </div>
+    window.irParaConsulta = function(sigla) {
+        document.getElementById('consulta-tab').click();
+        setTimeout(() => {
+            document.getElementById('filtroCargoCI').focus();
+        }, 300);
+    };
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="d-flex gap-2">
-                        <button class="btn-export" onclick="exportarTabelaConsultaCSV()"><i class="material-icons me-2">description</i>CSV</button>
-                        <button class="btn-export" onclick="exportarTabelaConsultaPDF()"><i class="material-icons me-2">print</i>PDF</button>
-                        <div class="share-dropdown">
-                            <button class="btn-export" onclick="toggleShare(2)"><i class="material-icons me-2">share</i>Compartilhar</button>
-                            <div class="share-options" id="shareOptions2">
-                                <a href="#" onclick="copiarLink(event,2)"><i class="fas fa-link"></i> Copiar Link</a>
-                                <a href="#" onclick="compartilharFacebook(event,2)"><i class="fab fa-facebook-f"></i> Facebook</a>
-                                <a href="#" onclick="compartilharTwitter(event,2)"><i class="fab fa-twitter"></i> Twitter</a>
-                                <a href="#" onclick="compartilharLinkedIn(event,2)"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-                                <a href="#" onclick="compartilharWhatsApp(event,2)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                            </div>
+    // ============================================
+    // RENDERIZAÇÃO CONSULTA INDIVIDUAL
+    // ============================================
+    function renderizarConsulta() {
+        const container = document.getElementById('consulta-content');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <!-- Filtros com combobox (dropdown + autocomplete) -->
+            <div class="filter-container">
+                <div class="consulta-filters-row">
+                    <div class="consulta-filter-group">
+                        <label class="filter-label"><i class="material-icons">person</i>Nome</label>
+                        <div class="autocomplete-container">
+                            <input type="text" class="form-control" id="filtroNomeCI" placeholder="Digite ou escolha..." autocomplete="off">
+                            <div class="autocomplete-suggestions" id="sugestoesNome"></div>
                         </div>
-                        <div class="table-search-container">
-                            <input type="text" class="table-search-input" id="buscaTabelaCI" placeholder="Buscar na tabela..." onkeyup="aplicarBuscaTabelaCI()">
-                        </div>
+                        <select class="form-select mt-1" id="dropdownNomeCI" style="font-size: 12px;">
+                            <option value="">Selecione um nome...</option>
+                        </select>
                     </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <span class="table-badge" id="totalServidoresBadge">${currentDisplayData.empregadosUnicos.length} empregados</span>
-                        <select class="items-per-page" id="itensPorPaginaCI" onchange="alterarItensPorPaginaCI()">
-                            <option value="25">25</option>
-                            <option value="50" selected>50</option>
-                            <option value="100">100</option>
-                            <option value="${currentDisplayData.empregadosUnicos.length}">Todos</option>
+                    <div class="consulta-filter-group">
+                        <label class="filter-label"><i class="material-icons">badge</i>Matrícula</label>
+                        <div class="autocomplete-container">
+                            <input type="text" class="form-control" id="filtroMatriculaCI" placeholder="Digite ou escolha..." autocomplete="off">
+                            <div class="autocomplete-suggestions" id="sugestoesMatricula"></div>
+                        </div>
+                        <select class="form-select mt-1" id="dropdownMatriculaCI" style="font-size: 12px;">
+                            <option value="">Selecione uma matrícula...</option>
+                        </select>
+                    </div>
+                    <div class="consulta-filter-group">
+                        <label class="filter-label"><i class="material-icons">work</i>Cargo</label>
+                        <div class="autocomplete-container">
+                            <input type="text" class="form-control" id="filtroCargoCI" placeholder="Digite ou escolha..." autocomplete="off">
+                            <div class="autocomplete-suggestions" id="sugestoesCargo"></div>
+                        </div>
+                        <select class="form-select mt-1" id="dropdownCargoCI" style="font-size: 12px;">
+                            <option value="">Selecione um cargo...</option>
                         </select>
                     </div>
                 </div>
-
-                <div class="table-container">
-                    <div class="table-fixed-header-container">
-                        <table class="table">
-                            <thead><tr><th>Matrícula</th><th>Nome</th><th>Órgão</th><th>Cargo</th><th>Empresa</th><th>CNPJ</th><th class="text-center">Ações</th></tr></thead>
-                            <tbody id="empregadosTableBody"></tbody>
-                        </table>
-                    </div>
-                    <div class="pagination-container" id="paginacaoContainerCI"></div>
+                <div class="consulta-buttons-row">
+                    <button class="btn-pesquisa" onclick="aplicarFiltrosCI()"><i class="material-icons me-2">search</i>Pesquisar</button>
+                    <button class="btn-secondary-custom" onclick="limparFiltrosCI()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
                 </div>
-            `;
-            
-            // Configura autocompletes
-            setupAutocomplete('filtroNomeCI', 'sugestoesNome', opcoesCache.nomes, 'nome');
-            setupAutocomplete('filtroMatriculaCI', 'sugestoesMatricula', opcoesCache.matriculas, 'matricula');
-            setupAutocomplete('filtroCargoCI', 'sugestoesCargo', opcoesCache.cargos, 'cargo');
-            
-            aplicarFiltrosCI();
-        }
+            </div>
 
-        window.aplicarFiltrosCI = function() {
-            const nome = document.getElementById('filtroNomeCI')?.value || '';
-            const matricula = document.getElementById('filtroMatriculaCI')?.value || '';
-            const cargo = document.getElementById('filtroCargoCI')?.value || '';
-            
-            filtrosAtivosCI.nome = nome;
-            filtrosAtivosCI.matricula = matricula;
-            filtrosAtivosCI.cargo = cargo;
-            
-            aplicarTodosFiltrosCI();
-        };
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex gap-2">
+                    <button class="btn-export" onclick="exportarTabelaConsultaCSV()"><i class="material-icons me-2">description</i>CSV</button>
+                    <button class="btn-export" onclick="exportarTabelaConsultaPDF()"><i class="material-icons me-2">print</i>PDF</button>
+                    <div class="share-dropdown">
+                        <button class="btn-export" onclick="toggleShare(2)"><i class="material-icons me-2">share</i>Compartilhar</button>
+                        <div class="share-options" id="shareOptions2">
+                            <a href="#" onclick="copiarLink(event,2)"><i class="fas fa-link"></i> Copiar Link</a>
+                            <a href="#" onclick="compartilharFacebook(event,2)"><i class="fab fa-facebook-f"></i> Facebook</a>
+                            <a href="#" onclick="compartilharTwitter(event,2)"><i class="fab fa-twitter"></i> Twitter</a>
+                            <a href="#" onclick="compartilharLinkedIn(event,2)"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                            <a href="#" onclick="compartilharWhatsApp(event,2)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        </div>
+                    </div>
+                    <div class="table-search-container">
+                        <input type="text" class="table-search-input" id="buscaTabelaCI" placeholder="Buscar na tabela..." onkeyup="aplicarBuscaTabelaCI()">
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="table-badge" id="totalServidoresBadge">${currentDisplayData.empregadosUnicos.length} empregados</span>
+                    <select class="items-per-page" id="itensPorPaginaCI" onchange="alterarItensPorPaginaCI()">
+                        <option value="25">25</option>
+                        <option value="50" selected>50</option>
+                        <option value="100">100</option>
+                        <option value="${currentDisplayData.empregadosUnicos.length}">Todos</option>
+                    </select>
+                </div>
+            </div>
 
-        window.aplicarBuscaTabelaCI = function() {
-            filtrosAtivosCI.buscaTabela = document.getElementById('buscaTabelaCI')?.value || '';
-            aplicarTodosFiltrosCI();
-        };
+            <div class="table-container">
+                <div class="table-fixed-header-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="sortable-header" onclick="ordenarTabela('matricula', 'text')">Matrícula <i class="material-icons">${sortConfig.coluna === 'matricula' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i></th>
+                                <th class="sortable-header" onclick="ordenarTabela('nome', 'text')">Nome <i class="material-icons">${sortConfig.coluna === 'nome' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i></th>
+                                <th class="sortable-header" onclick="ordenarTabela('orgao_sigla', 'text')">Órgão <i class="material-icons">${sortConfig.coluna === 'orgao_sigla' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i></th>
+                                <th class="sortable-header" onclick="ordenarTabela('cargo_descricao', 'text')">Cargo <i class="material-icons">${sortConfig.coluna === 'cargo_descricao' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i></th>
+                                <th class="sortable-header" onclick="ordenarTabela('empresa', 'text')">Empresa <i class="material-icons">${sortConfig.coluna === 'empresa' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i></th>
+                                <th class="sortable-header" onclick="ordenarTabela('cnpj_empresa', 'text')">CNPJ <i class="material-icons">${sortConfig.coluna === 'cnpj_empresa' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i></th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="empregadosTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="pagination-container" id="paginacaoContainerCI"></div>
+            </div>
+        `;
+        
+        // Configura comboboxes (dropdown + autocomplete)
+        setTimeout(() => {
+            setupCombobox('filtroNomeCI', 'sugestoesNome', 'dropdownNomeCI', opcoesCache.nomes, 'nome');
+            setupCombobox('filtroMatriculaCI', 'sugestoesMatricula', 'dropdownMatriculaCI', opcoesCache.matriculas, 'matricula');
+            setupCombobox('filtroCargoCI', 'sugestoesCargo', 'dropdownCargoCI', opcoesCache.cargos, 'cargo');
+        }, 100);
+        
+        aplicarFiltrosCI();
+    }
 
-        function aplicarTodosFiltrosCI() {
-            empregadosFiltradosCI = currentDisplayData.empregadosUnicos.filter(s => {
-                // Filtro por nome
-                if (filtrosAtivosCI.nome && !s.nome.toLowerCase().includes(filtrosAtivosCI.nome.toLowerCase())) return false;
+    window.aplicarFiltrosCI = function() {
+        const nome = document.getElementById('filtroNomeCI')?.value || '';
+        const matricula = document.getElementById('filtroMatriculaCI')?.value || '';
+        const cargo = document.getElementById('filtroCargoCI')?.value || '';
+        
+        filtrosAtivosCI.nome = nome;
+        filtrosAtivosCI.matricula = matricula;
+        filtrosAtivosCI.cargo = cargo;
+        
+        aplicarTodosFiltrosCI();
+    };
+
+    window.aplicarBuscaTabelaCI = function() {
+        filtrosAtivosCI.buscaTabela = document.getElementById('buscaTabelaCI')?.value || '';
+        aplicarTodosFiltrosCI();
+    };
+
+    function aplicarTodosFiltrosCI() {
+        empregadosFiltradosCI = currentDisplayData.empregadosUnicos.filter(s => {
+            // Filtro por nome
+            if (filtrosAtivosCI.nome && !s.nome.toLowerCase().includes(filtrosAtivosCI.nome.toLowerCase())) return false;
+            
+            // Filtro por matrícula
+            if (filtrosAtivosCI.matricula && !s.matricula.toLowerCase().includes(filtrosAtivosCI.matricula.toLowerCase())) return false;
+            
+            // Filtro por cargo
+            if (filtrosAtivosCI.cargo && !s.cargo_descricao.toLowerCase().includes(filtrosAtivosCI.cargo.toLowerCase())) return false;
+            
+            // Busca na tabela (busca geral em todos os campos)
+            if (filtrosAtivosCI.buscaTabela) {
+                const termo = filtrosAtivosCI.buscaTabela.toLowerCase();
+                const nomeMatch = s.nome && s.nome.toLowerCase().includes(termo);
+                const matriculaMatch = s.matricula && s.matricula.toLowerCase().includes(termo);
+                const cargoMatch = s.cargo_descricao && s.cargo_descricao.toLowerCase().includes(termo);
+                const empresaMatch = s.empresa && s.empresa.toLowerCase().includes(termo);
+                const orgaoMatch = s.orgao && s.orgao.toLowerCase().includes(termo);
+                const siglaMatch = s.orgao_sigla && s.orgao_sigla.toLowerCase().includes(termo);
+                const cnpjMatch = s.cnpj_empresa && s.cnpj_empresa.includes(termo);
                 
-                // Filtro por matrícula
-                if (filtrosAtivosCI.matricula && !s.matricula.toLowerCase().includes(filtrosAtivosCI.matricula.toLowerCase())) return false;
-                
-                // Filtro por cargo
-                if (filtrosAtivosCI.cargo && !s.cargo_descricao.toLowerCase().includes(filtrosAtivosCI.cargo.toLowerCase())) return false;
-                
-                // Busca na tabela (busca geral em todos os campos)
-                if (filtrosAtivosCI.buscaTabela) {
-                    const termo = filtrosAtivosCI.buscaTabela.toLowerCase();
-                    const nomeMatch = s.nome && s.nome.toLowerCase().includes(termo);
-                    const matriculaMatch = s.matricula && s.matricula.toLowerCase().includes(termo);
-                    const cargoMatch = s.cargo_descricao && s.cargo_descricao.toLowerCase().includes(termo);
-                    const empresaMatch = s.empresa && s.empresa.toLowerCase().includes(termo);
-                    const orgaoMatch = s.orgao && s.orgao.toLowerCase().includes(termo);
-                    const siglaMatch = s.orgao_sigla && s.orgao_sigla.toLowerCase().includes(termo);
-                    const cnpjMatch = s.cnpj_empresa && s.cnpj_empresa.includes(termo);
-                    
-                    if (!(nomeMatch || matriculaMatch || cargoMatch || empresaMatch || orgaoMatch || siglaMatch || cnpjMatch)) {
-                        return false;
-                    }
+                if (!(nomeMatch || matriculaMatch || cargoMatch || empresaMatch || orgaoMatch || siglaMatch || cnpjMatch)) {
+                    return false;
                 }
-                
-                return true;
-            });
-            
-            paginaAtualCI = 1;
-            atualizarTabelaConsulta();
-        }
-
-        window.limparFiltrosCI = function() {
-            // Limpa inputs
-            document.getElementById('filtroNomeCI').value = '';
-            document.getElementById('filtroMatriculaCI').value = '';
-            document.getElementById('filtroCargoCI').value = '';
-            document.getElementById('buscaTabelaCI').value = '';
-            
-            // Limpa filtros ativos
-            filtrosAtivosCI = {
-                nome: '',
-                matricula: '',
-                cargo: '',
-                buscaTabela: ''
-            };
-            
-            empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
-            paginaAtualCI = 1;
-            atualizarTabelaConsulta();
-        };
-
-        function atualizarTabelaConsulta() {
-            const inicio = (paginaAtualCI - 1) * itensPorPaginaCI;
-            const fim = Math.min(inicio + itensPorPaginaCI, empregadosFiltradosCI.length);
-            const dadosPagina = empregadosFiltradosCI.slice(inicio, fim);
-            
-            const tbody = document.getElementById('empregadosTableBody');
-            if (tbody) {
-                tbody.innerHTML = dadosPagina.map(s => `<tr>
-                    <td>${s.matricula || '-'}</td>
-                    <td>${s.nome || '-'}</td>
-                    <td>${s.orgao_sigla || '-'}</td>
-                    <td>${s.cargo_descricao || '-'}</td>
-                    <td>${s.empresa ? (s.empresa.length > 30 ? s.empresa.substring(0,30)+'...' : s.empresa) : '-'}</td>
-                    <td>${s.cnpj_empresa ? s.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-'}</td>
-                    <td class="text-center"><button class="btn-action" onclick="verDetalhes('${s.matricula}')"><i class="material-icons">visibility</i></button></td>
-                </tr>`).join('');
             }
             
-            document.getElementById('totalServidoresBadge').innerText = empregadosFiltradosCI.length + ' empregados';
-            
-            const totalPaginas = Math.ceil(empregadosFiltradosCI.length / itensPorPaginaCI);
-            renderizarPaginacaoCI(totalPaginas);
-        }
+            return true;
+        });
+        
+        paginaAtualCI = 1;
+        atualizarTabelaConsulta();
+    }
 
-        function renderizarPaginacaoCI(totalPaginas) {
-            const container = document.getElementById('paginacaoContainerCI');
-            if (!container) return;
+    window.limparFiltrosCI = function() {
+        // Limpa inputs
+        document.getElementById('filtroNomeCI').value = '';
+        document.getElementById('filtroMatriculaCI').value = '';
+        document.getElementById('filtroCargoCI').value = '';
+        document.getElementById('buscaTabelaCI').value = '';
+        
+        // Limpa dropdowns
+        if (document.getElementById('dropdownNomeCI')) document.getElementById('dropdownNomeCI').value = '';
+        if (document.getElementById('dropdownMatriculaCI')) document.getElementById('dropdownMatriculaCI').value = '';
+        if (document.getElementById('dropdownCargoCI')) document.getElementById('dropdownCargoCI').value = '';
+        
+        // Limpa filtros ativos
+        filtrosAtivosCI = {
+            nome: '',
+            matricula: '',
+            cargo: '',
+            buscaTabela: ''
+        };
+        
+        empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
+        paginaAtualCI = 1;
+        atualizarTabelaConsulta();
+    };
+
+    function atualizarTabelaConsulta() {
+        const inicio = (paginaAtualCI - 1) * itensPorPaginaCI;
+        const fim = Math.min(inicio + itensPorPaginaCI, empregadosFiltradosCI.length);
+        const dadosPagina = empregadosFiltradosCI.slice(inicio, fim);
+        
+        const tbody = document.getElementById('empregadosTableBody');
+        if (tbody) {
+            tbody.innerHTML = dadosPagina.map(s => `<tr>
+                <td>${s.matricula || '-'}</td>
+                <td>${s.nome || '-'}</td>
+                <td>${s.orgao_sigla || '-'}</td>
+                <td>${s.cargo_descricao || '-'}</td>
+                <td>${s.empresa ? (s.empresa.length > 30 ? s.empresa.substring(0,30)+'...' : s.empresa) : '-'}</td>
+                <td>${s.cnpj_empresa ? s.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-'}</td>
+                <td class="text-center"><button class="btn-action" onclick="verDetalhes('${s.matricula}')"><i class="material-icons">visibility</i></button></td>
+            </tr>`).join('');
+        }
+        
+        document.getElementById('totalServidoresBadge').innerText = empregadosFiltradosCI.length + ' empregados';
+        
+        const totalPaginas = Math.ceil(empregadosFiltradosCI.length / itensPorPaginaCI);
+        renderizarPaginacaoCI(totalPaginas);
+    }
+
+    function renderizarPaginacaoCI(totalPaginas) {
+        const container = document.getElementById('paginacaoContainerCI');
+        if (!container) return;
+        
+        if (empregadosFiltradosCI.length === 0) {
+            container.innerHTML = '<div class="pagination-info">Nenhum registro encontrado</div>';
+            return;
+        }
+        
+        const inicio = (paginaAtualCI - 1) * itensPorPaginaCI + 1;
+        const fim = Math.min(paginaAtualCI * itensPorPaginaCI, empregadosFiltradosCI.length);
+        
+        let html = `
+            <div class="pagination-info">
+                Mostrando ${inicio}-${fim} de ${empregadosFiltradosCI.length.toLocaleString('pt-BR')} registros
+            </div>
+            <nav>
+                <ul class="pagination mb-0">
+        `;
+        
+        html += `<li class="page-item ${paginaAtualCI === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI - 1}); return false;">&laquo;</a>
+        </li>`;
+        
+        let inicioPaginas = Math.max(1, paginaAtualCI - 2);
+        let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
+        
+        for (let i = inicioPaginas; i <= fimPaginas; i++) {
+            html += `<li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
+                <a class="page-link" href="#" onclick="mudarPaginaCI(${i}); return false;">${i}</a>
+            </li>`;
+        }
+        
+        html += `<li class="page-item ${paginaAtualCI === totalPaginas ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">&raquo;</a>
+        </li>`;
+        
+        html += '</ul></nav>';
+        container.innerHTML = html;
+    }
+
+    window.mudarPaginaCI = function(pagina) {
+        const totalPaginas = Math.ceil(empregadosFiltradosCI.length / itensPorPaginaCI);
+        if (pagina < 1 || pagina > totalPaginas) return;
+        paginaAtualCI = pagina;
+        atualizarTabelaConsulta();
+    };
+
+    window.alterarItensPorPaginaCI = function() {
+        itensPorPaginaCI = parseInt(document.getElementById('itensPorPaginaCI').value);
+        paginaAtualCI = 1;
+        atualizarTabelaConsulta();
+    };
+
+    window.verDetalhes = async function(matricula) {
+        showLoading(true, 'Carregando histórico...');
+        
+        try {
+            let historico = [];
             
-            if (empregadosFiltradosCI.length === 0) {
-                container.innerHTML = '<div class="pagination-info">Nenhum registro encontrado</div>';
+            // Adiciona dados do mês atual
+            const dadosAtuais = currentDisplayData.dados.filter(i => i.matricula === matricula);
+            historico = [...dadosAtuais];
+            
+            // Se o cache já tem outros meses, carrega deles também
+            if (dataCache['2025']) {
+                for (const mes in dataCache['2025']) {
+                    if (mes !== currentDisplayData.mes) {
+                        const dadosMes = dataCache['2025'][mes].filter(i => i.matricula === matricula);
+                        historico = [...historico, ...dadosMes];
+                    }
+                }
+            }
+            
+            if (historico.length === 0) {
+                showError('Histórico não encontrado');
                 return;
             }
             
-            const inicio = (paginaAtualCI - 1) * itensPorPaginaCI + 1;
-            const fim = Math.min(paginaAtualCI * itensPorPaginaCI, empregadosFiltradosCI.length);
+            historico.sort((a,b) => (b.ano_mes || '').localeCompare(a.ano_mes || ''));
+            const emp = historico[0];
             
-            let html = `
-                <div class="pagination-info">
-                    Mostrando ${inicio}-${fim} de ${empregadosFiltradosCI.length.toLocaleString('pt-BR')} registros
-                </div>
-                <nav>
-                    <ul class="pagination mb-0">
-            `;
-            
-            html += `<li class="page-item ${paginaAtualCI === 1 ? 'disabled' : ''}">
-                <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI - 1}); return false;">&laquo;</a>
-            </li>`;
-            
-            let inicioPaginas = Math.max(1, paginaAtualCI - 2);
-            let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
-            
-            for (let i = inicioPaginas; i <= fimPaginas; i++) {
-                html += `<li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
-                    <a class="page-link" href="#" onclick="mudarPaginaCI(${i}); return false;">${i}</a>
-                </li>`;
-            }
-            
-            html += `<li class="page-item ${paginaAtualCI === totalPaginas ? 'disabled' : ''}">
-                <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">&raquo;</a>
-            </li>`;
-            
-            html += '</ul></nav>';
-            container.innerHTML = html;
-        }
-
-        window.mudarPaginaCI = function(pagina) {
-            const totalPaginas = Math.ceil(empregadosFiltradosCI.length / itensPorPaginaCI);
-            if (pagina < 1 || pagina > totalPaginas) return;
-            paginaAtualCI = pagina;
-            atualizarTabelaConsulta();
-        };
-
-        window.alterarItensPorPaginaCI = function() {
-            itensPorPaginaCI = parseInt(document.getElementById('itensPorPaginaCI').value);
-            paginaAtualCI = 1;
-            atualizarTabelaConsulta();
-        };
-
-        window.verDetalhes = async function(matricula) {
-            showLoading(true, 'Carregando histórico...');
-            
-            try {
-                let historico = [];
-                
-                // Adiciona dados do mês atual
-                const dadosAtuais = currentDisplayData.dados.filter(i => i.matricula === matricula);
-                historico = [...dadosAtuais];
-                
-                // Se o cache já tem outros meses, carrega deles também
-                if (dataCache['2025']) {
-                    for (const mes in dataCache['2025']) {
-                        if (mes !== currentDisplayData.mes) {
-                            const dadosMes = dataCache['2025'][mes].filter(i => i.matricula === matricula);
-                            historico = [...historico, ...dadosMes];
-                        }
-                    }
-                }
-                
-                if (historico.length === 0) {
-                    showError('Histórico não encontrado');
-                    return;
-                }
-                
-                historico.sort((a,b) => (b.ano_mes || '').localeCompare(a.ano_mes || ''));
-                const emp = historico[0];
-                
-                document.getElementById('modalContent').innerHTML = `
-                    <div class="row">
-                        <div class="col-md-6"><div class="info-card primary"><div class="info-label">Empregado</div><div class="info-value highlight">${emp.nome}</div><div class="info-label mt-3">Matrícula</div><div class="info-value">${emp.matricula || '-'}</div></div></div>
-                        <div class="col-md-6"><div class="info-card"><div class="info-label">Órgão</div><div class="info-value">${emp.orgao_sigla} - ${emp.orgao}</div><div class="info-label mt-3">Cargo</div><div class="info-value">${emp.cargo_descricao || '-'}</div></div></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6"><div class="info-card"><div class="info-label">Empresa</div><div class="info-value">${emp.empresa || '-'}</div></div></div>
-                        <div class="col-md-6"><div class="info-card"><div class="info-label">CNPJ</div><div class="info-value">${emp.cnpj_empresa ? emp.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-'}</div></div></div>
-                    </div>
-                    <h6 class="mt-4 fw-bold">Histórico por Mês</h6>
-                    <div style="max-height:250px; overflow-y:auto;">
-                        <table class="table table-sm"><thead class="bg-light"><tr><th>Mês/Ano</th><th>Órgão</th><th>Cargo</th><th>Empresa</th><th>CNPJ</th></tr></thead><tbody>
-                            ${historico.map(i=>`<tr><td>${formatarMesAno(i.ano_mes)}</td><td>${i.orgao_sigla}</td><td>${i.cargo_descricao||'-'}</td><td>${i.empresa ? (i.empresa.length > 30 ? i.empresa.substring(0,30)+'...' : i.empresa) : '-'}</td><td>${i.cnpj_empresa || '-'}</td></tr>`).join('')}
-                        </tbody></table>
-                    </div>
-                `;
-                new bootstrap.Modal(document.getElementById('detailModal')).show();
-            } finally {
-                showLoading(false);
-            }
-        };
-
-        // ============================================
-        // EXPORTAÇÕES
-        // ============================================
-        window.exportarTabelaVisaoGeralCSV = function() {
-            const dados = agruparPorOrgao(currentDisplayData.dados);
-            const linhas = dados.map(i => [i.orgao, i.sigla, i.total]).map(l => l.map(c => `"${String(c).replace(/"/g,'""')}"`).join(';'));
-            const csv = ['Órgão;Sigla;Empregados', ...linhas].join('\n');
-            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `visao_geral_orgaos_${currentDisplayData.ano}_${currentDisplayData.mes}.csv`;
-            link.click();
-        };
-
-        window.exportarTabelaVisaoGeralPDF = function() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({ orientation: 'landscape' });
-            const dados = agruparPorOrgao(currentDisplayData.dados).map(i => [i.orgao, i.sigla, i.total.toLocaleString('pt-BR')]);
-            doc.autoTable({
-                head: [['Órgão', 'Sigla', 'Empregados']],
-                body: dados,
-                foot: [['Total Geral', '', dados.reduce((a,i)=>a+parseInt(i[2].replace(/\./g,'')),0).toLocaleString('pt-BR')]],
-                didDrawPage: (data) => {
-                    doc.setFontSize(10);
-                    doc.text('Visão Geral - Empregados Terceirizados', 14, 10);
-                    doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
-                }
-            });
-            doc.save(`visao_geral_orgaos_${currentDisplayData.ano}_${currentDisplayData.mes}.pdf`);
-        };
-
-        window.exportarTabelaConsultaCSV = function() {
-            const linhas = empregadosFiltradosCI.map(s => [s.matricula, s.nome, s.orgao_sigla, s.cargo_descricao||'', s.empresa||'', s.cnpj_empresa||''].map(c => `"${String(c).replace(/"/g,'""')}"`).join(';'));
-            const csv = ['Matrícula;Nome;Órgão;Cargo;Empresa;CNPJ', ...linhas].join('\n');
-            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `consulta_empregados_${currentDisplayData.ano}_${currentDisplayData.mes}.csv`;
-            link.click();
-        };
-
-        window.exportarTabelaConsultaPDF = function() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({ orientation: 'landscape' });
-            const dados = empregadosFiltradosCI.map(s => [s.matricula||'-', s.nome||'-', s.orgao_sigla||'-', s.cargo_descricao||'-', s.empresa||'-', s.cnpj_empresa||'-']);
-            doc.autoTable({
-                head: [['Matrícula', 'Nome', 'Órgão', 'Cargo', 'Empresa', 'CNPJ']],
-                body: dados,
-                didDrawPage: (data) => {
-                    doc.setFontSize(10);
-                    doc.text('Consulta de Empregados Terceirizados', 14, 10);
-                    doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
-                }
-            });
-            doc.save(`consulta_empregados_${currentDisplayData.ano}_${currentDisplayData.mes}.pdf`);
-        };
-
-        // ============================================
-        // COMPARTILHAMENTO
-        // ============================================
-        window.toggleShare = function(id) {
-            document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
-            document.getElementById(`shareOptions${id}`).classList.toggle('show');
-        };
-
-        window.copiarLink = function(e, id) {
-            e.preventDefault();
-            navigator.clipboard.writeText(window.location.href).then(() => alert('Link copiado!'));
-            document.getElementById(`shareOptions${id}`).classList.remove('show');
-        };
-
-        window.compartilharFacebook = function(e, id) {
-            e.preventDefault();
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
-            document.getElementById(`shareOptions${id}`).classList.remove('show');
-        };
-        
-        window.compartilharTwitter = function(e, id) {
-            e.preventDefault();
-            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent('Empregados Terceirizados - Governo de Minas Gerais')}`, '_blank');
-            document.getElementById(`shareOptions${id}`).classList.remove('show');
-        };
-        
-        window.compartilharLinkedIn = function(e, id) {
-            e.preventDefault();
-            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank');
-            document.getElementById(`shareOptions${id}`).classList.remove('show');
-        };
-        
-        window.compartilharWhatsApp = function(e, id) {
-            e.preventDefault();
-            window.open(`https://wa.me/?text=${encodeURIComponent('Empregados Terceirizados - Governo de Minas Gerais ' + window.location.href)}`, '_blank');
-            document.getElementById(`shareOptions${id}`).classList.remove('show');
-        };
-
-        // ============================================
-        // DOWNLOADS
-        // ============================================
-        function renderizarDownloads() {
-            const anos = Object.keys(CSV_FILES_BY_YEAR).sort((a,b) => b - a);
-            
-            document.getElementById('downloads-content').innerHTML = `
-                <div class="filter-container">
-                     <div class="row align-items-end g-3">
-                        <div class="col-md-4">
-                            <label class="filter-label"><i class="material-icons"></i>ANO</label>
-                            <select class="form-select" id="anoDownload">
-                                <option value="">Selecione um ano</option>
-                                ${anos.map(a => `<option value="${a}">${a}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn-primary-custom w-100" onclick="baixarCSVAno()"><i class="material-icons me-2">download</i>Baixar CSV</button>
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn-primary-custom w-100" onclick="baixarTodosCSV()"><i class="material-icons me-2">download</i>Baixar Todos</button>
-                        </div>
-                    </div>
-                </div>
-
+            document.getElementById('modalContent').innerHTML = `
                 <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div class="card-stats p-4 bg-white rounded shadow-sm h-100">
-                            <h4 class="fw-bold text-start mb-3"><i class="material-icons me-2">open_in_new</i> Portal de Dados Abertos</h4>
-                            <p class="text-muted text-justify" style="font-size: 13px; text-align: justify;">
-                                Acesse o conjunto de dados de Empregados Terceirizados no Portal de Dados Abertos de Minas Gerais.
-                            </p>
-                            <div class="mt-4 text-end">
-                                <a href="https://dados.mg.gov.br/dataset/empregados_terceirizados" 
-                                   target="_blank" 
-                                   class="btn-export text-decoration-none fw-bold d-inline-block px-4 py-2">
-                                    <i class="material-icons me-2" style="font-size: 16px; vertical-align: middle;">launch</i>Acessar Portal
-                                </a>
-                            </div>
+                    <div class="col-md-6"><div class="info-card primary"><div class="info-label">Empregado</div><div class="info-value highlight">${emp.nome}</div><div class="info-label mt-3">Matrícula</div><div class="info-value">${emp.matricula || '-'}</div></div></div>
+                    <div class="col-md-6"><div class="info-card"><div class="info-label">Órgão</div><div class="info-value">${emp.orgao_sigla} - ${emp.orgao}</div><div class="info-label mt-3">Cargo</div><div class="info-value">${emp.cargo_descricao || '-'}</div></div></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"><div class="info-card"><div class="info-label">Empresa</div><div class="info-value">${emp.empresa || '-'}</div></div></div>
+                    <div class="col-md-6"><div class="info-card"><div class="info-label">CNPJ</div><div class="info-value">${emp.cnpj_empresa ? emp.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-'}</div></div></div>
+                </div>
+                <h6 class="mt-4 fw-bold">Histórico por Mês</h6>
+                <div style="max-height:250px; overflow-y:auto;">
+                    <table class="table table-sm"><thead class="bg-light"><tr><th>Mês/Ano</th><th>Órgão</th><th>Cargo</th><th>Empresa</th><th>CNPJ</th></tr></thead><tbody>
+                        ${historico.map(i=>`<tr><td>${formatarMesAno(i.ano_mes)}</td><td>${i.orgao_sigla}</td><td>${i.cargo_descricao||'-'}</td><td>${i.empresa ? (i.empresa.length > 30 ? i.empresa.substring(0,30)+'...' : i.empresa) : '-'}</td><td>${i.cnpj_empresa || '-'}</td></tr>`).join('')}
+                    </tbody></table>
+                </div>
+            `;
+            new bootstrap.Modal(document.getElementById('detailModal')).show();
+        } finally {
+            showLoading(false);
+        }
+    };
+
+    // ============================================
+    // EXPORTAÇÕES
+    // ============================================
+    window.exportarTabelaVisaoGeralCSV = function() {
+        const dados = agruparPorOrgao(currentDisplayData.dados);
+        const linhas = dados.map(i => [i.orgao, i.sigla, i.total]).map(l => l.map(c => `"${String(c).replace(/"/g,'""')}"`).join(';'));
+        const csv = ['Órgão;Sigla;Empregados', ...linhas].join('\n');
+        const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `visao_geral_orgaos_${currentDisplayData.ano}_${currentDisplayData.mes}.csv`;
+        link.click();
+    };
+
+    window.exportarTabelaVisaoGeralPDF = function() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: 'landscape' });
+        const dados = agruparPorOrgao(currentDisplayData.dados).map(i => [i.orgao, i.sigla, i.total.toLocaleString('pt-BR')]);
+        doc.autoTable({
+            head: [['Órgão', 'Sigla', 'Empregados']],
+            body: dados,
+            foot: [['Total Geral', '', dados.reduce((a,i)=>a+parseInt(i[2].replace(/\./g,'')),0).toLocaleString('pt-BR')]],
+            didDrawPage: (data) => {
+                doc.setFontSize(10);
+                doc.text('Visão Geral - Empregados Terceirizados', 14, 10);
+                doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
+            }
+        });
+        doc.save(`visao_geral_orgaos_${currentDisplayData.ano}_${currentDisplayData.mes}.pdf`);
+    };
+
+    window.exportarTabelaConsultaCSV = function() {
+        const linhas = empregadosFiltradosCI.map(s => [s.matricula, s.nome, s.orgao_sigla, s.cargo_descricao||'', s.empresa||'', s.cnpj_empresa||''].map(c => `"${String(c).replace(/"/g,'""')}"`).join(';'));
+        const csv = ['Matrícula;Nome;Órgão;Cargo;Empresa;CNPJ', ...linhas].join('\n');
+        const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `consulta_empregados_${currentDisplayData.ano}_${currentDisplayData.mes}.csv`;
+        link.click();
+    };
+
+    window.exportarTabelaConsultaPDF = function() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: 'landscape' });
+        const dados = empregadosFiltradosCI.map(s => [s.matricula||'-', s.nome||'-', s.orgao_sigla||'-', s.cargo_descricao||'-', s.empresa||'-', s.cnpj_empresa||'-']);
+        doc.autoTable({
+            head: [['Matrícula', 'Nome', 'Órgão', 'Cargo', 'Empresa', 'CNPJ']],
+            body: dados,
+            didDrawPage: (data) => {
+                doc.setFontSize(10);
+                doc.text('Consulta de Empregados Terceirizados', 14, 10);
+                doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
+            }
+        });
+        doc.save(`consulta_empregados_${currentDisplayData.ano}_${currentDisplayData.mes}.pdf`);
+    };
+
+    // ============================================
+    // COMPARTILHAMENTO
+    // ============================================
+    window.toggleShare = function(id) {
+        document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
+        document.getElementById(`shareOptions${id}`).classList.toggle('show');
+    };
+
+    window.copiarLink = function(e, id) {
+        e.preventDefault();
+        navigator.clipboard.writeText(window.location.href).then(() => alert('Link copiado!'));
+        document.getElementById(`shareOptions${id}`).classList.remove('show');
+    };
+
+    window.compartilharFacebook = function(e, id) {
+        e.preventDefault();
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+        document.getElementById(`shareOptions${id}`).classList.remove('show');
+    };
+    
+    window.compartilharTwitter = function(e, id) {
+        e.preventDefault();
+        window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent('Empregados Terceirizados - Governo de Minas Gerais')}`, '_blank');
+        document.getElementById(`shareOptions${id}`).classList.remove('show');
+    };
+    
+    window.compartilharLinkedIn = function(e, id) {
+        e.preventDefault();
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank');
+        document.getElementById(`shareOptions${id}`).classList.remove('show');
+    };
+    
+    window.compartilharWhatsApp = function(e, id) {
+        e.preventDefault();
+        window.open(`https://wa.me/?text=${encodeURIComponent('Empregados Terceirizados - Governo de Minas Gerais ' + window.location.href)}`, '_blank');
+        document.getElementById(`shareOptions${id}`).classList.remove('show');
+    };
+
+    // ============================================
+    // DOWNLOADS
+    // ============================================
+    function renderizarDownloads() {
+        const anos = Object.keys(CSV_FILES_BY_YEAR).sort((a,b) => b - a);
+        
+        document.getElementById('downloads-content').innerHTML = `
+            <div class="filter-container">
+                 <div class="row align-items-end g-3">
+                    <div class="col-md-4">
+                        <label class="filter-label"><i class="material-icons">calendar_today</i>ANO</label>
+                        <select class="form-select" id="anoDownload">
+                            <option value="">Selecione um ano</option>
+                            ${anos.map(a => `<option value="${a}">${a}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn-primary-custom w-100" onclick="baixarCSVAno()"><i class="material-icons me-2">download</i>Baixar CSV</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn-primary-custom w-100" onclick="baixarTodosCSV()"><i class="material-icons me-2">download</i>Baixar Todos</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="card-stats p-4 bg-white rounded shadow-sm h-100">
+                        <h4 class="fw-bold text-start mb-3"><i class="material-icons me-2">open_in_new</i> Portal de Dados Abertos</h4>
+                        <p class="text-muted text-justify" style="font-size: 13px; text-align: justify;">
+                            Acesse o conjunto de dados de Empregados Terceirizados no Portal de Dados Abertos de Minas Gerais.
+                        </p>
+                        <div class="mt-4 text-end">
+                            <a href="https://dados.mg.gov.br/dataset/empregados_terceirizados" 
+                               target="_blank" 
+                               class="btn-export text-decoration-none fw-bold d-inline-block px-4 py-2">
+                                <i class="material-icons me-2" style="font-size: 16px; vertical-align: middle;">launch</i>Acessar Portal
+                            </a>
                         </div>
                     </div>
                 </div>
+            </div>
 
-<div class="mt-4">
-    <h5 class="mb-3">Dicionário de Dados</h5>
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Campo</th>
-                    <th>Descrição</th>
-                    <th>Tipo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>matricula</td>
-                    <td>Matrícula do empregado terceirizado</td>
-                    <td>Texto/Número</td>
-                </tr>
-                <tr>
-                    <td>nome</td>
-                    <td>Nome completo do empregado</td>
-                    <td>Texto</td>
-                </tr>
-                <tr>
-                    <td>orgao</td>
-                    <td>Órgão de trabalho</td>
-                    <td>Texto</td>
-                </tr>
-                <tr>
-                    <td>cargo</td>
-                    <td>Cargo exercido</td>
-                    <td>Texto</td>
-                </tr>
-                <tr>
-                    <td>empresa</td>
-                    <td>Nome da empresa terceirizada</td>
-                    <td>Texto</td>
-                </tr>
-                <tr>
-                    <td>cnpj_empresa</td>
-                    <td>CNPJ da empresa</td>
-                    <td>Texto/Número</td>
-                </tr>
-                <tr>
-                    <td>mes_referencia</td>
-                    <td>Mês de referência</td>
-                    <td>Texto/Data</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-            `;
+            <div class="mt-4">
+                <h5 class="mb-3">Dicionário de Dados</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Descrição</th>
+                                <th>Tipo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>matricula</td>
+                                <td>Matrícula do empregado terceirizado</td>
+                                <td>Texto/Número</td>
+                            </tr>
+                            <tr>
+                                <td>nome</td>
+                                <td>Nome completo do empregado</td>
+                                <td>Texto</td>
+                            </tr>
+                            <tr>
+                                <td>orgao</td>
+                                <td>Órgão de trabalho</td>
+                                <td>Texto</td>
+                            </tr>
+                            <tr>
+                                <td>cargo</td>
+                                <td>Cargo exercido</td>
+                                <td>Texto</td>
+                            </tr>
+                            <tr>
+                                <td>empresa</td>
+                                <td>Nome da empresa terceirizada</td>
+                                <td>Texto</td>
+                            </tr>
+                            <tr>
+                                <td>cnpj_empresa</td>
+                                <td>CNPJ da empresa</td>
+                                <td>Texto/Número</td>
+                            </tr>
+                            <tr>
+                                <td>mes_referencia</td>
+                                <td>Mês de referência</td>
+                                <td>Texto/Data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+    }
+
+    window.baixarCSVAno = async function() {
+        const ano = document.getElementById('anoDownload')?.value;
+        if (!ano) {
+            alert('Selecione um ano para baixar.');
+            return;
         }
-
-        window.baixarCSVAno = async function() {
-            const ano = document.getElementById('anoDownload')?.value;
-            if (!ano) {
-                alert('Selecione um ano para baixar.');
+        
+        showLoading(true, `Preparando download de ${ano}...`);
+        
+        try {
+            if (!dataCache[ano]) {
+                await carregarMes(ano, '12');
+            }
+            
+            let todosDados = [];
+            if (dataCache[ano]) {
+                for (const mes in dataCache[ano]) {
+                    todosDados = todosDados.concat(dataCache[ano][mes]);
+                }
+            }
+            
+            if (todosDados.length === 0) {
+                alert('Dados não encontrados para o ano selecionado.');
                 return;
             }
             
-            showLoading(true, `Preparando download de ${ano}...`);
+            const cabecalhos = ['matricula','nome','orgao','cargo','empresa','cnpj_empresa','mes_referencia'];
+            const linhas = todosDados.map(item => cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';'));
+            const csv = [cabecalhos.join(';'), ...linhas].join('\n');
+            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `terceirizados_${ano}.csv`;
+            link.click();
+        } finally {
+            showLoading(false);
+        }
+    };
+
+    window.baixarTodosCSV = async function() {
+        showLoading(true, 'Preparando download completo...');
+        
+        try {
+            let todosDados = [];
             
-            try {
+            for (const ano of Object.keys(CSV_FILES_BY_YEAR)) {
                 if (!dataCache[ano]) {
                     await carregarMes(ano, '12');
                 }
                 
-                let todosDados = [];
                 if (dataCache[ano]) {
                     for (const mes in dataCache[ano]) {
                         todosDados = todosDados.concat(dataCache[ano][mes]);
                     }
                 }
-                
-                if (todosDados.length === 0) {
-                    alert('Dados não encontrados para o ano selecionado.');
-                    return;
-                }
-                
-                const cabecalhos = ['matricula','nome','orgao','cargo','empresa','cnpj_empresa','mes_referencia'];
-                const linhas = todosDados.map(item => cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';'));
-                const csv = [cabecalhos.join(';'), ...linhas].join('\n');
-                const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = `terceirizados_${ano}.csv`;
-                link.click();
-            } finally {
-                showLoading(false);
             }
-        };
-
-        window.baixarTodosCSV = async function() {
-            showLoading(true, 'Preparando download completo...');
             
-            try {
-                let todosDados = [];
-                
-                for (const ano of Object.keys(CSV_FILES_BY_YEAR)) {
-                    if (!dataCache[ano]) {
-                        await carregarMes(ano, '12');
-                    }
-                    
-                    if (dataCache[ano]) {
-                        for (const mes in dataCache[ano]) {
-                            todosDados = todosDados.concat(dataCache[ano][mes]);
-                        }
-                    }
-                }
-                
-                if (todosDados.length === 0) {
-                    alert('Nenhum dado carregado.');
-                    return;
-                }
-                
-                const cabecalhos = ['matricula','nome','orgao','cargo','empresa','cnpj_empresa','mes_referencia'];
-                const linhas = todosDados.map(item => cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';'));
-                const csv = [cabecalhos.join(';'), ...linhas].join('\n');
-                const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = 'terceirizados_completo.csv';
-                link.click();
-            } finally {
-                showLoading(false);
+            if (todosDados.length === 0) {
+                alert('Nenhum dado carregado.');
+                return;
             }
-        };
-    </script>
+            
+            const cabecalhos = ['matricula','nome','orgao','cargo','empresa','cnpj_empresa','mes_referencia'];
+            const linhas = todosDados.map(item => cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';'));
+            const csv = [cabecalhos.join(';'), ...linhas].join('\n');
+            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'terceirizados_completo.csv';
+            link.click();
+        } finally {
+            showLoading(false);
+        }
+    };
+</script>
 </body>
 </html>

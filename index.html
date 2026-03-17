@@ -1337,7 +1337,17 @@
 
                 <!-- Cards -->
                 <div class="row mb-4">
-                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Total de Empregados</div><div class="metric-value">${currentDisplayData.metrica.totalEmpregados.toLocaleString('pt-BR')}</div></div></div>
+                   <div class="metric-card">
+    <div class="metric-header">
+        Total de Empregados
+        <i class="material-icons" style="font-size:16px;">info</i>
+    </div>
+    <div class="metric-body">
+        <div class="metric-value">
+            ${currentDisplayData.metrica.totalEmpregados.toLocaleString('pt-BR')}
+        </div>
+    </div>
+</div>
                     <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Órgãos</div><div class="metric-value">${currentDisplayData.metrica.totalOrgaos.toLocaleString('pt-BR')}</div></div></div>
                     <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Empresas</div><div class="metric-value">${currentDisplayData.metrica.totalEmpresas.toLocaleString('pt-BR')}</div></div></div>
                     <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Período</div><div class="metric-value">${currentDisplayData.metrica.periodo}</div></div></div>

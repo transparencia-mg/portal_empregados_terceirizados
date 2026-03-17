@@ -762,15 +762,16 @@
 }    
 /* ===== ÍCONE INFO ===== */
 .info-icon {
-    font-size: 16px;
+    font-size: 12px;
     color: white;
     background-color: #1a3a5c;
     border-radius: 50%;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    line-height: 1; 
 }
         
       </style>
@@ -1392,7 +1393,6 @@ tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
                 Total de Empregados
                <i class="material-icons info-icon"
     data-bs-toggle="tooltip"
-   data-bs-placement="top"
    title="Quantidade total de empregados no período selecionado">
    info
 </i>

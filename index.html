@@ -171,37 +171,35 @@
 
         /* ==================== CARDS DE MÉTRICAS ==================== */
         .metric-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px 15px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-            margin-bottom: 20px;
-            border-top: 4px solid var(--primary-dark);
-            transition: all 0.3s ease;
-            height: 100%;
-        }
-        
-        .metric-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-        }
-        
-        .metric-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin: 8px 0;
-            line-height: 1;
-        }
-        
-        .metric-label {
-            font-size: 15px;
-            color: var(--primary-darker);
-            font-weight: 600;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    height: 100%;
+}
+
+/* faixa azul (cabeçalho) */
+.metric-header {
+    background: #2c4e66;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* valor */
+.metric-body {
+    padding: 15px;
+}
+
+.metric-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a3a5c;
+}
 
         /* ==================== CONTAINER DE GRÁFICOS ==================== */
         .chart-container {

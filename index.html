@@ -731,11 +731,35 @@
     background-color: #fff;
     transition: all 0.2s ease;
 }
-
 .modern-select:focus{
     border-color: #1a3a5c !important;
     box-shadow: 0 0 0 2px rgba(26,58,92,0.1);
 }
+    /* ===== TOOLTIP CUSTOM ===== */
+.tooltip-inner {
+    background-color: #2f3b45 !important;
+    color: #fff;
+    font-size: 13px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    max-width: 250px;
+}
+
+.tooltip.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: #2f3b45 !important;
+}
+
+.tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+    border-bottom-color: #2f3b45 !important;
+}
+
+.tooltip.bs-tooltip-start .tooltip-arrow::before {
+    border-left-color: #2f3b45 !important;
+}
+
+.tooltip.bs-tooltip-end .tooltip-arrow::before {
+    border-right-color: #2f3b45 !important;
+}    
       </style>
 </head>
 <body>

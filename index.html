@@ -43,7 +43,6 @@
 
         html, body {
             width: 100%;
-            height: 100%;
             min-height: 100vh;
             overflow-x: hidden;
             overflow-y: auto;
@@ -55,16 +54,10 @@
             font-family: 'Montserrat', sans-serif !important;
             background-color: var(--background-light);
             position: relative;
-            display: flex;
-            flex-direction: column;
         }
 
         .main-container {
-            flex: 1;
             width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
             position: relative;
         }
 
@@ -73,9 +66,6 @@
             max-width: 100% !important;
             padding: 0 20px;
             margin: 0;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
         }
 
         /* ==================== DASHBOARD CONTAINER ==================== */
@@ -84,9 +74,6 @@
             max-width: 100%;
             padding: 0 20px;
             margin: 0 auto;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
         }
 
         /* ==================== DATA ATUALIZAÇÃO ==================== */
@@ -263,7 +250,7 @@
             width: 100%;
         }
 
-        /* ==================== TABELAS - OCUPANDO TODO ESPAÇO ==================== */
+        /* ==================== TABELAS - LIMITE DE 25 LINHAS ==================== */
         .table-container {
             background: white;
             border-radius: 10px;
@@ -272,10 +259,6 @@
             margin-bottom: 20px;
             border: 1px solid #dee2e6;
             width: 100%;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 300px;
         }
         
         .table-header {
@@ -306,11 +289,29 @@
         
         .table-fixed-header-container {
             position: relative;
-            flex: 1;
+            max-height: 650px; /* Altura para aproximadamente 25 linhas */
             overflow: auto;
-            max-height: calc(100vh - 400px);
-            min-height: 300px;
             width: 100%;
+        }
+        
+        /* Ajuste fino para quando mostrar 25 linhas */
+        .table-fixed-header-container.showing-25 {
+            max-height: 650px;
+        }
+        
+        /* Para quando mostrar 50 linhas - ativa rolagem */
+        .table-fixed-header-container.showing-50 {
+            max-height: 650px; /* Mantém mesma altura, ativa rolagem */
+        }
+        
+        /* Para quando mostrar 100 linhas - ativa rolagem */
+        .table-fixed-header-container.showing-100 {
+            max-height: 650px; /* Mantém mesma altura, ativa rolagem */
+        }
+        
+        /* Para quando mostrar Todos - ativa rolagem */
+        .table-fixed-header-container.showing-all {
+            max-height: 650px; /* Mantém mesma altura, ativa rolagem */
         }
         
         .table-fixed-header-container table thead th {
@@ -560,13 +561,32 @@
         }
 
         /* ==================== MODAL ==================== */
-        .modal-creative .modal-header {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
-            color: white;
-            padding: 20px 30px;
-            border-bottom: none;
-        }
-        .modal-creative .modal-body { padding: 30px; background: #f8fafc; }
+
+.modal-creative .modal-header {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
+    color: white !important;
+    padding: 20px 30px;
+    border-bottom: none;
+}
+
+.modal-creative .modal-header .modal-title {
+    color: white !important;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.modal-creative .modal-header .modal-title i {
+    color: white !important;
+}
+
+.modal-creative .modal-header .btn-close {
+    filter: brightness(0) invert(1);
+    opacity: 1;
+}
+
+.modal-creative .modal-header .btn-close:hover {
+    opacity: 0.8;
+}
         .info-card {
             background: white;
             border-radius: 10px;
@@ -612,7 +632,7 @@
         }
         
         .items-per-page {
-            width: 70px;
+            width: 80px;
             border: 2px solid var(--primary-dark) !important;
             border-radius: 6px;
             padding: 5px 10px;
@@ -861,27 +881,11 @@
         
         /* ==================== TAB CONTENT ==================== */
         .tab-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+            width: 100%;
         }
         
         .tab-pane {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .tab-pane.active {
-            display: flex !important;
-        }
-        
-        #visao-geral-content,
-        #consulta-content,
-        #downloads-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+            width: 100%;
         }
         
         /* ==================== RESPONSIVIDADE ==================== */
@@ -1044,7 +1048,7 @@
 
     // Variáveis de estado para UI
     let paginaAtualCI = 1;
-    let itensPorPaginaCI = 50;
+    let itensPorPaginaCI = 25; // Alterado para 25 como padrão
     let empregadosFiltradosCI = [];
     let filtrosAtivosCI = {
         nome: '',
@@ -1953,8 +1957,8 @@
                 <div class="d-flex align-items-center gap-3">
                     <span class="table-badge" id="totalServidoresBadge">${currentDisplayData.empregadosUnicos.length} empregados</span>
                     <select class="items-per-page" id="itensPorPaginaCI" onchange="alterarItensPorPaginaCI()">
-                        <option value="25">25</option>
-                        <option value="50" selected>50</option>
+                        <option value="25" selected>25</option>
+                        <option value="50">50</option>
                         <option value="100">100</option>
                         <option value="${currentDisplayData.empregadosUnicos.length}">Todos</option>
                     </select>
@@ -1962,7 +1966,7 @@
             </div>
 
             <div class="table-container">
-                <div class="table-fixed-header-container">
+                <div class="table-fixed-header-container" id="tabelaContainer">
                     <table class="table">
                         <thead>
                             <tr>
@@ -2088,8 +2092,25 @@
         
         document.getElementById('totalServidoresBadge').innerText = empregadosFiltradosCI.length + ' empregados';
         
+        // Adiciona classe CSS baseada na quantidade de itens por página
+        const tabelaContainer = document.getElementById('tabelaContainer');
+        if (tabelaContainer) {
+            tabelaContainer.classList.remove('showing-25', 'showing-50', 'showing-100', 'showing-all');
+            if (itensPorPaginaCI === 25) {
+                tabelaContainer.classList.add('showing-25');
+            } else if (itensPorPaginaCI === 50) {
+                tabelaContainer.classList.add('showing-50');
+            } else if (itensPorPaginaCI === 100) {
+                tabelaContainer.classList.add('showing-100');
+            } else {
+                tabelaContainer.classList.add('showing-all');
+            }
+        }
+        
         const totalPaginas = Math.ceil(empregadosFiltradosCI.length / itensPorPaginaCI);
         renderizarPaginacaoCI(totalPaginas);
+        
+        setTimeout(iframeUpdateHeight, 100);
     }
 
     function renderizarPaginacaoCI(totalPaginas) {
@@ -2195,6 +2216,112 @@
             showLoading(false);
         }
     };
+
+// ============================================
+// FUNÇÃO VER DETALHES - ATUALIZADA
+// ============================================
+window.verDetalhes = async function(matricula) {
+    showLoading(true, 'Carregando histórico...');
+    
+    try {
+        let historico = [];
+        
+        // Adiciona dados do mês atual
+        const dadosAtuais = currentDisplayData.dados.filter(i => i.matricula === matricula);
+        historico = [...dadosAtuais];
+        
+        // Se o cache já tem outros meses, carrega deles também
+        if (dataCache['2025']) {
+            for (const mes in dataCache['2025']) {
+                if (mes !== currentDisplayData.mes) {
+                    const dadosMes = dataCache['2025'][mes].filter(i => i.matricula === matricula);
+                    historico = [...historico, ...dadosMes];
+                }
+            }
+        }
+        
+        if (historico.length === 0) {
+            showError('Histórico não encontrado');
+            return;
+        }
+        
+        historico.sort((a,b) => (b.ano_mes || '').localeCompare(a.ano_mes || ''));
+        const emp = historico[0];
+        
+        // Atualiza o título do modal com o nome do empregado
+        const modalTitle = document.querySelector('#detailModal .modal-title');
+        if (modalTitle) {
+            modalTitle.innerHTML = `<i class="material-icons me-2">person</i> ${emp.nome} - ${emp.matricula || ''}`;
+        }
+        
+        document.getElementById('modalContent').innerHTML = `
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-card primary">
+                        <div class="info-label">Informações Pessoais</div>
+                        <div class="info-value highlight mt-2">${emp.nome}</div>
+                        <div class="info-label mt-3">Matrícula</div>
+                        <div class="info-value">${emp.matricula || '-'}</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-card">
+                        <div class="info-label">Vínculo Atual</div>
+                        <div class="info-label mt-2">Órgão</div>
+                        <div class="info-value">${emp.orgao_sigla} - ${emp.orgao}</div>
+                        <div class="info-label mt-3">Cargo</div>
+                        <div class="info-value">${emp.cargo_descricao || '-'}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-card">
+                        <div class="info-label">Empresa</div>
+                        <div class="info-value">${emp.empresa || '-'}</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-card">
+                        <div class="info-label">CNPJ</div>
+                        <div class="info-value">${emp.cnpj_empresa ? emp.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-'}</div>
+                    </div>
+                </div>
+            </div>
+            <h6 class="mt-4 fw-bold" style="color: var(--primary-dark);">Histórico por Mês</h6>
+            <div style="max-height:250px; overflow-y:auto; border: 1px solid #dee2e6; border-radius: 6px;">
+                <table class="table table-sm mb-0">
+                    <thead class="bg-light" style="position: sticky; top: 0; background-color: #f8f9fa !important;">
+                        <tr>
+                            <th style="background-color: #f8f9fa;">Mês/Ano</th>
+                            <th style="background-color: #f8f9fa;">Órgão</th>
+                            <th style="background-color: #f8f9fa;">Cargo</th>
+                            <th style="background-color: #f8f9fa;">Empresa</th>
+                            <th style="background-color: #f8f9fa;">CNPJ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${historico.map(i => `
+                            <tr>
+                                <td>${formatarMesAno(i.ano_mes)}</td>
+                                <td>${i.orgao_sigla}</td>
+                                <td>${i.cargo_descricao || '-'}</td>
+                                <td>${i.empresa ? (i.empresa.length > 30 ? i.empresa.substring(0,30)+'...' : i.empresa) : '-'}</td>
+                                <td>${i.cnpj_empresa || '-'}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+        
+        const modal = new bootstrap.Modal(document.getElementById('detailModal'));
+        modal.show();
+        
+    } finally {
+        showLoading(false);
+    }
+};
 
     // ============================================
     // EXPORTAÇÕES

@@ -1622,7 +1622,9 @@
                         </select>
                     </div>
                     <div class="filter-buttons-group">
-                        </div>
+                        <button class="btn-pesquisa" onclick="aplicarFiltrosVG()"><i class="material-icons me-2">search</i>Pesquisar</button>
+                        <button class="btn-secondary-custom" onclick="limparFiltrosVG()"><i class="material-icons me-2">clear</i>Limpar</button>
+                    </div>
                 </div>
             </div>
 
@@ -2306,14 +2308,6 @@
                             <option value="">Selecione um ano</option>
                             ${anos.map(a => `<option value="${a}">${a}</option>`).join('')}
                         </select>
-                        <div style="display:flex; gap:10px; margin-top:10px;">
-    <button class="btn-pesquisa" onclick="aplicarFiltrosVG()">
-        <i class="material-icons me-2">search</i>Pesquisar
-    </button>
-    <button class="btn-secondary-custom" onclick="limparFiltrosVG()">
-        <i class="material-icons me-2">clear</i>Limpar
-    </button>
-</div>
                     </div>
                     <div class="col-md-4">
                         <button class="btn-primary-custom w-100" onclick="baixarCSVAno()"><i class="material-icons me-2">download</i>Baixar CSV</button>

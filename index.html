@@ -1761,6 +1761,7 @@
                 data: { 
 <<<<<<< HEAD
                     labels: dadosOrgao.slice(0, 10).map(i => i.sigla), 
+<<<<<<< HEAD
                     datasets: dadosOrgao.slice(0,10).map((item, index) => ({
                       label: item.orgao, // 👈 nome na legenda
                       data: dadosOrgao.slice(0,10).map((_, i) => i === index ? item.total : 0),
@@ -1768,10 +1769,19 @@
                       borderRadius: 4, 
                       barThickness: 40   
                     })) 
+=======
+                    datasets: [{ 
+                        label: 'Empregados', 
+                        data: dadosOrgao.slice(0, 10).map(i => i.total), 
+                        backgroundColor: chartPalette, 
+                        borderRadius: 4 
+                    }] 
+>>>>>>> parent of d935e2e (legenda do graficox.html)
                 },
                 options: { 
                     responsive: true, 
                     maintainAspectRatio: false,
+<<<<<<< HEAD
                    plugins: { 
         legend: {
     display: true,
@@ -1827,6 +1837,10 @@
         }
     }
     }                
+=======
+                    plugins: { legend: { display: false } }
+                }
+>>>>>>> parent of d935e2e (legenda do graficox.html)
             });
         }
         

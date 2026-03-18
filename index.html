@@ -1075,25 +1075,40 @@
         window.addEventListener('resize', iframeUpdateHeight);
     });
 
-    function iframeUpdateHeight() {
-        const html = document.documentElement;
-        const body = document.body;
-        const scrollHeight = Math.max(
-            body.scrollHeight,
-            html.scrollHeight,
-            body.offsetHeight,
-            html.offsetHeight
-        );
+function iframeUpdateHeight() {
+    // Calcula a altura real do conteúdo
+    const scrollHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight,
+        document.body.clientHeight,
+        document.documentElement.clientHeight
+    );
+    
+    // Altura final com uma pequena margem de segurança
+    const finalHeight = scrollHeight + 5;
+    
+    // Tenta enviar para a página pai
+    try {
+        // Compatibilidade com o código existente
+        window.parent.postMessage({ iframeHeight: finalHeight }, '*');
         
-        const finalHeight = scrollHeight + 5;
+        // Também tenta um formato mais completo (alguns sistemas esperam assim)
+        window.parent.postMessage({ 
+            height: finalHeight,
+            iframeHeight: finalHeight,
+            type: 'resize'
+        }, '*');
         
-        try {
-            window.parent.postMessage({ iframeHeight: finalHeight }, '*');
-            console.log('Altura do iframe atualizada:', finalHeight);
-        } catch (error) {}
-        
-        return finalHeight;
+        console.log('Altura do iframe enviada:', finalHeight);
+    } catch (error) {
+        // Ignora erros de cross-origin
+        console.log('Não foi possível comunicar com a página pai');
     }
+    
+    return finalHeight;
+}
 
     function setupAtualizacaoData() {
         const now = new Date();

@@ -1760,20 +1760,20 @@
                 type: 'bar',
                 data: { 
 labels: dadosOrgao.slice(0, 10).map(i => i.sigla),
-datasets: [{ 
-    label: 'Empregados',
-    data: dadosOrgao.slice(0, 10).map(i => i.total),
-    backgroundColor: chartPalette,
-    borderRadius: 4
-}]
-},
-options: { 
-    responsive: true, 
-    maintainAspectRatio: false,
-    plugins: { 
-        legend: { display: false }
+        datasets: [{ 
+            label: 'Empregados',
+            data: dadosOrgao.slice(0, 10).map(i => i.total),
+            backgroundColor: chartPalette,
+            borderRadius: 4
+        }]
+    },
+    options: { 
+        responsive: true, 
+        maintainAspectRatio: false,
+             plugins: { 
+            legend: { display: false }
+        }
     }
-}
 });
                     labels: top10.map(i => i.sigla),
 

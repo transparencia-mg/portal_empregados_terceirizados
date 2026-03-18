@@ -1759,14 +1759,19 @@
             window.orgaoChart = new Chart(ctxOrgao, {
                 type: 'bar',
                 data: { 
-                    labels: top10.map(i => i.sigla),
+                    const top10 = dadosOrgao
+    .sort((a, b) => b.total - a.total)
+    .slice(0, 10);
 
-                    datasets: top10.map((item, index) => ({
-                        label: item.orgao,
-                        data: top10.map((_, i) => i === index ? item.total : 0),
-                        backgroundColor: chartPalette[index],
-                        borderRadius: 4,
-                         barThickness: 40  
+// 🔥 gráfico
+labels: top10.map(i => i.sigla),
+
+datasets: top10.map((item, index) => ({
+    label: item.orgao,
+    data: top10.map((_, i) => i === index ? item.total : 0),
+    backgroundColor: chartPalette[index],
+    borderRadius: 4,
+    barThickness: 40  
                     })) 
                 },
                 options: { 

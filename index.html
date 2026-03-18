@@ -1759,6 +1759,7 @@
             window.orgaoChart = new Chart(ctxOrgao, {
                 type: 'bar',
                 data: { 
+<<<<<<< HEAD
                     labels: dadosOrgao.slice(0, 10).map(i => i.sigla), 
                     datasets: dadosOrgao.slice(0,10).map((item, index) => ({
                       label: item.orgao, // 👈 nome na legenda
@@ -1787,6 +1788,37 @@
 }
     },
 
+=======
+                    labels: top10.map(i => i.sigla),
+
+                    datasets: top10.map((item, index) => ({
+                        label: item.orgao,
+                        data: top10.map((_, i) => i === index ? item.total : 0),
+                        backgroundColor: chartPalette[index],
+                        borderRadius: 4,
+                         barThickness: 40  
+                    })) 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                   plugins: { 
+        legend: {
+    display: true,
+    position: 'bottom',
+    align: 'start',
+    labels: {
+        boxWidth: 12,
+        boxHeight: 12,
+        padding: 10,
+        font: {
+            size: 11
+        }
+    }
+}
+    },
+
+>>>>>>> parent of 72ce667 (Update index.html)
     scales: {
         x: {
             ticks: {

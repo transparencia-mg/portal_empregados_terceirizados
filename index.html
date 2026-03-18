@@ -1762,7 +1762,13 @@ if (ctxOrgao && dadosOrgao.length > 0) {
     const top10 = dadosOrgao
         .sort((a, b) => b.total - a.total)
         .slice(0, 10);
-
+ while (top10.length < 10) {
+        top10.push({
+            sigla: '',
+            orgao: '',
+            total: 0
+        });
+    }
     window.orgaoChart = new Chart(ctxOrgao, {
         type: 'bar',
         data: { 

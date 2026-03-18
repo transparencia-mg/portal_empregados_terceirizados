@@ -1756,24 +1756,24 @@
         
         const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
         if (ctxOrgao && dadosOrgao.length > 0) {
-window.orgaoChart = new Chart(ctxOrgao, {
-    type: 'bar',
-    data: { 
-        labels: dadosOrgao.slice(0, 10).map(i => i.sigla),
-        datasets: [{ 
-            label: 'Empregados',
-            data: dadosOrgao.slice(0, 10).map(i => i.total),
-            backgroundColor: chartPalette,
-            borderRadius: 4
-        }]
-    },
-    options: { 
-        responsive: true, 
-        maintainAspectRatio: false,
-        plugins: { 
-            legend: { display: false }
-        }
+            window.orgaoChart = new Chart(ctxOrgao, {
+                type: 'bar',
+                data: { 
+labels: dadosOrgao.slice(0, 10).map(i => i.sigla),
+datasets: [{ 
+    label: 'Empregados',
+    data: dadosOrgao.slice(0, 10).map(i => i.total),
+    backgroundColor: chartPalette,
+    borderRadius: 4
+}]
+},
+options: { 
+    responsive: true, 
+    maintainAspectRatio: false,
+    plugins: { 
+        legend: { display: false }
     }
+}
 });
                     labels: top10.map(i => i.sigla),
 

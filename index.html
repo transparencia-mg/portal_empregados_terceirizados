@@ -822,15 +822,14 @@
         
         /* ==================== FILTROS LAYOUT ==================== */
         .filters-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 2fr
+            display: flex;
             gap: 15px;
             width: 100%;
+            flex-wrap: nowrap;
         }
         
         .filter-group {
             flex: 1;
-            min-width: 0;
         }
         
         .filter-buttons-group {
@@ -883,11 +882,13 @@
             }
         }
         
-        @media (max-width: 768px) {
+        /
+        *@media (max-width: 768px) {
             .filters-row {
                 flex-direction: column;
                 align-items: stretch;
             }
+        */
             
             .filter-buttons-group {
                 margin-left: 0;

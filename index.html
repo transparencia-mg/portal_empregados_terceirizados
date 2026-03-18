@@ -34,59 +34,75 @@
             --info-blue: #17a2b8;
         }
 
-/* ==================== ESTILOS GERAIS ==================== */ 
-body { 
-    font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif; 
-    background-color: var(--background-light); 
-    padding-bottom: 15px; 
-    overflow-y: visible !important; 
-    overflow-x: hidden !important; 
-    min-height: auto !important; 
-    height: auto !important; 
-    position: relative; 
-} 
+        /* ==================== RESET E CONFIGURAÇÕES GLOBAIS ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-html { 
-    overflow-y: visible !important;  
-    height: auto !important; 
-} 
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            /* IMPORTANTE: SEM overflow-y aqui - deixar padrão */
+            margin: 0;
+            padding: 0;
+            height: auto;
+            min-height: auto;
+        }
 
-.main-container { 
-    height: auto !important; 
-    min-height: auto !important; 
-    overflow: visible !important; 
-    position: relative; 
-} 
+        body { 
+            font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--background-light); 
+            padding-bottom: 15px; 
+            /* REMOVIDO overflow-y: hidden - isso causava o problema */
+            overflow-x: hidden; 
+            min-height: auto; 
+            height: auto; 
+            position: relative; 
+        } 
 
-.container.dashboard-spacing { 
-    overflow: visible !important; 
-    height: auto !important; 
-    min-height: auto !important; 
-    position: relative; 
-} 
+        .main-container { 
+            height: auto; 
+            min-height: auto; 
+            overflow: visible; 
+            position: relative; 
+        } 
 
-.tab-content { 
-    overflow: visible !important; 
-    height: auto !important; 
-    min-height: auto !important; 
-    position: relative; 
-} 
+        .container-fluid {
+            width: 100%;
+            max-width: 100% !important;
+            padding: 0 20px;
+            margin: 0;
+            height: auto;
+            min-height: auto;
+        }
 
-.table-container { 
-    height: auto !important; 
-    min-height: auto !important; 
-    overflow: visible !important; 
-    position: relative; 
-}
-
-        /* ==================== DASHBOARD CONTAINER ==================== */
         .dashboard-container {
             width: 100%;
             max-width: 100%;
             padding: 0 20px;
             margin: 0 auto;
+            height: auto;
+            min-height: auto;
         }
 
+        .tab-content, 
+        .tab-pane {
+            width: 100%;
+            height: auto;
+            min-height: auto;
+            overflow: visible;
+        }
+
+        .table-container { 
+            height: auto; 
+            min-height: auto; 
+            overflow: visible; 
+            position: relative; 
+        }
+
+        /* TODO O RESTO DO SEU CSS PERMANECE IGUAL */
         /* ==================== DATA ATUALIZAÇÃO ==================== */
         .data-atualizacao-container {
             display: flex;
@@ -261,17 +277,7 @@ html {
             width: 100%;
         }
 
-        /* ==================== TABELAS - LIMITE DE 25 LINHAS ==================== */
-        .table-container {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-            margin-bottom: 20px;
-            border: 1px solid #dee2e6;
-            width: 100%;
-        }
-        
+        /* ==================== TABELAS ==================== */
         .table-header {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
             color: white;
@@ -302,6 +308,7 @@ html {
             position: relative;
             overflow: auto;
             width: 100%;
+            max-height: 600px; /* Altura máxima para scroll interno */
         }
         
         
@@ -552,32 +559,32 @@ html {
         }
 
         /* ==================== MODAL ==================== */
+        .modal-creative .modal-header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
+            color: white !important;
+            padding: 20px 30px;
+            border-bottom: none;
+        }
 
-.modal-creative .modal-header {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
-    color: white !important;
-    padding: 20px 30px;
-    border-bottom: none;
-}
+        .modal-creative .modal-header .modal-title {
+            color: white !important;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
 
-.modal-creative .modal-header .modal-title {
-    color: white !important;
-    font-weight: 600;
-    font-size: 1.25rem;
-}
+        .modal-creative .modal-header .modal-title i {
+            color: white !important;
+        }
 
-.modal-creative .modal-header .modal-title i {
-    color: white !important;
-}
+        .modal-creative .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+            opacity: 1;
+        }
 
-.modal-creative .modal-header .btn-close {
-    filter: brightness(0) invert(1);
-    opacity: 1;
-}
-
-.modal-creative .modal-header .btn-close:hover {
-    opacity: 0.8;
-}
+        .modal-creative .modal-header .btn-close:hover {
+            opacity: 0.8;
+        }
+        
         .info-card {
             background: white;
             border-radius: 10px;
@@ -755,19 +762,6 @@ html {
             border-bottom: 2px solid var(--info-blue);
             padding-bottom: 10px;
         }
-        
-        body {
-            line-height: 1.2;
-        }
-
-        .filter-label {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1a3a5c;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
 
         .modern-select {
             border: 1.5px solid #dfe5ec !important;
@@ -870,15 +864,6 @@ html {
             min-width: 150px;
         }
         
-        /* ==================== TAB CONTENT ==================== */
-        .tab-content {
-            width: 100%;
-        }
-        
-        .tab-pane {
-            width: 100%;
-        }
-        
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 1200px) {
             .consulta-filter-group {
@@ -934,9 +919,14 @@ html {
                 width: 100% !important;
             }
         }
+
+        /* Classe para quando o iframe precisar de altura automática */
+        .iframe-mode {
+            overflow: visible !important;
+        }
     </style>
 </head>
-<body>
+<body class="iframe-mode">
 
 <div class="main-container">
     <div class="container-fluid dashboard-container">          
@@ -1039,7 +1029,7 @@ html {
 
     // Variáveis de estado para UI
     let paginaAtualCI = 1;
-    let itensPorPaginaCI = 25; // Alterado para 25 como padrão
+    let itensPorPaginaCI = 25;
     let empregadosFiltradosCI = [];
     let filtrosAtivosCI = {
         nome: '',
@@ -1059,7 +1049,7 @@ html {
     // Estado de ordenação
     let sortConfig = {
         coluna: '',
-        direcao: 'asc' // 'asc' ou 'desc'
+        direcao: 'asc'
     };
 
     const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
@@ -1082,10 +1072,61 @@ html {
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
         tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
         
-        // Ajusta altura do iframe após carregamento
-        setTimeout(iframeUpdateHeight, 500);
-        window.addEventListener('resize', iframeUpdateHeight);
+        // Configuração melhorada para iframe
+        setTimeout(() => {
+            iframeUpdateHeight();
+        }, 500);
+        
+        window.addEventListener('resize', () => {
+            clearTimeout(window.resizeTimer);
+            window.resizeTimer = setTimeout(iframeUpdateHeight, 250);
+        });
+        
+        // Observa mudanças nas abas
+        document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', () => {
+                setTimeout(iframeUpdateHeight, 300);
+            });
+        });
     });
+
+    // ==================== FUNÇÃO CORRIGIDA DO IFRAME ====================
+    function iframeUpdateHeight() {
+        // Remove qualquer manipulação que cause flicker
+        // Não esconder o body!
+        
+        const html = document.documentElement;
+        const body = document.body;
+        
+        // Calcula a altura real
+        const scrollHeight = Math.max(
+            body.scrollHeight,
+            html.scrollHeight,
+            body.offsetHeight,
+            html.offsetHeight,
+            document.querySelector('.main-container')?.scrollHeight || 0
+        );
+        
+        // Altura final com margem mínima
+        const finalHeight = scrollHeight + 2;
+        
+        console.log('Altura do iframe:', finalHeight);
+        
+        try {
+            // Tenta enviar para a página pai
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ 
+                    iframeHeight: finalHeight,
+                    height: finalHeight,
+                    type: 'resize'
+                }, '*');
+            }
+        } catch (error) {
+            // Ignora erros de cross-origin
+        }
+        
+        return finalHeight;
+    }
 
     function setupAtualizacaoData() {
         const now = new Date();
@@ -1102,7 +1143,6 @@ html {
                 document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
             }
             
-            // Fecha autocomplete se clicar fora
             if (!e.target.closest('.autocomplete-container')) {
                 document.querySelectorAll('.autocomplete-suggestions').forEach(s => s.classList.remove('show'));
             }
@@ -1140,7 +1180,7 @@ html {
     }
 
     // ============================================
-    // FUNÇÕES AUXILIARES
+    // FUNÇÕES AUXILIARES (mantidas iguais)
     // ============================================
     function formatarMesAno(anoMes) {
         if (!anoMes || anoMes.length < 7) return anoMes;
@@ -1445,11 +1485,9 @@ html {
         
         if (!input || !suggestions || !select) return;
         
-        // Preenche o dropdown
         select.innerHTML = '<option value="">Selecione...</option>' + 
             opcoes.map(op => `<option value="${op.replace(/"/g, '&quot;')}">${op}</option>`).join('');
         
-        // Evento do input para autocomplete
         input.addEventListener('input', function() {
             const valor = this.value.toLowerCase();
             if (valor.length < 1) {
@@ -1473,7 +1511,6 @@ html {
             suggestions.classList.add('show');
         });
         
-        // Evento do dropdown
         select.addEventListener('change', function() {
             const valor = this.value;
             if (valor) {
@@ -1498,7 +1535,6 @@ html {
             aplicarTodosFiltrosCI();
         }
         
-        // Fecha sugestões
         document.querySelectorAll('.autocomplete-suggestions').forEach(s => s.classList.remove('show'));
     };
 
@@ -1532,8 +1568,6 @@ html {
         
         paginaAtualCI = 1;
         atualizarTabelaConsulta();
-        
-        // Re-renderiza os cabeçalhos para atualizar os ícones
         renderizarConsulta();
     };
 
@@ -1548,7 +1582,6 @@ html {
         const dadosCargo = agruparPorCargo(currentDisplayData.dados).slice(0, 10);
         
         let html = `
-            <!-- Filtros em uma linha -->
             <div class="filter-container">
                 <div class="filters-row">
                     <div class="filter-group">
@@ -1647,13 +1680,11 @@ html {
                 </div>
             </div>
 
-            <!-- Gráficos -->
             <div class="row mb-4">
                 <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Empregados por Órgão</h4></div><div class="chart-wrapper"><canvas id="chartOrgao"></canvas></div></div></div>
                 <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Top 10 Cargos</h4></div><div class="chart-wrapper"><canvas id="chartCargo"></canvas></div></div></div>
             </div>
 
-            <!-- Ações -->
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="d-flex gap-2">
                     <button class="btn-export" onclick="exportarTabelaVisaoGeralCSV()"><i class="material-icons me-2">description</i>CSV</button>
@@ -1672,7 +1703,6 @@ html {
                 <span class="table-badge">${dadosOrgao.length} órgãos</span>
             </div>
 
-            <!-- Tabela -->
             <div class="table-container">
                 <div class="table-fixed-header-container">
                     <table class="table">
@@ -1700,7 +1730,6 @@ html {
         
         container.innerHTML = html;
         
-        // Atualiza selects com valores atuais
         const selectAno = document.getElementById('filtroAnoVG');
         const selectMes = document.getElementById('filtroMesVG');
         const selectOrgao = document.getElementById('filtroOrgaoVG');
@@ -1708,11 +1737,9 @@ html {
         if (selectMes) selectMes.value = currentDisplayData.mes;
         if (selectOrgao) selectOrgao.value = '';
         
-        // Destruir gráficos antigos
         if (window.orgaoChart) window.orgaoChart.destroy();
         if (window.cargoChart) window.cargoChart.destroy();
         
-        // Criar novos gráficos
         const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
         if (ctxOrgao && dadosOrgao.length > 0) {
             window.orgaoChart = new Chart(ctxOrgao, {
@@ -1755,7 +1782,6 @@ html {
             });
         }
         
-        // Reaplicar tooltips
         setTimeout(() => {
             const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
             tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
@@ -1783,10 +1809,8 @@ html {
             currentDisplayData.metrica = calcularMetricas(dadosFiltrados, mes);
             currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(dadosFiltrados);
             
-            // Atualiza cache de opções
             atualizarOpcoesCache();
             
-            // Atualiza consulta
             empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
             paginaAtualCI = 1;
             
@@ -1806,14 +1830,12 @@ html {
         if (selectMes) selectMes.value = '12';
         if (selectOrgao) selectOrgao.value = '';
         
-        // Recarrega os dados iniciais
         currentDisplayData.ano = '2025';
         currentDisplayData.mes = '12';
         currentDisplayData.dados = dataCache['2025']['12'] || [];
         currentDisplayData.metrica = calcularMetricas(currentDisplayData.dados, '12');
         currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(currentDisplayData.dados);
         
-        // Atualiza cache de opções
         atualizarOpcoesCache();
         
         empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
@@ -1824,7 +1846,6 @@ html {
     };
 
     window.ordenarTabelaVisaoGeral = function(coluna) {
-        // Implementar ordenação para tabela da visão geral
         console.log('Ordenar por:', coluna);
     };
 
@@ -1867,7 +1888,6 @@ html {
         if (!container) return;
         
         container.innerHTML = `
-            <!-- Filtros com combobox (dropdown + autocomplete) -->
             <div class="filter-container">
                 <div class="consulta-filters-row">
                     <div class="consulta-filter-group">
@@ -1957,7 +1977,6 @@ html {
             </div>
         `;
         
-        // Configura comboboxes (dropdown + autocomplete)
         setTimeout(() => {
             setupCombobox('filtroNomeCI', 'sugestoesNome', 'dropdownNomeCI', opcoesCache.nomes, 'nome');
             setupCombobox('filtroMatriculaCI', 'sugestoesMatricula', 'dropdownMatriculaCI', opcoesCache.matriculas, 'matricula');
@@ -1986,16 +2005,10 @@ html {
 
     function aplicarTodosFiltrosCI() {
         empregadosFiltradosCI = currentDisplayData.empregadosUnicos.filter(s => {
-            // Filtro por nome
             if (filtrosAtivosCI.nome && !s.nome.toLowerCase().includes(filtrosAtivosCI.nome.toLowerCase())) return false;
-            
-            // Filtro por matrícula
             if (filtrosAtivosCI.matricula && !s.matricula.toLowerCase().includes(filtrosAtivosCI.matricula.toLowerCase())) return false;
-            
-            // Filtro por cargo
             if (filtrosAtivosCI.cargo && !s.cargo_descricao.toLowerCase().includes(filtrosAtivosCI.cargo.toLowerCase())) return false;
             
-            // Busca na tabela (busca geral em todos os campos)
             if (filtrosAtivosCI.buscaTabela) {
                 const termo = filtrosAtivosCI.buscaTabela.toLowerCase();
                 const nomeMatch = s.nome && s.nome.toLowerCase().includes(termo);
@@ -2019,18 +2032,15 @@ html {
     }
 
     window.limparFiltrosCI = function() {
-        // Limpa inputs
         document.getElementById('filtroNomeCI').value = '';
         document.getElementById('filtroMatriculaCI').value = '';
         document.getElementById('filtroCargoCI').value = '';
         document.getElementById('buscaTabelaCI').value = '';
         
-        // Limpa dropdowns
         if (document.getElementById('dropdownNomeCI')) document.getElementById('dropdownNomeCI').value = '';
         if (document.getElementById('dropdownMatriculaCI')) document.getElementById('dropdownMatriculaCI').value = '';
         if (document.getElementById('dropdownCargoCI')) document.getElementById('dropdownCargoCI').value = '';
         
-        // Limpa filtros ativos
         filtrosAtivosCI = {
             nome: '',
             matricula: '',
@@ -2063,7 +2073,6 @@ html {
         
         document.getElementById('totalServidoresBadge').innerText = empregadosFiltradosCI.length + ' empregados';
         
-        // Adiciona classe CSS baseada na quantidade de itens por página
         const tabelaContainer = document.getElementById('tabelaContainer');
         if (tabelaContainer) {
             tabelaContainer.classList.remove('showing-25', 'showing-50', 'showing-100', 'showing-all');
@@ -2144,11 +2153,9 @@ html {
         try {
             let historico = [];
             
-            // Adiciona dados do mês atual
             const dadosAtuais = currentDisplayData.dados.filter(i => i.matricula === matricula);
             historico = [...dadosAtuais];
             
-            // Se o cache já tem outros meses, carrega deles também
             if (dataCache['2025']) {
                 for (const mes in dataCache['2025']) {
                     if (mes !== currentDisplayData.mes) {
@@ -2187,112 +2194,6 @@ html {
             showLoading(false);
         }
     };
-
-// ============================================
-// FUNÇÃO VER DETALHES - ATUALIZADA
-// ============================================
-window.verDetalhes = async function(matricula) {
-    showLoading(true, 'Carregando histórico...');
-    
-    try {
-        let historico = [];
-        
-        // Adiciona dados do mês atual
-        const dadosAtuais = currentDisplayData.dados.filter(i => i.matricula === matricula);
-        historico = [...dadosAtuais];
-        
-        // Se o cache já tem outros meses, carrega deles também
-        if (dataCache['2025']) {
-            for (const mes in dataCache['2025']) {
-                if (mes !== currentDisplayData.mes) {
-                    const dadosMes = dataCache['2025'][mes].filter(i => i.matricula === matricula);
-                    historico = [...historico, ...dadosMes];
-                }
-            }
-        }
-        
-        if (historico.length === 0) {
-            showError('Histórico não encontrado');
-            return;
-        }
-        
-        historico.sort((a,b) => (b.ano_mes || '').localeCompare(a.ano_mes || ''));
-        const emp = historico[0];
-        
-        // Atualiza o título do modal com o nome do empregado
-        const modalTitle = document.querySelector('#detailModal .modal-title');
-        if (modalTitle) {
-            modalTitle.innerHTML = `<i class="material-icons me-2">person</i> ${emp.nome} - ${emp.matricula || ''}`;
-        }
-        
-        document.getElementById('modalContent').innerHTML = `
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="info-card primary">
-                        <div class="info-label">Informações Pessoais</div>
-                        <div class="info-value highlight mt-2">${emp.nome}</div>
-                        <div class="info-label mt-3">Matrícula</div>
-                        <div class="info-value">${emp.matricula || '-'}</div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="info-card">
-                        <div class="info-label">Vínculo Atual</div>
-                        <div class="info-label mt-2">Órgão</div>
-                        <div class="info-value">${emp.orgao_sigla} - ${emp.orgao}</div>
-                        <div class="info-label mt-3">Cargo</div>
-                        <div class="info-value">${emp.cargo_descricao || '-'}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="info-card">
-                        <div class="info-label">Empresa</div>
-                        <div class="info-value">${emp.empresa || '-'}</div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="info-card">
-                        <div class="info-label">CNPJ</div>
-                        <div class="info-value">${emp.cnpj_empresa ? emp.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-'}</div>
-                    </div>
-                </div>
-            </div>
-            <h6 class="mt-4 fw-bold" style="color: var(--primary-dark);">Histórico por Mês</h6>
-            <div style="max-height:250px; overflow-y:auto; border: 1px solid #dee2e6; border-radius: 6px;">
-                <table class="table table-sm mb-0">
-                    <thead class="bg-light" style="position: sticky; top: 0; background-color: #f8f9fa !important;">
-                        <tr>
-                            <th style="background-color: #f8f9fa;">Mês/Ano</th>
-                            <th style="background-color: #f8f9fa;">Órgão</th>
-                            <th style="background-color: #f8f9fa;">Cargo</th>
-                            <th style="background-color: #f8f9fa;">Empresa</th>
-                            <th style="background-color: #f8f9fa;">CNPJ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${historico.map(i => `
-                            <tr>
-                                <td>${formatarMesAno(i.ano_mes)}</td>
-                                <td>${i.orgao_sigla}</td>
-                                <td>${i.cargo_descricao || '-'}</td>
-                                <td>${i.empresa ? (i.empresa.length > 30 ? i.empresa.substring(0,30)+'...' : i.empresa) : '-'}</td>
-                                <td>${i.cnpj_empresa || '-'}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            </div>
-        `;
-        
-        const modal = new bootstrap.Modal(document.getElementById('detailModal'));
-        modal.show();
-        
-    } finally {
-        showLoading(false);
-    }
-};
 
     // ============================================
     // EXPORTAÇÕES

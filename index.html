@@ -1754,6 +1754,7 @@
         if (window.orgaoChart) window.orgaoChart.destroy();
         if (window.cargoChart) window.cargoChart.destroy();
         
+<<<<<<< HEAD
      const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
 
 if (ctxOrgao && dadosOrgao.length > 0) {
@@ -1808,6 +1809,28 @@ if (ctxOrgao && dadosOrgao.length > 0) {
         }
     });
 }
+=======
+        const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
+        if (ctxOrgao && dadosOrgao.length > 0) {
+            window.orgaoChart = new Chart(ctxOrgao, {
+                type: 'bar',
+                data: { 
+                    labels: dadosOrgao.slice(0, 10).map(i => i.sigla), 
+                    datasets: [{ 
+                        label: 'Empregados', 
+                        data: dadosOrgao.slice(0, 10).map(i => i.total), 
+                        backgroundColor: chartPalette, 
+                        borderRadius: 4 
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+>>>>>>> parent of d935e2e (legenda do graficox.html)
         
         const ctxCargo = document.getElementById('chartCargo')?.getContext('2d');
         if (ctxCargo && dadosCargo.length > 0) {

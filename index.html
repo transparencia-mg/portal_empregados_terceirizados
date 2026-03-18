@@ -1620,16 +1620,23 @@
                         </div>
                         </div>
                      <div class="filter-group">
-                        <label class="filter-label"><i class="material-icons"></i>ÓRGÃO</label>
-                        <select class="form-select modern-select" id="filtroOrgaoVG">
-                            <option value="">Todos os órgãos</option>
-                            ${opcoesCache.orgaos.map(org => `<option value="${org}">${org}</option>`).join('')}
-                        </select>
-                    </div>
-                    <div class="botoes-abaixo">
-                        <button class="btn-pesquisa" onclick="aplicarFiltrosVG()"><i class="material-icons me-2">search</i>Pesquisar</button>
-                        <button class="btn-secondary-custom" onclick="limparFiltrosVG()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
-                    </div>
+        <label class="filter-label">ÓRGÃO</label>
+        <select class="form-select modern-select" id="filtroOrgaoVG">
+            <option value="">Todos os órgãos</option>
+            ${opcoesCache.orgaos.map(org => `<option value="${org}">${org}</option>`).join('')}
+        </select>
+    </div>
+
+</div> <!-- 🔥 FECHA A LINHA DOS FILTROS -->
+
+<div class="botoes-abaixo">
+    <button class="btn-pesquisa" onclick="aplicarFiltrosVG()">
+        <i class="material-icons me-2">search</i>Pesquisar
+    </button>
+    <button class="btn-secondary-custom" onclick="limparFiltrosVG()">
+        <i class="material-icons me-2">clear</i>Limpar Filtros
+    </button>
+</div>
                 </div>
             </div>
 

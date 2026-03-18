@@ -39,7 +39,7 @@ body {
     font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif; 
     background-color: var(--background-light); 
     padding-bottom: 15px; 
-    overflow-y: visible !important;  /* Mudado de hidden para visible */
+    overflow-y: visible !important; 
     overflow-x: hidden !important; 
     min-height: auto !important; 
     height: auto !important; 
@@ -47,7 +47,7 @@ body {
 } 
 
 html { 
-    overflow-y: visible !important;  /* Mudado de hidden para visible */
+    overflow-y: visible !important;  
     height: auto !important; 
 } 
 
@@ -1086,49 +1086,6 @@ html {
         setTimeout(iframeUpdateHeight, 500);
         window.addEventListener('resize', iframeUpdateHeight);
     });
-
-function iframeUpdateHeight() {
-    console.log('Atualizando altura do iframe...');
-    
-    // Não precisa mais esconder o body - isso pode causar flicker
-    // document.body.style.display = 'none';
-    // document.body.offsetHeight;
-    // document.body.style.display = '';
-    
-    // Calcula a altura real do conteúdo
-    const html = document.documentElement;
-    const body = document.body;
-    
-    const scrollHeight = Math.max(
-        body.scrollHeight,
-        html.scrollHeight,
-        body.offsetHeight,
-        html.offsetHeight,
-        document.querySelector('.main-container')?.scrollHeight || 0
-    );
-    
-    // Altura final com uma margem de segurança
-    const finalHeight = scrollHeight + 10;
-    
-    console.log('Altura calculada:', finalHeight);
-    
-    try {
-        // Tenta enviar para a página pai
-        window.parent.postMessage({ iframeHeight: finalHeight }, '*');
-        
-        // Também tenta outros formatos que alguns CMS usam
-        window.parent.postMessage({ 
-            height: finalHeight,
-            iframeHeight: finalHeight,
-            type: 'resize' 
-        }, '*');
-        
-    } catch (error) {
-        console.log('Erro ao comunicar com página pai (pode ser normal)');
-    }
-    
-    return finalHeight;
-}
 
     function setupAtualizacaoData() {
         const now = new Date();

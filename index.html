@@ -1754,50 +1754,54 @@
         if (window.orgaoChart) window.orgaoChart.destroy();
         if (window.cargoChart) window.cargoChart.destroy();
         
-        const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
-        if (ctxOrgao && dadosOrgao.length > 0) {
-            window.orgaoChart = new Chart(ctxOrgao, {
-                type: 'bar',
-                data: { 
-                    labels: top10.map(i => i.sigla),
+     const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
 
-                    datasets: top10.map((item, index) => ({
-                        label: item.orgao,
-                        data: top10.map((_, i) => i === index ? item.total : 0),
-                        backgroundColor: chartPalette[index],
-                        borderRadius: 4,
-                         barThickness: 40  
-                    })) 
-                },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false,
-                   plugins: { 
-        legend: {
-    display: true,
-    position: 'bottom',
-    align: 'start',
-    labels: {
-        boxWidth: 12,
-        boxHeight: 12,
-        padding: 10,
-        font: {
-            size: 11
-        }
-    }
-}
-    },
+if (ctxOrgao && dadosOrgao.length > 0) {
 
-    scales: {
-        x: {
-            ticks: {
-                display: false
+    // ✅ CRIE O TOP 10 AQUI (ANTES DO CHART)
+    const top10 = dadosOrgao
+        .sort((a, b) => b.total - a.total)
+        .slice(0, 10);
+
+    window.orgaoChart = new Chart(ctxOrgao, {
+        type: 'bar',
+        data: { 
+            labels: top10.map(i => i.sigla),
+
+            datasets: top10.map((item, index) => ({
+                label: item.orgao,
+                data: top10.map((_, i) => i === index ? item.total : 0),
+                backgroundColor: chartPalette[index],
+                borderRadius: 4,
+                barThickness: 40
+            }))
+        },
+        options: { 
+            responsive: true, 
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    align: 'start',
+                    labels: {
+                        boxWidth: 12,
+                        boxHeight: 12,
+                        padding: 10,
+                        font: { size: 11 }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        display: false
+                    }
+                }
             }
         }
-    }
-    }                
-            });
-        }
+    });
+}
         
         const ctxCargo = document.getElementById('chartCargo')?.getContext('2d');
         if (ctxCargo && dadosCargo.length > 0) {

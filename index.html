@@ -34,38 +34,50 @@
             --info-blue: #17a2b8;
         }
 
-        /* ==================== RESET E CONFIGURAÇÕES GLOBAIS ==================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* ==================== ESTILOS GERAIS ==================== */ 
+body { 
+    font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif; 
+    background-color: var(--background-light); 
+    padding-bottom: 15px; 
+    overflow-y: visible !important;  /* Mudado de hidden para visible */
+    overflow-x: hidden !important; 
+    min-height: auto !important; 
+    height: auto !important; 
+    position: relative; 
+} 
 
-        html, body {
-            width: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
-            margin: 0;
-            padding: 0;
-        }
+html { 
+    overflow-y: visible !important;  /* Mudado de hidden para visible */
+    height: auto !important; 
+} 
 
-        body {
-            font-family: 'Montserrat', sans-serif !important;
-            background-color: var(--background-light);
-            position: relative;
-        }
+.main-container { 
+    height: auto !important; 
+    min-height: auto !important; 
+    overflow: visible !important; 
+    position: relative; 
+} 
 
-        .main-container {
-            width: 100%;
-            position: relative;
-        }
+.container.dashboard-spacing { 
+    overflow: visible !important; 
+    height: auto !important; 
+    min-height: auto !important; 
+    position: relative; 
+} 
 
-        .container-fluid {
-            width: 100%;
-            max-width: 100% !important;
-            padding: 0 20px;
-            margin: 0;
-        }
+.tab-content { 
+    overflow: visible !important; 
+    height: auto !important; 
+    min-height: auto !important; 
+    position: relative; 
+} 
+
+.table-container { 
+    height: auto !important; 
+    min-height: auto !important; 
+    overflow: visible !important; 
+    position: relative; 
+}
 
         /* ==================== DASHBOARD CONTAINER ==================== */
         .dashboard-container {
@@ -1076,35 +1088,43 @@
     });
 
 function iframeUpdateHeight() {
+    console.log('Atualizando altura do iframe...');
+    
+    // Não precisa mais esconder o body - isso pode causar flicker
+    // document.body.style.display = 'none';
+    // document.body.offsetHeight;
+    // document.body.style.display = '';
+    
     // Calcula a altura real do conteúdo
+    const html = document.documentElement;
+    const body = document.body;
+    
     const scrollHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.offsetHeight,
-        document.body.clientHeight,
-        document.documentElement.clientHeight
+        body.scrollHeight,
+        html.scrollHeight,
+        body.offsetHeight,
+        html.offsetHeight,
+        document.querySelector('.main-container')?.scrollHeight || 0
     );
     
-    // Altura final com uma pequena margem de segurança
-    const finalHeight = scrollHeight + 5;
+    // Altura final com uma margem de segurança
+    const finalHeight = scrollHeight + 10;
     
-    // Tenta enviar para a página pai
+    console.log('Altura calculada:', finalHeight);
+    
     try {
-        // Compatibilidade com o código existente
+        // Tenta enviar para a página pai
         window.parent.postMessage({ iframeHeight: finalHeight }, '*');
         
-        // Também tenta um formato mais completo (alguns sistemas esperam assim)
+        // Também tenta outros formatos que alguns CMS usam
         window.parent.postMessage({ 
             height: finalHeight,
             iframeHeight: finalHeight,
-            type: 'resize'
+            type: 'resize' 
         }, '*');
         
-        console.log('Altura do iframe enviada:', finalHeight);
     } catch (error) {
-        // Ignora erros de cross-origin
-        console.log('Não foi possível comunicar com a página pai');
+        console.log('Erro ao comunicar com página pai (pode ser normal)');
     }
     
     return finalHeight;

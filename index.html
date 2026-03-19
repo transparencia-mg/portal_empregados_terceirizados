@@ -1823,23 +1823,14 @@ div {
                     </table>
                 </div>
             </div>
+            <div class="pagination-container" id="paginacaoContainerVG"></div>
         `;
         
         container.innerHTML = html;
         renderizarPaginacaoVG();
        
 
-    html += `
-        <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG + 1}); return false;">&raquo;</a>
-        </li>
-    `;
-
-    html += '</ul></nav>';
-
-    container.innerHTML = html;
-}
-        
+         
         const selectAno = document.getElementById('filtroAnoVG');
         const selectMes = document.getElementById('filtroMesVG');
         const selectOrgao = document.getElementById('filtroOrgaoVG');
@@ -2084,10 +2075,9 @@ if (ctxOrgao && dadosOrgaoGlobal.length > 0) {
                         </thead>
                         <tbody id="empregadosTableBody"></tbody>
                     </table>
-                    <div class="pagination-container" id="paginacaoContainerVG"></div>
-                </div>
+                    </div>
                 <div class="pagination-container" id="paginacaoContainerCI"></div>
-            </div>
+                           </div>
         `;
         
         setTimeout(() => {

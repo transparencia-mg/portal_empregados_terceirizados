@@ -1619,6 +1619,28 @@ div {
             sortConfig.coluna = coluna;
             sortConfig.direcao = 'asc';
         }
+     }; 
+
+function ordenarDadosVG(dados) {
+    if (!sortConfig.coluna) return dados;
+
+    return dados.sort((a, b) => {
+        let valorA = a[sortConfig.coluna];
+        let valorB = b[sortConfig.coluna];
+
+        if (sortConfig.coluna === 'total') {
+            valorA = Number(valorA);
+            valorB = Number(valorB);
+        } else {
+            valorA = (valorA || '').toString().toLowerCase();
+            valorB = (valorB || '').toString().toLowerCase();
+        }
+
+        if (valorA < valorB) return sortConfig.direcao === 'asc' ? -1 : 1;
+        if (valorA > valorB) return sortConfig.direcao === 'asc' ? 1 : -1;
+        return 0;
+    });
+}   
         
         empregadosFiltradosCI.sort((a, b) => {
             let valorA = a[coluna] || '';
@@ -1650,7 +1672,9 @@ div {
         if (!container) return;
         
         dadosOrgaoGlobal = agruparPorOrgao(currentDisplayData.dados);
+        dadosOrgaoGlobal = ordenarDadosVG(dadosOrgaoGlobal);
         const dadosCargo = agruparPorCargo(currentDisplayData.dados).slice(0, 10);
+        
 
         const inicio = (paginaAtualVG - 1) * itensPorPaginaVG;
         const fim = inicio + itensPorPaginaVG;

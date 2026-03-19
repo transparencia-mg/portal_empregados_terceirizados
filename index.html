@@ -1646,8 +1646,13 @@ div {
         const container = document.getElementById('visao-geral-content');
         if (!container) return;
         
-        const dadosOrgao = agruparPorOrgao(currentDisplayData.dados);
+        dadosOrgaoGlobal = agruparPorOrgao(currentDisplayData.dados);
         const dadosCargo = agruparPorCargo(currentDisplayData.dados).slice(0, 10);
+
+        const inicio = (paginaAtualVG - 1) * itensPorPaginaVG;
+        const fim = inicio + itensPorPaginaVG;
+
+        const dadosPagina = dadosOrgaoGlobal.slice(inicio, fim);
         
         let html = `
             <div class="filter-container">
@@ -1803,7 +1808,7 @@ div {
                             </tr>
                         </thead>
                         <tbody>
-                            ${dadosOrgao.map(item => `
+                            ${dadosPagina.map(item => `
                                 <tr>
                                     <td><a href="#" class="orgao-link" onclick="irParaConsulta('${item.sigla}'); return false;">${item.orgao}</a></td>
                                     <td><strong>${item.sigla}</strong></td>
@@ -1818,6 +1823,8 @@ div {
         `;
         
         container.innerHTML = html;
+        renderizarPaginacaoVG();
+        
         
         const selectAno = document.getElementById('filtroAnoVG');
         const selectMes = document.getElementById('filtroMesVG');

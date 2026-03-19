@@ -992,6 +992,41 @@ div {
 .table thead th:last-child {
     border-top-right-radius: 8px;
 }
+#btnTopo {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+
+    background: #ffffff;
+    color: #1a3a5c;
+
+    border: 1px solid #d6dee6;
+    border-radius: 12px;
+
+    padding: 10px 16px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    display: none; /* começa escondido */
+
+    align-items: center;
+    gap: 6px;
+
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+
+    z-index: 999;
+}
+
+#btnTopo:hover {
+    background-color: #1a3a5c;
+    color: #ffffff;
+    border-color: #1a3a5c;
+}
+        
     </style>
 </head>
 <body class="iframe-mode">
@@ -2680,6 +2715,26 @@ function toggleClear(input) {
     const clear = input.parentElement.querySelector('.clear-icon');
     clear.style.display = input.value ? 'block' : 'none';
 }
+    function voltarAoTopo() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+    window.addEventListener('scroll', function () {
+    const btn = document.getElementById('btnTopo');
+
+    if (window.scrollY > 200) {
+        btn.style.display = 'flex';
+    } else {
+        btn.style.display = 'none';
+    }
+});
 </script>
+    <div id="btnTopo" onclick="voltarAoTopo()">
+    <i class="material-icons">arrow_upward</i>
+    Voltar ao topo
+</div>
 </body>
 </html>
+

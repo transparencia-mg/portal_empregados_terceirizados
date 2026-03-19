@@ -2343,13 +2343,42 @@ setupCombobox('filtroCargoCI', 'sugestoesCargo', 'cargo', opcoesCache.cargos);
     let inicioPaginas = Math.max(1, paginaAtualCI - 2);
     let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
 
-    for (let i = inicioPaginas; i <= fimPaginas; i++) {
-        html += `
-            <li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
-                <a class="page-link" href="#" onclick="mudarPaginaCI(${i}); return false;">${i}</a>
-            </li>
-        `;
+   // PRIMEIRA PÁGINA
+if (inicioPaginas > 1) {
+    html += `
+        <li class="page-item">
+            <a class="page-link" href="#" onclick="mudarPaginaCI(1); return false;">1</a>
+        </li>
+    `;
+
+    if (inicioPaginas > 2) {
+        html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
     }
+}
+
+// PÁGINAS DO MEIO
+for (let i = inicioPaginas; i <= fimPaginas; i++) {
+    html += `
+        <li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
+            <a class="page-link" href="#" onclick="mudarPaginaCI(${i}); return false;">${i}</a>
+        </li>
+    `;
+}
+
+// ÚLTIMA PÁGINA
+if (fimPaginas < totalPaginas) {
+    if (fimPaginas < totalPaginas - 1) {
+        html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+    }
+
+    html += `
+        <li class="page-item">
+            <a class="page-link" href="#" onclick="mudarPaginaCI(${totalPaginas}); return false;">
+                ${totalPaginas}
+            </a>
+        </li>
+    `;
+}
 
     // Botão próximo
     html += `

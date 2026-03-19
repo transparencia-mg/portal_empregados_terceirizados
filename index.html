@@ -2062,53 +2062,60 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
         if (!container) return;
         
         container.innerHTML = `
-            <div class="filter-container">
-               <div class="consulta-filters-row">
+           <div class="filter-container">
 
-    <div class="consulta-filter-group">
-        <label class="filter-label">Nome</label>
-        <div class="autocomplete-container">
-            <input type="text" class="form-control"
-                   id="filtroNomeCI"
-                   placeholder="Digite ou selecione..."
-                   autocomplete="off"
-                   onclick="mostrarSugestoes('filtroNomeCI','sugestoesNome','nome')">
-            <div class="autocomplete-suggestions" id="sugestoesNome"></div>
+    <div class="consulta-filters-row">
+
+        <div class="consulta-filter-group">
+            <label class="filter-label">Nome</label>
+            <div class="autocomplete-container">
+                <input type="text" class="form-control"
+                    id="filtroNomeCI"
+                    placeholder="Digite ou selecione..."
+                    autocomplete="off"
+                    onclick="mostrarSugestoes('filtroNomeCI','sugestoesNome','nome')">
+                <div class="autocomplete-suggestions" id="sugestoesNome"></div>
+            </div>
         </div>
+
+        <div class="consulta-filter-group">
+            <label class="filter-label">Matrícula</label>
+            <div class="autocomplete-container">
+                <input type="text" class="form-control"
+                    id="filtroMatriculaCI"
+                    placeholder="Digite ou selecione..."
+                    autocomplete="off"
+                    onclick="mostrarSugestoes('filtroMatriculaCI','sugestoesMatricula','matricula')">
+                <div class="autocomplete-suggestions" id="sugestoesMatricula"></div>
+            </div>
+        </div>
+
+        <div class="consulta-filter-group">
+            <label class="filter-label">Cargo</label>
+            <div class="autocomplete-container">
+                <input type="text" class="form-control"
+                    id="filtroCargoCI"
+                    placeholder="Digite ou selecione..."
+                    autocomplete="off"
+                    onclick="mostrarSugestoes('filtroCargoCI','sugestoesCargo','cargo')">
+                <div class="autocomplete-suggestions" id="sugestoesCargo"></div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="consulta-filter-group">
-        <label class="filter-label">Matrícula</label>
-        <div class="autocomplete-container">
-            <input type="text" class="form-control"
-                   id="filtroMatriculaCI"
-                   placeholder="Digite ou selecione..."
-                   autocomplete="off"
-                   onclick="mostrarSugestoes('filtroMatriculaCI','sugestoesMatricula','matricula')">
-            <div class="autocomplete-suggestions" id="sugestoesMatricula"></div>
-        </div>
-    </div>
+    <!-- 🔥 BOTÕES DENTRO DA CAIXA -->
+    <div class="consulta-buttons-row">
+        <button class="btn-pesquisa" onclick="aplicarFiltrosCI()">
+            <i class="material-icons me-2">search</i>Pesquisar
+        </button>
 
-    <div class="consulta-filter-group">
-        <label class="filter-label">Cargo</label>
-        <div class="autocomplete-container">
-            <input type="text" class="form-control"
-                   id="filtroCargoCI"
-                   placeholder="Digite ou selecione..."
-                   autocomplete="off"
-                   onclick="mostrarSugestoes('filtroCargoCI','sugestoesCargo','cargo')">
-            <div class="autocomplete-suggestions" id="sugestoesCargo"></div>
-        </div>
+        <button class="btn-secondary-custom" onclick="limparFiltrosCI()">
+            <i class="material-icons me-2">clear</i>Limpar Filtros
+        </button>
     </div>
 
 </div>
-                </div>
-                <div class="consulta-buttons-row">
-                    <button class="btn-pesquisa" onclick="aplicarFiltrosCI()"><i class="material-icons me-2">search</i>Pesquisar</button>
-                    <button class="btn-secondary-custom" onclick="limparFiltrosCI()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
-                </div>
-            </div>
-
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="d-flex gap-2">
                     <button class="btn-export" onclick="exportarTabelaConsultaCSV()"><i class="material-icons me-2">description</i>CSV</button>

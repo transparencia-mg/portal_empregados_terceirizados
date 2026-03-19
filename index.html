@@ -1947,9 +1947,36 @@ if (ctxOrgao && dadosOrgaoGlobal.length > 0) {
         renderizarConsulta();
     };
 
-    window.ordenarTabelaVisaoGeral = function(coluna) {
-        console.log('Ordenar por:', coluna);
-    };
+  window.ordenarTabelaVisaoGeral = function(coluna) {
+
+    if (sortConfig.coluna === coluna) {
+        sortConfig.direcao = sortConfig.direcao === 'asc' ? 'desc' : 'asc';
+    } else {
+        sortConfig.coluna = coluna;
+        sortConfig.direcao = 'asc';
+    }
+
+    dadosOrgaoGlobal.sort((a, b) => {
+        let valorA = a[coluna];
+        let valorB = b[coluna];
+
+        if (coluna === 'total') {
+            valorA = Number(valorA);
+            valorB = Number(valorB);
+        } else {
+            valorA = (valorA || '').toString().toLowerCase();
+            valorB = (valorB || '').toString().toLowerCase();
+        }
+
+        if (valorA < valorB) return sortConfig.direcao === 'asc' ? -1 : 1;
+        if (valorA > valorB) return sortConfig.direcao === 'asc' ? 1 : -1;
+        return 0;
+    });
+
+    paginaAtualVG = 1; // volta para primeira página
+    renderizarVisaoGeral();
+};
+ 
 
     function agruparPorOrgao(dados) {
         const mapa = new Map();

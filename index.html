@@ -1578,55 +1578,47 @@ div {
     // ============================================
     // FUNÇÕES DE AUTOCOMPLETE E DROPDOWN COMBINADOS
     // ============================================
-    function setupCombobox(inputId, suggestionsId, selectId, opcoes, campo) {
-        const input = document.getElementById(inputId);
-        const suggestions = document.getElementById(suggestionsId);
-        const select = document.getElementById(selectId);
-        
-        if (!input || !suggestions || !select) return;
-        
-        select.innerHTML = '<option value="">Selecione...</option>' + 
-            opcoes.map(op => `<option value="${op.replace(/"/g, '&quot;')}">${op}</option>`).join('');
-        
-        input.addEventListener('input', function() {
-            const valor = this.value.toLowerCase();
-            if (valor.length < 1) {
-                suggestions.classList.remove('show');
-                return;
-            }
-            
-            const filtradas = opcoes.filter(op => op.toLowerCase().includes(valor)).slice(0, 20);
-            
-            if (filtradas.length === 0) {
-                suggestions.classList.remove('show');
-                return;
-            }
-            
-            suggestions.innerHTML = filtradas.map(op => 
-                `<div class="autocomplete-suggestion" onclick="selecionarSugestao('${inputId}', '${campo}', '${op.replace(/'/g, "\\'")}')">
-                    ${op.replace(new RegExp(valor, 'gi'), match => `<strong>${match}</strong>`)}
-                </div>`
-            ).join('');
-            
-            suggestions.classList.add('show');
-        });
-        
-        select.addEventListener('change', function() {
-            const valor = this.value;
-            if (valor) {
-                input.value = valor;
-                filtrosAtivosCI[campo] = valor;
-                aplicarTodosFiltrosCI();
-            }
-        });
-        
-        input.addEventListener('blur', function() {
-            setTimeout(() => {
-                suggestions.classList.remove('show');
-            }, 200);
-        });
-    }
+   function setupCombobox(inputId, suggestionsId, campo, opcoes) {
+    const input = document.getElementById(inputId);
+    const suggestions = document.getElementById(suggestionsId);
 
+    if (!input || !suggestions) return;
+
+    input.addEventListener('input', function() {
+        const valor = this.value.toLowerCase();
+
+        const filtradas = opcoes
+            .filter(op => op.toLowerCase().includes(valor))
+            .slice(0, 20);
+
+        suggestions.innerHTML = filtradas.map(op =>
+            `<div class="autocomplete-suggestion"
+                onclick="selecionarSugestao('${inputId}','${campo}','${op.replace(/'/g, "\\'")}')">
+                ${op}
+            </div>`
+        ).join('');
+
+        suggestions.classList.add('show');
+    });
+}
+function mostrarSugestoes(inputId, suggestionsId, campo) {
+    const suggestions = document.getElementById(suggestionsId);
+
+    let opcoes = [];
+
+    if (campo === 'nome') opcoes = opcoesCache.nomes;
+    if (campo === 'matricula') opcoes = opcoesCache.matriculas;
+    if (campo === 'cargo') opcoes = opcoesCache.cargos;
+
+    suggestions.innerHTML = opcoes.slice(0, 20).map(op =>
+        `<div class="autocomplete-suggestion"
+            onclick="selecionarSugestao('${inputId}','${campo}','${op.replace(/'/g, "\\'")}')">
+            ${op}
+        </div>`
+    ).join('');
+
+    suggestions.classList.add('show');
+}
     window.selecionarSugestao = function(inputId, campo, valor) {
         const input = document.getElementById(inputId);
         if (input) {
@@ -2078,7 +2070,20 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
                             <input type="text" class="form-control" id="filtroNomeCI" placeholder="Digite ou escolha..." autocomplete="off">
                             <div class="autocomplete-suggestions" id="sugestoesNome"></div>
                         </div>
-                        <select class="form-select mt-1" id="dropdownNomeCI" style="font-size: 12px;">
+                        <div class="consulta-filter-group">
+    <label class="filter-label">Nome</label>
+
+    <div class="autocomplete-container">
+        <input type="text"
+               class="form-control"
+               id="filtroNomeCI"
+               placeholder="Digite ou selecione..."
+               autocomplete="off"
+               onclick="mostrarSugestoes('filtroNomeCI','sugestoesNome','nome')">
+
+        <div class="autocomplete-suggestions" id="sugestoesNome"></div>
+    </div>
+</div>
                             <option value="">Selecione um nome...</option>
                         </select>
                     </div>
@@ -2088,7 +2093,9 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
                             <input type="text" class="form-control" id="filtroMatriculaCI" placeholder="Digite ou escolha..." autocomplete="off">
                             <div class="autocomplete-suggestions" id="sugestoesMatricula"></div>
                         </div>
-                        <select class="form-select mt-1" id="dropdownMatriculaCI" style="font-size: 12px;">
+                       <input type="text"
+       id="filtroMatriculaCI"
+       onclick="mostrarSugestoes('filtroMatriculaCI','sugestoesMatricula','matricula')">
                             <option value="">Selecione uma matrícula...</option>
                         </select>
                     </div>
@@ -2098,7 +2105,9 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
                             <input type="text" class="form-control" id="filtroCargoCI" placeholder="Digite ou escolha..." autocomplete="off">
                             <div class="autocomplete-suggestions" id="sugestoesCargo"></div>
                         </div>
-                        <select class="form-select mt-1" id="dropdownCargoCI" style="font-size: 12px;">
+                       <input type="text"
+       id="filtroCargoCI"
+       onclick="mostrarSugestoes('filtroCargoCI','sugestoesCargo','cargo')">
                             <option value="">Selecione um cargo...</option>
                         </select>
                     </div>
@@ -2160,9 +2169,9 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
         `;
         
         setTimeout(() => {
-            setupCombobox('filtroNomeCI', 'sugestoesNome', 'dropdownNomeCI', opcoesCache.nomes, 'nome');
-            setupCombobox('filtroMatriculaCI', 'sugestoesMatricula', 'dropdownMatriculaCI', opcoesCache.matriculas, 'matricula');
-            setupCombobox('filtroCargoCI', 'sugestoesCargo', 'dropdownCargoCI', opcoesCache.cargos, 'cargo');
+           setupCombobox('filtroNomeCI', 'sugestoesNome', 'nome', opcoesCache.nomes);
+setupCombobox('filtroMatriculaCI', 'sugestoesMatricula', 'matricula', opcoesCache.matriculas);
+setupCombobox('filtroCargoCI', 'sugestoesCargo', 'cargo', opcoesCache.cargos);
         }, 100);
         
         aplicarFiltrosCI();
@@ -2219,10 +2228,7 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
         document.getElementById('filtroCargoCI').value = '';
         document.getElementById('buscaTabelaCI').value = '';
         
-        if (document.getElementById('dropdownNomeCI')) document.getElementById('dropdownNomeCI').value = '';
-        if (document.getElementById('dropdownMatriculaCI')) document.getElementById('dropdownMatriculaCI').value = '';
-        if (document.getElementById('dropdownCargoCI')) document.getElementById('dropdownCargoCI').value = '';
-        
+       
         filtrosAtivosCI = {
             nome: '',
             matricula: '',

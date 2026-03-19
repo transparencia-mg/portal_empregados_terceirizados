@@ -1671,7 +1671,9 @@ div {
         if (!container) return;
         
         dadosOrgaoGlobal = agruparPorOrgao(currentDisplayData.dados);
-        dadosOrgaoGlobal = ordenarDadosVG(dadosOrgaoGlobal);
+     if (sortConfig.coluna) {
+    dadosOrgaoGlobal = ordenarDadosVG(dadosOrgaoGlobal);
+}
         const dadosCargo = agruparPorCargo(currentDisplayData.dados).slice(0, 10);
         
 
@@ -1980,7 +1982,7 @@ if (ctxOrgao && dadosOrgaoGlobal.length > 0) {
         renderizarConsulta();
     };
 
-  window.ordenarTabelaVisaoGeral = function(coluna) {
+window.ordenarTabelaVisaoGeral = function(coluna) {
 
     if (sortConfig.coluna === coluna) {
         sortConfig.direcao = sortConfig.direcao === 'asc' ? 'desc' : 'asc';
@@ -1989,25 +1991,7 @@ if (ctxOrgao && dadosOrgaoGlobal.length > 0) {
         sortConfig.direcao = 'asc';
     }
 
-    dadosOrgaoGlobal.sort((a, b) => {
-        let valorA = a[coluna];
-        let valorB = b[coluna];
-
-        if (coluna === 'total') {
-            valorA = Number(valorA);
-            valorB = Number(valorB);
-        } else {
-            valorA = (valorA || '').toString().toLowerCase();
-            valorB = (valorB || '').toString().toLowerCase();
-        }
-
-        if (valorA < valorB) return sortConfig.direcao === 'asc' ? -1 : 1;
-        if (valorA > valorB) return sortConfig.direcao === 'asc' ? 1 : -1;
-        return 0;
-    });
-
-    paginaAtualVG = 1; // volta para primeira página
-    renderizarVisaoGeral();
+    renderizarVisaoGeral(); // 👈 só isso
 };
  
 

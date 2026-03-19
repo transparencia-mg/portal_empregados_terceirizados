@@ -2313,10 +2313,16 @@ setupCombobox('filtroCargoCI', 'sugestoesCargo', 'cargo', opcoesCache.cargos);
         const fim = Math.min(paginaAtualCI * itensPorPaginaCI, empregadosFiltradosCI.length);
         
         let html = `
-            <div class="pagination-info">
-                Mostrando ${inicio}-${fim} de ${empregadosFiltradosCI.length.toLocaleString('pt-BR')} registros
-            </div>
-            <nav>
+            let html = `
+    <div class="d-flex align-items-center justify-content-center gap-3 w-100">
+
+        <div class="pagination-info">
+            ${inicio}-${fim} de ${empregadosFiltradosCI.length.toLocaleString('pt-BR')} resultados
+        </div>
+
+        <nav>
+            <ul class="pagination mb-0">
+`;
                 <ul class="pagination mb-0">
         `;
         

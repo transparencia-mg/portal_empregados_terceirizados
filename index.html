@@ -1097,7 +1097,7 @@ div {
 
     // Variáveis de estado para UI
     let paginaAtualCI = 1;
-    let itensPorPaginaCI = 50;
+    let itensPorPaginaCI = 25;
     let dadosOrgaoGlobal = [];
     let empregadosFiltradosCI = [];
     let filtrosAtivosCI = {
@@ -1825,7 +1825,50 @@ div {
         
         container.innerHTML = html;
         renderizarPaginacaoVG();
-        
+        function renderizarPaginacaoVG() {
+    const container = document.getElementById('paginacaoContainerVG');
+    if (!container) return;
+
+    const totalPaginas = Math.ceil(dadosOrgaoGlobal.length / itensPorPaginaVG);
+
+    const inicio = (paginaAtualVG - 1) * itensPorPaginaVG + 1;
+    const fim = Math.min(paginaAtualVG * itensPorPaginaVG, dadosOrgaoGlobal.length);
+
+    let html = `
+        <div class="pagination-info">
+            ${inicio}-${fim} de ${dadosOrgaoGlobal.length} resultados
+        </div>
+        <nav>
+            <ul class="pagination mb-0">
+    `;
+
+    html += `
+        <li class="page-item ${paginaAtualVG === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG - 1}); return false;">&laquo;</a>
+        </li>
+    `;
+
+    let inicioPaginas = Math.max(1, paginaAtualVG - 2);
+    let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
+
+    for (let i = inicioPaginas; i <= fimPaginas; i++) {
+        html += `
+            <li class="page-item ${i === paginaAtualVG ? 'active' : ''}">
+                <a class="page-link" href="#" onclick="mudarPaginaVG(${i}); return false;">${i}</a>
+            </li>
+        `;
+    }
+
+    html += `
+        <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG + 1}); return false;">&raquo;</a>
+        </li>
+    `;
+
+    html += '</ul></nav>';
+
+    container.innerHTML = html;
+}
         
         const selectAno = document.getElementById('filtroAnoVG');
         const selectMes = document.getElementById('filtroMesVG');
@@ -1838,14 +1881,14 @@ div {
         if (window.cargoChart) window.cargoChart.destroy();
         
        const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
-if (ctxOrgao && dadosOrgao.length > 0) {
+if (ctxOrgao && dadosOrgaoGlobal.length > 0) {
     window.orgaoChart = new Chart(ctxOrgao, {
         type: 'bar',
         data: { 
-            labels: dadosOrgao.slice(0, 10).map(i => i.sigla),
+            labels: dadosOrgaoGlobal.slice(0, 10).map(i => i.sigla),
             datasets: [{ 
                 label: 'Empregados',
-                data: dadosOrgao.slice(0, 10).map(i => i.total),
+                data: dadosOrgaoGlobal.slice(0, 10).map(i => i.total),
                 backgroundColor: chartPalette,
                 borderRadius: 4
             }]
@@ -2071,6 +2114,7 @@ if (ctxOrgao && dadosOrgao.length > 0) {
                         </thead>
                         <tbody id="empregadosTableBody"></tbody>
                     </table>
+                    <div class="pagination-container" id="paginacaoContainerVG"></div>
                 </div>
                 <div class="pagination-container" id="paginacaoContainerCI"></div>
             </div>
@@ -2239,6 +2283,14 @@ if (ctxOrgao && dadosOrgao.length > 0) {
         paginaAtualCI = pagina;
         atualizarTabelaConsulta();
     };
+    window.mudarPaginaVG = function(pagina) {
+    const totalPaginas = Math.ceil(dadosOrgaoGlobal.length / itensPorPaginaVG);
+
+    if (pagina < 1 || pagina > totalPaginas) return;
+
+    paginaAtualVG = pagina;
+    renderizarVisaoGeral();
+};
 
     window.alterarItensPorPaginaCI = function() {
         itensPorPaginaCI = parseInt(document.getElementById('itensPorPaginaCI').value);

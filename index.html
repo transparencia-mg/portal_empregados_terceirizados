@@ -518,12 +518,12 @@ button.btn-export:hover {
     display: flex;
     align-items: center;
 
-    background: #f1f5f9;
+    background: ##ffffff;
     border: 1px solid #d6dee6;
     border-radius: 20px;
 
     padding: 4px 10px;
-    height: 32px;
+    height: 38px;
 }
 
 .table-search-input {
@@ -1774,6 +1774,7 @@ div {
                 placeholder="Buscar..." 
                 onkeyup="filtrarTabelaVG(this.value)"
             >
+            <i class="material-icons clear-icon" onclick="limparBusca(this)">close</i>
         </div>
 
     </div>
@@ -2549,6 +2550,17 @@ if (ctxOrgao && dadosOrgao.length > 0) {
         const texto = tr.innerText.toLowerCase();
         tr.style.display = texto.includes(valor) ? '' : 'none';
     });
+}
+    function limparBusca(el) {
+    const input = el.parentElement.querySelector('input');
+    input.value = '';
+    el.style.display = 'none';
+    filtrarTabelaVG('');
+}
+
+function toggleClear(input) {
+    const clear = input.parentElement.querySelector('.clear-icon');
+    clear.style.display = input.value ? 'block' : 'none';
 }
 </script>
 </body>

@@ -2300,53 +2300,64 @@ setupCombobox('filtroCargoCI', 'sugestoesCargo', 'cargo', opcoesCache.cargos);
         setTimeout(iframeUpdateHeight, 100);
     }
 
-    function renderizarPaginacaoCI(totalPaginas) {
-        const container = document.getElementById('paginacaoContainerCI');
-        if (!container) return;
-        
-        if (empregadosFiltradosCI.length === 0) {
-            container.innerHTML = '<div class="pagination-info">Nenhum registro encontrado</div>';
-            return;
-        }
-        
-        const inicio = (paginaAtualCI - 1) * itensPorPaginaCI + 1;
-        const fim = Math.min(paginaAtualCI * itensPorPaginaCI, empregadosFiltradosCI.length);
-        
-        let html = `
-            let html = `
-    <div class="d-flex align-items-center justify-content-center gap-3 w-100">
+   function renderizarPaginacaoCI(totalPaginas) {
+    const container = document.getElementById('paginacaoContainerCI');
+    if (!container) return;
 
-        <div class="pagination-info">
-            ${inicio}-${fim} de ${empregadosFiltradosCI.length.toLocaleString('pt-BR')} resultados
-        </div>
-
-        <nav>
-            <ul class="pagination mb-0">
-`;
-                <ul class="pagination mb-0">
-        `;
-        
-        html += `<li class="page-item ${paginaAtualCI === 1 ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI - 1}); return false;">&laquo;</a>
-        </li>`;
-        
-        let inicioPaginas = Math.max(1, paginaAtualCI - 2);
-        let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
-        
-        for (let i = inicioPaginas; i <= fimPaginas; i++) {
-            html += `<li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
-                <a class="page-link" href="#" onclick="mudarPaginaCI(${i}); return false;">${i}</a>
-            </li>`;
-        }
-        
-        html += `<li class="page-item ${paginaAtualCI === totalPaginas ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">&raquo;</a>
-        </li>`;
-        
-        html += '</ul></nav>';
-        container.innerHTML = html;
+    if (empregadosFiltradosCI.length === 0) {
+        container.innerHTML = '<div class="pagination-info">Nenhum registro encontrado</div>';
+        return;
     }
 
+    const inicio = (paginaAtualCI - 1) * itensPorPaginaCI + 1;
+    const fim = Math.min(paginaAtualCI * itensPorPaginaCI, empregadosFiltradosCI.length);
+
+    let html = `
+        <div class="d-flex align-items-center justify-content-center gap-3 w-100">
+
+            <div class="pagination-info">
+                ${inicio}-${fim} de ${empregadosFiltradosCI.length.toLocaleString('pt-BR')} resultados
+            </div>
+
+            <nav>
+                <ul class="pagination mb-0">
+    `;
+
+    // Botão anterior
+    html += `
+        <li class="page-item ${paginaAtualCI === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI - 1}); return false;">«</a>
+        </li>
+    `;
+
+    let inicioPaginas = Math.max(1, paginaAtualCI - 2);
+    let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
+
+    for (let i = inicioPaginas; i <= fimPaginas; i++) {
+        html += `
+            <li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
+                <a class="page-link" href="#" onclick="mudarPaginaCI(${i}); return false;">${i}</a>
+            </li>
+        `;
+    }
+
+    // Botão próximo
+    html += `
+        <li class="page-item ${paginaAtualCI === totalPaginas ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">»</a>
+        </li>
+    `;
+
+    // 🔥 FECHAMENTOS CORRETOS
+    html += `
+                </ul>
+            </nav>
+
+        </div>
+    `;
+
+    container.innerHTML = html;
+}
     window.mudarPaginaCI = function(pagina) {
         const totalPaginas = Math.ceil(empregadosFiltradosCI.length / itensPorPaginaCI);
         if (pagina < 1 || pagina > totalPaginas) return;

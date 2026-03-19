@@ -1725,22 +1725,41 @@ div {
                 <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Cargos</h4></div><div class="chart-wrapper"><canvas id="chartCargo"></canvas></div></div></div>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="d-flex gap-2">
-                    <button class="btn-export" onclick="exportarTabelaVisaoGeralCSV()"><i class="material-icons me-2">description</i>CSV</button>
-                    <button class="btn-export" onclick="exportarTabelaVisaoGeralPDF()"><i class="material-icons me-2">print</i>PDF</button>
-                    <div class="share-dropdown">
-                        <button class="btn-export" onclick="toggleShare(1)"><i class="material-icons me-2">share</i>Compartilhar</button>
-                        <div class="share-options" id="shareOptions1">
-                            <a href="#" onclick="copiarLink(event,1)"><i class="fas fa-link"></i> Copiar Link</a>
-                            <a href="#" onclick="compartilharFacebook(event,1)"><i class="fab fa-facebook-f"></i> Facebook</a>
-                            <a href="#" onclick="compartilharTwitter(event,1)"><i class="fab fa-twitter"></i> Twitter</a>
-                            <a href="#" onclick="compartilharLinkedIn(event,1)"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-                            <a href="#" onclick="compartilharWhatsApp(event,1)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                        </div>
-                    </div>
-                </div>
-                <span class="table-badge">${dadosOrgao.length} órgãos</span>
+            <div class="d-<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <!-- ESQUERDA (botões) -->
+    <div class="d-flex gap-2">
+        <button class="btn-export" onclick="exportarTabelaVisaoGeralCSV()">
+            <i class="material-icons">description</i>CSV
+        </button>
+        <button class="btn-export" onclick="exportarTabelaVisaoGeralPDF()">
+            <i class="material-icons">print</i>PDF
+        </button>
+
+        <div class="share-dropdown">
+            <button class="btn-export" onclick="toggleShare(1)">
+                <i class="material-icons">share</i>Compartilhar
+            </button>
+        </div>
+    </div>
+
+    <!-- DIREITA (badge + busca) -->
+    <div class="d-flex align-items-center gap-2">
+        
+        <span class="table-badge">${dadosOrgao.length} órgãos</span>
+
+        <div class="table-search-container">
+            <i class="material-icons" style="font-size:16px;color:#94a3b8;">search</i>
+            <input 
+                type="text" 
+                class="table-search-input" 
+                placeholder="Buscar..." 
+                onkeyup="filtrarTabelaVG(this.value)"
+            >
+        </div>
+
+    </div>
+</div>
             </div>
 
             <div class="table-container">
@@ -2503,6 +2522,16 @@ if (ctxOrgao && dadosOrgao.length > 0) {
             showLoading(false);
         }
     };
+    function filtrarTabelaVG(valor) {
+    valor = valor.toLowerCase();
+
+    const linhas = document.querySelectorAll('.table tbody tr');
+
+    linhas.forEach(tr => {
+        const texto = tr.innerText.toLowerCase();
+        tr.style.display = texto.includes(valor) ? '' : 'none';
+    });
+}
 </script>
 </body>
 </html>

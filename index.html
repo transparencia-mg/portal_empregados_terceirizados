@@ -2332,9 +2332,9 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
     const fim = Math.min(paginaAtualVG * itensPorPaginaVG, dadosOrgaoGlobal.length);
 
     let html = `
-        <div class="d-flex justify-content-between align-items-center w-100">
+        <div class="d-flex align-items-center justify-content-center gap-3 w-100">
 
-            <div class="pagination-info">
+            <div class="pagination-info me-3">
                 ${inicio}-${fim} de ${dadosOrgaoGlobal.length} resultados
             </div>
 
@@ -2366,24 +2366,7 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
         </li>
     `;
 
-    html += `
-                    </ul>
-                </nav>
-
-                <select class="items-per-page" onchange="alterarItensPorPaginaVG(this.value)">
-                    <option value="25" ${itensPorPaginaVG == 25 ? 'selected' : ''}>25</option>
-                    <option value="50" ${itensPorPaginaVG == 50 ? 'selected' : ''}>50</option>
-                    <option value="100" ${itensPorPaginaVG == 100 ? 'selected' : ''}>100</option>
-                </select>
-
-            </div>
-        </div>
-    `;
-
-    container.innerHTML = html;
-}
-
-    html += `
+      html += `
         <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
             <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG + 1}); return false;">&raquo;</a>
         </li>

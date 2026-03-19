@@ -1097,7 +1097,8 @@ div {
 
     // Variáveis de estado para UI
     let paginaAtualCI = 1;
-    let itensPorPaginaCI = 25;
+    let itensPorPaginaCI = 50;
+    let dadosOrgaoGlobal = [];
     let empregadosFiltradosCI = [];
     let filtrosAtivosCI = {
         nome: '',
@@ -1780,7 +1781,7 @@ div {
     <!-- DIREITA (badge + busca) -->
     <div class="d-flex align-items-center gap-2 ms-auto">
         
-        <span class="table-badge">${dadosOrgao.length} órgãos</span>
+        <span class="table-badge">${dadosOrgaoGlobal.length} órgãos</span>
 
         <div class="table-search-container">
             <i class="material-icons" style="font-size:16px;color:#94a3b8;">search</i>
@@ -1816,7 +1817,7 @@ div {
                                 </tr>
                             `).join('')}
                         </tbody>
-                        <tfoot><tr><td colspan="2" class="fw-bold">Total Geral</td><td class="text-center fw-bold">${dadosOrgao.reduce((a,i)=>a+i.total,0).toLocaleString()}</td></tr></tfoot>
+                        <tfoot><tr><td colspan="2" class="fw-bold">Total Geral</td><td class="text-center fw-bold">${dadosOrgaoGlobal.reduce((a,i)=>a+i.total,0).toLocaleString()}</td></tr></tfoot>
                     </table>
                 </div>
             </div>

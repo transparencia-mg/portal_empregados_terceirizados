@@ -1106,6 +1106,8 @@ div {
         cargo: '',
         buscaTabela: ''
     };
+    let paginaAtualVG = 1;
+    let itensPorPaginaVG = 25;
 
     // Cache de opções para autocomplete
     let opcoesCache = {
@@ -1825,39 +1827,7 @@ div {
         
         container.innerHTML = html;
         renderizarPaginacaoVG();
-        function renderizarPaginacaoVG() {
-    const container = document.getElementById('paginacaoContainerVG');
-    if (!container) return;
-
-    const totalPaginas = Math.ceil(dadosOrgaoGlobal.length / itensPorPaginaVG);
-
-    const inicio = (paginaAtualVG - 1) * itensPorPaginaVG + 1;
-    const fim = Math.min(paginaAtualVG * itensPorPaginaVG, dadosOrgaoGlobal.length);
-
-    let html = `
-        <div class="pagination-info">
-            ${inicio}-${fim} de ${dadosOrgaoGlobal.length} resultados
-        </div>
-        <nav>
-            <ul class="pagination mb-0">
-    `;
-
-    html += `
-        <li class="page-item ${paginaAtualVG === 1 ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG - 1}); return false;">&laquo;</a>
-        </li>
-    `;
-
-    let inicioPaginas = Math.max(1, paginaAtualVG - 2);
-    let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
-
-    for (let i = inicioPaginas; i <= fimPaginas; i++) {
-        html += `
-            <li class="page-item ${i === paginaAtualVG ? 'active' : ''}">
-                <a class="page-link" href="#" onclick="mudarPaginaVG(${i}); return false;">${i}</a>
-            </li>
-        `;
-    }
+       
 
     html += `
         <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
@@ -2283,6 +2253,50 @@ if (ctxOrgao && dadosOrgaoGlobal.length > 0) {
         paginaAtualCI = pagina;
         atualizarTabelaConsulta();
     };
+    function renderizarPaginacaoVG() {
+    const container = document.getElementById('paginacaoContainerVG');
+    if (!container) return;
+
+    const totalPaginas = Math.ceil(dadosOrgaoGlobal.length / itensPorPaginaVG);
+
+    const inicio = (paginaAtualVG - 1) * itensPorPaginaVG + 1;
+    const fim = Math.min(paginaAtualVG * itensPorPaginaVG, dadosOrgaoGlobal.length);
+
+    let html = `
+        <div class="pagination-info">
+            ${inicio}-${fim} de ${dadosOrgaoGlobal.length} resultados
+        </div>
+        <nav>
+            <ul class="pagination mb-0">
+    `;
+
+    html += `
+        <li class="page-item ${paginaAtualVG === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG - 1}); return false;">&laquo;</a>
+        </li>
+    `;
+
+    let inicioPaginas = Math.max(1, paginaAtualVG - 2);
+    let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
+
+    for (let i = inicioPaginas; i <= fimPaginas; i++) {
+        html += `
+            <li class="page-item ${i === paginaAtualVG ? 'active' : ''}">
+                <a class="page-link" href="#" onclick="mudarPaginaVG(${i}); return false;">${i}</a>
+            </li>
+        `;
+    }
+
+    html += `
+        <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG + 1}); return false;">&raquo;</a>
+        </li>
+    `;
+
+    html += '</ul></nav>';
+
+    container.innerHTML = html;
+}
     window.mudarPaginaVG = function(pagina) {
     const totalPaginas = Math.ceil(dadosOrgaoGlobal.length / itensPorPaginaVG);
 

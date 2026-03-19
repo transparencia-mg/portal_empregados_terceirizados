@@ -2322,7 +2322,7 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
         paginaAtualCI = pagina;
         atualizarTabelaConsulta();
     };
-    function renderizarPaginacaoVG() {
+  function renderizarPaginacaoVG() {
     const container = document.getElementById('paginacaoContainerVG');
     if (!container) return;
 
@@ -2332,16 +2332,20 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
     const fim = Math.min(paginaAtualVG * itensPorPaginaVG, dadosOrgaoGlobal.length);
 
     let html = `
-        <div class="pagination-info">
-            ${inicio}-${fim} de ${dadosOrgaoGlobal.length} resultados
-        </div>
-        <nav>
-            <ul class="pagination mb-0">
+        <div class="d-flex justify-content-between align-items-center w-100">
+
+            <div class="pagination-info">
+                ${inicio}-${fim} de ${dadosOrgaoGlobal.length} resultados
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <nav>
+                    <ul class="pagination mb-0">
     `;
 
     html += `
         <li class="page-item ${paginaAtualVG === 1 ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG - 1}); return false;">&laquo;</a>
+            <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG - 1}); return false;">«</a>
         </li>
     `;
 
@@ -2355,6 +2359,29 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
             </li>
         `;
     }
+
+    html += `
+        <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG + 1}); return false;">»</a>
+        </li>
+    `;
+
+    html += `
+                    </ul>
+                </nav>
+
+                <select class="items-per-page" onchange="alterarItensPorPaginaVG(this.value)">
+                    <option value="25" ${itensPorPaginaVG == 25 ? 'selected' : ''}>25</option>
+                    <option value="50" ${itensPorPaginaVG == 50 ? 'selected' : ''}>50</option>
+                    <option value="100" ${itensPorPaginaVG == 100 ? 'selected' : ''}>100</option>
+                </select>
+
+            </div>
+        </div>
+    `;
+
+    container.innerHTML = html;
+}
 
     html += `
         <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
@@ -2372,6 +2399,11 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
     if (pagina < 1 || pagina > totalPaginas) return;
 
     paginaAtualVG = pagina;
+    renderizarVisaoGeral();
+};
+    window.alterarItensPorPaginaVG = function(valor) {
+    itensPorPaginaVG = parseInt(valor);
+    paginaAtualVG = 1;
     renderizarVisaoGeral();
 };
 

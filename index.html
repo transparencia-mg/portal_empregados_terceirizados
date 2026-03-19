@@ -2063,54 +2063,45 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
         
         container.innerHTML = `
             <div class="filter-container">
-                <div class="consulta-filters-row">
-                    <div class="consulta-filter-group">
-                        <label class="filter-label"><i class="material-icons"></i>Nome</label>
-                        <div class="autocomplete-container">
-                            <input type="text" class="form-control" id="filtroNomeCI" placeholder="Digite ou escolha..." autocomplete="off">
-                            <div class="autocomplete-suggestions" id="sugestoesNome"></div>
-                        </div>
-                        <div class="consulta-filter-group">
-    <label class="filter-label">Nome</label>
+               <div class="consulta-filters-row">
 
-    <div class="autocomplete-container">
-        <input type="text"
-               class="form-control"
-               id="filtroNomeCI"
-               placeholder="Digite ou selecione..."
-               autocomplete="off"
-               onclick="mostrarSugestoes('filtroNomeCI','sugestoesNome','nome')">
-
-        <div class="autocomplete-suggestions" id="sugestoesNome"></div>
+    <div class="consulta-filter-group">
+        <label class="filter-label">Nome</label>
+        <div class="autocomplete-container">
+            <input type="text" class="form-control"
+                   id="filtroNomeCI"
+                   placeholder="Digite ou selecione..."
+                   autocomplete="off"
+                   onclick="mostrarSugestoes('filtroNomeCI','sugestoesNome','nome')">
+            <div class="autocomplete-suggestions" id="sugestoesNome"></div>
+        </div>
     </div>
+
+    <div class="consulta-filter-group">
+        <label class="filter-label">Matrícula</label>
+        <div class="autocomplete-container">
+            <input type="text" class="form-control"
+                   id="filtroMatriculaCI"
+                   placeholder="Digite ou selecione..."
+                   autocomplete="off"
+                   onclick="mostrarSugestoes('filtroMatriculaCI','sugestoesMatricula','matricula')">
+            <div class="autocomplete-suggestions" id="sugestoesMatricula"></div>
+        </div>
+    </div>
+
+    <div class="consulta-filter-group">
+        <label class="filter-label">Cargo</label>
+        <div class="autocomplete-container">
+            <input type="text" class="form-control"
+                   id="filtroCargoCI"
+                   placeholder="Digite ou selecione..."
+                   autocomplete="off"
+                   onclick="mostrarSugestoes('filtroCargoCI','sugestoesCargo','cargo')">
+            <div class="autocomplete-suggestions" id="sugestoesCargo"></div>
+        </div>
+    </div>
+
 </div>
-                            <option value="">Selecione um nome...</option>
-                        </select>
-                    </div>
-                    <div class="consulta-filter-group">
-                        <label class="filter-label"><i class="material-icons"></i>Matrícula</label>
-                        <div class="autocomplete-container">
-                            <input type="text" class="form-control" id="filtroMatriculaCI" placeholder="Digite ou escolha..." autocomplete="off">
-                            <div class="autocomplete-suggestions" id="sugestoesMatricula"></div>
-                        </div>
-                       <input type="text"
-       id="filtroMatriculaCI"
-       onclick="mostrarSugestoes('filtroMatriculaCI','sugestoesMatricula','matricula')">
-                            <option value="">Selecione uma matrícula...</option>
-                        </select>
-                    </div>
-                    <div class="consulta-filter-group">
-                        <label class="filter-label"><i class="material-icons"></i>Cargo</label>
-                        <div class="autocomplete-container">
-                            <input type="text" class="form-control" id="filtroCargoCI" placeholder="Digite ou escolha..." autocomplete="off">
-                            <div class="autocomplete-suggestions" id="sugestoesCargo"></div>
-                        </div>
-                       <input type="text"
-       id="filtroCargoCI"
-       onclick="mostrarSugestoes('filtroCargoCI','sugestoesCargo','cargo')">
-                            <option value="">Selecione um cargo...</option>
-                        </select>
-                    </div>
                 </div>
                 <div class="consulta-buttons-row">
                     <button class="btn-pesquisa" onclick="aplicarFiltrosCI()"><i class="material-icons me-2">search</i>Pesquisar</button>

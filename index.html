@@ -1818,8 +1818,14 @@ div {
                                 </tr>
                             `).join('')}
                         </tbody>
-                        <tfoot><tr><td colspan="2" class="fw-bold">Total Geral</td><td class="text-center fw-bold">${dadosOrgaoGlobal.reduce((a,i)=>a+i.total,0).toLocaleString()}</td></tr></tfoot>
-                    </table>
+                         </table>
+                         </div> <!-- fecha table-fixed-header-container -->
+<div class="d-flex justify-content-between align-items-center px-3 py-2" style="background:#f8f9fa; border-top:1px solid #dee2e6;">
+    <strong>Total Geral</strong>
+    <strong>
+        ${dadosOrgaoGlobal.reduce((a,i)=>a+i.total,0).toLocaleString()}
+    </strong>
+</div>
                 </div>
             </div>
             <div class="pagination-container" id="paginacaoContainerVG"></div>

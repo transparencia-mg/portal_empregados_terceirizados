@@ -993,10 +993,6 @@ div {
     border-top-right-radius: 8px;
 }
 #btnTopo {
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-
     background: #ffffff;
     color: #1a3a5c;
 
@@ -1008,7 +1004,7 @@ div {
     font-size: 14px;
     font-weight: 600;
 
-    display: none; /* começa escondido */
+    display: inline-flex;
 
     align-items: center;
     gap: 6px;
@@ -1017,8 +1013,6 @@ div {
 
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     transition: all 0.3s ease;
-
-    z-index: 999;
 }
 
 #btnTopo:hover {
@@ -1892,7 +1886,14 @@ div {
 </table>
                 </div>
             </div>
-            <div class="pagination-container" id="paginacaoContainerVG"></div>
+           <div class="pagination-container" id="paginacaoContainerVG"></div>
+
+<div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+    <div id="btnTopo" onclick="voltarAoTopo()">
+        <i class="material-icons">arrow_upward</i>
+        Voltar ao topo
+    </div>
+</div>
         `;
         
         container.innerHTML = html;
@@ -2721,16 +2722,7 @@ function toggleClear(input) {
         behavior: 'smooth'
     });
 }
-    window.addEventListener('scroll', function () {
-    const btn = document.getElementById('btnTopo');
-
-    if (window.scrollY > 200) {
-        btn.style.display = 'flex';
-    } else {
-        btn.style.display = 'none';
-    }
-});
-</script>
+    </script>
     <div id="btnTopo" onclick="voltarAoTopo()">
     <i class="material-icons">arrow_upward</i>
     Voltar ao topo

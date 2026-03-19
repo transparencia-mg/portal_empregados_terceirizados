@@ -667,15 +667,33 @@ button.btn-export:hover {
         }
         
         .items-per-page {
-            width: 80px;
-            border: 2px solid var(--primary-dark) !important;
-            border-radius: 6px;
-            padding: 5px 10px;
-            font-size: 12px;
-            background-color: white;
-            color: var(--primary-dark);
-            font-weight: 600;
-            cursor: pointer;
+    height: 38px;
+    min-width: 80px;
+
+    border-radius: 10px;
+    border: 1px solid #d6dee6;
+
+    padding: 6px 30px 6px 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #1a3a5c;
+    background-color: #ffffff;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    cursor: pointer;
+
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%231a3a5c' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+}
+        .items-per-page option {
+    font-size: 14px;
+}
         }
 
         /* ==================== INDICADOR DE CARREGAMENTO ==================== */
@@ -1126,7 +1144,7 @@ div {
 
     // Variáveis de estado para UI
     let paginaAtualCI = 1;
-    let itensPorPaginaCI = 25;
+    let itensPorPaginaCI = 100;
     let dadosOrgaoGlobal = [];
     let empregadosFiltradosCI = [];
     let filtrosAtivosCI = {

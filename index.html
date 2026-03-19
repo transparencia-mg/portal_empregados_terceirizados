@@ -1178,10 +1178,18 @@ div {
     // ============================================
     // FUNÇÕES DE INICIALIZAÇÃO
     // ============================================
+  
     document.addEventListener('DOMContentLoaded', function() {
-        setupEventListeners();
-        carregarDadosIniciais();
-        setupAtualizacaoData();
+
+    // 🔥 LIMPA O TEXTO "Carregando..."
+    const el = document.getElementById('data-atualizacao-header');
+    if (el) el.textContent = '';
+
+    setupEventListeners();
+    carregarDadosIniciais();
+    setupAtualizacaoData();
+
+});
         
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
         tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));

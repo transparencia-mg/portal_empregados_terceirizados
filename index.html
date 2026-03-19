@@ -419,8 +419,9 @@
         }
         
       .btn-export {
-    all: unset; /* 💥 REMOVE estilo do Bootstrap */
-    
+    appearance: none;
+    -webkit-appearance: none;
+
     background: #ffffff;
     border: 1px solid #d6dee6;
     color: #1a3a5c;
@@ -428,12 +429,12 @@
     border-radius: 8px;
     font-size: 15px;
     font-weight: 500;
-    
+
     display: inline-flex;
     align-items: center;
     gap: 6px;
     height: 36px;
-    
+
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -441,11 +442,10 @@
 .btn-export i {
     font-size: 15px !important;
 }
-
-.btn-export:hover {
-    background: #f1f5f9;
-    border-color: #94a3b8;
-    color: #1a3a5c;
+button.btn-export:hover {
+    background-color: #1a3a5c !important; /* azul */
+    border-color: #1a3a5c !important;
+    color: #ffffff !important; /* texto branco */
 }
 
         .btn-action {

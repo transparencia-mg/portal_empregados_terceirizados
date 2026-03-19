@@ -993,7 +993,7 @@ div {
     border-top-right-radius: 8px;
 }
 #btnTopo {
-    background: #ffffff;
+    background: #eeeff5;
     color: #1a3a5c;
 
     border: 1px solid #d6dee6;
@@ -2716,11 +2716,18 @@ function toggleClear(input) {
     const clear = input.parentElement.querySelector('.clear-icon');
     clear.style.display = input.value ? 'block' : 'none';
 }
-    function voltarAoTopo() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+ window.voltarAoTopo = function() {
+    if (window.parent && window.parent !== window) {
+        window.parent.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    } else {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
 }
     </script>
     </body>

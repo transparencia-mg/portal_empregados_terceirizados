@@ -2117,33 +2117,61 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
 
 </div>
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="d-flex gap-2">
-                    <button class="btn-export" onclick="exportarTabelaConsultaCSV()"><i class="material-icons me-2">description</i>CSV</button>
-                    <button class="btn-export" onclick="exportarTabelaConsultaPDF()"><i class="material-icons me-2">print</i>PDF</button>
-                    <div class="share-dropdown">
-                        <button class="btn-export" onclick="toggleShare(2)"><i class="material-icons me-2">share</i>Compartilhar</button>
-                        <div class="share-options" id="shareOptions2">
-                            <a href="#" onclick="copiarLink(event,2)"><i class="fas fa-link"></i> Copiar Link</a>
-                            <a href="#" onclick="compartilharFacebook(event,2)"><i class="fab fa-facebook-f"></i> Facebook</a>
-                            <a href="#" onclick="compartilharTwitter(event,2)"><i class="fab fa-twitter"></i> Twitter</a>
-                            <a href="#" onclick="compartilharLinkedIn(event,2)"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-                            <a href="#" onclick="compartilharWhatsApp(event,2)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                        </div>
-                    </div>
-                    <div class="table-search-container">
-                        <input type="text" class="table-search-input" id="buscaTabelaCI" placeholder="Buscar na tabela..." onkeyup="aplicarBuscaTabelaCI()">
-                    </div>
-                </div>
-                <div class="d-flex align-items-center gap-3">
-                    <span class="table-badge" id="totalServidoresBadge">${currentDisplayData.empregadosUnicos.length} empregados</span>
-                    <select class="items-per-page" id="itensPorPaginaCI" onchange="alterarItensPorPaginaCI()">
-                        <option value="25" selected>25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                        <option value="${currentDisplayData.empregadosUnicos.length}">Todos</option>
-                    </select>
-                </div>
+
+    <!-- ESQUERDA -->
+    <div class="d-flex gap-2">
+        <button class="btn-export" onclick="exportarTabelaConsultaCSV()">
+            <i class="material-icons">description</i>CSV
+        </button>
+
+        <button class="btn-export" onclick="exportarTabelaConsultaPDF()">
+            <i class="material-icons">print</i>PDF
+        </button>
+
+        <div class="share-dropdown">
+            <button class="btn-export" onclick="toggleShare(2)">
+                <i class="material-icons">share</i>Compartilhar
+            </button>
+
+            <div class="share-options" id="shareOptions2">
+                <a href="#" onclick="copiarLink(event,2)">Copiar Link</a>
+                <a href="#" onclick="compartilharFacebook(event,2)">Facebook</a>
+                <a href="#" onclick="compartilharTwitter(event,2)">Twitter</a>
+                <a href="#" onclick="compartilharLinkedIn(event,2)">LinkedIn</a>
+                <a href="#" onclick="compartilharWhatsApp(event,2)">WhatsApp</a>
             </div>
+        </div>
+    </div>
+
+    <!-- DIREITA -->
+    <div class="d-flex align-items-center gap-2 ms-auto">
+
+        <span class="table-badge" id="totalServidoresBadge">
+            ${currentDisplayData.empregadosUnicos.length} empregados
+        </span>
+
+        <div class="table-search-container">
+            <i class="material-icons" style="font-size:16px;color:#94a3b8;">search</i>
+            <input 
+                type="text" 
+                class="table-search-input" 
+                id="buscaTabelaCI"
+                placeholder="Buscar..."
+                onkeyup="aplicarBuscaTabelaCI()"
+            >
+            <i class="material-icons clear-icon" onclick="limparBusca(this)">close</i>
+        </div>
+
+        <select class="items-per-page" id="itensPorPaginaCI" onchange="alterarItensPorPaginaCI()">
+            <option value="25" selected>25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="${currentDisplayData.empregadosUnicos.length}">Todos</option>
+        </select>
+
+    </div>
+
+</div>
 
             <div class="table-container">
                 <div class="table-fixed-header-container" id="tabelaContainer">

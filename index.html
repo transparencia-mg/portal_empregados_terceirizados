@@ -1267,17 +1267,9 @@ div {
         });
     }
 
-    function showLoading(show, message = 'Carregando dados...') {
-        const indicator = document.getElementById('loadingIndicator');
-        if (indicator) {
-            indicator.querySelector('span').textContent = message;
-            if (show) {
-                indicator.classList.add('show');
-            } else {
-                indicator.classList.remove('show');
-            }
-        }
-    }
+   function showLoading(show, message = 'Carregando dados...') {
+    return;
+}
 
     function showError(message) {
         const container = document.querySelector('.main-container');

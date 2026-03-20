@@ -2323,90 +2323,61 @@ setupCombobox('filtroCargoCI', 'sugestoesCargo', 'cargo', opcoesCache.cargos);
     const inicio = (paginaAtualCI - 1) * itensPorPaginaCI + 1;
     const fim = Math.min(paginaAtualCI * itensPorPaginaCI, empregadosFiltradosCI.length);
 
-    let html = `
-        <div class="d-flex align-items-center justify-content-center gap-3 w-100">
+   let html = `
+    <div class="d-flex align-items-center justify-content-between w-100">
 
-            <div class="pagination-info">
-                ${inicio}-${fim} de ${empregadosFiltradosCI.length.toLocaleString('pt-BR')} resultados
-            </div>
+        <!-- ESQUERDA -->
+        <div class="pagination-info">
+            ${inicio}-${fim} de ${dadosOrgaoGlobal.length} resultados
+        </div>
 
-            <nav>
-                <ul class="pagination mb-0">
-    `;
+        <!-- CENTRO -->
+        <nav>
+            <ul class="pagination mb-0">
+`;
 
-    // Botão anterior
-    html += `
-        <li class="page-item ${paginaAtualCI === 1 ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI - 1}); return false;">«</a>
-        </li>
-    `;
+html += `
+    <li class="page-item ${paginaAtualVG === 1 ? 'disabled' : ''}">
+        <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG - 1}); return false;">«</a>
+    </li>
+`;
 
-    let inicioPaginas = Math.max(1, paginaAtualCI - 2);
-    let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
+let inicioPaginas = Math.max(1, paginaAtualVG - 2);
+let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
 
-   // PRIMEIRA PÁGINA
-if (inicioPaginas > 1) {
-    html += `
-        <li class="page-item">
-            <a class="page-link" href="#" onclick="mudarPaginaCI(1); return false;">1</a>
-        </li>
-    `;
-
-    if (inicioPaginas > 2) {
-        html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-    }
-}
-
-// PÁGINAS DO MEIO
 for (let i = inicioPaginas; i <= fimPaginas; i++) {
     html += `
-        <li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaCI(${i}); return false;">${i}</a>
+        <li class="page-item ${i === paginaAtualVG ? 'active' : ''}">
+            <a class="page-link" href="#" onclick="mudarPaginaVG(${i}); return false;">${i}</a>
         </li>
     `;
 }
 
-// ÚLTIMA PÁGINA
-if (fimPaginas < totalPaginas) {
-    if (fimPaginas < totalPaginas - 1) {
-        html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-    }
+html += `
+    <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
+        <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG + 1}); return false;">»</a>
+    </li>
+`;
 
-    html += `
-        <li class="page-item">
-            <a class="page-link" href="#" onclick="mudarPaginaCI(${totalPaginas}); return false;">
-                ${totalPaginas}
-            </a>
-        </li>
-    `;
-}
+html += `
+            </ul>
+        </nav>
 
-    // Botão próximo
-    html += `
-        <li class="page-item ${paginaAtualCI === totalPaginas ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">»</a>
-        </li>
-    `;
-
-    // 🔥 FECHAMENTOS CORRETOS
-    html += `
-                </ul>
-            </nav>
+        <!-- DIREITA -->
         <div>
-            <select class="items-per-page" onchange="alterarItensPorPaginaCI()" id="itensPorPaginaCI">
-               <option value="100" ${itensPorPaginaCI == 100 ? 'selected' : ''}>100</option>
-<option value="150" ${itensPorPaginaCI == 150 ? 'selected' : ''}>150</option>
-<option value="200" ${itensPorPaginaCI == 200 ? 'selected' : ''}>200</option>
-<option value="300" ${itensPorPaginaCI == 300 ? 'selected' : ''}>300</option>
-<option value="500" ${itensPorPaginaCI == 500 ? 'selected' : ''}>500</option>
+            <select class="items-per-page" onchange="alterarItensPorPaginaVG(this.value)">
+                <option value="100" ${itensPorPaginaVG == 100 ? 'selected' : ''}>100</option>
+                <option value="150" ${itensPorPaginaVG == 150 ? 'selected' : ''}>150</option>
+                <option value="200" ${itensPorPaginaVG == 200 ? 'selected' : ''}>200</option>
+                <option value="300" ${itensPorPaginaVG == 300 ? 'selected' : ''}>300</option>
+                <option value="500" ${itensPorPaginaVG == 500 ? 'selected' : ''}>500</option>
             </select>
         </div>
 
     </div>
 `;
-     
 
-    container.innerHTML = html;
+container.innerHTML = html;
 }
     window.mudarPaginaCI = function(pagina) {
         const totalPaginas = Math.ceil(empregadosFiltradosCI.length / itensPorPaginaCI);

@@ -2423,53 +2423,48 @@ if (fimPaginas < totalPaginas) {
     const inicio = (paginaAtualVG - 1) * itensPorPaginaVG + 1;
     const fim = Math.min(paginaAtualVG * itensPorPaginaVG, dadosOrgaoGlobal.length);
 
-    let html = `
-        <div class="d-flex align-items-center w-100">
+ let html = `
+    <div class="d-flex align-items-center justify-content-center gap-3 w-100">
 
-    <!-- ESQUERDA -->
-    <div style="flex:1; text-align:left;">
         <div class="pagination-info">
             ${inicio}-${fim} de ${dadosOrgaoGlobal.length} resultados
         </div>
-    </div>
 
-    <!-- CENTRO -->
-    <div style="flex:1; display:flex; justify-content:center;">
         <nav>
             <ul class="pagination mb-0">
-    `;
+`;
 
+// botão anterior
+html += `
+    <li class="page-item ${paginaAtualVG === 1 ? 'disabled' : ''}">
+        <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG - 1}); return false;">«</a>
+    </li>
+`;
+
+let inicioPaginas = Math.max(1, paginaAtualVG - 2);
+let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
+
+// páginas
+for (let i = inicioPaginas; i <= fimPaginas; i++) {
     html += `
-        <li class="page-item ${paginaAtualVG === 1 ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG - 1}); return false;">«</a>
+        <li class="page-item ${i === paginaAtualVG ? 'active' : ''}">
+            <a class="page-link" href="#" onclick="mudarPaginaVG(${i}); return false;">${i}</a>
         </li>
     `;
+}
 
-    let inicioPaginas = Math.max(1, paginaAtualVG - 2);
-    let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
+// próximo
+html += `
+    <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
+        <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG + 1}); return false;">»</a>
+    </li>
+`;
 
-    for (let i = inicioPaginas; i <= fimPaginas; i++) {
-        html += `
-            <li class="page-item ${i === paginaAtualVG ? 'active' : ''}">
-                <a class="page-link" href="#" onclick="mudarPaginaVG(${i}); return false;">${i}</a>
-            </li>
-        `;
-    }
-
-    html += `
-        <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG + 1}); return false;">»</a>
-        </li>
-    
-    `;
-
-  html += `
+// fechamento + select
+html += `
             </ul>
         </nav>
-    </div>
 
-    <!-- DIREITA -->
-    <div style="flex:1; display:flex; justify-content:flex-end;">
         <select class="items-per-page" onchange="alterarItensPorPaginaVG(this.value)">
             <option value="100" ${itensPorPaginaVG == 100 ? 'selected' : ''}>100</option>
             <option value="150" ${itensPorPaginaVG == 150 ? 'selected' : ''}>150</option>
@@ -2477,11 +2472,11 @@ if (fimPaginas < totalPaginas) {
             <option value="300" ${itensPorPaginaVG == 300 ? 'selected' : ''}>300</option>
             <option value="500" ${itensPorPaginaVG == 500 ? 'selected' : ''}>500</option>
         </select>
-    </div>
 
-</div>
+    </div>
 `;
-    container.innerHTML = html;
+
+container.innerHTML = html;
 
     window.alterarItensPorPaginaVG = function(valor) {
     itensPorPaginaVG = parseInt(valor);

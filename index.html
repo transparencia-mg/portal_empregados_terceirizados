@@ -1187,13 +1187,7 @@ div {
         iframeUpdateHeight();
     }, 500);
 
-    // ✅ CORREÇÃO SEGURA (não quebra nada)
-    document.querySelectorAll('body *').forEach(el => {
-        if (el.children.length === 0 && el.textContent.includes('Carregando')) {
-            el.textContent = '';
-        }
-    });
-});
+   });
            
         window.addEventListener('resize', () => {
             clearTimeout(window.resizeTimer);

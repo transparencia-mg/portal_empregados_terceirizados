@@ -2424,15 +2424,19 @@ if (fimPaginas < totalPaginas) {
     const fim = Math.min(paginaAtualVG * itensPorPaginaVG, dadosOrgaoGlobal.length);
 
     let html = `
-        <div class="d-flex align-items-center justify-content-center gap-3 w-100">
+        <div class="d-flex align-items-center w-100">
 
-            <div class="pagination-info me-3">
-                ${inicio}-${fim} de ${dadosOrgaoGlobal.length} resultados
-            </div>
+    <!-- ESQUERDA -->
+    <div style="flex:1; text-align:left;">
+        <div class="pagination-info">
+            ${inicio}-${fim} de ${dadosOrgaoGlobal.length} resultados
+        </div>
+    </div>
 
-            <div class="d-flex align-items-center gap-2">
-                <nav>
-                    <ul class="pagination mb-0">
+    <!-- CENTRO -->
+    <div style="flex:1; display:flex; justify-content:center;">
+        <nav>
+            <ul class="pagination mb-0">
     `;
 
     html += `
@@ -2464,28 +2468,30 @@ if (fimPaginas < totalPaginas) {
         </li>
     `;
 
-    html += '</ul></nav>';
+  html += `
+            </ul>
+        </nav>
+    </div>
 
-    container.innerHTML = html;
-}
-    window.mudarPaginaVG = function(pagina) {
-    const totalPaginas = Math.ceil(dadosOrgaoGlobal.length / itensPorPaginaVG);
+    <!-- DIREITA -->
+    <div style="flex:1; display:flex; justify-content:flex-end;">
+        <select class="items-per-page" onchange="alterarItensPorPaginaVG(this.value)">
+            <option value="100" ${itensPorPaginaVG == 100 ? 'selected' : ''}>100</option>
+            <option value="150" ${itensPorPaginaVG == 150 ? 'selected' : ''}>150</option>
+            <option value="200" ${itensPorPaginaVG == 200 ? 'selected' : ''}>200</option>
+            <option value="300" ${itensPorPaginaVG == 300 ? 'selected' : ''}>300</option>
+            <option value="500" ${itensPorPaginaVG == 500 ? 'selected' : ''}>500</option>
+        </select>
+    </div>
 
-    if (pagina < 1 || pagina > totalPaginas) return;
+</div>
+`;
 
-    paginaAtualVG = pagina;
-    renderizarVisaoGeral();
-};
     window.alterarItensPorPaginaVG = function(valor) {
     itensPorPaginaVG = parseInt(valor);
     paginaAtualVG = 1;
     renderizarVisaoGeral();
 };
-
-    window.alterarItensPorPaginaCI = function() {
-        itensPorPaginaCI = parseInt(document.getElementById('itensPorPaginaCI').value);
-        paginaAtualCI = 1;
-        atualizarTabelaConsulta();
     };
 
     window.verDetalhes = async function(matricula) {

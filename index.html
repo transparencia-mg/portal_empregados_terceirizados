@@ -1038,7 +1038,10 @@ div {
     color: #ffffff;
     border-color: #1a3a5c;
 }
-        
+
+        .loading-indicator {
+    display: none !important;
+}
     </style>
 </head>
 <body class="iframe-mode">
@@ -1173,18 +1176,25 @@ div {
     // FUNÇÕES DE INICIALIZAÇÃO
     // ============================================
     document.addEventListener('DOMContentLoaded', function() {
-        setupEventListeners();
-        carregarDadosIniciais();
-        setupAtualizacaoData();
-        
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-        tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
-        
-        // Configuração melhorada para iframe
-        setTimeout(() => {
-            iframeUpdateHeight();
-        }, 500);
-        
+    setupEventListeners();
+    carregarDadosIniciais();
+    setupAtualizacaoData();
+    
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+    
+    setTimeout(() => {
+        iframeUpdateHeight();
+    }, 500);
+
+    // ✅ CORREÇÃO SEGURA (não quebra nada)
+    document.querySelectorAll('body *').forEach(el => {
+        if (el.children.length === 0 && el.textContent.includes('Carregando')) {
+            el.textContent = '';
+        }
+    });
+});
+           
         window.addEventListener('resize', () => {
             clearTimeout(window.resizeTimer);
             window.resizeTimer = setTimeout(iframeUpdateHeight, 250);

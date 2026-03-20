@@ -2460,12 +2460,7 @@ if (fimPaginas < totalPaginas) {
         <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
             <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG + 1}); return false;">»</a>
         </li>
-    `;
-
-      html += `
-        <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG + 1}); return false;">&raquo;</a>
-        </li>
+    
     `;
 
   html += `
@@ -2486,6 +2481,7 @@ if (fimPaginas < totalPaginas) {
 
 </div>
 `;
+    container.innerHTML = html;
 
     window.alterarItensPorPaginaVG = function(valor) {
     itensPorPaginaVG = parseInt(valor);

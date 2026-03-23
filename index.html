@@ -2527,110 +2527,118 @@ container.innerHTML = html;
     };
 
     window.verDetalhes = async function(matricula) {
-        showLoading(true, 'Carregando histórico...');
+        showLoading(true, 'Carregando histórico completo...');
         
         try {
             let historico = [];
             
-            const dadosAtuais = currentDisplayData.dados.filter(i => i.matricula === matricula);
-            historico = [...dadosAtuais];
-            
-            if (dataCache['2025']) {
-                for (const mes in dataCache['2025']) {
-                    if (mes !== currentDisplayData.mes) {
-                        const dadosMes = dataCache['2025'][mes].filter(i => i.matricula === matricula);
-                        historico = [...historico, ...dadosMes];
-                    }
+            for (const ano of Object.keys(CSV_FILES_BY_YEAR)) {
+
+            // garante que o ano foi carregado
+            if (!dataCache[ano]) {
+                await carregarMes(ano, '12'); // força carregar o ano
+            }
+
+            // percorre todos os meses do ano
+            if (dataCache[ano]) {
+                for (const mes in dataCache[ano]) {
+
+                    const dadosMes = dataCache[ano][mes]
+                        .filter(i => i.matricula === matricula);
+
+                    historico = [...historico, ...dadosMes];
                 }
             }
-            
-            if (historico.length === 0) {
-                showError('Histórico não encontrado');
-                return;
-            }
-            
-            historico.sort((a,b) => (b.ano_mes || '').localeCompare(a.ano_mes || ''));
-            const emp = historico[0];
-            
-            document.getElementById('modalContent').innerHTML = `
-    
-    <div class="mb-3">
-        <div style="font-size:18px;font-weight:600;">
-            ${emp.nome}
-        </div>
-    </div>
-
-    <div class="row g-2 mb-3">
-
-        <div class="col-md-4">
-            <div class="info-card primary">
-                <div class="info-label">Matrícula</div>
-                <div class="info-value">${emp.matricula}</div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="info-card primary">
-                <div class="info-label">Órgão</div>
-                <div class="info-value">${emp.orgao_sigla}</div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="info-card primary">
-                <div class="info-label">Cargo</div>
-                <div class="info-value">${emp.cargo_descricao}</div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="info-card">
-                <div class="info-label">Empresa</div>
-                <div class="info-value">${emp.empresa}</div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="info-card">
-                <div class="info-label">CNPJ</div>
-                <div class="info-value">${emp.cnpj_empresa}</div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- TABELA -->
-    <div class="table-fixed-header-container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>MÊS/ANO</th>
-                    <th>ÓRGÃO</th>
-                    <th>CARGO</th>
-                    <th>EMPRESA</th>
-                    <th>CNPJ</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${historico.map(h => `
-                    <tr>
-                        <td>${formatarData(h.ano_mes)}</td>
-                        <td>${h.orgao_sigla}</td>
-                        <td>${h.cargo_descricao}</td>
-                        <td>${h.empresa}</td>
-                        <td>${h.cnpj_empresa}</td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-    </div>
-
-            `;
-            new bootstrap.Modal(document.getElementById('detailModal')).show();
-        } finally {
-            showLoading(false);
         }
-    };
+
+        if (historico.length === 0) {
+            showError('Histórico não encontrado');
+            return;
+        }
+
+        // 🔥 ORDENA DO MAIS RECENTE PARA O MAIS ANTIGO
+        historico.sort((a, b) =>
+            (b.ano_mes || '').localeCompare(a.ano_mes || '')
+        );
+
+        const emp = historico[0];
+
+        document.getElementById('modalContent').innerHTML = `
+            <div class="mb-3">
+                <div style="font-size:18px;font-weight:600;">
+                    ${emp.nome}
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3">
+                <div class="col-md-4">
+                    <div class="info-card primary">
+                        <div class="info-label">Matrícula</div>
+                        <div class="info-value">${emp.matricula}</div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="info-card primary">
+                        <div class="info-label">Órgão</div>
+                        <div class="info-value">${emp.orgao_sigla}</div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="info-card primary">
+                        <div class="info-label">Cargo</div>
+                        <div class="info-value">${emp.cargo_descricao}</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="info-card">
+                        <div class="info-label">Empresa</div>
+                        <div class="info-value">${emp.empresa}</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="info-card">
+                        <div class="info-label">CNPJ</div>
+                        <div class="info-value">${emp.cnpj_empresa}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-fixed-header-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>MÊS/ANO</th>
+                            <th>ÓRGÃO</th>
+                            <th>CARGO</th>
+                            <th>EMPRESA</th>
+                            <th>CNPJ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${historico.map(h => `
+                            <tr>
+                                <td>${formatarData(h.ano_mes)}</td>
+                                <td>${h.orgao_sigla}</td>
+                                <td>${h.cargo_descricao}</td>
+                                <td>${h.empresa}</td>
+                                <td>${h.cnpj_empresa}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        new bootstrap.Modal(document.getElementById('detailModal')).show();
+
+    } finally {
+        showLoading(false);
+    }
+};
 
     // ============================================
     // EXPORTAÇÕES

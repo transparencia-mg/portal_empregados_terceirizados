@@ -2301,7 +2301,11 @@ setupCombobox('filtroCargoCI', 'sugestoesCargo', 'cargo', opcoesCache.cargos);
         if (tbody) {
             tbody.innerHTML = dadosPagina.map(s => `<tr>
                 <td>${s.matricula || '-'}</td>
-                <td>${s.nome || '-'}</td>
+                <td>
+    <a href="#" class="nome-link" onclick="verDetalhes('${s.matricula}'); return false;">
+        ${s.nome || '-'}
+    </a>
+</td>
                 <td>${s.orgao_sigla || '-'}</td>
                 <td>${s.cargo_descricao || '-'}</td>
                 <td>${s.empresa ? (s.empresa.length > 30 ? s.empresa.substring(0,30)+'...' : s.empresa) : '-'}</td>

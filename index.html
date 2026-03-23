@@ -627,7 +627,8 @@ button.btn-export:hover {
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid var(--accent-red);
+            border-left: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
             margin-bottom: 15px;
         }
         .info-card.primary { border-left-color: var(--primary-dark); }
@@ -2512,20 +2513,78 @@ container.innerHTML = html;
             const emp = historico[0];
             
             document.getElementById('modalContent').innerHTML = `
-                <div class="row">
-                    <div class="col-md-6"><div class="info-card primary"><div class="info-label">Empregado</div><div class="info-value highlight">${emp.nome}</div><div class="info-label mt-3">Matrícula</div><div class="info-value">${emp.matricula || '-'}</div></div></div>
-                    <div class="col-md-6"><div class="info-card"><div class="info-label">Órgão</div><div class="info-value">${emp.orgao_sigla} - ${emp.orgao}</div><div class="info-label mt-3">Cargo</div><div class="info-value">${emp.cargo_descricao || '-'}</div></div></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6"><div class="info-card"><div class="info-label">Empresa</div><div class="info-value">${emp.empresa || '-'}</div></div></div>
-                    <div class="col-md-6"><div class="info-card"><div class="info-label">CNPJ</div><div class="info-value">${emp.cnpj_empresa ? emp.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-'}</div></div></div>
-                </div>
-                <h6 class="mt-4 fw-bold">Histórico por Mês</h6>
-                <div style="max-height:250px; overflow-y:auto;">
-                    <table class="table table-sm"><thead class="bg-light"><tr><th>Mês/Ano</th><th>Órgão</th><th>Cargo</th><th>Empresa</th><th>CNPJ</th></tr></thead><tbody>
-                        ${historico.map(i=>`<tr><td>${formatarMesAno(i.ano_mes)}</td><td>${i.orgao_sigla}</td><td>${i.cargo_descricao||'-'}</td><td>${i.empresa ? (i.empresa.length > 30 ? i.empresa.substring(0,30)+'...' : i.empresa) : '-'}</td><td>${i.cnpj_empresa || '-'}</td></tr>`).join('')}
-                    </tbody></table>
-                </div>
+    
+    <div class="mb-3">
+        <div style="font-size:18px;font-weight:600;">
+            ${dados.nome}
+        </div>
+    </div>
+
+    <div class="row g-2 mb-3">
+
+        <div class="col-md-4">
+            <div class="info-card primary">
+                <div class="info-label">Matrícula</div>
+                <div class="info-value">${dados.matricula}</div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="info-card primary">
+                <div class="info-label">Órgão</div>
+                <div class="info-value">${dados.orgao_sigla}</div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="info-card primary">
+                <div class="info-label">Cargo</div>
+                <div class="info-value">${dados.cargo_descricao}</div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-card">
+                <div class="info-label">Empresa</div>
+                <div class="info-value">${dados.empresa}</div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-card">
+                <div class="info-label">CNPJ</div>
+                <div class="info-value">${dados.cnpj_empresa}</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- TABELA -->
+    <div class="table-fixed-header-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>MÊS/ANO</th>
+                    <th>ÓRGÃO</th>
+                    <th>CARGO</th>
+                    <th>EMPRESA</th>
+                    <th>CNPJ</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${historico.map(h => `
+                    <tr>
+                        <td>${h.ano_mes}</td>
+                        <td>${h.orgao_sigla}</td>
+                        <td>${h.cargo_descricao}</td>
+                        <td>${h.empresa}</td>
+                        <td>${h.cnpj_empresa}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    </div>
+
             `;
             new bootstrap.Modal(document.getElementById('detailModal')).show();
         } finally {

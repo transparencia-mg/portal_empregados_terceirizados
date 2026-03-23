@@ -1043,6 +1043,15 @@ div {
         .loading-indicator {
     display: none !important;
 }
+        .nome-link {
+    color: #006a82 !important;
+    text-decoration: none !important;
+    font-weight: 400;
+}
+
+.nome-link:hover {
+    color: #b93c42 !important;
+}
     </style>
 </head>
 <body class="iframe-mode">
@@ -2302,7 +2311,7 @@ setupCombobox('filtroCargoCI', 'sugestoesCargo', 'cargo', opcoesCache.cargos);
             tbody.innerHTML = dadosPagina.map(s => `<tr>
                 <td>${s.matricula || '-'}</td>
                 <td>
-    <a href="#" class="orgão-link" onclick="verDetalhes('${s.matricula}'); return false;">
+    <a href="#" class="nome-link" onclick="verDetalhes('${s.matricula}'); return false;">
         ${s.nome || '-'}
     </a>
 </td>

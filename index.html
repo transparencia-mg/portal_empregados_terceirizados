@@ -1294,7 +1294,27 @@ div {
         }
         return anoMes;
     }
-    
+    function formatarMesAno(anoMes) {
+    if (!anoMes || anoMes.length < 7) return anoMes;
+    const partes = anoMes.split('-');
+    if (partes.length === 2) {
+        return `${meses[parseInt(partes[1])-1] || partes[1]}/${partes[0]}`;
+    }
+    return anoMes;
+}
+
+// 🔥 COLE AQUI
+function formatarData(data) {
+    if (!data) return '';
+
+    const partes = data.split('-');
+
+    if (partes.length === 3) {
+        return `${partes[2]}-${partes[1]}-${partes[0]}`;
+    }
+
+    return data;
+}
     function getOrgaoExtenso(orgaoSigla) {
         if (!orgaoSigla || orgaoSigla.trim() === '') return '';
         const mapaOrgaos = {
@@ -2574,7 +2594,7 @@ container.innerHTML = html;
             <tbody>
                 ${historico.map(h => `
                     <tr>
-                        <td>${h.ano_mes}</td>
+                        <td>${formatarData(h.ano_mes)}</td>
                         <td>${h.orgao_sigla}</td>
                         <td>${h.cargo_descricao}</td>
                         <td>${h.empresa}</td>

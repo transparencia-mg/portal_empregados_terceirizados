@@ -1,6 +1,6 @@
 {
   "version": "4.16.6",
-  "time": 21.039,
+  "time": 20.086,
   "errors": [],
   "tasks": [
     {
@@ -69,7 +69,7 @@
           "rows": 140455
         }
       },
-      "time": 3.933,
+      "time": 3.659,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -163,7 +163,7 @@
           "rows": 135574
         }
       },
-      "time": 3.778,
+      "time": 3.538,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -257,7 +257,7 @@
           "rows": 152938
         }
       },
-      "time": 4.26,
+      "time": 3.97,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -351,7 +351,7 @@
           "rows": 159967
         }
       },
-      "time": 4.407,
+      "time": 4.116,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -445,7 +445,101 @@
           "rows": 166139
         }
       },
-      "time": 4.603,
+      "time": 4.362,
+      "scope": [
+        "hash-count-error",
+        "byte-count-error",
+        "field-count-error",
+        "row-count-error",
+        "blank-header",
+        "extra-label",
+        "missing-label",
+        "blank-label",
+        "duplicate-label",
+        "incorrect-label",
+        "blank-row",
+        "primary-key-error",
+        "foreign-key-error",
+        "extra-cell",
+        "missing-cell",
+        "type-error",
+        "constraint-error",
+        "unique-error"
+      ],
+      "partial": false,
+      "errors": [],
+      "stats": {
+        "errors": 0
+      },
+      "valid": true
+    },
+    {
+      "resource": {
+        "dialect": {
+          "delimiter": ";"
+        },
+        "encoding": "utf-8-sig",
+        "format": "csv",
+        "hashing": "md5",
+        "name": "terceirizados_2026",
+        "path": "data/terceirizados_2026.csv",
+        "profile": "tabular-data-resource",
+        "schema": {
+          "fields": [
+            {
+              "name": "matricula",
+              "type": "integer",
+              "title": "Matrícula",
+              "description": "Matrícula do empregado terceirizado utilizado para controle e referência do registro."
+            },
+            {
+              "name": "nome",
+              "type": "string",
+              "title": "Nome",
+              "description": "Nome completo do empregado terceirizado vinculado à empresa prestadora de serviços e alocado no órgão ou entidade do Poder Executivo."
+            },
+            {
+              "name": "orgao",
+              "type": "string",
+              "title": "Órgão",
+              "description": "Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
+            },
+            {
+              "name": "cargo",
+              "type": "string",
+              "title": "Cargo",
+              "description": "Função ou atividade desempenhada pelo empregado terceirizado no âmbito do contrato de prestação de serviços."
+            },
+            {
+              "name": "empresa",
+              "type": "string",
+              "title": "Empresa",
+              "description": "Nome da empresa contratada pelo órgão ou entidade para a prestação de serviços terceirizados."
+            },
+            {
+              "name": "cnpj_empresa",
+              "type": "string",
+              "title": "CNPJ da Empresa",
+              "description": "Número de inscrição da empresa prestadora de serviços no Cadastro Nacional da Pessoa Jurídica (CNPJ)"
+            },
+            {
+              "name": "mes_referencia",
+              "type": "date",
+              "title": "Data",
+              "description": "Mês e ano de referência das informações apresentadas no registro, indicando o período ao qual os dados se referem."
+            }
+          ]
+        },
+        "scheme": "file",
+        "title": "Terceirizados 2026",
+        "stats": {
+          "hash": "59323b7a5ad0476229ba9e31ee473eb4",
+          "bytes": 1872685,
+          "fields": 7,
+          "rows": 13918
+        }
+      },
+      "time": 0.38,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -476,7 +570,7 @@
   ],
   "stats": {
     "errors": 0,
-    "tasks": 5
+    "tasks": 6
   },
   "valid": true
 }

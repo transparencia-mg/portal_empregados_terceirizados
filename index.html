@@ -112,7 +112,7 @@
         }
         
         .data-atualizacao-box {
-            background: white;
+            background: transparent !important;
             border-radius: 8px;
             padding: 8px 15px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -122,6 +122,7 @@
             font-size: 12px;
             color: var(--primary-dark);
             font-weight: 600;
+             box-shadow: none;
         }
         
         .data-atualizacao-box i {
@@ -426,7 +427,7 @@
     appearance: none;
     -webkit-appearance: none;
 
-    background: #eeeff5;
+    background: transparent !important;
     border: 1px solid #d6dee6;
     color: #1a3a5c;
     padding: 2px 10px;
@@ -529,10 +530,10 @@ button.btn-export:hover {
 
     background: ##ffffff;
     border: 1px solid #d6dee6;
-    border-radius: 20px;
+    border-radius: 8px;
 
-    padding: 4px 10px;
-    height: 38px;
+    padding: 6px 12px;
+    height: 42px;
 }
 
 .table-search-input {
@@ -541,7 +542,7 @@ button.btn-export:hover {
     background: transparent;
 
     font-size: 13px;
-    width: 160px;
+    width: 200px;
     color: #1a3a5c;
 }
 
@@ -1063,6 +1064,31 @@ div {
     max-width: 80% !important;
     width: 80% !important;
 }
+/* 🔥 FIXAR TOTAL GERAL CORRETAMENTE */
+.table tfoot {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+}
+
+.table tfoot tr {
+    background-color: #dfe3e8 !important;
+    box-shadow: nome;
+}
+
+.table tfoot td {
+    background-color: #dfe3e8 !important;
+    font-weight: 700;
+}
+.table-search-container {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;   /* 🔥 evita quebrar */
+}
+
+.table-badge {
+    white-space: nowrap;   /* 🔥 mantém "58 órgãos" na mesma linha */
+}
     </style>
 </head>
 <body class="iframe-mode">
@@ -1081,7 +1107,7 @@ div {
         <!-- ==================== DATA DE ATUALIZAÇÃO ==================== -->
         <div class="data-atualizacao-container">
             <div class="data-atualizacao-box">
-                <i class="material-icons">update</i> Atualizado em:<span id="data-atualizacao-header"></span>
+                Data de atualização:<span id="data-atualizacao-header"></span>
             </div>
         </div>
 
@@ -1262,7 +1288,7 @@ div {
 
     function setupAtualizacaoData() {
         const now = new Date();
-        const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
+        const dataFormatada = now.toLocaleDateString('pt-BR');
         const elementoData = document.getElementById('data-atualizacao-header');
         if (elementoData) {
             elementoData.textContent = dataFormatada;
@@ -1863,14 +1889,13 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
             <i class="material-icons">print</i>PDF
         </button>
 
-        <div class="share-dropdown">
-            <button class="btn-export" onclick="toggleShare(1)">
-                <i class="material-icons">share</i>Compartilhar
-            </button>
+       <button class="btn-export" onclick="copiarLinkDireto()">
+    <i class="material-icons">link</i>Copiar Link
+</button>
         </div>
-    </div>
+    
     <!-- DIREITA (badge + busca) -->
-    <div class="d-flex align-items-center gap-2 ms-auto">
+   <div class="d-flex align-items-center gap-2 ms-auto flex-nowrap">
         
         <span class="table-badge">${dadosOrgaoGlobal.length} órgãos</span>
 
@@ -1903,23 +1928,21 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
                             ${dadosPagina.map(item => `
                                 <tr>
                                     <td><a href="#" class="orgao-link" onclick="irParaConsulta('${item.sigla}'); return false;">${item.orgao}</a></td>
-                                    <td><strong>${item.sigla}</strong></td>
+                                    <td>${item.sigla}</td>
                                     <td class="text-center">${item.total.toLocaleString()}</td>
                                 </tr>
                             `).join('')}
-                        </tbody>
-                         </table>
+                            </tbody>
+                            <tfoot>
+    <tr>
+        <td colspan="2">Total Geral</td>
+        <td class="text-center">
+            ${dadosOrgaoGlobal.reduce((a,i)=>a+i.total,0).toLocaleString()}
+        </td>
+    </tr>
+</tfoot>
+                            </table>
                          </div> <!-- fecha table-fixed-header-container -->
-<table class="table mb-0">
-    <tbody>
-        <tr style="background-color: #dfe3e8; font-weight: 700;">
-            <td colspan="2">Total Geral</td>
-            <td class="text-center">
-                ${dadosOrgaoGlobal.reduce((a,i)=>a+i.total,0).toLocaleString()}
-            </td>
-        </tr>
-    </tbody>
-</table>
                 </div>
             </div>
            <div class="pagination-container" id="paginacaoContainerVG"></div>
@@ -2172,21 +2195,11 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
             <i class="material-icons">print</i>PDF
         </button>
 
-        <div class="share-dropdown">
-            <button class="btn-export" onclick="toggleShare(2)">
-                <i class="material-icons">share</i>Compartilhar
-            </button>
-
-            <div class="share-options" id="shareOptions2">
-                <a href="#" onclick="copiarLink(event,2)">Copiar Link</a>
-                <a href="#" onclick="compartilharFacebook(event,2)">Facebook</a>
-                <a href="#" onclick="compartilharTwitter(event,2)">Twitter</a>
-                <a href="#" onclick="compartilharLinkedIn(event,2)">LinkedIn</a>
-                <a href="#" onclick="compartilharWhatsApp(event,2)">WhatsApp</a>
+        <button class="btn-export" onclick="copiarLinkDireto()">
+    <i class="material-icons">link</i>Copiar Link
+</button>
             </div>
-        </div>
-    </div>
-
+    
     <!-- DIREITA -->
     <div class="d-flex align-items-center gap-2 ms-auto">
 
@@ -2714,30 +2727,16 @@ container.innerHTML = html;
         navigator.clipboard.writeText(window.location.href).then(() => alert('Link copiado!'));
         document.getElementById(`shareOptions${id}`).classList.remove('show');
     };
+    function copiarLinkDireto() {
+    navigator.clipboard.writeText(window.location.href)
+        .then(() => {
+            alert('Link copiado!');
+        })
+        .catch(() => {
+            alert('Erro ao copiar o link');
+        });
 
-    window.compartilharFacebook = function(e, id) {
-        e.preventDefault();
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
-        document.getElementById(`shareOptions${id}`).classList.remove('show');
-    };
-    
-    window.compartilharTwitter = function(e, id) {
-        e.preventDefault();
-        window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent('Empregados Terceirizados - Governo de Minas Gerais')}`, '_blank');
-        document.getElementById(`shareOptions${id}`).classList.remove('show');
-    };
-    
-    window.compartilharLinkedIn = function(e, id) {
-        e.preventDefault();
-        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank');
-        document.getElementById(`shareOptions${id}`).classList.remove('show');
-    };
-    
-    window.compartilharWhatsApp = function(e, id) {
-        e.preventDefault();
-        window.open(`https://wa.me/?text=${encodeURIComponent('Empregados Terceirizados - Governo de Minas Gerais ' + window.location.href)}`, '_blank');
-        document.getElementById(`shareOptions${id}`).classList.remove('show');
-    };
+}
 
     // ============================================
     // DOWNLOADS
@@ -2967,7 +2966,21 @@ function toggleClear(input) {
         });
     }
 }
-    </script>
-    </body>
+ </script>
+
+<!-- 🔔 TOAST DE SUCESSO -->
+<div id="toastSucesso" class="toast-sucesso">
+    <div class="toast-content">
+        <i class="material-icons">check</i>
+        <div>
+            <strong>Sucesso</strong><br>
+            Link copiado para a área de transferência!
+        </div>
+    </div>
+    <span class="toast-close" onclick="fecharToast()">×</span>
+</div>
+
+</body>
 </html>
+
 

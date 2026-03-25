@@ -1160,24 +1160,24 @@ div {
         '2022': 'terceirizados_2022.csv',
         '2023': 'terceirizados_2023.csv',
         '2024': 'terceirizados_2024.csv',
-        '2025': 'terceirizados_2025.csv'
+        '2025': 'terceirizados_2025.csv',
+        '2026': 'terceirizados_2026.csv'
     };
 
     // Cache de dados por ano e mês
     const dataCache = {
-        '2025': {}  // Inicializa cache para 2025
+        '2026': {}  // Inicializa cache para 2026
     };
 
-    // Estado atual - APENAS Dezembro/2025 inicialmente
     let currentDisplayData = {
-        ano: '2025',
-        mes: '12',
+        ano: '2026',
+        mes: '01',
         dados: [],          // Dados completos do mês atual
         metrica: {
             totalEmpregados: 0,
             totalOrgaos: 0,
             totalEmpresas: 0,
-            periodo: 'Dezembro/2025'
+            periodo: 'Janeiro/2026'
         },
         empregadosUnicos: [] // Lista única de empregados para consulta
     };
@@ -1402,18 +1402,18 @@ function formatarData(data) {
     }
 
     // ============================================
-    // FUNÇÃO PRINCIPAL - CARREGA APENAS DEZEMBRO/2025
+    // FUNÇÃO PRINCIPAL - CARREGA APENAS JANEIRO/2026
     // ============================================
     async function carregarDadosIniciais() {
-        showLoading(true, 'Carregando Dezembro/2025...');
+        showLoading(true, 'Carregando Janeiro/2026...');
         
         try {
-            console.log('🚀 Carregando apenas Dezembro/2025...');
+            console.log('🚀 Carregando apenas Janeiro/2026...');
             
-            const url2025 = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR['2025']}`;
+            const url2026 = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR['2026']}`;
             
-            const dados2025 = await new Promise((resolve) => {
-                Papa.parse(url2025, {
+            const dados2026 = await new Promise((resolve) => {
+                Papa.parse(url2026, {
                     download: true,
                     header: true,
                     skipEmptyLines: true,
@@ -1432,14 +1432,14 @@ function formatarData(data) {
                 });
             });
             
-            if (dados2025.length === 0) {
-                throw new Error('Não foi possível carregar os dados de 2025');
+            if (dados2026.length === 0) {
+                throw new Error('Não foi possível carregar os dados de 2026');
             }
             
             // Processa e separa por mês
             const dadosPorMes = {};
             
-            dados2025.forEach(linha => {
+            dados2026.forEach(linha => {
                 let mes = '';
                 const competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
                 
@@ -1469,11 +1469,11 @@ function formatarData(data) {
                     dadosPorMes[mes] = [];
                 }
                 
-                dadosPorMes[mes].push(formatarLinha(linha, '2025', mes));
+                dadosPorMes[mes].push(formatarLinha(linha, '2026', mes));
             });
             
             // Armazena no cache
-            dataCache['2025'] = dadosPorMes;
+            dataCache['2026'] = dadosPorMes;
             
             // Verifica se temos Dezembro
             if (!dadosPorMes['12'] || dadosPorMes['12'].length === 0) {
@@ -1492,9 +1492,9 @@ function formatarData(data) {
             }
             
             // Atualiza o estado com Dezembro
-            currentDisplayData.dados = dataCache['2025'][currentDisplayData.mes] || [];
+            currentDisplayData.dados = dataCache['2026'][currentDisplayData.mes] || [];
             
-            console.log(`✅ Carregados ${currentDisplayData.dados.length} registros de ${monthNames[currentDisplayData.mes]}/2025`);
+            console.log(`✅ Carregados ${currentDisplayData.dados.length} registros de ${monthNames[currentDisplayData.mes]}/2026`);
             
             // Calcula métricas
             currentDisplayData.metrica = calcularMetricas(currentDisplayData.dados, currentDisplayData.mes);
@@ -1611,7 +1611,7 @@ function formatarData(data) {
         const orgaos = new Set(dados.map(i => i.orgao_sigla).filter(Boolean)).size;
         const empresas = new Set(dados.map(i => i.empresa).filter(Boolean)).size;
         
-        let periodo = 'Dezembro/2025';
+        let periodo = 'Janeiro/2026';
         if (mes && currentDisplayData.ano) {
             periodo = `${monthNames[mes] || 'Dezembro'}/${currentDisplayData.ano}`;
         }
@@ -1779,7 +1779,8 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
                     <div class="filter-group">
                         <label class="filter-label"><i class="material-icons"></i>ANO</label>
                         <select class="form-select modern-select" id="filtroAnoVG">
-                            <option value="2025" selected>2025</option>
+                            <option value="2026" selected>2026</option>
+                            <option value="2025">2025</option>
                             <option value="2024">2024</option>
                             <option value="2023">2023</option>
                             <option value="2022">2022</option>
@@ -2023,8 +2024,8 @@ if (ctxOrgao && dadosOrgaoGlobal.length > 0) {
     }
 
     window.aplicarFiltrosVG = async function() {
-        const ano = document.getElementById('filtroAnoVG')?.value || '2025';
-        const mes = document.getElementById('filtroMesVG')?.value || '12';
+        const ano = document.getElementById('filtroAnoVG')?.value || '2026';
+        const mes = document.getElementById('filtroMesVG')?.value || '01';
         const orgao = document.getElementById('filtroOrgaoVG')?.value || '';
         
         const dadosMes = await carregarMes(ano, mes);
@@ -2058,13 +2059,13 @@ if (ctxOrgao && dadosOrgaoGlobal.length > 0) {
         const selectMes = document.getElementById('filtroMesVG');
         const selectOrgao = document.getElementById('filtroOrgaoVG');
         
-        if (selectAno) selectAno.value = '2025';
-        if (selectMes) selectMes.value = '12';
+        if (selectAno) selectAno.value = '2026';
+        if (selectMes) selectMes.value = '01';
         if (selectOrgao) selectOrgao.value = '';
         
-        currentDisplayData.ano = '2025';
-        currentDisplayData.mes = '12';
-        currentDisplayData.dados = dataCache['2025']['12'] || [];
+        currentDisplayData.ano = '2026';
+        currentDisplayData.mes = '01';
+        currentDisplayData.dados = dataCache['2026']['01'] || [];
         currentDisplayData.metrica = calcularMetricas(currentDisplayData.dados, '12');
         currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(currentDisplayData.dados);
         
@@ -2968,17 +2969,6 @@ function toggleClear(input) {
 }
  </script>
 
-<!-- 🔔 TOAST DE SUCESSO -->
-<div id="toastSucesso" class="toast-sucesso">
-    <div class="toast-content">
-        <i class="material-icons">check</i>
-        <div>
-            <strong>Sucesso</strong><br>
-            Link copiado para a área de transferência!
-        </div>
-    </div>
-    <span class="toast-close" onclick="fecharToast()">×</span>
-</div>
 
 </body>
 </html>

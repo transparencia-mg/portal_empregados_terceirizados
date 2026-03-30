@@ -250,12 +250,19 @@
             background: white;
             border-radius: 10px;
             padding: 20px; /* REMOVE o padding */
-            overflow: hidden;
+            overflow: auto;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
             margin-bottom: 20px;
             height: 100%;
             min-height: 320px;
         }
+        .chart-container canvas {
+    max-width: 100%;
+}
+
+.chart-container {
+    overflow-x: auto;  /* permite scroll horizontal */
+}
         
         .chart-header {
             background: #20445d;
@@ -273,11 +280,11 @@
         }
         
         .chart-wrapper {
-            position: relative;
-            height: 240px;
-            width: 100%;
-            padding: 15px;
-        }
+    display: flex;
+    justify-content: center;   /* 🔥 centraliza horizontal */
+    align-items: center;       /* 🔥 centraliza vertical */
+    height: 350px;             /* pode aumentar */
+}
 
         /* ==================== TABELAS ==================== */
         .table-header {
@@ -528,7 +535,7 @@ button.btn-export:hover {
     display: flex;
     align-items: center;
 
-    background: ##ffffff;
+    background: #ffffff;
     border: 1px solid #d6dee6;
     border-radius: 8px;
 
@@ -702,7 +709,7 @@ button.btn-export:hover {
         .items-per-page option {
     font-size: 14px;
 }
-        }
+        
 
         /* ==================== INDICADOR DE CARREGAMENTO ==================== */
         .loading-indicator {
@@ -1088,6 +1095,65 @@ div {
 
 .table-badge {
     white-space: nowrap;   /* 🔥 mantém "58 órgãos" na mesma linha */
+    
+}
+.toast-sucesso {
+    position: fixed;
+
+    bottom: 30px;          /* 🔥 fica embaixo */
+    left: 50%;             
+    transform: translateX(-50%); /* 🔥 centraliza horizontal */
+
+    background: #e6f4ea;
+    color: #1e4620;
+
+    border-radius: 12px;
+    padding: 14px 20px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+    z-index: 9999;
+
+    min-width: 250px;
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 🔥 centraliza conteúdo */
+
+    width: 100%;
+    text-align: center;
+
+    gap: 10px;
+}
+
+.toast-content i {
+    color: #28a745;
+    font-size: 22px;
+}
+
+.toast-close {
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
     </style>
 </head>
@@ -1217,7 +1283,13 @@ div {
         '07': 'Julho', '08': 'Agosto', '09': 'Setembro',
         '10': 'Outubro', '11': 'Novembro', '12': 'Dezembro'
     };
-    const chartPalette = ['#1a3a5c','#2c5f8a','#3a7cb8','#5a9fd4','#7ab8e0','#9dd1ec','#bde4f5','#d4a017','#c0392b','#27ae10'];
+  const chartPalette = [
+    '#2f4b63', // azul escuro (principal)
+    '#39a585', // verde
+    '#5f6f7f', // cinza médio
+    '#f28c28', // laranja
+    '#7aa6c2'  // azul claro
+];
 
     // ============================================
     // FUNÇÕES DE INICIALIZAÇÃO
@@ -1286,14 +1358,32 @@ div {
         return finalHeight;
     }
 
-    function setupAtualizacaoData() {
-        const now = new Date();
-        const dataFormatada = now.toLocaleDateString('pt-BR');
-        const elementoData = document.getElementById('data-atualizacao-header');
-        if (elementoData) {
+    async function setupAtualizacaoData() {
+    const elementoData = document.getElementById('data-atualizacao-header');
+
+    try {
+        const response = await fetch(
+            'https://api.github.com/repos/transparencia-mg/portal_empregados_terceirizados/commits?path=dataset/data'
+        );
+
+        const data = await response.json();
+
+        if (data && data.length > 0) {
+            const ultimaAtualizacao = data[0].commit.committer.date;
+
+            const dataFormatada = new Date(ultimaAtualizacao)
+                .toLocaleDateString('pt-BR');
+
             elementoData.textContent = dataFormatada;
+        } else {
+            elementoData.textContent = 'Não disponível';
         }
+
+    } catch (erro) {
+        console.error('Erro ao buscar data do GitHub:', erro);
+        elementoData.textContent = 'Erro ao carregar';
     }
+}
 
     function setupEventListeners() {
         window.addEventListener('click', (e) => {
@@ -1765,7 +1855,7 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
      if (sortConfig.coluna) {
     dadosOrgaoGlobal = ordenarDadosVG(dadosOrgaoGlobal);
 }
-        const dadosCargo = agruparPorCargo(currentDisplayData.dados).slice(0, 10);
+        const dadosCargo = agruparPorCargo(currentDisplayData.dados).slice(0, 5);
         
 
         const inicio = (paginaAtualVG - 1) * itensPorPaginaVG;
@@ -1875,7 +1965,7 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
             </div>
 
             <div class="row mb-4">
-                <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Empregados por Órgão</h4></div><div class="chart-wrapper"><canvas id="chartOrgao"></canvas></div></div></div>
+                <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Empregados por Órgão</h4></div><div class="chart-wrapper"><canvas id="chartOrgao" style="max-width: 400px; max-height: 400px;"></canvas></div></div></div>
                 <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Cargos</h4></div><div class="chart-wrapper"><canvas id="chartCargo"></canvas></div></div></div>
             </div>
 
@@ -1913,8 +2003,7 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
 
     </div>
 </div>
-            </div>
-
+       
             <div class="table-container">
                 <div class="table-fixed-header-container">
                     <table class="table">
@@ -1955,7 +2044,7 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
     </div>
 </div>
         `;
-        
+      
         container.innerHTML = html;
         renderizarPaginacaoVG();
        
@@ -1973,46 +2062,90 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
         
        const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
 if (ctxOrgao && dadosOrgaoGlobal.length > 0) {
-    window.orgaoChart = new Chart(ctxOrgao, {
-        type: 'bar',
-        data: { 
-            labels: dadosOrgaoGlobal.slice(0, 10).map(i => i.sigla),
-            datasets: [{ 
-                label: 'Empregados',
-                data: dadosOrgaoGlobal.slice(0, 10).map(i => i.total),
-                backgroundColor: chartPalette,
-                borderRadius: 4
-            }]
-        },
-        options: { 
-            responsive: true, 
-            maintainAspectRatio: false,
-            plugins: { 
-                legend: { display: false }
-            }
+// 🔥 garante ordem correta
+dadosOrgaoGlobal.sort((a, b) => b.total - a.total);
+
+// pega só os 8 maiores
+const topOrgaos = dadosOrgaoGlobal.slice(0, 8);
+
+// dados do gráfico
+const labels = topOrgaos.map(i => i.sigla);
+const valores = topOrgaos.map(i => i.total);
+
+window.orgaoChart = new Chart(ctxOrgao, {
+    type: 'doughnut',
+    data: {
+        labels: labels,
+        datasets: [{
+            data: valores,
+            backgroundColor: chartPalette
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+    position: 'bottom',
+    align: 'center',
+    labels: {
+        boxWidth: 10,
+        padding: 10,
+        font: {
+            size: 11
         }
-    }); 
+        },
+    fullSize: true
+    },
+
+        }
+    }
+});
+   
 }
     const ctxCargo = document.getElementById('chartCargo')?.getContext('2d');
-        if (ctxCargo && dadosCargo.length > 0) {
-            window.cargoChart = new Chart(ctxCargo, {
-                type: 'bar',
-                data: { 
-                    labels: dadosCargo.map(i => i.cargo.length > 20 ? i.cargo.substring(0,20)+'...' : i.cargo), 
-                    datasets: [{ 
-                        label: 'Empregados', 
-                        data: dadosCargo.map(i => i.total), 
-                        backgroundColor: chartPalette.slice().reverse(), 
-                        borderRadius: 4 
-                    }] 
-                },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false }
-                             }
+
+if (ctxCargo && dadosCargo.length > 0) {
+
+    const labels = dadosCargo.map(i => {
+        if (!i.cargo) return ['-'];
+
+        const palavras = i.cargo.split(' ');
+        const meio = Math.ceil(palavras.length / 2);
+
+        return [
+            palavras.slice(0, meio).join(' '),
+            palavras.slice(meio).join(' ')
+        ];
+    });
+
+    window.cargoChart = new Chart(ctxCargo, {
+        type: 'bar',
+        data: { 
+            labels: labels,
+            datasets: [{ 
+                data: dadosCargo.map(i => i.total),
+                backgroundColor: chartPalette,
+            }] 
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
                 }
-            });
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        maxRotation: 0,
+                        minRotation: 0,
+                        autoSkip: false
+                    }
+                }
+            }
+        }
+    });
+
         }
         
         setTimeout(() => {
@@ -2262,7 +2395,7 @@ setupCombobox('filtroCargoCI', 'sugestoesCargo', 'cargo', opcoesCache.cargos);
         aplicarFiltrosCI();
     }
 
-    window.aplicarFiltrosCI = function() {
+   function aplicarFiltrosCI() {
         const nome = document.getElementById('filtroNomeCI')?.value || '';
         const matricula = document.getElementById('filtroMatriculaCI')?.value || '';
         const cargo = document.getElementById('filtroCargoCI')?.value || '';
@@ -2725,13 +2858,31 @@ container.innerHTML = html;
 
     window.copiarLink = function(e, id) {
         e.preventDefault();
-        navigator.clipboard.writeText(window.location.href).then(() => alert('Link copiado!'));
+        navigator.clipboard.writeText(window.location.href).then(() => alert('Sucesso! Link copiado para a área de transferência'));
         document.getElementById(`shareOptions${id}`).classList.remove('show');
     };
+   function mostrarToast() {
+    const toast = document.getElementById('toastSucesso');
+
+    toast.style.display = 'flex';
+
+    // 🔥 força reinício da animação
+    toast.style.animation = 'none';
+    toast.offsetHeight;
+    toast.style.animation = 'fadeInUp 0.3s ease';
+
+    setTimeout(() => {
+        toast.style.display = 'none';
+    }, 3000);
+}
+
+function fecharToast() {
+    document.getElementById('toastSucesso').style.display = 'none';
+}
     function copiarLinkDireto() {
     navigator.clipboard.writeText(window.location.href)
         .then(() => {
-            alert('Link copiado!');
+            mostrarToast();
         })
         .catch(() => {
             alert('Erro ao copiar o link');
@@ -2806,8 +2957,30 @@ container.innerHTML = html;
             </div>
 
             <div class="mt-4">
-                <h5 class="mb-3">Dicionário de Dados</h5>
-                <div class="table-responsive">
+          
+
+    <div class="mb-3">
+
+    <h5 style="border:none; margin-bottom:8px;">
+        Dicionário de Dados
+    </h5>
+
+    <div class="d-flex gap-2">
+    <button class="btn-export" onclick="baixarDicionarioCSV()">
+        <i class="material-icons">description</i> CSV
+    </button>
+
+    <button class="btn-export" onclick="baixarDicionarioPDF()">
+        <i class="material-icons">print</i> PDF
+    </button>
+
+    <button class="btn-export" onclick="copiarLinkDireto()">
+        <i class="material-icons">link</i> Copiar Link
+    </button>
+</div>
+</div>
+
+<div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -2967,10 +3140,61 @@ function toggleClear(input) {
         });
     }
 }
+window.baixarDicionarioCSV = function () {
+    const linhas = [
+        ['Campo', 'Descrição', 'Tipo'],
+        ['matricula', 'Matrícula do empregado terceirizado', 'Texto/Número'],
+        ['nome', 'Nome completo do empregado', 'Texto'],
+        ['orgao', 'Órgão de trabalho', 'Texto'],
+        ['cargo', 'Cargo exercido', 'Texto'],
+        ['empresa', 'Nome da empresa terceirizada', 'Texto'],
+        ['cnpj_empresa', 'CNPJ da empresa', 'Texto/Número'],
+        ['mes_referencia', 'Mês de referência', 'Texto/Data']
+    ];
+
+    const csv = linhas.map(l => l.join(';')).join('\n');
+
+    const blob = new Blob(['\uFEFF' + csv], {
+        type: 'text/csv;charset=utf-8;'
+    });
+
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'dicionario_de_dados.csv';
+    link.click();
+};
+
+window.baixarDicionarioPDF = function () {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(14);
+    doc.text('Dicionário de Dados', 14, 15);
+
+    doc.autoTable({
+        startY: 25,
+        head: [['Campo', 'Descrição', 'Tipo']],
+        body: [
+            ['matricula', 'Matrícula do empregado terceirizado', 'Texto/Número'],
+            ['nome', 'Nome completo do empregado', 'Texto'],
+            ['orgao', 'Órgão de trabalho', 'Texto'],
+            ['cargo', 'Cargo exercido', 'Texto'],
+            ['empresa', 'Nome da empresa terceirizada', 'Texto'],
+            ['cnpj_empresa', 'CNPJ da empresa', 'Texto/Número'],
+            ['mes_referencia', 'Mês de referência', 'Texto/Data']
+        ]
+    });
+
+    doc.save('dicionario_de_dados.pdf');
+};
  </script>
 
-
+<div id="toastSucesso" class="toast-sucesso">
+    <div class="toast-content">
+        <i class="material-icons">check_circle</i>
+        <span>Sucesso!<br>Link copiado para área de transferência</span>
+    </div>
+    <span class="toast-close" onclick="fecharToast()">✖</span>
+</div>
 </body>
 </html>
-
-

@@ -247,18 +247,17 @@
 
         /* ==================== CONTAINER DE GRÁFICOS ==================== */
         .chart-container {
-            background: white;
-            border-radius: 10px;
-            padding: 20px; /* REMOVE o padding */
-            overflow: auto;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-            margin-bottom: 20px;
-            height: 100%;
-            min-height: 240px;
-        }
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    margin-bottom: 20px;
+    min-height: 320px;
+    padding: 0;
+    overflow: hidden;
+}
         .chart-container canvas {
     max-width: 100%;
-}
+    }
 
 .chart-container {
     overflow-x: auto;  /* permite scroll horizontal */
@@ -267,9 +266,8 @@
         .chart-header {
             background: #20445d;
             color: white;
-            padding: 10px 15px;
-            border-radius: 10px 10px 0 0;
-            margin: -20px -20px 15px -20px;
+            padding: 12px 16px;
+            margin: 0;
         }
         
         .chart-title {
@@ -279,13 +277,87 @@
             margin: 0;
         }
         
-        .chart-wrapper {
+.chart-pizza canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+.chart-pizza-layout {
     display: flex;
-    justify-content: center;   /* 🔥 centraliza horizontal */
-    align-items: center;       /* 🔥 centraliza vertical */
-    height: 220px;             /* pode aumentar */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    gap: 30px;
 }
 
+.chart-pizza-box {
+    flex: 0 0 55%;
+    height: 280px;
+    position: relative;
+}
+
+.legend-grid {
+    display: flex;
+    flex-direction: column;   /* 🔥 vertical */
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    min-width: 180px;
+    white-space: nowrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+.chart-wrapper {
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    width: 100%;
+}
+
+.chart-wrapper.chart-pizza {
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px 0 20px;
+}
+
+.chart-pizza-layout {
+    display: flex;
+    flex-direction: row;   /* 🔥 lado a lado */
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    gap: 30px;
+    padding: 10px 20px;
+}
+
+.chart-pizza-box {
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+}
+
+.chart-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
         /* ==================== TABELAS ==================== */
         .table-header {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
@@ -423,6 +495,7 @@
             cursor: pointer;
             height: 42px;
             white-space: nowrap;
+            text-decoration: none !important;
         }
         .btn-secondary-custom:hover {
             background-color: #132837  !important;
@@ -1965,8 +2038,26 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
             </div>
 
             <div class="row mb-4">
-                <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Empregados por Órgão</h4></div><div class="chart-wrapper"><canvas id="chartOrgao" style="max-width: 400px; max-height: 400px;"></canvas></div></div></div>
-                <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Cargos</h4></div><div class="chart-wrapper"><canvas id="chartCargo"></canvas></div></div></div>
+                <div class="col-md-6">
+    <div class="chart-container">
+        <div class="chart-header">
+            <h4 class="chart-title">Empregados por Órgão</h4>
+        </div>
+        <div class="chart-wrapper chart-pizza">
+    <div class="chart-pizza-layout">
+        <div class="chart-pizza-box">
+            <canvas id="chartOrgao"></canvas>
+        </div>
+        <div class="legend-grid" id="legendOrgao"></div>
+    </div>
+</div>
+    </div>
+</div>
+                <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Cargos</h4></div><div class="chart-wrapper">
+    <div style="width:100%; height:260px; position:relative;">
+        <canvas id="chartCargo"></canvas>
+    </div>
+</div></div></div>
             </div>
 
           <div class="d-flex justify-content-between align-items-center mb-3">
@@ -2066,7 +2157,7 @@ if (ctxOrgao && dadosOrgaoGlobal.length > 0) {
 dadosOrgaoGlobal.sort((a, b) => b.total - a.total);
 
 // pega só os 8 maiores
-const topOrgaos = dadosOrgaoGlobal.slice(0, 8);
+const topOrgaos = dadosOrgaoGlobal.slice(0, 6);
 
 // dados do gráfico
 const labels = topOrgaos.map(i => i.sigla);
@@ -2082,24 +2173,33 @@ window.orgaoChart = new Chart(ctxOrgao, {
         }]
     },
     options: {
-        responsive: true,
-        plugins: {
-            legend: {
-    position: 'bottom',
-    align: 'center',
-    labels: {
-        boxWidth: 10,
-        padding: 10,
-        font: {
-            size: 11
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '60%',
+    radius: '90%',
+    layout: {
+        padding: {
+            left: 10,
+            right: 10
         }
-        },
-    fullSize: true
     },
-
-        }
+   plugins: {
+    legend: {
+        display: false
+    
     }
+}
+}
 });
+const legendContainer = document.getElementById('legendOrgao');
+
+legendContainer.innerHTML = topOrgaos.map((item, index) => `
+    <div class="legend-item">
+        <span class="legend-color" 
+              style="background:${chartPalette[index]}"></span>
+        <span>${item.sigla}</span>
+    </div>
+`).join('');
    
 }
     const ctxCargo = document.getElementById('chartCargo')?.getContext('2d');
@@ -2119,31 +2219,44 @@ if (ctxCargo && dadosCargo.length > 0) {
     });
 
     window.cargoChart = new Chart(ctxCargo, {
-        type: 'bar',
-        data: { 
-            labels: labels,
-            datasets: [{ 
-                data: dadosCargo.map(i => i.total),
-                backgroundColor: chartPalette,
-            }] 
+    type: 'bar',
+    data: { 
+        labels: labels,
+        datasets: [{ 
+            data: dadosCargo.map(i => i.total),
+            backgroundColor: chartPalette,
+            barThickness: 50,   // deixa mais estreito
+            borderRadius: 4
+        }] 
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false
+        scales: {
+            x: {
+                grid: {
+                    display: false   // remove linhas verticais
+                },
+                ticks: {
+                    maxRotation: 0,
+                    minRotation: 0,
+                    autoSkip: false
                 }
             },
-            scales: {
-                x: {
-                    ticks: {
-                        maxRotation: 0,
-                        minRotation: 0,
-                        autoSkip: false
-                    }
-                }
+            y: {
+                grid: {
+                    display: false   // remove linhas horizontais
+                },
+                beginAtZero: true
             }
         }
+    }
+
     });
 
         }

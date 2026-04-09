@@ -24,6 +24,10 @@ resources:
           type: string
           title: Órgão
           description: Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
+        - name: sigla
+          type: string
+          title: Sigla
+          description: Sigla do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
         - name: cargo
           type: string
           title: Cargo
@@ -64,6 +68,10 @@ resources:
           type: string
           title: Órgão
           description: Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
+        - name: sigla
+          type: string
+          title: Sigla
+          description: Sigla do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
         - name: cargo
           type: string
           title: Cargo
@@ -104,6 +112,10 @@ resources:
           type: string
           title: Órgão
           description: Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
+        - name: sigla
+          type: string
+          title: Sigla
+          description: Sigla do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
         - name: cargo
           type: string
           title: Cargo
@@ -144,6 +156,10 @@ resources:
           type: string
           title: Órgão
           description: Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
+        - name: sigla
+          type: string
+          title: Sigla
+          description: Sigla do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
         - name: cargo
           type: string
           title: Cargo
@@ -184,6 +200,10 @@ resources:
           type: string
           title: Órgão
           description: Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
+        - name: sigla
+          type: string
+          title: Sigla
+          description: Sigla do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
         - name: cargo
           type: string
           title: Cargo
@@ -224,6 +244,10 @@ resources:
           type: string
           title: Órgão
           description: Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
+        - name: sigla
+          type: string
+          title: Sigla
+          description: Sigla do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas.
         - name: cargo
           type: string
           title: Cargo

@@ -1,6 +1,6 @@
 {
   "version": "4.16.6",
-  "time": 22.735,
+  "time": 19.126,
   "errors": [],
   "tasks": [
     {
@@ -35,6 +35,12 @@
               "description": "Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
             },
             {
+              "name": "sigla",
+              "type": "string",
+              "title": "Sigla",
+              "description": "Sigla do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
+            },
+            {
               "name": "cargo",
               "type": "string",
               "title": "Cargo",
@@ -63,13 +69,13 @@
         "scheme": "file",
         "title": "Terceirizados 2021",
         "stats": {
-          "hash": "6fd01c33ae9382a7bde0ade23d049f36",
-          "bytes": 18368163,
-          "fields": 7,
-          "rows": 140455
+          "hash": "64719469340d5e0757a2b15692753625",
+          "bytes": 23640979,
+          "fields": 8,
+          "rows": 134876
         }
       },
-      "time": 4.091,
+      "time": 3.423,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -129,6 +135,12 @@
               "description": "Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
             },
             {
+              "name": "sigla",
+              "type": "string",
+              "title": "Sigla",
+              "description": "Sigla do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
+            },
+            {
               "name": "cargo",
               "type": "string",
               "title": "Cargo",
@@ -157,13 +169,13 @@
         "scheme": "file",
         "title": "Terceirizados 2022",
         "stats": {
-          "hash": "4ea9514a9eaf4f02d7422bd666a81f0c",
-          "bytes": 17773804,
-          "fields": 7,
-          "rows": 135574
+          "hash": "785b9fb3988504f62377363a1f1ce228",
+          "bytes": 22782613,
+          "fields": 8,
+          "rows": 129862
         }
       },
-      "time": 3.936,
+      "time": 3.331,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -223,6 +235,12 @@
               "description": "Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
             },
             {
+              "name": "sigla",
+              "type": "string",
+              "title": "Sigla",
+              "description": "Sigla do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
+            },
+            {
               "name": "cargo",
               "type": "string",
               "title": "Cargo",
@@ -251,13 +269,13 @@
         "scheme": "file",
         "title": "Terceirizados 2023",
         "stats": {
-          "hash": "f695cd5fa5968457ea97869efa3a4eed",
-          "bytes": 20051732,
-          "fields": 7,
-          "rows": 152938
+          "hash": "11badb51c667dd1dff9f3cd2970001e3",
+          "bytes": 25624826,
+          "fields": 8,
+          "rows": 145942
         }
       },
-      "time": 4.464,
+      "time": 3.732,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -317,6 +335,12 @@
               "description": "Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
             },
             {
+              "name": "sigla",
+              "type": "string",
+              "title": "Sigla",
+              "description": "Sigla do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
+            },
+            {
               "name": "cargo",
               "type": "string",
               "title": "Cargo",
@@ -345,13 +369,13 @@
         "scheme": "file",
         "title": "Terceirizados 2024",
         "stats": {
-          "hash": "5a1fb6d2c4b100e3d4a875428db0d82b",
-          "bytes": 21017044,
-          "fields": 7,
-          "rows": 159967
+          "hash": "9aba6808378e6c427363e485b40e32ae",
+          "bytes": 26730786,
+          "fields": 8,
+          "rows": 151978
         }
       },
-      "time": 4.572,
+      "time": 3.862,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -411,6 +435,12 @@
               "description": "Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
             },
             {
+              "name": "sigla",
+              "type": "string",
+              "title": "Sigla",
+              "description": "Sigla do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
+            },
+            {
               "name": "cargo",
               "type": "string",
               "title": "Cargo",
@@ -439,13 +469,13 @@
         "scheme": "file",
         "title": "Terceirizados 2025",
         "stats": {
-          "hash": "3c8ca8ccd5a4e0e92f7db47eda072faa",
-          "bytes": 22333350,
-          "fields": 7,
-          "rows": 166139
+          "hash": "2b90e03ec1b0f230c3828a00ef4accbb",
+          "bytes": 28353569,
+          "fields": 8,
+          "rows": 158096
         }
       },
-      "time": 4.785,
+      "time": 4.017,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -505,6 +535,12 @@
               "description": "Nome do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
             },
             {
+              "name": "sigla",
+              "type": "string",
+              "title": "Sigla",
+              "description": "Sigla do órgão ou entidade do Poder Executivo do Estado de Minas Gerais ao qual o empregado terceirizado está vinculado para a execução das atividades contratadas."
+            },
+            {
               "name": "cargo",
               "type": "string",
               "title": "Cargo",
@@ -533,13 +569,13 @@
         "scheme": "file",
         "title": "Terceirizados 2026",
         "stats": {
-          "hash": "f5262cfa0ebbbf1e0f9deca4e3658543",
-          "bytes": 3748146,
-          "fields": 7,
-          "rows": 27850
+          "hash": "5a487c0a9b2ac40d8c540c1fba05e127",
+          "bytes": 4752901,
+          "fields": 8,
+          "rows": 26486
         }
       },
-      "time": 0.819,
+      "time": 0.694,
       "scope": [
         "hash-count-error",
         "byte-count-error",

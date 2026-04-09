@@ -1525,36 +1525,21 @@ function formatarData(data) {
 
     return data;
 }
-    function getOrgaoExtenso(orgaoSigla) {
-        if (!orgaoSigla || orgaoSigla.trim() === '') return '';
-        const mapaOrgaos = {
-            'SES': 'SECRETARIA DE ESTADO DE SAÚDE',
-            'SEE': 'SECRETARIA DE ESTADO DE EDUCAÇÃO',
-            'SEPLAG': 'SECRETARIA DE ESTADO DE PLANEJAMENTO E GESTÃO',
-            'SEF': 'SECRETARIA DE ESTADO DE FAZENDA',
-            'SEJUSP': 'SECRETARIA DE ESTADO DE JUSTIÇA E SEGURANÇA PÚBLICA',
-            'SEMAD': 'SECRETARIA DE ESTADO DE MEIO AMBIENTE E DESENVOLVIMENTO SUSTENTÁVEL',
-            'PCMG': 'POLÍCIA CIVIL DE MINAS GERAIS',
-            'PMMG': 'POLÍCIA MILITAR DE MINAS GERAIS',
-            'CBMMG': 'CORPO DE BOMBEIROS MILITAR DE MINAS GERAIS',
-            'FHEMIG': 'FUNDAÇÃO HOSPITALAR DO ESTADO DE MINAS GERAIS'
-        };
-        const siglaUpper = orgaoSigla.toUpperCase().trim();
-        return mapaOrgaos[siglaUpper] || orgaoSigla;
-    }
-
     function formatarLinha(linha, year, mes) {
         let competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
         
         if (!competencia && year && mes) {
             competencia = `${year}-${mes}`;
         }
+
+        const sigla = linha['sigla'] || linha['SIGLA'] || '';
+        const orgaoNome = linha['orgao'] || linha['ÓRGÃO'] || linha['Orgao'] || sigla || '';
         
         return {
             matricula: linha['matricula'] || linha['MAT'] || linha['Matrícula'] || linha['mat'] || '',
             nome: linha['nome'] || linha['NOME'] || linha['Nome'] || '',
-            orgao_sigla: linha['orgao'] || linha['ÓRGÃO'] || linha['orgao_sigla'] || linha['Orgao'] || '',
-            orgao: getOrgaoExtenso(linha['orgao'] || linha['ÓRGÃO'] || linha['orgao_sigla'] || ''),
+            orgao_sigla: sigla,
+            orgao: orgaoNome,
             cargo_descricao: linha['cargo'] || linha['CARGO'] || linha['Cargo'] || '',
             empresa: linha['empresa'] || linha['EMPRESA'] || linha['Empresa'] || '',
             cnpj_empresa: linha['cnpj_empresa'] || linha['CNPJ EMPRESA'] || linha['cnpj'] || linha['CNPJ'] || '',
@@ -3116,7 +3101,12 @@ function fecharToast() {
                             </tr>
                             <tr>
                                 <td>orgao</td>
-                                <td>Órgão de trabalho</td>
+                                <td>Nome por extenso do órgão de trabalho</td>
+                                <td>Texto</td>
+                            </tr>
+                            <tr>
+                                <td>sigla</td>
+                                <td>Sigla do órgão de trabalho</td>
                                 <td>Texto</td>
                             </tr>
                             <tr>
@@ -3259,7 +3249,8 @@ window.baixarDicionarioCSV = function () {
         ['Campo', 'Descrição', 'Tipo'],
         ['matricula', 'Matrícula do empregado terceirizado', 'Texto/Número'],
         ['nome', 'Nome completo do empregado', 'Texto'],
-        ['orgao', 'Órgão de trabalho', 'Texto'],
+        ['orgao', 'Nome por extenso do órgão de trabalho', 'Texto'],
+        ['sigla', 'Sigla do órgão de trabalho', 'Texto'],
         ['cargo', 'Cargo exercido', 'Texto'],
         ['empresa', 'Nome da empresa terceirizada', 'Texto'],
         ['cnpj_empresa', 'CNPJ da empresa', 'Texto/Número'],
@@ -3291,7 +3282,8 @@ window.baixarDicionarioPDF = function () {
         body: [
             ['matricula', 'Matrícula do empregado terceirizado', 'Texto/Número'],
             ['nome', 'Nome completo do empregado', 'Texto'],
-            ['orgao', 'Órgão de trabalho', 'Texto'],
+            ['orgao', 'Nome por extenso do órgão de trabalho', 'Texto'],
+            ['sigla', 'Sigla do órgão de trabalho', 'Texto'],
             ['cargo', 'Cargo exercido', 'Texto'],
             ['empresa', 'Nome da empresa terceirizada', 'Texto'],
             ['cnpj_empresa', 'CNPJ da empresa', 'Texto/Número'],

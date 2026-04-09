@@ -1790,7 +1790,11 @@ function formatarData(data) {
             opcoesCache.nomes = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.nome).filter(Boolean))].sort();
             opcoesCache.matriculas = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.matricula).filter(Boolean))].sort();
             opcoesCache.cargos = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.cargo_descricao).filter(Boolean))].sort();
-            opcoesCache.orgaos = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.orgao_sigla).filter(Boolean))].sort();
+            opcoesCache.orgaos = [...new Map(
+                currentDisplayData.empregadosUnicos
+                    .filter(e => e.orgao_sigla)
+                    .map(e => [e.orgao_sigla, { sigla: e.orgao_sigla, nome: e.orgao || e.orgao_sigla }])
+            ).values()].sort((a, b) => (a.nome || '').localeCompare(b.nome || '', 'pt-BR'));
         }
     }
 
@@ -1891,14 +1895,16 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
         if (sortConfig.coluna === 'total') {
             valorA = Number(valorA);
             valorB = Number(valorB);
+            if (valorA < valorB) return sortConfig.direcao === 'asc' ? -1 : 1;
+            if (valorA > valorB) return sortConfig.direcao === 'asc' ? 1 : -1;
+            return 0;
         } else {
-            valorA = (valorA || '').toString().toLowerCase();
-            valorB = (valorB || '').toString().toLowerCase();
+            valorA = (valorA || '').toString();
+            valorB = (valorB || '').toString();
+            return sortConfig.direcao === 'asc'
+                ? valorA.localeCompare(valorB, 'pt-BR')
+                : valorB.localeCompare(valorA, 'pt-BR');
         }
-
-        if (valorA < valorB) return sortConfig.direcao === 'asc' ? -1 : 1;
-        if (valorA > valorB) return sortConfig.direcao === 'asc' ? 1 : -1;
-        return 0;
     });
 }   
          
@@ -1957,7 +1963,7 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
                         <label class="filter-label"><i class="material-icons"></i>ÓRGÃO</label>
                         <select class="form-select modern-select" id="filtroOrgaoVG">
                             <option value="">Todos os órgãos</option>
-                            ${opcoesCache.orgaos.map(org => `<option value="${org}">${org}</option>`).join('')}
+                            ${opcoesCache.orgaos.map(org => `<option value="${org.sigla}">${org.nome} (${org.sigla})</option>`).join('')}
                         </select>
                         </div>
                     </div>
@@ -2332,7 +2338,7 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
             }
             mapa.get(sigla).total += 1;
         }
-        return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
+        return Array.from(mapa.values()).sort((a,b) => (a.orgao || '').localeCompare(b.orgao || '', 'pt-BR'));
     }
 
     function agruparPorCargo(dados) {
@@ -2350,7 +2356,13 @@ window.ordenarTabelaVisaoGeral = function(coluna) {
     window.irParaConsulta = function(sigla) {
         document.getElementById('consulta-tab').click();
         setTimeout(() => {
-            document.getElementById('filtroCargoCI').focus();
+            // Filtra os empregados pelo órgão clicado
+            empregadosFiltradosCI = currentDisplayData.empregadosUnicos.filter(e => e.orgao_sigla === sigla);
+            paginaAtualCI = 1;
+            atualizarTabelaConsulta();
+            // Atualiza o badge de total
+            const badge = document.getElementById('totalServidoresBadge');
+            if (badge) badge.innerText = empregadosFiltradosCI.length + ' empregados';
         }, 300);
     };
 

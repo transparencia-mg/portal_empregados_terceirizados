@@ -5,36 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Terceirizados - Governo de Minas Gerais</title>
 
-    <!-- ==================== ESTILOS E BIBLIOTECAS ==================== -->
+    <!-- ============================================================
+         BIBLIOTECAS EXTERNAS
+    ============================================================ -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Bibliotecas para PDF -->
+    <!-- PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
-    <!-- Chart.js e PapaParse -->
+    <!-- Chart.js | PapaParse | jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <style>
-        /* ==================== VARIÁVEIS DE CORES ==================== */
+
+        /* ============================================================
+           1. VARIÁVEIS DE CORES
+        ============================================================ */
         :root {
-            --primary-dark: #1a3a5c;
-            --primary-darker: #0f2a44;
-            --accent-red: #b93c42;
-            --accent-bright: #db233f;
-            --background-light: #f5f7fa;
-            --success-green: #28a745;
-            --warning-yellow: #ffc107;
-            --info-blue: #17a2b8;
+            --primary-dark:      #1a3a5c;
+            --primary-darker:    #0f2a44;
+            --accent-red:        #b93c42;
+            --accent-bright:     #db233f;
+            --background-light:  #f5f7fa;
+            --success-green:     #28a745;
+            --warning-yellow:    #ffc107;
+            --info-blue:         #17a2b8;
         }
 
-        /* ==================== RESET E CONFIGURAÇÕES GLOBAIS ==================== */
+
+        /* ============================================================
+           2. RESET E CONFIGURAÇÕES GLOBAIS
+        ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -44,30 +52,44 @@
         html, body {
             width: 100%;
             overflow-x: hidden;
-            /* IMPORTANTE: SEM overflow-y aqui - deixar padrão */
             margin: 0;
             padding: 0;
             height: auto;
             min-height: auto;
         }
 
-        body { 
-            font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: var(--background-light); 
-            padding-bottom: 15px; 
-            /* REMOVIDO overflow-y: hidden - isso causava o problema */
-            overflow-x: hidden; 
-            min-height: auto; 
-            height: auto; 
-            position: relative; 
-        } 
+        body {
+            font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-light);
+            padding-bottom: 15px;
+            overflow-x: hidden;
+            min-height: auto;
+            height: auto;
+            position: relative;
+        }
 
-        .main-container { 
-            height: auto; 
-            min-height: auto; 
-            overflow: visible; 
-            position: relative; 
-        } 
+        /* Fonte global para todos os elementos */
+        body, button, input, select, textarea, span, div {
+            font-family: 'Montserrat', sans-serif !important;
+        }
+
+        /* Ícones Material não devem herdar fonte customizada */
+        .material-icons {
+            font-family: 'Material Icons' !important;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+
+        /* ============================================================
+           3. LAYOUT PRINCIPAL (containers e estrutura)
+        ============================================================ */
+        .main-container {
+            height: auto;
+            min-height: auto;
+            overflow: visible;
+            position: relative;
+        }
 
         .container-fluid {
             width: 100%;
@@ -76,6 +98,10 @@
             margin: 0;
             height: auto;
             min-height: auto;
+        }
+
+        .container {
+            max-width: 85% !important;
         }
 
         .dashboard-container {
@@ -87,7 +113,7 @@
             min-height: auto;
         }
 
-        .tab-content, 
+        .tab-content,
         .tab-pane {
             width: 100%;
             height: auto;
@@ -95,42 +121,51 @@
             overflow: visible;
         }
 
-        .table-container { 
-            height: auto; 
-            min-height: auto; 
-            overflow: visible; 
-            position: relative; 
+        .table-container {
+            height: auto;
+            min-height: auto;
+            overflow: visible;
+            position: relative;
         }
 
-        /* TODO O RESTO DO SEU CSS PERMANECE IGUAL */
-        /* ==================== DATA ATUALIZAÇÃO ==================== */
+        /* Classe para uso em iframe */
+        .iframe-mode {
+            overflow: visible !important;
+        }
+
+
+        /* ============================================================
+           4. DATA DE ATUALIZAÇÃO
+        ============================================================ */
         .data-atualizacao-container {
             display: flex;
             justify-content: left;
             align-items: center;
             margin: 15px 0;
         }
-        
+
         .data-atualizacao-box {
             background: transparent !important;
             border-radius: 8px;
             padding: 8px 15px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 12px;
             color: var(--primary-dark);
             font-weight: 600;
-             box-shadow: none;
+            box-shadow: none;
         }
-        
+
         .data-atualizacao-box i {
             font-size: 14px;
             color: var(--accent-red);
         }
 
-        /* ==================== FILTROS ==================== */
+
+        /* ============================================================
+           5. FILTROS
+        ============================================================ */
         .filter-container {
             background: white;
             border-radius: 10px;
@@ -140,39 +175,119 @@
             border-left: none;
             width: 100%;
         }
-        
+
         .filter-label {
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 600;
             color: #1a3a5c;
             margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
-        .filter-label i { font-size: 18px; color: var(--accent-red); }
-        
-        .form-control, .form-select {
+
+        .filter-label i {
+            font-size: 14px;
+            color: var(--accent-red);
+        }
+
+        .form-control,
+        .form-select {
             border: 2px solid #e9ecef;
             border-radius: 6px;
             padding: 10px 12px;
             font-size: 13px;
             transition: all 0.3s ease;
-            height: 42px;
+            height: auto;
             width: 100%;
         }
-        
-        .form-control:focus, .form-select:focus {
+
+        .form-control:focus,
+        .form-select:focus {
             border-color: var(--accent-red);
             box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
         }
 
-        /* ==================== AUTOCOMPLETE ==================== */
+        .modern-select {
+            border: 1.5px solid #dfe5ec !important;
+            border-radius: 8px !important;
+            padding: 10px 12px !important;
+            font-size: 14px !important;
+            height: 48px !important;
+            line-height: 1.5 !important;
+            background-color: #fff;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .modern-select:focus {
+            border-color: #1a3a5c !important;
+            box-shadow: 0 0 0 2px rgba(26, 58, 92, 0.1);
+        }
+
+        /* Layout das linhas de filtros */
+        .filters-row {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            flex-wrap: nowrap;
+        }
+
+        .filters-row .filter-group {
+            width: auto !important;
+        }
+
+        .filter-group {
+            flex: 1;
+        }
+
+        .filter-buttons-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .consulta-filters-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .consulta-filter-group {
+            flex: 1 1 calc(33.333% - 15px);
+            min-width: 250px;
+        }
+
+        .consulta-buttons-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            margin-top: 15px;
+            justify-content: flex-start;
+        }
+
+        .consulta-buttons-row .btn-pesquisa,
+        .consulta-buttons-row .btn-secondary-custom {
+            min-width: 150px;
+        }
+
+        .botoes-abaixo {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+
+        /* ============================================================
+           6. AUTOCOMPLETE
+        ============================================================ */
         .autocomplete-container {
             position: relative;
             width: 100%;
         }
-        
+
         .autocomplete-suggestions {
             position: absolute;
             top: 100%;
@@ -187,11 +302,11 @@
             z-index: 1000;
             display: none;
         }
-        
+
         .autocomplete-suggestions.show {
             display: block;
         }
-        
+
         .autocomplete-suggestion {
             padding: 10px 12px;
             cursor: pointer;
@@ -199,22 +314,25 @@
             border-bottom: 1px solid #f1f1f1;
             transition: background 0.2s;
         }
-        
+
         .autocomplete-suggestion:hover {
             background-color: var(--background-light);
             color: var(--accent-red);
         }
-        
+
         .autocomplete-suggestion:last-child {
             border-bottom: none;
         }
-        
+
         .autocomplete-suggestion strong {
             color: var(--accent-red);
             font-weight: 700;
         }
 
-        /* ==================== CARDS DE MÉTRICAS ==================== */
+
+        /* ============================================================
+           7. CARDS DE MÉTRICAS
+        ============================================================ */
         .metric-card {
             background: white;
             border-radius: 8px;
@@ -227,7 +345,7 @@
         .metric-header {
             background: #20445d;
             color: white;
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 600;
             padding: 10px 15px;
             display: flex;
@@ -240,125 +358,119 @@
         }
 
         .metric-value {
-            font-size: 26px;
-            font-weight: 500;
+            font-size: 20px;
+            font-weight: 600;
             color: #171c21;
         }
 
-        /* ==================== CONTAINER DE GRÁFICOS ==================== */
-        .chart-container {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-    margin-bottom: 20px;
-    min-height: 320px;
-    padding: 0;
-    overflow: hidden;
-}
-        .chart-container canvas {
-    max-width: 100%;
-    }
 
-.chart-container {
-    overflow-x: auto;  /* permite scroll horizontal */
-}
-        
+        /* ============================================================
+           8. GRÁFICOS
+        ============================================================ */
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            min-height: 320px;
+            padding: 0;
+            overflow: hidden;
+            overflow-x: auto;
+        }
+
+        .chart-container canvas {
+            max-width: 100%;
+        }
+
         .chart-header {
             background: #20445d;
             color: white;
             padding: 12px 16px;
             margin: 0;
         }
-        
+
         .chart-title {
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 600;
             color: white;
             margin: 0;
         }
-        
-.chart-pizza canvas {
-    width: 100% !important;
-    height: 100% !important;
-}
-.chart-pizza-layout {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-    gap: 30px;
-}
 
-.chart-pizza-box {
-    flex: 0 0 55%;
-    height: 280px;
-    position: relative;
-}
+        .chart-wrapper {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 15px;
+            width: 100%;
+        }
 
-.legend-grid {
-    display: flex;
-    flex-direction: column;   /* 🔥 vertical */
-    justify-content: center;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 13px;
-    min-width: 180px;
-    white-space: nowrap;
-}
+        .chart-wrapper.chart-pizza {
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px 0 20px;
+        }
 
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-}
+        .chart-wrapper canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
 
-.legend-color {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
-    flex-shrink: 0;
-}
-.chart-wrapper {
-    height: 260px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 15px;
-    width: 100%;
-}
+        /* Layout pizza */
+        .chart-pizza canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
 
-.chart-wrapper.chart-pizza {
-    height: 260px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px 0 20px;
-}
+        .chart-pizza-layout {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            gap: 30px;
+            padding: 10px 20px;
+        }
 
-.chart-pizza-layout {
-    display: flex;
-    flex-direction: row;   /* 🔥 lado a lado */
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    gap: 30px;
-    padding: 10px 20px;
-}
+        .chart-pizza-box {
+            width: 250px;
+            height: 250px;
+            flex-shrink: 0;
+        }
 
-.chart-pizza-box {
-    width: 250px;
-    height: 250px;
-    flex-shrink: 0;
-}
+        /* Legenda customizada */
+        .legend-grid {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 11px;
+            min-width: 180px;
+            white-space: nowrap;
+        }
 
-.chart-wrapper canvas {
-    width: 100% !important;
-    height: 100% !important;
-}
-        /* ==================== TABELAS ==================== */
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+
+        /* ============================================================
+           9. TABELAS
+        ============================================================ */
         .table-header {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
             color: white;
@@ -369,30 +481,30 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        
+
         .table-title {
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 600;
             margin: 0;
         }
-        
+
         .table-badge {
             background: #1a3a5c;
             color: white;
             padding: 5px 12px;
             border-radius: 12px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
+            white-space: nowrap;
         }
-        
+
         .table-fixed-header-container {
             position: relative;
             overflow: auto;
             width: 100%;
-            max-height: 600px; /* Altura máxima para scroll interno */
+            max-height: 600px;
         }
-        
-        
+
         .table-fixed-header-container table thead th {
             background-color: #54697b;
             color: white !important;
@@ -401,54 +513,124 @@
             z-index: 10;
             font-weight: 600;
             padding: 12px 10px;
-            font-size: 15px;
+            font-size: 13px;
             text-transform: uppercase;
             white-space: nowrap;
         }
-        
+
         .table {
             width: 100%;
-            font-size: 15px;
+            font-size: 13px;
             border-collapse: collapse;
             table-layout: auto;
         }
+
         .table th,
         .table td {
             border: 1px solid #d6dee6;
-}
-        
+        }
+
+        .table thead th {
+            background-color: #54697b !important;
+            color: white !important;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 12px 10px;
+            text-transform: uppercase;
+            border: 1px solid #d6dee6;
+        }
+
+        /* Arredondamento do topo da tabela */
+        .table thead th:first-child { border-top-left-radius: 8px; }
+        .table thead th:last-child  { border-top-right-radius: 8px; }
+
+        .table tbody tr {
+            background-color: #ffffff;
+        }
+
         .table tbody td {
             padding: 12px 10px;
             vertical-align: middle;
             border-bottom: 1px solid #f1f1f1;
         }
-        
+
         .table tbody tr:hover {
             background-color: rgba(41, 67, 90, 0.04);
         }
 
+        /* Rodapé fixo (total geral) */
+        .table tfoot {
+            position: sticky;
+            bottom: 0;
+            z-index: 20;
+        }
+
+        .table tfoot tr,
+        .table tfoot td {
+            background-color: #dfe3e8 !important;
+            font-weight: 700;
+        }
+
+        /* Tabela com bordas (dicionário) */
+        .table-bordered {
+            border: 1px solid #dee2e6;
+            width: 100%;
+        }
+
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            vertical-align: top;
+        }
+
+        .table-responsive {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Links na tabela */
         .orgao-link {
             color: #006a82;
             text-decoration: none;
             font-weight: 400;
             cursor: pointer;
         }
-        .orgao-link:hover { color: var(--accent-red); 
-        text-decoration: underline; }
 
-        /* ==================== SORTABLE HEADERS ==================== */
+        .orgao-link:hover {
+            color: var(--accent-red);
+            text-decoration: underline;
+        }
+
+        .nome-link {
+            color: #006a82 !important;
+            text-decoration: none !important;
+            font-weight: 400;
+        }
+
+        .nome-link:hover {
+            color: #b93c42 !important;
+            text-decoration: underline !important;
+        }
+
+
+        /* ============================================================
+           10. CABEÇALHOS ORDENÁVEIS
+        ============================================================ */
         .sortable-header {
             cursor: pointer;
             position: relative;
             padding-right: 25px !important;
         }
-        
+
         .sortable-header:hover {
             background-color: #2a4a6e !important;
         }
-        
+
         .sortable-header i {
-            font-size: 18px;
+            font-size: 14px;
             position: absolute;
             right: 5px;
             top: 50%;
@@ -456,110 +638,145 @@
             opacity: 0.8;
         }
 
-        /* ==================== BOTÕES ==================== */
-        .btn-primary-custom, .btn-pesquisa {
+
+        /* ============================================================
+           11. BOTÕES
+        ============================================================ */
+        .btn-primary-custom,
+        .btn-pesquisa {
             background: linear-gradient(to right, #20445d, #20445d);
             border: none;
-            padding: 10px 20px;
+            padding: 0 16px;
             font-weight: 600;
             border-radius: 6px;
             transition: all 0.3s ease;
-            font-size: 18px;
+            font-size: 14px;
             color: white;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 3px;
             cursor: pointer;
-            height: 42px;
-            white-space: nowrap;
+            height: 32px;
+	    min-width: unset; 
+    	    white-space: nowrap;
+    	    justify-content: flex-start;
         }
-        .btn-primary-custom:hover, .btn-pesquisa:hover {
+
+        .btn-primary-custom:hover,
+        .btn-pesquisa:hover {
             background: linear-gradient(to right, var(--accent-red), #a32c32);
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(185, 60, 66, 0.2);
             color: white;
         }
-        
+
         .btn-secondary-custom {
             background: white;
             border: 2px solid var(--primary-darker);
             color: var(--primary-darker);
-            padding: 10px 20px;
+            padding: 0 16px;
             font-weight: 600;
-            font-size: 18px;
+            font-size: 14px;
             border-radius: 6px;
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 3px;
             cursor: pointer;
-            height: 42px;
+            height: 32px;
             white-space: nowrap;
             text-decoration: none !important;
         }
+
         .btn-secondary-custom:hover {
-            background-color: #132837  !important;
+            background-color: #132837 !important;
             color: white !important;
             border-color: #132837 !important;
         }
-        
-      .btn-export {
-    appearance: none;
-    -webkit-appearance: none;
 
-    background: transparent !important;
-    border: 1px solid #d6dee6;
-    color: #1a3a5c;
-    padding: 2px 10px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
+        .btn-export {
+            appearance: none;
+            -webkit-appearance: none;
+            background: transparent !important;
+            border: 1px solid #d6dee6;
+            color: #1a3a5c;
+            padding: 0 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            height: 32px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    height: 28px;
+        .btn-export i {
+            font-size: 14px !important;
+        }
 
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-export i {
-    font-size: 14px !important;
-}
-button.btn-export:hover {
-    background-color: #1a3a5c !important; /* azul */
-    border-color: #1a3a5c !important;
-    color: #ffffff !important; /* texto branco */
-}
+        button.btn-export:hover {
+            background-color: #1a3a5c !important;
+            border-color: #1a3a5c !important;
+            color: #ffffff !important;
+        }
 
         .btn-action {
-    padding: 6px;
-    border-radius: 8px;
-    border: 1.5px solid #1a3a5c;
-    background-color: #ffffff;
-    color: #1a3a5c;
+            padding: 6px;
+            border-radius: 8px;
+            border: 1.5px solid #1a3a5c;
+            background-color: #ffffff;
+            color: #1a3a5c;
+            width: 34px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
 
-    width: 34px;
-    height: 34px;
+        .btn-action:hover {
+            background-color: #1a3a5c;
+            color: #ffffff;
+        }
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+        /* Botão "Voltar ao topo" */
+        #btnTopo {
+            background: #eeeff5;
+            color: #1a3a5c;
+            border: 1px solid #d6dee6;
+            border-radius: 12px;
+            padding: 0 16px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
 
-    transition: all 0.2s ease;
-}
-       .btn-action:hover {
-    background-color: #1a3a5c;
-    color: #ffffff;
-}
+        #btnTopo:hover {
+            background-color: #1a3a5c;
+            color: #ffffff;
+            border-color: #1a3a5c;
+        }
+	
+	.consulta-buttons-row .btn-pesquisa {
+    	    min-width: unset !important;
+	}
 
-        /* ==================== BOTÃO COMPARTILHAR ==================== */
+
+        /* ============================================================
+           12. DROPDOWN DE COMPARTILHAMENTO
+        ============================================================ */
         .share-dropdown {
             position: relative;
             display: inline-block;
         }
-        
+
         .share-options {
             display: none;
             position: absolute;
@@ -574,9 +791,9 @@ button.btn-export:hover {
             border: 1px solid #dee2e6;
             margin-top: 5px;
         }
-        
+
         .share-options.show { display: block; }
-        
+
         .share-options a {
             display: flex;
             align-items: center;
@@ -589,54 +806,55 @@ button.btn-export:hover {
             cursor: pointer;
             text-decoration: none;
         }
-        .share-options a:hover { background-color: var(--background-light); color: var(--accent-red); }
-        .share-options a i { font-size: 18px; width: 20px; text-align: center; }
 
-        /* ==================== BUSCA NA TABELA ==================== */
+        .share-options a:hover {
+            background-color: var(--background-light);
+            color: var(--accent-red);
+        }
+
+        .share-options a i {
+            font-size: 14px;
+            width: 20px;
+            text-align: center;
+        }
+
+
+        /* ============================================================
+           13. BUSCA NA TABELA
+        ============================================================ */
         .table-search-container {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            background: #ffffff;
+            border: 1px solid #d6dee6;
+            border-radius: 8px;
+            padding: 6px 12px;
+            height: 42px;
+        }
 
-    background: white;
-    border: 1px solid #d6dee6;
-    border-radius: 10px;
-    padding: 2px 10px;
-}
-        
-       .table-search-container {
-    display: flex;
-    align-items: center;
+        .table-search-container:hover {
+            border-color: #1a3a5c;
+            background: #ffffff;
+        }
 
-    background: #ffffff;
-    border: 1px solid #d6dee6;
-    border-radius: 8px;
+        .table-search-input {
+            border: none !important;
+            outline: none;
+            background: transparent;
+            font-size: 13px;
+            width: 200px;
+            color: #1a3a5c;
+        }
 
-    padding: 6px 12px;
-    height: 42px;
-}
+        .table-search-input::placeholder {
+            color: #94a3b8;
+        }
 
-.table-search-input {
-    border: none !important;
-    outline: none;
-    background: transparent;
 
-    font-size: 13px;
-    width: 200px;
-    color: #1a3a5c;
-}
-
-.table-search-input::placeholder {
-    color: #94a3b8;
-}
-
-.table-search-container:hover {
-    border-color: #1a3a5c;
-    background: #ffffff;
-}
-                
-
-        /* ==================== NAVEGAÇÃO ==================== */
+        /* ============================================================
+           14. NAVEGAÇÃO (abas)
+        ============================================================ */
         .nav-tabs-container {
             background: transparent;
             padding: 10px 0;
@@ -644,7 +862,7 @@ button.btn-export:hover {
             margin-bottom: 15px;
             width: 100%;
         }
-        
+
         .nav-tabs {
             border: none !important;
             gap: 10px;
@@ -657,7 +875,7 @@ button.btn-export:hover {
             border-radius: 10px !important;
             padding: 8px 18px !important;
             font-weight: 500;
-            font-size: 18px;
+            font-size: 14px;
             color: #1a3a5c !important;
             display: inline-flex !important;
             align-items: center;
@@ -676,24 +894,29 @@ button.btn-export:hover {
         }
 
         .nav-tabs .material-icons {
-            font-size: 18px !important;
+            font-size: 14px !important;
         }
-        .container{
-    max-width: 85% !important;
-}
 
-        /* ==================== MODAL ==================== */
+
+        /* ============================================================
+           15. MODAL
+        ============================================================ */
+        .modal-full-custom {
+            max-width: 80% !important;
+            width: 80% !important;
+        }
+
         .modal-creative .modal-header {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
             color: white !important;
-            padding: 20px 30px;
+            padding: 15px;
             border-bottom: none;
         }
 
         .modal-creative .modal-header .modal-title {
             color: white !important;
             font-weight: 600;
-            font-size: 1.25rem;
+            font-size: 14px;
         }
 
         .modal-creative .modal-header .modal-title i {
@@ -708,22 +931,43 @@ button.btn-export:hover {
         .modal-creative .modal-header .btn-close:hover {
             opacity: 0.8;
         }
-        
+
+        /* Cards de informação no modal */
         .info-card {
             background: white;
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border-left: none;
             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border-left: none;
             margin-bottom: 15px;
         }
-        .info-card.primary { border-left-color: var(--primary-dark); }
-        .info-label { font-size: 11px; text-transform: uppercase; color: #6c757d; font-weight: 600; margin-bottom: 5px; }
-        .info-value { font-size: 14px; font-weight: 600; color: var(--primary-dark); word-break: break-word; }
-        .info-value.highlight { font-size: 18px; color: var(--accent-red); }
 
-        /* ==================== PAGINAÇÃO ==================== */
+        .info-card.primary { border-left-color: var(--primary-dark); }
+
+        .info-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            word-break: break-word;
+        }
+
+        .info-value.highlight {
+            font-size: 13px;
+            color: var(--accent-red);
+        }
+
+
+        /* ============================================================
+           16. PAGINAÇÃO
+        ============================================================ */
         .pagination-container {
             display: flex;
             justify-content: space-between;
@@ -733,77 +977,58 @@ button.btn-export:hover {
             border-top: 1px solid #dee2e6;
             width: 100%;
         }
-        
+
         .pagination-info {
             font-size: 13px;
             color: #6c757d;
         }
-        
+
         .pagination .page-link {
             color: var(--primary-dark);
             border-color: #dee2e6;
         }
+
         .pagination .page-link:hover {
             color: var(--accent-red);
             background-color: #f8f9fa;
             border-color: #dee2e6;
         }
+
         .pagination .page-item.active .page-link {
             background-color: var(--primary-dark);
             border-color: var(--primary-dark);
             color: white;
         }
-        
+
         .items-per-page {
-    height: 38px;
-    min-width: 80px;
-
-    border-radius: 10px;
-    border: 1px solid #d6dee6;
-
-    padding: 6px 30px 6px 10px;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    color: #1a3a5c;
-    background-color: #ffffff;
-
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    cursor: pointer;
-
-    background-image: url("data:image/svg+xml;utf8,<svg fill='%231a3a5c' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-}
-        .items-per-page option {
-    font-size: 14px;
-}
-        
-
-        /* ==================== INDICADOR DE CARREGAMENTO ==================== */
-        .loading-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--primary-dark);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 13px;
+            height: 38px;
+            min-width: 80px;
+            border-radius: 10px;
+            border: 1px solid #d6dee6;
+            padding: 6px 30px 6px 10px;
+            font-size: 14px;
             font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            display: none;
-            align-items: center;
-            gap: 10px;
-            z-index: 9999;
+            color: #1a3a5c;
+            background-color: #ffffff;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='%231a3a5c' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
         }
 
-        .loading-indicator.show {
-            display: flex;
+        .items-per-page option {
+            font-size: 14px;
+        }
+
+
+        /* ============================================================
+           17. INDICADOR DE CARREGAMENTO
+        ============================================================ */
+        .loading-indicator {
+            display: none !important;
         }
 
         .spinner-small {
@@ -819,111 +1044,58 @@ button.btn-export:hover {
             to { transform: rotate(360deg); }
         }
 
-        /* ==================== METADADOS ==================== */
+
+        /* ============================================================
+           18. METADADOS E INFORMAÇÕES AUXILIARES
+        ============================================================ */
         .metadata-card {
             background: white;
             border-radius: 8px;
             padding: 20px;
             margin-top: 20px;
-            border-left: 4px solid var(--info-blue);
         }
-        .metadata-item { 
-            font-size: 13px; 
-            padding: 8px 0; 
-            border-bottom: 1px dashed #eee; 
+
+        .metadata-item {
+            font-size: 13px;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
         }
-        .metadata-item strong { 
-            color: var(--primary-dark); 
-            width: 180px; 
-            display: inline-block; 
+
+        .metadata-item strong {
+            color: var(--primary-dark);
+            width: 180px;
+            display: inline-block;
         }
-        
-        .table-bordered {
-            border: 1px solid #dee2e6;
-            width: 100%;
-        }
-        
-        .table-bordered th,
-        .table-bordered td {
-            border: 1px solid #dee2e6;
-            padding: 12px;
-            vertical-align: top;
-        }
-        
-        .table thead th {
-            background-color: #54697b !important;
-            color: white !important;
-            font-weight: 600;
-            font-size: 15px;
-            padding: 12px 10px;
-            text-transform: uppercase;
-           border: 1px solid #d6dee6;
-        }
-        
-        .table tbody tr {
-            background-color: #ffffff;
-        }
-        
-        .table tbody tr:hover {
-             background-color: #f0f4f8;
-          }
-        
-        .table tbody td {
-           padding: 12px 10px;
-           border-bottom: 1px solid #e5e9ef;
-        }
-        
-        .fw-bold {
-            font-weight: 700;
-        }
-        
-        .mb-3 {
-            margin-bottom: 1rem;
-        }
-        
-        .mt-4 {
-            margin-top: 2rem;
-        }
-        
-        .me-2 {
-            margin-right: 0.5rem;
-        }
-        
-        .material-icons {
-            font-size: 20px;
-            vertical-align: middle;
-        }
-        
-        .table-responsive {
-            display: block;
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        
+
         h5 {
             font-size: 1.25rem;
             color: var(--primary-dark);
-            border-bottom: 2px solid var(--info-blue);
             padding-bottom: 10px;
         }
 
-        .modern-select {
-            border: 1.5px solid #dfe5ec !important;
-            border-radius: 8px !important;
-            padding: 10px 12px !important;
-            font-size: 16px !important;
-            height: 48px !important;       
-            line-height: 1.5 !important;
-            background-color: #fff;
-            transition: all 0.2s ease;
-            width: 100%;
+        .info-icon {
+            font-size: 14px;
+            color: white;
+            background-color: #1a3a5c;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
         }
-        .modern-select:focus {
-            border-color: #1a3a5c !important;
-            box-shadow: 0 0 0 2px rgba(26,58,92,0.1);
-        }
-        
+
+        /* Utilitários Bootstrap sobrescritos */
+        .fw-bold  { font-weight: 700; }
+        .mb-3     { margin-bottom: 1rem; }
+        .mt-4     { margin-top: 2rem; }
+        .me-2     { margin-right: 0.5rem; }
+
+
+        /* ============================================================
+           19. TOOLTIPS
+        ============================================================ */
         .tooltip-inner {
             background-color: #2f3b45 !important;
             color: #fff;
@@ -933,367 +1105,226 @@ button.btn-export:hover {
             max-width: 250px;
         }
 
-        .tooltip.bs-tooltip-top .tooltip-arrow::before {
-            border-top-color: #2f3b45 !important;
-        }
+        .tooltip.bs-tooltip-top    .tooltip-arrow::before { border-top-color:    #2f3b45 !important; }
+        .tooltip.bs-tooltip-bottom .tooltip-arrow::before { border-bottom-color: #2f3b45 !important; }
+        .tooltip.bs-tooltip-start  .tooltip-arrow::before { border-left-color:   #2f3b45 !important; }
+        .tooltip.bs-tooltip-end    .tooltip-arrow::before { border-right-color:  #2f3b45 !important; }
 
-        .tooltip.bs-tooltip-bottom .tooltip-arrow::before {
-            border-bottom-color: #2f3b45 !important;
-        }
 
-        .tooltip.bs-tooltip-start .tooltip-arrow::before {
-            border-left-color: #2f3b45 !important;
-        }
-
-        .tooltip.bs-tooltip-end .tooltip-arrow::before {
-            border-right-color: #2f3b45 !important;
-        }    
-        
-        .info-icon {
-            font-size: 18px;
-            color: white;
-            background-color: #1a3a5c;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            display: inline-flex;
+        /* ============================================================
+           20. TOAST DE SUCESSO
+        ============================================================ */
+        .toast-sucesso {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e6f4ea;
+            color: #1e4620;
+            border-radius: 12px;
+            padding: 14px 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: none;
             align-items: center;
             justify-content: center;
-            line-height: 1; 
-        }
-        
-        /* ==================== FILTROS LAYOUT ==================== */
-        .filters-row {
-            display: flex;
-            gap: 15px;
-            width: 100%;
-            flex-wrap: nowrap;
-        }
-        
-        .filter-group {
-            flex: 1;
-        }
-        
-        .filter-buttons-group {
-            display: flex;
             gap: 10px;
-            flex-wrap: wrap;
-            align-items: center;
-            margin-left: auto;
-        }
-        
-        .consulta-filters-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            width: 100%;
-        }
-        
-        .consulta-filter-group {
-            flex: 1 1 calc(33.333% - 15px);
+            z-index: 9999;
             min-width: 250px;
         }
-        
-        .consulta-buttons-row {
+
+        .toast-content {
             display: flex;
-            gap: 10px;
+            align-items: center;
+            justify-content: center;
             width: 100%;
-            margin-top: 15px;
-            justify-content: flex-start;
+            text-align: center;
+            gap: 10px;
         }
-        
-        .consulta-buttons-row .btn-pesquisa,
-        .consulta-buttons-row .btn-secondary-custom {
-            min-width: 150px;
+
+        .toast-content i {
+            color: #28a745;
+            font-size: 14px;
         }
-        
-        /* ==================== RESPONSIVIDADE ==================== */
+
+        .toast-close {
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+
+        /* ============================================================
+           21. RESPONSIVIDADE
+        ============================================================ */
         @media (max-width: 1200px) {
             .consulta-filter-group {
                 flex: 1 1 calc(50% - 15px);
             }
         }
-        
+
         @media (max-width: 992px) {
-            .container-fluid {
-                padding: 0 15px;
-            }
-            
+            .container-fluid,
             .dashboard-container {
                 padding: 0 15px;
             }
         }
-        
+
         @media (max-width: 768px) {
             .filters-row {
                 flex-direction: column;
                 align-items: stretch;
             }
-                  
+
             .filter-buttons-group {
                 margin-left: 0;
                 width: 100%;
                 justify-content: stretch;
             }
-            
-            .filter-buttons-group button {
-                flex: 1;
-            }
-            
-            .consulta-filter-group {
-                flex: 1 1 100%;
-            }
-            
+
+            .filter-buttons-group button,
             .consulta-buttons-row button {
                 flex: 1;
             }
-            
+
+            .consulta-filter-group {
+                flex: 1 1 100%;
+            }
+
             .d-flex.justify-content-between {
                 flex-direction: column;
                 gap: 15px;
                 align-items: flex-start !important;
             }
-            
+
             .d-flex.gap-2 {
                 flex-wrap: wrap;
             }
-            
+
             .table-search-input {
                 width: 100% !important;
             }
         }
 
-        /* Classe para quando o iframe precisar de altura automática */
-        .iframe-mode {
-            overflow: visible !important;
-        }
-        .botoes-abaixo {
-    margin-top: 15px;
-    display: flex;
-    gap: 10px;
-}
-        .filters-row .filter-group {
-    width: auto !important;
-}
-        /* Fonte global */
-body, 
-button, 
-input, 
-select, 
-textarea, 
-span, 
-div {
-    font-family: 'Montserrat', sans-serif !important;
-}
-
-/* 🔥 NÃO ALTERAR ÍCONES */
-.material-icons {
-    font-family: 'Material Icons' !important;
-}
-        /* 🔵 ARREDONDAR TOPO DA TABELA */
-.table thead th:first-child {
-    border-top-left-radius: 8px;
-}
-
-.table thead th:last-child {
-    border-top-right-radius: 8px;
-}
-#btnTopo {
-    background: #eeeff5;
-    color: #1a3a5c;
-
-    border: 1px solid #d6dee6;
-    border-radius: 12px;
-
-    padding: 10px 16px;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    display: inline-flex;
-
-    align-items: center;
-    gap: 6px;
-
-    cursor: pointer;
-
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-}
-
-#btnTopo:hover {
-    background-color: #1a3a5c;
-    color: #ffffff;
-    border-color: #1a3a5c;
-}
-
-        .loading-indicator {
-    display: none !important;
-}
-        .nome-link {
-    color: #006a82 !important;
-    text-decoration: none !important;
-    font-weight: 400;
-}
-
-.nome-link:hover {
-    color: #b93c42 !important;
-    text-decoration: underline !important;
-}
-.modal-full-custom {
-    max-width: 80% !important;
-    width: 80% !important;
-}
-/* 🔥 FIXAR TOTAL GERAL CORRETAMENTE */
-.table tfoot {
-    position: sticky;
-    bottom: 0;
-    z-index: 20;
-}
-
-.table tfoot tr {
-    background-color: #dfe3e8 !important;
-    box-shadow: nome;
-}
-
-.table tfoot td {
-    background-color: #dfe3e8 !important;
-    font-weight: 700;
-}
-.table-search-container {
-    display: flex;
-    align-items: center;
-    white-space: nowrap;   /* 🔥 evita quebrar */
-}
-
-.table-badge {
-    white-space: nowrap;   /* 🔥 mantém "58 órgãos" na mesma linha */
-    
-}
-.toast-sucesso {
-    position: fixed;
-
-    bottom: 30px;          /* 🔥 fica embaixo */
-    left: 50%;             
-    transform: translateX(-50%); /* 🔥 centraliza horizontal */
-
-    background: #e6f4ea;
-    color: #1e4620;
-
-    border-radius: 12px;
-    padding: 14px 20px;
-
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 10px;
-    z-index: 9999;
-
-    min-width: 250px;
-}
-
-.toast-content {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* 🔥 centraliza conteúdo */
-
-    width: 100%;
-    text-align: center;
-
-    gap: 10px;
-}
-
-.toast-content i {
-    color: #28a745;
-    font-size: 22px;
-}
-
-.toast-close {
-    cursor: pointer;
-    font-size: 18px;
-    margin-left: 10px;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
     </style>
 </head>
 <body class="iframe-mode">
 
+<!-- ============================================================
+     ESTRUTURA PRINCIPAL
+============================================================ -->
 <div class="main-container">
-    <div class="container-fluid dashboard-container">          
-        <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
+    <div class="container-fluid dashboard-container">
+
+        <!-- Navegação por abas -->
         <div class="nav-tabs-container">
             <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
-                <li class="nav-item"><button class="nav-link active" id="visao-geral-tab" data-bs-toggle="tab" data-bs-target="#visao-geral"><i class="material-icons">bar_chart</i>Visão Geral</button></li>
-                <li class="nav-item"><button class="nav-link" id="consulta-tab" data-bs-toggle="tab" data-bs-target="#consulta"><i class="material-icons">person</i>Consulta Individual</button></li>
-                <li class="nav-item"><button class="nav-link" id="downloads-tab" data-bs-toggle="tab" data-bs-target="#downloads"><i class="material-icons">download</i>Downloads</button></li>
+                <li class="nav-item">
+                    <button class="nav-link active" id="visao-geral-tab"
+                        data-bs-toggle="tab" data-bs-target="#visao-geral">
+                        <i class="material-icons">bar_chart</i>Visão Geral
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="consulta-tab"
+                        data-bs-toggle="tab" data-bs-target="#consulta">
+                        <i class="material-icons">person</i>Consulta Individual
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="downloads-tab"
+                        data-bs-toggle="tab" data-bs-target="#downloads">
+                        <i class="material-icons">download</i>Downloads
+                    </button>
+                </li>
             </ul>
         </div>
 
-        <!-- ==================== DATA DE ATUALIZAÇÃO ==================== -->
+        <!-- Data de atualização -->
         <div class="data-atualizacao-container">
             <div class="data-atualizacao-box">
                 Data de atualização:<span id="data-atualizacao-header"></span>
             </div>
         </div>
 
-        <!-- ==================== CONTEÚDO DAS ABAS ==================== -->
+        <!-- Conteúdo das abas (renderizado via JS) -->
         <div class="tab-content" id="dashboardTabsContent">
-            <!-- ABA 1: VISÃO GERAL -->
             <div class="tab-pane fade show active" id="visao-geral" role="tabpanel">
                 <div id="visao-geral-content"></div>
             </div>
-            <!-- ABA 2: CONSULTA INDIVIDUAL -->
             <div class="tab-pane fade" id="consulta" role="tabpanel">
                 <div id="consulta-content"></div>
             </div>
-            <!-- ABA 3: DOWNLOADS -->
             <div class="tab-pane fade" id="downloads" role="tabpanel">
                 <div id="downloads-content"></div>
             </div>
         </div>
+
     </div>
 </div>
 
-<!-- ==================== MODAL DE DETALHES ==================== -->
+
+<!-- ============================================================
+     MODAL DE DETALHES DO EMPREGADO
+============================================================ -->
 <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-full-custom modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content modal-creative">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="material-icons me-2">person</i> Histórico do Empregado</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">
+                    <i class="material-icons"></i>Informações e Histórico
+                </h5>
+                <button type="button" class="btn-close btn-close-white"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="modalContent"></div>
             <div class="modal-footer">
-                <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal"><i class="material-icons me-2">close</i>Fechar</button>
+                <button type="button" class="btn-export" id="modalBtnPDF"
+                    onclick="if(window._modalEmp){exportarModalPDF(window._modalEmp.matricula, window._modalEmp.nome)}">
+                    <i class="material-icons">print</i> PDF
+                </button>
+                <button type="button" class="btn-export" id="modalBtnCSV"
+                    onclick="if(window._modalEmp){exportarModalCSV(window._modalEmp.matricula, window._modalEmp.nome)}">
+                    <i class="material-icons">description</i> CSV
+                </button>
+                <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal">
+                    <i class="material-icons me-2">close</i>Fechar
+                </button>
             </div>
         </div>
     </div>
 </div>
 
 
-<!-- ==================== SCRIPTS ==================== -->
+<!-- ============================================================
+     TOAST DE LINK COPIADO
+============================================================ -->
+<div id="toastSucesso" class="toast-sucesso">
+    <div class="toast-content">
+        <i class="material-icons">check_circle</i>
+        <span>Sucesso!<br>Link copiado para área de transferência</span>
+    </div>
+    <span class="toast-close" onclick="fecharToast()">✖</span>
+</div>
+
+
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // ============================================
-    // CONFIGURAÇÕES E VARIÁVEIS GLOBAIS
-    // ============================================
+
+    // ============================================================
+    // 1. CONFIGURAÇÕES E VARIÁVEIS GLOBAIS
+    // ============================================================
+
     const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/transparencia-mg/portal_empregados_terceirizados/refs/heads/main/dataset/data/';
-    
+
     const CSV_FILES_BY_YEAR = {
         '2021': 'terceirizados_2021.csv',
         '2022': 'terceirizados_2022.csv',
@@ -1303,90 +1334,76 @@ div {
         '2026': 'terceirizados_2026.csv'
     };
 
-    // Cache de dados por ano e mês
-    const dataCache = {
-        '2026': {}  // Inicializa cache para 2026
-    };
+    // Cache de dados por ano/mês
+    const dataCache = { '2026': {} };
 
+    // Estado atual de exibição
     let currentDisplayData = {
         ano: '2026',
         mes: '01',
-        dados: [],          // Dados completos do mês atual
+        dados: [],
         metrica: {
             totalEmpregados: 0,
             totalOrgaos: 0,
             totalEmpresas: 0,
             periodo: 'Janeiro/2026'
         },
-        empregadosUnicos: [] // Lista única de empregados para consulta
+        empregadosUnicos: []
     };
 
-    // Variáveis de estado para UI
-    let paginaAtualCI = 1;
-    let itensPorPaginaCI = 100;
-    let dadosOrgaoGlobal = [];
+    // Estado de UI
+    let paginaAtualCI     = 1;
+    let itensPorPaginaCI  = 100;
+    let dadosOrgaoGlobal  = [];
     let empregadosFiltradosCI = [];
-    let filtrosAtivosCI = {
-        nome: '',
-        matricula: '',
-        cargo: '',
-        buscaTabela: ''
-    };
-    let paginaAtualVG = 1;
-    let itensPorPaginaVG = 100;
+    let filtrosAtivosCI = { nome: '', matricula: '', cargo: '', buscaTabela: '' };
+    let paginaAtualVG     = 1;
+    let itensPorPaginaVG  = 100;
 
     // Cache de opções para autocomplete
-    let opcoesCache = {
-        nomes: [],
-        matriculas: [],
-        cargos: [],
-        orgaos: []
-    };
+    let opcoesCache = { nomes: [], matriculas: [], cargos: [], orgaos: [] };
 
     // Estado de ordenação
-    let sortConfig = {
-        coluna: '',
-        direcao: 'asc'
-    };
+    let sortConfig = { coluna: '', direcao: 'asc' };
 
+    // Constantes de formatação
     const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
     const monthNames = {
-        '01': 'Janeiro', '02': 'Fevereiro', '03': 'Março',
-        '04': 'Abril', '05': 'Maio', '06': 'Junho',
-        '07': 'Julho', '08': 'Agosto', '09': 'Setembro',
-        '10': 'Outubro', '11': 'Novembro', '12': 'Dezembro'
+        '01': 'Janeiro',  '02': 'Fevereiro', '03': 'Março',
+        '04': 'Abril',    '05': 'Maio',       '06': 'Junho',
+        '07': 'Julho',    '08': 'Agosto',     '09': 'Setembro',
+        '10': 'Outubro',  '11': 'Novembro',   '12': 'Dezembro'
     };
-  const chartPalette = [
-    '#2f4b63', // azul escuro (principal)
-    '#39a585', // verde
-    '#5f6f7f', // cinza médio
-    '#f28c28', // laranja
-    '#7aa6c2', 
-    '#8e44ad' // azul claro
-];
 
-    // ============================================
-    // FUNÇÕES DE INICIALIZAÇÃO
-    // ============================================
-    document.addEventListener('DOMContentLoaded', function() {
-    setupEventListeners();
-    carregarDadosIniciais();
-    setupAtualizacaoData();
-    
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
-    
-    setTimeout(() => {
-        iframeUpdateHeight();
-    }, 500);
+    const chartPalette = [
+        '#2f4b63',  // azul escuro
+        '#39a585',  // verde
+        '#5f6f7f',  // cinza médio
+        '#f28c28',  // laranja
+        '#7aa6c2',  // azul claro
+        '#8e44ad'   // roxo
+    ];
 
-           
+
+    // ============================================================
+    // 2. INICIALIZAÇÃO
+    // ============================================================
+
+    document.addEventListener('DOMContentLoaded', function () {
+        setupEventListeners();
+        carregarDadosIniciais();
+        setupAtualizacaoData();
+
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+
+        setTimeout(() => { iframeUpdateHeight(); }, 500);
+
         window.addEventListener('resize', () => {
             clearTimeout(window.resizeTimer);
             window.resizeTimer = setTimeout(iframeUpdateHeight, 250);
         });
-        
-        // Observa mudanças nas abas
+
         document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
             tab.addEventListener('shown.bs.tab', () => {
                 setTimeout(iframeUpdateHeight, 300);
@@ -1394,15 +1411,15 @@ div {
         });
     });
 
-    // ==================== FUNÇÃO CORRIGIDA DO IFRAME ====================
+
+    // ============================================================
+    // 3. IFRAME — COMUNICAÇÃO DE ALTURA COM A PÁGINA PAI
+    // ============================================================
+
     function iframeUpdateHeight() {
-        // Remove qualquer manipulação que cause flicker
-        // Não esconder o body!
-        
         const html = document.documentElement;
         const body = document.body;
-        
-        // Calcula a altura real
+
         const scrollHeight = Math.max(
             body.scrollHeight,
             html.scrollHeight,
@@ -1410,16 +1427,12 @@ div {
             html.offsetHeight,
             document.querySelector('.main-container')?.scrollHeight || 0
         );
-        
-        // Altura final com margem mínima
+
         const finalHeight = scrollHeight + 2;
-        
-        console.log('Altura do iframe:', finalHeight);
-        
+
         try {
-            // Tenta enviar para a página pai
             if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ 
+                window.parent.postMessage({
                     iframeHeight: finalHeight,
                     height: finalHeight,
                     type: 'resize'
@@ -1428,57 +1441,65 @@ div {
         } catch (error) {
             // Ignora erros de cross-origin
         }
-        
+
         return finalHeight;
     }
 
+
+    // ============================================================
+    // 4. DATA DE ATUALIZAÇÃO (via GitHub API)
+    // ============================================================
+
     async function setupAtualizacaoData() {
-    const elementoData = document.getElementById('data-atualizacao-header');
+        const elementoData = document.getElementById('data-atualizacao-header');
 
-    try {
-        const response = await fetch(
-            'https://api.github.com/repos/transparencia-mg/portal_empregados_terceirizados/commits?path=dataset/data'
-        );
+        try {
+            const response = await fetch(
+                'https://api.github.com/repos/transparencia-mg/portal_empregados_terceirizados/commits?path=dataset/data'
+            );
+            const data = await response.json();
 
-        const data = await response.json();
-
-        if (data && data.length > 0) {
-            const ultimaAtualizacao = data[0].commit.committer.date;
-
-            const dataFormatada = new Date(ultimaAtualizacao)
-                .toLocaleDateString('pt-BR');
-
-            elementoData.textContent = dataFormatada;
-        } else {
-            elementoData.textContent = 'Não disponível';
+            if (data && data.length > 0) {
+                const ultimaAtualizacao = data[0].commit.committer.date;
+                elementoData.textContent = new Date(ultimaAtualizacao).toLocaleDateString('pt-BR');
+            } else {
+                elementoData.textContent = 'Não disponível';
+            }
+        } catch (erro) {
+            console.error('Erro ao buscar data do GitHub:', erro);
+            elementoData.textContent = 'Erro ao carregar';
         }
-
-    } catch (erro) {
-        console.error('Erro ao buscar data do GitHub:', erro);
-        elementoData.textContent = 'Erro ao carregar';
     }
-}
+
+
+    // ============================================================
+    // 5. EVENT LISTENERS GLOBAIS
+    // ============================================================
 
     function setupEventListeners() {
         window.addEventListener('click', (e) => {
             if (!e.target.closest('.share-dropdown')) {
                 document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
             }
-            
             if (!e.target.closest('.autocomplete-container')) {
                 document.querySelectorAll('.autocomplete-suggestions').forEach(s => s.classList.remove('show'));
             }
         });
     }
 
-   function showLoading(show, message = 'Carregando dados...') {
-    return;
-}
+
+    // ============================================================
+    // 6. FEEDBACK VISUAL (loading e erros)
+    // ============================================================
+
+    function showLoading(show, message = 'Carregando dados...') {
+        return; // Indicador desativado intencionalmente
+    }
 
     function showError(message) {
         const container = document.querySelector('.main-container');
         if (!container) return;
-        
+
         const errorDiv = document.createElement('div');
         errorDiv.className = 'alert alert-danger alert-dismissible fade show';
         errorDiv.innerHTML = `
@@ -1487,80 +1508,64 @@ div {
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         `;
         container.prepend(errorDiv);
-        
-        setTimeout(() => {
-            errorDiv.remove();
-        }, 5000);
+
+        setTimeout(() => { errorDiv.remove(); }, 5000);
     }
 
-    // ============================================
-    // FUNÇÕES AUXILIARES (mantidas iguais)
-    // ============================================
+
+    // ============================================================
+    // 7. FUNÇÕES AUXILIARES DE FORMATAÇÃO
+    // ============================================================
+
     function formatarMesAno(anoMes) {
         if (!anoMes || anoMes.length < 7) return anoMes;
         const partes = anoMes.split('-');
         if (partes.length === 2) {
-            return `${meses[parseInt(partes[1])-1] || partes[1]}/${partes[0]}`;
+            return `${meses[parseInt(partes[1]) - 1] || partes[1]}/${partes[0]}`;
         }
         return anoMes;
     }
-    function formatarMesAno(anoMes) {
-    if (!anoMes || anoMes.length < 7) return anoMes;
-    const partes = anoMes.split('-');
-    if (partes.length === 2) {
-        return `${meses[parseInt(partes[1])-1] || partes[1]}/${partes[0]}`;
-    }
-    return anoMes;
-}
 
-// 🔥 COLE AQUI
-function formatarData(data) {
-    if (!data) return '';
-
-    const partes = data.split('-');
-
-   if (partes.length >= 2) {
-        return `${partes[1]}/${partes[0]}`;
+    function formatarData(data) {
+        if (!data) return '';
+        const partes = data.split('-');
+        if (partes.length >= 2) return `${partes[1]}/${partes[0]}`;
+        return data;
     }
 
-    return data;
-}
     function formatarLinha(linha, year, mes) {
         let competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
-        
-        if (!competencia && year && mes) {
-            competencia = `${year}-${mes}`;
-        }
+        if (!competencia && year && mes) competencia = `${year}-${mes}`;
 
-        const sigla = linha['sigla'] || linha['SIGLA'] || '';
-        const orgaoNome = linha['orgao'] || linha['ÓRGÃO'] || linha['Orgao'] || sigla || '';
-        
+        const sigla     = linha['sigla']  || linha['SIGLA'] || '';
+        const orgaoNome = linha['orgao']  || linha['ÓRGÃO'] || linha['Orgao'] || sigla || '';
+
         return {
-            matricula: linha['matricula'] || linha['MAT'] || linha['Matrícula'] || linha['mat'] || '',
-            nome: linha['nome'] || linha['NOME'] || linha['Nome'] || '',
-            orgao_sigla: sigla,
-            orgao: orgaoNome,
-            cargo_descricao: linha['cargo'] || linha['CARGO'] || linha['Cargo'] || '',
-            empresa: linha['empresa'] || linha['EMPRESA'] || linha['Empresa'] || '',
-            cnpj_empresa: linha['cnpj_empresa'] || linha['CNPJ EMPRESA'] || linha['cnpj'] || linha['CNPJ'] || '',
-            mes_referencia: competencia,
-            ano_mes: competencia,
-            ANO: year,
-            MES_NUM: mes
+            matricula:       linha['matricula'] || linha['MAT'] || linha['Matrícula'] || linha['mat'] || '',
+            nome:            linha['nome']      || linha['NOME'] || linha['Nome'] || '',
+            orgao_sigla:     sigla,
+            orgao:           orgaoNome,
+            cargo_descricao: linha['cargo']     || linha['CARGO'] || linha['Cargo'] || '',
+            empresa:         linha['empresa']   || linha['EMPRESA'] || linha['Empresa'] || '',
+            cnpj_empresa:    linha['cnpj_empresa'] || linha['CNPJ EMPRESA'] || linha['cnpj'] || linha['CNPJ'] || '',
+            mes_referencia:  competencia,
+            ano_mes:         competencia,
+            ANO:             year,
+            MES_NUM:         mes
         };
     }
 
-    // ============================================
-    // FUNÇÃO PRINCIPAL - CARREGA APENAS JANEIRO/2026
-    // ============================================
+
+    // ============================================================
+    // 8. CARREGAMENTO DE DADOS
+    // ============================================================
+
     async function carregarDadosIniciais() {
         showLoading(true, 'Carregando Janeiro/2026...');
-        
+
         try {
-            console.log('🚀 Carregando apenas Janeiro/2026...');
-            
             const url2026 = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR['2026']}`;
-            
+
             const dados2026 = await new Promise((resolve) => {
                 Papa.parse(url2026, {
                     download: true,
@@ -1568,38 +1573,24 @@ function formatarData(data) {
                     skipEmptyLines: true,
                     encoding: 'UTF-8',
                     delimiter: ";",
-                    complete: function(results) {
-                        if (results.data && results.data.length > 0) {
-                            resolve(results.data);
-                        } else {
-                            resolve([]);
-                        }
-                    },
-                    error: function() {
-                        resolve([]);
-                    }
+                    complete: (results) => resolve(results.data?.length > 0 ? results.data : []),
+                    error: () => resolve([])
                 });
             });
-            
-            if (dados2026.length === 0) {
-                throw new Error('Não foi possível carregar os dados de 2026');
-            }
-            
-            // Processa e separa por mês
+
+            if (dados2026.length === 0) throw new Error('Não foi possível carregar os dados de 2026');
+
+            // Separa por mês
             const dadosPorMes = {};
-            
             dados2026.forEach(linha => {
                 let mes = '';
                 const competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
-                
+
                 if (competencia) {
-                    if (competencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                        mes = competencia.split('-')[1];
-                    } else if (competencia.match(/^\d{4}-\d{2}$/)) {
-                        mes = competencia.split('-')[1];
-                    }
+                    if (competencia.match(/^\d{4}-\d{2}-\d{2}$/)) mes = competencia.split('-')[1];
+                    else if (competencia.match(/^\d{4}-\d{2}$/))   mes = competencia.split('-')[1];
                 }
-                
+
                 if (!mes) {
                     for (const key in linha) {
                         if (key.toLowerCase().includes('mes') || key.toLowerCase().includes('mês')) {
@@ -1611,57 +1602,38 @@ function formatarData(data) {
                         }
                     }
                 }
-                
+
                 if (!mes) return;
-                
-                if (!dadosPorMes[mes]) {
-                    dadosPorMes[mes] = [];
-                }
-                
+                if (!dadosPorMes[mes]) dadosPorMes[mes] = [];
                 dadosPorMes[mes].push(formatarLinha(linha, '2026', mes));
             });
-            
-            // Armazena no cache
+
             dataCache['2026'] = dadosPorMes;
-            
-            // Verifica se temos Dezembro
+
+            // Usa o mês com mais dados se dezembro não existir
             if (!dadosPorMes['12'] || dadosPorMes['12'].length === 0) {
-                console.warn('Dezembro não encontrado. Usando o mês com mais dados...');
-                let melhorMes = '12';
-                let maiorQuantidade = 0;
-                
+                let melhorMes = '12', maiorQuantidade = 0;
                 for (const mes in dadosPorMes) {
                     if (dadosPorMes[mes].length > maiorQuantidade) {
                         maiorQuantidade = dadosPorMes[mes].length;
                         melhorMes = mes;
                     }
                 }
-                
                 currentDisplayData.mes = melhorMes;
             }
-            
-            // Atualiza o estado com Dezembro
-            currentDisplayData.dados = dataCache['2026'][currentDisplayData.mes] || [];
-            
-            console.log(`✅ Carregados ${currentDisplayData.dados.length} registros de ${monthNames[currentDisplayData.mes]}/2026`);
-            
-            // Calcula métricas
-            currentDisplayData.metrica = calcularMetricas(currentDisplayData.dados, currentDisplayData.mes);
-            
-            // Gera lista de empregados únicos
+
+            currentDisplayData.dados          = dataCache['2026'][currentDisplayData.mes] || [];
+            currentDisplayData.metrica        = calcularMetricas(currentDisplayData.dados, currentDisplayData.mes);
             currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(currentDisplayData.dados);
-            empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
-            
-            // Atualiza cache de opções
+            empregadosFiltradosCI             = [...currentDisplayData.empregadosUnicos];
+
             atualizarOpcoesCache();
-            
-            // Renderiza
             renderizarVisaoGeral();
             renderizarConsulta();
             renderizarDownloads();
-            
+
             setTimeout(iframeUpdateHeight, 300);
-            
+
         } catch (erro) {
             console.error('Erro no carregamento inicial:', erro);
             showError('Erro ao carregar dados. Tente novamente mais tarde.');
@@ -1670,22 +1642,16 @@ function formatarData(data) {
         }
     }
 
-    // ============================================
-    // FUNÇÃO PARA CARREGAR MÊS SOB DEMANDA
-    // ============================================
     async function carregarMes(ano, mes) {
-        if (dataCache[ano] && dataCache[ano][mes]) {
-            return dataCache[ano][mes];
-        }
-        
+        if (dataCache[ano] && dataCache[ano][mes]) return dataCache[ano][mes];
+
         showLoading(true, `Carregando ${monthNames[mes]}/${ano}...`);
-        
+
         try {
             if (!dataCache[ano]) {
                 dataCache[ano] = {};
-                
+
                 const url = `${GITHUB_BASE_URL}${CSV_FILES_BY_YEAR[ano]}`;
-                
                 const dadosAno = await new Promise((resolve) => {
                     Papa.parse(url, {
                         download: true,
@@ -1693,35 +1659,22 @@ function formatarData(data) {
                         skipEmptyLines: true,
                         encoding: 'UTF-8',
                         delimiter: ";",
-                        complete: function(results) {
-                            if (results.data && results.data.length > 0) {
-                                resolve(results.data);
-                            } else {
-                                resolve([]);
-                            }
-                        },
-                        error: function() {
-                            resolve([]);
-                        }
+                        complete: (results) => resolve(results.data?.length > 0 ? results.data : []),
+                        error: () => resolve([])
                     });
                 });
-                
-                if (dadosAno.length === 0) {
-                    throw new Error(`Não foi possível carregar dados de ${ano}`);
-                }
-                
+
+                if (dadosAno.length === 0) throw new Error(`Não foi possível carregar dados de ${ano}`);
+
                 dadosAno.forEach(linha => {
                     let linhaMes = '';
                     const competencia = linha['mes_referencia'] || linha['MÊS REFERÊNCIA'] || linha['MÊS_REFERENCIA'] || '';
-                    
+
                     if (competencia) {
-                        if (competencia.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                            linhaMes = competencia.split('-')[1];
-                        } else if (competencia.match(/^\d{4}-\d{2}$/)) {
-                            linhaMes = competencia.split('-')[1];
-                        }
+                        if (competencia.match(/^\d{4}-\d{2}-\d{2}$/)) linhaMes = competencia.split('-')[1];
+                        else if (competencia.match(/^\d{4}-\d{2}$/))   linhaMes = competencia.split('-')[1];
                     }
-                    
+
                     if (!linhaMes) {
                         for (const key in linha) {
                             if (key.toLowerCase().includes('mes') || key.toLowerCase().includes('mês')) {
@@ -1733,19 +1686,15 @@ function formatarData(data) {
                             }
                         }
                     }
-                    
+
                     if (!linhaMes) return;
-                    
-                    if (!dataCache[ano][linhaMes]) {
-                        dataCache[ano][linhaMes] = [];
-                    }
-                    
+                    if (!dataCache[ano][linhaMes]) dataCache[ano][linhaMes] = [];
                     dataCache[ano][linhaMes].push(formatarLinha(linha, ano, linhaMes));
                 });
             }
-            
+
             return dataCache[ano][mes] || [];
-            
+
         } catch (erro) {
             console.error(`Erro ao carregar ${ano}/${mes}:`, erro);
             showError(`Erro ao carregar dados de ${monthNames[mes]}/${ano}`);
@@ -1755,42 +1704,39 @@ function formatarData(data) {
         }
     }
 
+
+    // ============================================================
+    // 9. CÁLCULO DE MÉTRICAS E AGRUPAMENTOS
+    // ============================================================
+
     function calcularMetricas(dados, mes) {
         const totalEmpregados = dados.length;
-        const orgaos = new Set(dados.map(i => i.orgao_sigla).filter(Boolean)).size;
+        const orgaos  = new Set(dados.map(i => i.orgao_sigla).filter(Boolean)).size;
         const empresas = new Set(dados.map(i => i.empresa).filter(Boolean)).size;
-        
+
         let periodo = 'Janeiro/2026';
         if (mes && currentDisplayData.ano) {
             periodo = `${monthNames[mes] || 'Dezembro'}/${currentDisplayData.ano}`;
         }
-        
-        return {
-            totalEmpregados,
-            totalOrgaos: orgaos,
-            totalEmpresas: empresas,
-            periodo: periodo
-        };
+
+        return { totalEmpregados, totalOrgaos: orgaos, totalEmpresas: empresas, periodo };
     }
 
     function obterEmpregadosUnicos(dados) {
         if (!dados || dados.length === 0) return [];
-        
         const mapa = new Map();
         for (const i of dados) {
-            if (i.matricula && !mapa.has(i.matricula)) {
-                mapa.set(i.matricula, { ...i });
-            }
+            if (i.matricula && !mapa.has(i.matricula)) mapa.set(i.matricula, { ...i });
         }
         return Array.from(mapa.values()).sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
     }
 
     function atualizarOpcoesCache() {
         if (currentDisplayData.empregadosUnicos.length > 0) {
-            opcoesCache.nomes = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.nome).filter(Boolean))].sort();
+            opcoesCache.nomes     = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.nome).filter(Boolean))].sort();
             opcoesCache.matriculas = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.matricula).filter(Boolean))].sort();
-            opcoesCache.cargos = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.cargo_descricao).filter(Boolean))].sort();
-            opcoesCache.orgaos = [...new Map(
+            opcoesCache.cargos    = [...new Set(currentDisplayData.empregadosUnicos.map(e => e.cargo_descricao).filter(Boolean))].sort();
+            opcoesCache.orgaos    = [...new Map(
                 currentDisplayData.empregadosUnicos
                     .filter(e => e.orgao_sigla)
                     .map(e => [e.orgao_sigla, { sigla: e.orgao_sigla, nome: e.orgao || e.orgao_sigla }])
@@ -1798,23 +1744,59 @@ function formatarData(data) {
         }
     }
 
-    // ============================================
-    // FUNÇÕES DE AUTOCOMPLETE E DROPDOWN COMBINADOS
-    // ============================================
-   function setupCombobox(inputId, suggestionsId, campo, opcoes) {
-    const input = document.getElementById(inputId);
-    const suggestions = document.getElementById(suggestionsId);
+    function agruparPorOrgao(dados) {
+        const mapa = new Map();
+        for (const i of dados) {
+            const sigla = i.orgao_sigla || 'Não informado';
+            if (!mapa.has(sigla)) mapa.set(sigla, { sigla, orgao: i.orgao || sigla, total: 0 });
+            mapa.get(sigla).total += 1;
+        }
+        return Array.from(mapa.values()).sort((a, b) => (a.orgao || '').localeCompare(b.orgao || '', 'pt-BR'));
+    }
 
-    if (!input || !suggestions) return;
+    function agruparPorCargo(dados) {
+        const mapa = new Map();
+        for (const i of dados) {
+            const cargo = i.cargo_descricao || 'Não informado';
+            if (!mapa.has(cargo)) mapa.set(cargo, { cargo, total: 0 });
+            mapa.get(cargo).total += 1;
+        }
+        return Array.from(mapa.values()).sort((a, b) => b.total - a.total);
+    }
 
-    input.addEventListener('input', function() {
-        const valor = this.value.toLowerCase();
 
-        const filtradas = opcoes
-            .filter(op => op.toLowerCase().includes(valor))
-            .slice(0, 20);
+    // ============================================================
+    // 10. AUTOCOMPLETE E COMBOBOX
+    // ============================================================
 
-        suggestions.innerHTML = filtradas.map(op =>
+    function setupCombobox(inputId, suggestionsId, campo, opcoes) {
+        const input       = document.getElementById(inputId);
+        const suggestions = document.getElementById(suggestionsId);
+        if (!input || !suggestions) return;
+
+        input.addEventListener('input', function () {
+            const valor    = this.value.toLowerCase();
+            const filtradas = opcoes.filter(op => op.toLowerCase().includes(valor)).slice(0, 20);
+
+            suggestions.innerHTML = filtradas.map(op =>
+                `<div class="autocomplete-suggestion"
+                    onclick="selecionarSugestao('${inputId}','${campo}','${op.replace(/'/g, "\\'")}')">
+                    ${op}
+                </div>`
+            ).join('');
+
+            suggestions.classList.add('show');
+        });
+    }
+
+    function mostrarSugestoes(inputId, suggestionsId, campo) {
+        const suggestions = document.getElementById(suggestionsId);
+        let opcoes = [];
+        if (campo === 'nome')      opcoes = opcoesCache.nomes;
+        if (campo === 'matricula') opcoes = opcoesCache.matriculas;
+        if (campo === 'cargo')     opcoes = opcoesCache.cargos;
+
+        suggestions.innerHTML = opcoes.slice(0, 20).map(op =>
             `<div class="autocomplete-suggestion"
                 onclick="selecionarSugestao('${inputId}','${campo}','${op.replace(/'/g, "\\'")}')">
                 ${op}
@@ -1822,112 +1804,102 @@ function formatarData(data) {
         ).join('');
 
         suggestions.classList.add('show');
-    });
-}
-function mostrarSugestoes(inputId, suggestionsId, campo) {
-    const suggestions = document.getElementById(suggestionsId);
+    }
 
-    let opcoes = [];
-
-    if (campo === 'nome') opcoes = opcoesCache.nomes;
-    if (campo === 'matricula') opcoes = opcoesCache.matriculas;
-    if (campo === 'cargo') opcoes = opcoesCache.cargos;
-
-    suggestions.innerHTML = opcoes.slice(0, 20).map(op =>
-        `<div class="autocomplete-suggestion"
-            onclick="selecionarSugestao('${inputId}','${campo}','${op.replace(/'/g, "\\'")}')">
-            ${op}
-        </div>`
-    ).join('');
-
-    suggestions.classList.add('show');
-}
-    window.selecionarSugestao = function(inputId, campo, valor) {
+    window.selecionarSugestao = function (inputId, campo, valor) {
         const input = document.getElementById(inputId);
         if (input) {
             input.value = valor;
             filtrosAtivosCI[campo] = valor;
             aplicarTodosFiltrosCI();
         }
-        
         document.querySelectorAll('.autocomplete-suggestions').forEach(s => s.classList.remove('show'));
     };
 
-    // ============================================
-    // FUNÇÕES DE ORDENAÇÃO
-    // ============================================
- window.ordenarTabela = function(coluna, tipo) {
 
-    if (sortConfig.coluna === coluna) {
-        sortConfig.direcao = sortConfig.direcao === 'asc' ? 'desc' : 'asc';
-    } else {
-        sortConfig.coluna = coluna;
-        sortConfig.direcao = 'asc';
+    // ============================================================
+    // 11. ORDENAÇÃO
+    // ============================================================
+
+    window.ordenarTabela = function (coluna, tipo) {
+        if (sortConfig.coluna === coluna) {
+            sortConfig.direcao = sortConfig.direcao === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortConfig.coluna  = coluna;
+            sortConfig.direcao = 'asc';
+        }
+
+        empregadosFiltradosCI.sort((a, b) => {
+            let valorA = a[coluna] || '';
+            let valorB = b[coluna] || '';
+
+            if (tipo === 'number') {
+                valorA = parseFloat(valorA) || 0;
+                valorB = parseFloat(valorB) || 0;
+            } else {
+                valorA = valorA.toString().toLowerCase();
+                valorB = valorB.toString().toLowerCase();
+            }
+
+            if (valorA < valorB) return sortConfig.direcao === 'asc' ? -1 : 1;
+            if (valorA > valorB) return sortConfig.direcao === 'asc' ?  1 : -1;
+            return 0;
+        });
+
+        paginaAtualCI = 1;
+        atualizarTabelaConsulta();
+    };
+
+    function ordenarDadosVG(dados) {
+        if (!sortConfig.coluna) return dados;
+
+        return dados.sort((a, b) => {
+            let valorA = a[sortConfig.coluna];
+            let valorB = b[sortConfig.coluna];
+
+            if (sortConfig.coluna === 'total') {
+                valorA = Number(valorA);
+                valorB = Number(valorB);
+                if (valorA < valorB) return sortConfig.direcao === 'asc' ? -1 : 1;
+                if (valorA > valorB) return sortConfig.direcao === 'asc' ?  1 : -1;
+                return 0;
+            } else {
+                valorA = (valorA || '').toString();
+                valorB = (valorB || '').toString();
+                return sortConfig.direcao === 'asc'
+                    ? valorA.localeCompare(valorB, 'pt-BR')
+                    : valorB.localeCompare(valorA, 'pt-BR');
+            }
+        });
     }
 
-    empregadosFiltradosCI.sort((a, b) => {
-        let valorA = a[coluna] || '';
-        let valorB = b[coluna] || '';
-
-        if (tipo === 'number') {
-            valorA = parseFloat(valorA) || 0;
-            valorB = parseFloat(valorB) || 0;
+    window.ordenarTabelaVisaoGeral = function (coluna) {
+        if (sortConfig.coluna === coluna) {
+            sortConfig.direcao = sortConfig.direcao === 'asc' ? 'desc' : 'asc';
         } else {
-            valorA = valorA.toString().toLowerCase();
-            valorB = valorB.toString().toLowerCase();
+            sortConfig.coluna  = coluna;
+            sortConfig.direcao = 'asc';
         }
+        renderizarVisaoGeral();
+    };
 
-        if (valorA < valorB) return sortConfig.direcao === 'asc' ? -1 : 1;
-        if (valorA > valorB) return sortConfig.direcao === 'asc' ? 1 : -1;
-        return 0;
-    });
 
-    paginaAtualCI = 1;
-    atualizarTabelaConsulta();
-};
-  function ordenarDadosVG(dados) {
-    if (!sortConfig.coluna) return dados;
+    // ============================================================
+    // 12. RENDERIZAÇÃO — VISÃO GERAL
+    // ============================================================
 
-    return dados.sort((a, b) => {
-        let valorA = a[sortConfig.coluna];
-        let valorB = b[sortConfig.coluna];
-
-        if (sortConfig.coluna === 'total') {
-            valorA = Number(valorA);
-            valorB = Number(valorB);
-            if (valorA < valorB) return sortConfig.direcao === 'asc' ? -1 : 1;
-            if (valorA > valorB) return sortConfig.direcao === 'asc' ? 1 : -1;
-            return 0;
-        } else {
-            valorA = (valorA || '').toString();
-            valorB = (valorB || '').toString();
-            return sortConfig.direcao === 'asc'
-                ? valorA.localeCompare(valorB, 'pt-BR')
-                : valorB.localeCompare(valorA, 'pt-BR');
-        }
-    });
-}   
-         
-
-    // ============================================
-    // RENDERIZAÇÃO VISÃO GERAL
-    // ============================================
     function renderizarVisaoGeral() {
         const container = document.getElementById('visao-geral-content');
         if (!container) return;
-        
+
         dadosOrgaoGlobal = agruparPorOrgao(currentDisplayData.dados);
-     if (sortConfig.coluna) {
-    dadosOrgaoGlobal = ordenarDadosVG(dadosOrgaoGlobal);
-}
-        const dadosCargo = agruparPorCargo(currentDisplayData.dados).slice(0, 5);
-        
+        if (sortConfig.coluna) dadosOrgaoGlobal = ordenarDadosVG(dadosOrgaoGlobal);
 
-        const inicio = (paginaAtualVG - 1) * itensPorPaginaVG;
-        const fim = inicio + itensPorPaginaVG;
-
+        const dadosCargo  = agruparPorCargo(currentDisplayData.dados).slice(0, 5);
+        const inicio      = (paginaAtualVG - 1) * itensPorPaginaVG;
+        const fim         = inicio + itensPorPaginaVG;
         const dadosPagina = dadosOrgaoGlobal.slice(inicio, fim);
-        
+
         let html = `
             <div class="filter-container">
                 <div class="filters-row">
@@ -1958,19 +1930,22 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
                             <option value="11">Novembro</option>
                             <option value="12" selected>Dezembro</option>
                         </select>
-                        </div>
+                    </div>
                     <div class="filter-group">
                         <label class="filter-label"><i class="material-icons"></i>ÓRGÃO</label>
                         <select class="form-select modern-select" id="filtroOrgaoVG">
                             <option value="">Todos os órgãos</option>
                             ${opcoesCache.orgaos.map(org => `<option value="${org.sigla}">${org.nome} (${org.sigla})</option>`).join('')}
                         </select>
-                        </div>
                     </div>
-                    <div class="botoes-abaixo">
-                        <button class="btn-pesquisa" onclick="aplicarFiltrosVG()"><i class="material-icons me-2">search</i>Pesquisar</button>
-                        <button class="btn-secondary-custom" onclick="limparFiltrosVG()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
-                    </div>
+                </div>
+                <div class="botoes-abaixo">
+                    <button class="btn-pesquisa" onclick="aplicarFiltrosVG()">
+                        <i class="material-icons">search</i>Pesquisar
+                    </button>
+                    <button class="btn-secondary-custom" onclick="limparFiltrosVG()">
+                        <i class="material-icons">clear</i>Limpar Filtros
+                    </button>
                 </div>
             </div>
 
@@ -1979,7 +1954,8 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
                     <div class="metric-card">
                         <div class="metric-header">
                             Total de Empregados
-                            <i class="material-icons" data-bs-toggle="tooltip" title="Quantidade total de empregados no período selecionado">info_outline</i>
+                            <i class="material-icons" data-bs-toggle="tooltip"
+                                title="Quantidade total de empregados no período selecionado">info_outline</i>
                         </div>
                         <div class="metric-body">
                             <div class="metric-value">
@@ -1992,7 +1968,8 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
                     <div class="metric-card">
                         <div class="metric-header">
                             Órgãos
-                            <i class="material-icons" data-bs-toggle="tooltip" title="Quantidade de órgãos com empregados">info_outline</i>
+                            <i class="material-icons" data-bs-toggle="tooltip"
+                                title="Quantidade de órgãos com empregados">info_outline</i>
                         </div>
                         <div class="metric-body">
                             <div class="metric-value">
@@ -2005,7 +1982,8 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
                     <div class="metric-card">
                         <div class="metric-header">
                             Empresas
-                            <i class="material-icons" data-bs-toggle="tooltip" title="Quantidade de empresas terceirizadas">info_outline</i>
+                            <i class="material-icons" data-bs-toggle="tooltip"
+                                title="Quantidade de empresas terceirizadas">info_outline</i>
                         </div>
                         <div class="metric-body">
                             <div class="metric-value">
@@ -2018,7 +1996,8 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
                     <div class="metric-card">
                         <div class="metric-header">
                             Período
-                            <i class="material-icons" data-bs-toggle="tooltip" title="Mês/ano dos dados exibidos">info_outline</i>
+                            <i class="material-icons" data-bs-toggle="tooltip"
+                                title="Mês/ano dos dados exibidos">info_outline</i>
                         </div>
                         <div class="metric-body">
                             <div class="metric-value">
@@ -2031,260 +2010,241 @@ function mostrarSugestoes(inputId, suggestionsId, campo) {
 
             <div class="row mb-4">
                 <div class="col-md-6">
-    <div class="chart-container">
-        <div class="chart-header">
-            <h4 class="chart-title">Empregados por Órgão</h4>
-        </div>
-        <div class="chart-wrapper chart-pizza">
-    <div class="chart-pizza-layout">
-        <div class="chart-pizza-box">
-            <canvas id="chartOrgao"></canvas>
-        </div>
-        <div class="legend-grid" id="legendOrgao"></div>
-    </div>
-</div>
-    </div>
-</div>
-                <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Cargos</h4></div><div class="chart-wrapper">
-    <div style="width:100%; height:260px; position:relative;">
-        <canvas id="chartCargo"></canvas>
-    </div>
-</div></div></div>
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h4 class="chart-title">Empregados por Órgão</h4>
+                        </div>
+                        <div class="chart-wrapper chart-pizza">
+                            <div class="chart-pizza-layout">
+                                <div class="chart-pizza-box">
+                                    <canvas id="chartOrgao"></canvas>
+                                </div>
+                                <div class="legend-grid" id="legendOrgao"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h4 class="chart-title">Cargos</h4>
+                        </div>
+                        <div class="chart-wrapper">
+                            <div style="width:100%; height:260px; position:relative;">
+                                <canvas id="chartCargo"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex gap-2">
+                    <button class="btn-export" onclick="exportarTabelaVisaoGeralCSV()">
+                        <i class="material-icons">description</i>CSV
+                    </button>
+                    <button class="btn-export" onclick="exportarTabelaVisaoGeralPDF()">
+                        <i class="material-icons">print</i>PDF
+                    </button>
+                    <button class="btn-export" onclick="copiarLinkDireto()">
+                        <i class="material-icons">link</i>Copiar Link
+                    </button>
+                </div>
+                <div class="d-flex align-items-center gap-2 ms-auto flex-nowrap">
+                    <span class="table-badge">${dadosOrgaoGlobal.length} órgãos</span>
+                    <div class="table-search-container">
+                        <i class="material-icons" style="font-size:14px;color:#94a3b8;">search</i>
+                        <input type="text" class="table-search-input" placeholder="Buscar..."
+                            onkeyup="filtrarTabelaVG(this.value)">
+                        <i class="material-icons clear-icon" onclick="limparBusca(this)">close</i>
+                    </div>
+                </div>
+            </div>
 
-    <!-- ESQUERDA (botões) -->
-    <div class="d-flex gap-2">
-        <button class="btn-export" onclick="exportarTabelaVisaoGeralCSV()">
-            <i class="material-icons">description</i>CSV
-        </button>
-        <button class="btn-export" onclick="exportarTabelaVisaoGeralPDF()">
-            <i class="material-icons">print</i>PDF
-        </button>
-
-       <button class="btn-export" onclick="copiarLinkDireto()">
-    <i class="material-icons">link</i>Copiar Link
-</button>
-        </div>
-    
-    <!-- DIREITA (badge + busca) -->
-   <div class="d-flex align-items-center gap-2 ms-auto flex-nowrap">
-        
-        <span class="table-badge">${dadosOrgaoGlobal.length} órgãos</span>
-
-        <div class="table-search-container">
-            <i class="material-icons" style="font-size:16px;color:#94a3b8;">search</i>
-            <input 
-                type="text" 
-                class="table-search-input" 
-                placeholder="Buscar..." 
-                onkeyup="filtrarTabelaVG(this.value)"
-            >
-            <i class="material-icons clear-icon" onclick="limparBusca(this)">close</i>
-        </div>
-
-    </div>
-</div>
-       
             <div class="table-container">
                 <div class="table-fixed-header-container">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="sortable-header" onclick="ordenarTabelaVisaoGeral('orgao')">Órgão <i class="material-icons">unfold_more</i></th>
-                                <th class="sortable-header" onclick="ordenarTabelaVisaoGeral('sigla')">Sigla <i class="material-icons">unfold_more</i></th>
-                                <th class="text-center sortable-header" onclick="ordenarTabelaVisaoGeral('total')">Empregados <i class="material-icons">unfold_more</i></th>
+                                <th class="sortable-header" onclick="ordenarTabelaVisaoGeral('orgao')">
+                                    Órgão <i class="material-icons">unfold_more</i>
+                                </th>
+                                <th class="sortable-header" onclick="ordenarTabelaVisaoGeral('sigla')">
+                                    Sigla <i class="material-icons">unfold_more</i>
+                                </th>
+                                <th class="text-center sortable-header" onclick="ordenarTabelaVisaoGeral('total')">
+                                    Empregados <i class="material-icons">unfold_more</i>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             ${dadosPagina.map(item => `
                                 <tr>
-                                    <td><a href="#" class="orgao-link" onclick="irParaConsulta('${item.sigla}'); return false;">${item.orgao}</a></td>
+                                    <td>
+                                        <a href="#" class="orgao-link"
+                                            onclick="irParaConsulta('${item.sigla}'); return false;">
+                                            ${item.orgao}
+                                        </a>
+                                    </td>
                                     <td>${item.sigla}</td>
                                     <td class="text-center">${item.total.toLocaleString()}</td>
                                 </tr>
                             `).join('')}
-                            </tbody>
-                            <tfoot>
-    <tr>
-        <td colspan="2">Total Geral</td>
-        <td class="text-center">
-            ${dadosOrgaoGlobal.reduce((a,i)=>a+i.total,0).toLocaleString()}
-        </td>
-    </tr>
-</tfoot>
-                            </table>
-                         </div> <!-- fecha table-fixed-header-container -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2">Total Geral</td>
+                                <td class="text-center">
+                                    ${dadosOrgaoGlobal.reduce((a, i) => a + i.total, 0).toLocaleString()}
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
-           <div class="pagination-container" id="paginacaoContainerVG"></div>
 
-<div style="display: flex; justify-content: flex-end; margin-top: 10px;">
-    <div id="btnTopo" onclick="voltarAoTopo()">
-        <i class="material-icons">arrow_upward</i>
-        Voltar ao topo
-    </div>
-</div>
+            <div class="pagination-container" id="paginacaoContainerVG"></div>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                <div id="btnTopo" onclick="voltarAoTopo()">
+                    <i class="material-icons">arrow_upward</i>
+                    Voltar ao topo
+                </div>
+            </div>
         `;
-      
+
         container.innerHTML = html;
         renderizarPaginacaoVG();
-       
 
-         
-        const selectAno = document.getElementById('filtroAnoVG');
-        const selectMes = document.getElementById('filtroMesVG');
+        const selectAno   = document.getElementById('filtroAnoVG');
+        const selectMes   = document.getElementById('filtroMesVG');
         const selectOrgao = document.getElementById('filtroOrgaoVG');
-        if (selectAno) selectAno.value = currentDisplayData.ano;
-        if (selectMes) selectMes.value = currentDisplayData.mes;
+        if (selectAno)   selectAno.value   = currentDisplayData.ano;
+        if (selectMes)   selectMes.value   = currentDisplayData.mes;
         if (selectOrgao) selectOrgao.value = '';
-        
+
+        // Destroi gráficos anteriores
         if (window.orgaoChart) window.orgaoChart.destroy();
         if (window.cargoChart) window.cargoChart.destroy();
-        
-       const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
-if (ctxOrgao && dadosOrgaoGlobal.length > 0) {
-// 🔥 garante ordem correta
-dadosOrgaoGlobal.sort((a, b) => b.total - a.total);
 
-// pega só os 8 maiores
-const topOrgaos = dadosOrgaoGlobal.slice(0, 6);
+        // Gráfico de pizza — Órgãos
+        const ctxOrgao = document.getElementById('chartOrgao')?.getContext('2d');
+        if (ctxOrgao && dadosOrgaoGlobal.length > 0) {
+            dadosOrgaoGlobal.sort((a, b) => b.total - a.total);
+            const topOrgaos = dadosOrgaoGlobal.slice(0, 6);
+            const labels    = topOrgaos.map(i => i.sigla);
+            const valores   = topOrgaos.map(i => i.total);
 
-// dados do gráfico
-const labels = topOrgaos.map(i => i.sigla);
-const valores = topOrgaos.map(i => i.total);
-
-window.orgaoChart = new Chart(ctxOrgao, {
-    type: 'doughnut',
-    data: {
-        labels: labels,
-        datasets: [{
-            data: valores,
-            backgroundColor: chartPalette
-        }]
-    },
-    options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    cutout: '60%',
-    radius: '90%',
-    layout: {
-        padding: {
-            left: 10,
-            right: 10
-        }
-    },
-   plugins: {
-    legend: {
-        display: false
-    
-    }
-}
-}
-});
-const legendContainer = document.getElementById('legendOrgao');
-
-legendContainer.innerHTML = topOrgaos.map((item, index) => `
-    <div class="legend-item">
-        <span class="legend-color" 
-              style="background:${chartPalette[index]}"></span>
-        <span>${item.sigla}</span>
-    </div>
-`).join('');
-   
-}
-    const ctxCargo = document.getElementById('chartCargo')?.getContext('2d');
-
-if (ctxCargo && dadosCargo.length > 0) {
-
-    const labels = dadosCargo.map(i => {
-        if (!i.cargo) return ['-'];
-
-        const palavras = i.cargo.split(' ');
-        const meio = Math.ceil(palavras.length / 2);
-
-        return [
-            palavras.slice(0, meio).join(' '),
-            palavras.slice(meio).join(' ')
-        ];
-    });
-
-    window.cargoChart = new Chart(ctxCargo, {
-    type: 'bar',
-    data: { 
-        labels: labels,
-        datasets: [{ 
-            data: dadosCargo.map(i => i.total),
-            backgroundColor: chartPalette,
-            barThickness: 50,   // deixa mais estreito
-            borderRadius: 4
-        }] 
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    display: false   // remove linhas verticais
+            window.orgaoChart = new Chart(ctxOrgao, {
+                type: 'doughnut',
+                data: {
+                    labels,
+                    datasets: [{ data: valores, backgroundColor: chartPalette }]
                 },
-                ticks: {
-                    maxRotation: 0,
-                    minRotation: 0,
-                    autoSkip: false
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    radius: '90%',
+                    layout: { padding: { left: 10, right: 10 } },
+                    plugins: { legend: { display: false } }
                 }
-            },
-            y: {
-                grid: {
-                    display: false   // remove linhas horizontais
+            });
+
+            document.getElementById('legendOrgao').innerHTML = topOrgaos.map((item, index) => `
+                <div class="legend-item">
+                    <span class="legend-color" style="background:${chartPalette[index]}"></span>
+                    <span>${item.sigla}</span>
+                </div>
+            `).join('');
+        }
+
+        // Gráfico de barras — Cargos
+        const ctxCargo = document.getElementById('chartCargo')?.getContext('2d');
+        if (ctxCargo && dadosCargo.length > 0) {
+            const labels = dadosCargo.map(i => {
+                if (!i.cargo) return ['-'];
+                const palavras = i.cargo.split(' ');
+                const linhas = [];
+    		let linha = '';
+
+    		palavras.forEach(p => {
+       		    if ((linha + ' ' + p).length > 18) {
+            	    	linhas.push(linha);
+            	    	linha = p;
+        	    } else {
+            	    	linha += (linha ? ' ' : '') + p;
+        	    }
+    		});
+
+    		if (linha) linhas.push(linha);
+
+    		return linhas.slice(0, 3);
+	    });
+
+            window.cargoChart = new Chart(ctxCargo, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        data: dadosCargo.map(i => i.total),
+                        backgroundColor: chartPalette,
+                        barThickness: 40,
+                        borderRadius: 4                    }]
                 },
-                beginAtZero: true
-            }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { maxRotation: 0, minRotation: 0, autoSkip: false,
+			    font: {
+            			size: 8
+        		    }
+			}
+                        },
+                        y: { grid: { display: false }, beginAtZero: true }
+                    }
+                }
+            });
         }
-    }
 
-    });
-
-        }
-        
         setTimeout(() => {
             const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
             tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
         }, 100);
-        
+
         setTimeout(iframeUpdateHeight, 300);
     }
 
-    window.aplicarFiltrosVG = async function() {
-        const ano = document.getElementById('filtroAnoVG')?.value || '2026';
-        const mes = document.getElementById('filtroMesVG')?.value || '01';
+
+    // ============================================================
+    // 13. FILTROS — VISÃO GERAL
+    // ============================================================
+
+    window.aplicarFiltrosVG = async function () {
+        const ano   = document.getElementById('filtroAnoVG')?.value   || '2026';
+        const mes   = document.getElementById('filtroMesVG')?.value   || '01';
         const orgao = document.getElementById('filtroOrgaoVG')?.value || '';
-        
+
         const dadosMes = await carregarMes(ano, mes);
-        
+
         if (dadosMes.length > 0) {
             let dadosFiltrados = dadosMes;
-            if (orgao) {
-                dadosFiltrados = dadosMes.filter(d => d.orgao_sigla === orgao);
-            }
-            
-            currentDisplayData.ano = ano;
-            currentDisplayData.mes = mes;
-            currentDisplayData.dados = dadosFiltrados;
-            currentDisplayData.metrica = calcularMetricas(dadosFiltrados, mes);
+            if (orgao) dadosFiltrados = dadosMes.filter(d => d.orgao_sigla === orgao);
+
+            currentDisplayData.ano              = ano;
+            currentDisplayData.mes              = mes;
+            currentDisplayData.dados            = dadosFiltrados;
+            currentDisplayData.metrica          = calcularMetricas(dadosFiltrados, mes);
             currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(dadosFiltrados);
-            
+
             atualizarOpcoesCache();
-            
             empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
             paginaAtualCI = 1;
-            
+
             renderizarVisaoGeral();
             renderizarConsulta();
         } else {
@@ -2292,316 +2252,332 @@ if (ctxCargo && dadosCargo.length > 0) {
         }
     };
 
-    window.limparFiltrosVG = function() {
-        const selectAno = document.getElementById('filtroAnoVG');
-        const selectMes = document.getElementById('filtroMesVG');
+    window.limparFiltrosVG = function () {
+        const selectAno   = document.getElementById('filtroAnoVG');
+        const selectMes   = document.getElementById('filtroMesVG');
         const selectOrgao = document.getElementById('filtroOrgaoVG');
-        
-        if (selectAno) selectAno.value = '2026';
-        if (selectMes) selectMes.value = '01';
+
+        if (selectAno)   selectAno.value   = '2026';
+        if (selectMes)   selectMes.value   = '01';
         if (selectOrgao) selectOrgao.value = '';
-        
-        currentDisplayData.ano = '2026';
-        currentDisplayData.mes = '01';
-        currentDisplayData.dados = dataCache['2026']['01'] || [];
-        currentDisplayData.metrica = calcularMetricas(currentDisplayData.dados, '12');
+
+        currentDisplayData.ano              = '2026';
+        currentDisplayData.mes              = '01';
+        currentDisplayData.dados            = dataCache['2026']['01'] || [];
+        currentDisplayData.metrica          = calcularMetricas(currentDisplayData.dados, '12');
         currentDisplayData.empregadosUnicos = obterEmpregadosUnicos(currentDisplayData.dados);
-        
+
         atualizarOpcoesCache();
-        
         empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
         paginaAtualCI = 1;
-        
+
         renderizarVisaoGeral();
         renderizarConsulta();
     };
 
-window.ordenarTabelaVisaoGeral = function(coluna) {
 
-    if (sortConfig.coluna === coluna) {
-        sortConfig.direcao = sortConfig.direcao === 'asc' ? 'desc' : 'asc';
-    } else {
-        sortConfig.coluna = coluna;
-        sortConfig.direcao = 'asc';
-    }
+    // ============================================================
+    // 14. PAGINAÇÃO — VISÃO GERAL
+    // ============================================================
 
-    renderizarVisaoGeral(); // 👈 só isso
-};
- 
+    function renderizarPaginacaoVG() {
+        const container    = document.getElementById('paginacaoContainerVG');
+        if (!container) return;
 
-    function agruparPorOrgao(dados) {
-        const mapa = new Map();
-        for (const i of dados) {
-            const sigla = i.orgao_sigla || 'Não informado';
-            if (!mapa.has(sigla)) {
-                mapa.set(sigla, { sigla: sigla, orgao: i.orgao || sigla, total: 0 });
-            }
-            mapa.get(sigla).total += 1;
+        const totalPaginas = Math.ceil(dadosOrgaoGlobal.length / itensPorPaginaVG);
+        const inicio       = (paginaAtualVG - 1) * itensPorPaginaVG + 1;
+        const fim          = Math.min(paginaAtualVG * itensPorPaginaVG, dadosOrgaoGlobal.length);
+
+        let html = `
+            <div class="d-flex align-items-center justify-content-center gap-3 w-100">
+                <div class="pagination-info">
+                    ${inicio}-${fim} de ${dadosOrgaoGlobal.length} resultados
+                </div>
+                <nav>
+                    <ul class="pagination mb-0">
+                        <li class="page-item ${paginaAtualVG === 1 ? 'disabled' : ''}">
+                            <a class="page-link" href="#"
+                                onclick="mudarPaginaVG(${paginaAtualVG - 1}); return false;">«</a>
+                        </li>
+        `;
+
+        let inicioPaginas = Math.max(1, paginaAtualVG - 2);
+        let fimPaginas    = Math.min(totalPaginas, inicioPaginas + 4);
+
+        for (let i = inicioPaginas; i <= fimPaginas; i++) {
+            html += `
+                <li class="page-item ${i === paginaAtualVG ? 'active' : ''}">
+                    <a class="page-link" href="#"
+                        onclick="mudarPaginaVG(${i}); return false;">${i}</a>
+                </li>
+            `;
         }
-        return Array.from(mapa.values()).sort((a,b) => (a.orgao || '').localeCompare(b.orgao || '', 'pt-BR'));
+
+        html += `
+                        <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
+                            <a class="page-link" href="#"
+                                onclick="mudarPaginaVG(${paginaAtualVG + 1}); return false;">»</a>
+                        </li>
+                    </ul>
+                </nav>
+                <select class="items-per-page" onchange="alterarItensPorPaginaVG(this.value)">
+                    <option value="100" ${itensPorPaginaVG == 100 ? 'selected' : ''}>100</option>
+                    <option value="150" ${itensPorPaginaVG == 150 ? 'selected' : ''}>150</option>
+                    <option value="200" ${itensPorPaginaVG == 200 ? 'selected' : ''}>200</option>
+                    <option value="300" ${itensPorPaginaVG == 300 ? 'selected' : ''}>300</option>
+                    <option value="500" ${itensPorPaginaVG == 500 ? 'selected' : ''}>500</option>
+                </select>
+            </div>
+        `;
+
+        container.innerHTML = html;
+
+        window.alterarItensPorPaginaVG = function (valor) {
+            itensPorPaginaVG = parseInt(valor);
+            paginaAtualVG    = 1;
+            renderizarVisaoGeral();
+        };
     }
 
-    function agruparPorCargo(dados) {
-        const mapa = new Map();
-        for (const i of dados) {
-            const cargo = i.cargo_descricao || 'Não informado';
-            if (!mapa.has(cargo)) {
-                mapa.set(cargo, { cargo: cargo, total: 0 });
-            }
-            mapa.get(cargo).total += 1;
-        }
-        return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
-    }
-
-    window.irParaConsulta = function(sigla) {
-        document.getElementById('consulta-tab').click();
-        setTimeout(() => {
-            // Filtra os empregados pelo órgão clicado
-            empregadosFiltradosCI = currentDisplayData.empregadosUnicos.filter(e => e.orgao_sigla === sigla);
-            paginaAtualCI = 1;
-            atualizarTabelaConsulta();
-            // Atualiza o badge de total
-            const badge = document.getElementById('totalServidoresBadge');
-            if (badge) badge.innerText = empregadosFiltradosCI.length + ' empregados';
-        }, 300);
+    window.mudarPaginaVG = function (pagina) {
+        const totalPaginas = Math.ceil(dadosOrgaoGlobal.length / itensPorPaginaVG);
+        if (pagina < 1 || pagina > totalPaginas) return;
+        paginaAtualVG = pagina;
+        renderizarVisaoGeral();
     };
 
-    // ============================================
-    // RENDERIZAÇÃO CONSULTA INDIVIDUAL
-    // ============================================
+
+    // ============================================================
+    // 15. RENDERIZAÇÃO — CONSULTA INDIVIDUAL
+    // ============================================================
+
     function renderizarConsulta() {
         const container = document.getElementById('consulta-content');
         if (!container) return;
-        
+
         container.innerHTML = `
-           <div class="filter-container">
-
-    <div class="consulta-filters-row">
-
-        <div class="consulta-filter-group">
-            <label class="filter-label">Nome</label>
-            <div class="autocomplete-container">
-                <input type="text" class="form-control"
-                    id="filtroNomeCI"
-                    placeholder="Digite ou selecione..."
-                    autocomplete="off"
-                    onclick="mostrarSugestoes('filtroNomeCI','sugestoesNome','nome')">
-                <div class="autocomplete-suggestions" id="sugestoesNome"></div>
+            <div class="filter-container">
+                <div class="consulta-filters-row">
+                    <div class="consulta-filter-group">
+                        <label class="filter-label">Nome</label>
+                        <div class="autocomplete-container">
+                            <input type="text" class="form-control"
+                                id="filtroNomeCI"
+                                placeholder="Digite ou selecione..."
+                                autocomplete="off"
+                                onclick="mostrarSugestoes('filtroNomeCI','sugestoesNome','nome')">
+                            <div class="autocomplete-suggestions" id="sugestoesNome"></div>
+                        </div>
+                    </div>
+                    <div class="consulta-filter-group">
+                        <label class="filter-label">Matrícula</label>
+                        <div class="autocomplete-container">
+                            <input type="text" class="form-control"
+                                id="filtroMatriculaCI"
+                                placeholder="Digite ou selecione..."
+                                autocomplete="off"
+                                onclick="mostrarSugestoes('filtroMatriculaCI','sugestoesMatricula','matricula')">
+                            <div class="autocomplete-suggestions" id="sugestoesMatricula"></div>
+                        </div>
+                    </div>
+                    <div class="consulta-filter-group">
+                        <label class="filter-label">Cargo</label>
+                        <div class="autocomplete-container">
+                            <input type="text" class="form-control"
+                                id="filtroCargoCI"
+                                placeholder="Digite ou selecione..."
+                                autocomplete="off"
+                                onclick="mostrarSugestoes('filtroCargoCI','sugestoesCargo','cargo')">
+                            <div class="autocomplete-suggestions" id="sugestoesCargo"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="consulta-buttons-row">
+                    <button class="btn-pesquisa" onclick="aplicarFiltrosCI()">
+                        <i class="material-icons">search</i>Pesquisar
+                    </button>
+                    <button class="btn-secondary-custom" onclick="limparFiltrosCI()">
+                        <i class="material-icons">clear</i>Limpar Filtros
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <div class="consulta-filter-group">
-            <label class="filter-label">Matrícula</label>
-            <div class="autocomplete-container">
-                <input type="text" class="form-control"
-                    id="filtroMatriculaCI"
-                    placeholder="Digite ou selecione..."
-                    autocomplete="off"
-                    onclick="mostrarSugestoes('filtroMatriculaCI','sugestoesMatricula','matricula')">
-                <div class="autocomplete-suggestions" id="sugestoesMatricula"></div>
-            </div>
-        </div>
-
-        <div class="consulta-filter-group">
-            <label class="filter-label">Cargo</label>
-            <div class="autocomplete-container">
-                <input type="text" class="form-control"
-                    id="filtroCargoCI"
-                    placeholder="Digite ou selecione..."
-                    autocomplete="off"
-                    onclick="mostrarSugestoes('filtroCargoCI','sugestoesCargo','cargo')">
-                <div class="autocomplete-suggestions" id="sugestoesCargo"></div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- 🔥 BOTÕES DENTRO DA CAIXA -->
-    <div class="consulta-buttons-row">
-        <button class="btn-pesquisa" onclick="aplicarFiltrosCI()">
-            <i class="material-icons me-2">search</i>Pesquisar
-        </button>
-
-        <button class="btn-secondary-custom" onclick="limparFiltrosCI()">
-            <i class="material-icons me-2">clear</i>Limpar Filtros
-        </button>
-    </div>
-
-</div>
             <div class="d-flex justify-content-between align-items-center mb-3">
-
-    <!-- ESQUERDA -->
-    <div class="d-flex gap-2">
-        <button class="btn-export" onclick="exportarTabelaConsultaCSV()">
-            <i class="material-icons">description</i>CSV
-        </button>
-
-        <button class="btn-export" onclick="exportarTabelaConsultaPDF()">
-            <i class="material-icons">print</i>PDF
-        </button>
-
-        <button class="btn-export" onclick="copiarLinkDireto()">
-    <i class="material-icons">link</i>Copiar Link
-</button>
+                <div class="d-flex gap-2">
+                    <button class="btn-export" onclick="exportarTabelaConsultaCSV()">
+                        <i class="material-icons">description</i>CSV
+                    </button>
+                    <button class="btn-export" onclick="exportarTabelaConsultaPDF()">
+                        <i class="material-icons">print</i>PDF
+                    </button>
+                    <button class="btn-export" onclick="copiarLinkDireto()">
+                        <i class="material-icons">link</i>Copiar Link
+                    </button>
+                </div>
+                <div class="d-flex align-items-center gap-2 ms-auto">
+                    <span class="table-badge" id="totalServidoresBadge">
+                        ${currentDisplayData.empregadosUnicos.length} empregados
+                    </span>
+                    <div class="table-search-container">
+                        <i class="material-icons" style="font-size:14px;color:#94a3b8;">search</i>
+                        <input type="text" class="table-search-input"
+                            id="buscaTabelaCI"
+                            placeholder="Buscar..."
+                            onkeyup="aplicarBuscaTabelaCI()">
+                        <i class="material-icons clear-icon" onclick="limparBusca(this)">close</i>
+                    </div>
+                </div>
             </div>
-    
-    <!-- DIREITA -->
-    <div class="d-flex align-items-center gap-2 ms-auto">
-
-        <span class="table-badge" id="totalServidoresBadge">
-            ${currentDisplayData.empregadosUnicos.length} empregados
-        </span>
-
-        <div class="table-search-container">
-            <i class="material-icons" style="font-size:16px;color:#94a3b8;">search</i>
-            <input 
-                type="text" 
-                class="table-search-input" 
-                id="buscaTabelaCI"
-                placeholder="Buscar..."
-                onkeyup="aplicarBuscaTabelaCI()"
-            >
-            <i class="material-icons clear-icon" onclick="limparBusca(this)">close</i>
-        </div>
-
-            </div>
-
-</div>
 
             <div class="table-container">
                 <div class="table-fixed-header-container" id="tabelaContainer">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="sortable-header" onclick="ordenarTabela('matricula', 'text')">Matrícula <i class="material-icons">${sortConfig.coluna === 'matricula' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i></th>
-                                <th class="sortable-header" onclick="ordenarTabela('nome', 'text')">Nome <i class="material-icons">${sortConfig.coluna === 'nome' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i></th>
-                                <th class="sortable-header" onclick="ordenarTabela('orgao_sigla', 'text')">Sigla <i class="material-icons">${sortConfig.coluna === 'orgao_sigla' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i></th>
-                                <th class="sortable-header" onclick="ordenarTabela('cargo_descricao', 'text')">Cargo <i class="material-icons">${sortConfig.coluna === 'cargo_descricao' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i></th>
-                                <th class="sortable-header" onclick="ordenarTabela('empresa', 'text')">Empresa <i class="material-icons">${sortConfig.coluna === 'empresa' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i></th>
-                                <th class="sortable-header" onclick="ordenarTabela('cnpj_empresa', 'text')">CNPJ <i class="material-icons">${sortConfig.coluna === 'cnpj_empresa' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i></th>
+                                <th class="sortable-header" onclick="ordenarTabela('matricula', 'text')">
+                                    Matrícula <i class="material-icons">${sortConfig.coluna === 'matricula' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i>
+                                </th>
+                                <th class="sortable-header" onclick="ordenarTabela('nome', 'text')">
+                                    Nome <i class="material-icons">${sortConfig.coluna === 'nome' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i>
+                                </th>
+                                <th class="sortable-header" onclick="ordenarTabela('orgao', 'text')">
+                                    Órgão <i class="material-icons">${sortConfig.coluna === 'orgao' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i>
+                                </th>
+                                <th class="sortable-header" onclick="ordenarTabela('cargo_descricao', 'text')">
+                                    Cargo <i class="material-icons">${sortConfig.coluna === 'cargo_descricao' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i>
+                                </th>
+                                <th class="sortable-header" onclick="ordenarTabela('empresa', 'text')">
+                                    Empresa <i class="material-icons">${sortConfig.coluna === 'empresa' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i>
+                                </th>
+                                <th class="sortable-header" onclick="ordenarTabela('cnpj_empresa', 'text')">
+                                    CNPJ <i class="material-icons">${sortConfig.coluna === 'cnpj_empresa' ? (sortConfig.direcao === 'asc' ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'}</i>
+                                </th>
                                 <th class="text-center">Ações</th>
                             </tr>
                         </thead>
                         <tbody id="empregadosTableBody"></tbody>
                     </table>
-                    </div>
+                </div>
                 <div class="pagination-container" id="paginacaoContainerCI"></div>
+            </div>
 
-<div style="display: flex; justify-content: flex-end; margin-top: 10px;">
-    <div id="btnTopo" onclick="voltarAoTopo()">
-        <i class="material-icons">arrow_upward</i>
-        Voltar ao topo
-    </div>
-</div>
-
-</div>
+            <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                <div id="btnTopo" onclick="voltarAoTopo()">
+                    <i class="material-icons">arrow_upward</i>
+                    Voltar ao topo
+                </div>
+            </div>
         `;
-        
+
         setTimeout(() => {
-           setupCombobox('filtroNomeCI', 'sugestoesNome', 'nome', opcoesCache.nomes);
-setupCombobox('filtroMatriculaCI', 'sugestoesMatricula', 'matricula', opcoesCache.matriculas);
-setupCombobox('filtroCargoCI', 'sugestoesCargo', 'cargo', opcoesCache.cargos);
+            setupCombobox('filtroNomeCI',      'sugestoesNome',      'nome',      opcoesCache.nomes);
+            setupCombobox('filtroMatriculaCI', 'sugestoesMatricula', 'matricula', opcoesCache.matriculas);
+            setupCombobox('filtroCargoCI',     'sugestoesCargo',     'cargo',     opcoesCache.cargos);
         }, 100);
-        
+
         aplicarFiltrosCI();
     }
 
-   function aplicarFiltrosCI() {
-        const nome = document.getElementById('filtroNomeCI')?.value || '';
-        const matricula = document.getElementById('filtroMatriculaCI')?.value || '';
-        const cargo = document.getElementById('filtroCargoCI')?.value || '';
-        
-        filtrosAtivosCI.nome = nome;
-        filtrosAtivosCI.matricula = matricula;
-        filtrosAtivosCI.cargo = cargo;
-        
-        aplicarTodosFiltrosCI();
-    };
 
-    window.aplicarBuscaTabelaCI = function() {
+    // ============================================================
+    // 16. FILTROS — CONSULTA INDIVIDUAL
+    // ============================================================
+
+    function aplicarFiltrosCI() {
+        filtrosAtivosCI.nome      = document.getElementById('filtroNomeCI')?.value      || '';
+        filtrosAtivosCI.matricula = document.getElementById('filtroMatriculaCI')?.value || '';
+        filtrosAtivosCI.cargo     = document.getElementById('filtroCargoCI')?.value     || '';
+        aplicarTodosFiltrosCI();
+    }
+
+    window.aplicarBuscaTabelaCI = function () {
         filtrosAtivosCI.buscaTabela = document.getElementById('buscaTabelaCI')?.value || '';
         aplicarTodosFiltrosCI();
     };
 
     function aplicarTodosFiltrosCI() {
         empregadosFiltradosCI = currentDisplayData.empregadosUnicos.filter(s => {
-            if (filtrosAtivosCI.nome && !s.nome.toLowerCase().includes(filtrosAtivosCI.nome.toLowerCase())) return false;
+            if (filtrosAtivosCI.nome      && !s.nome.toLowerCase().includes(filtrosAtivosCI.nome.toLowerCase()))           return false;
             if (filtrosAtivosCI.matricula && !s.matricula.toLowerCase().includes(filtrosAtivosCI.matricula.toLowerCase())) return false;
-            if (filtrosAtivosCI.cargo && !s.cargo_descricao.toLowerCase().includes(filtrosAtivosCI.cargo.toLowerCase())) return false;
-            
+            if (filtrosAtivosCI.cargo     && !s.cargo_descricao.toLowerCase().includes(filtrosAtivosCI.cargo.toLowerCase())) return false;
+
             if (filtrosAtivosCI.buscaTabela) {
                 const termo = filtrosAtivosCI.buscaTabela.toLowerCase();
-                const nomeMatch = s.nome && s.nome.toLowerCase().includes(termo);
-                const matriculaMatch = s.matricula && s.matricula.toLowerCase().includes(termo);
-                const cargoMatch = s.cargo_descricao && s.cargo_descricao.toLowerCase().includes(termo);
-                const empresaMatch = s.empresa && s.empresa.toLowerCase().includes(termo);
-                const orgaoMatch = s.orgao && s.orgao.toLowerCase().includes(termo);
-                const siglaMatch = s.orgao_sigla && s.orgao_sigla.toLowerCase().includes(termo);
-                const cnpjMatch = s.cnpj_empresa && s.cnpj_empresa.includes(termo);
-                
-                if (!(nomeMatch || matriculaMatch || cargoMatch || empresaMatch || orgaoMatch || siglaMatch || cnpjMatch)) {
-                    return false;
-                }
+                const match =
+                    (s.nome            && s.nome.toLowerCase().includes(termo))            ||
+                    (s.matricula       && s.matricula.toLowerCase().includes(termo))       ||
+                    (s.cargo_descricao && s.cargo_descricao.toLowerCase().includes(termo)) ||
+                    (s.empresa         && s.empresa.toLowerCase().includes(termo))         ||
+                    (s.orgao           && s.orgao.toLowerCase().includes(termo))           ||
+                    (s.orgao_sigla     && s.orgao_sigla.toLowerCase().includes(termo))     ||
+                    (s.cnpj_empresa    && s.cnpj_empresa.includes(termo));
+                if (!match) return false;
             }
-            
+
             return true;
         });
-        
+
         paginaAtualCI = 1;
         atualizarTabelaConsulta();
     }
 
-    window.limparFiltrosCI = function() {
-        document.getElementById('filtroNomeCI').value = '';
+    window.limparFiltrosCI = function () {
+        document.getElementById('filtroNomeCI').value      = '';
         document.getElementById('filtroMatriculaCI').value = '';
-        document.getElementById('filtroCargoCI').value = '';
-        document.getElementById('buscaTabelaCI').value = '';
-        
-       
-        filtrosAtivosCI = {
-            nome: '',
-            matricula: '',
-            cargo: '',
-            buscaTabela: ''
-        };
-        
+        document.getElementById('filtroCargoCI').value     = '';
+        document.getElementById('buscaTabelaCI').value     = '';
+
+        filtrosAtivosCI       = { nome: '', matricula: '', cargo: '', buscaTabela: '' };
         empregadosFiltradosCI = [...currentDisplayData.empregadosUnicos];
-        paginaAtualCI = 1;
+        paginaAtualCI         = 1;
         atualizarTabelaConsulta();
     };
 
+
+    // ============================================================
+    // 17. TABELA E PAGINAÇÃO — CONSULTA INDIVIDUAL
+    // ============================================================
+
     function atualizarTabelaConsulta() {
-        const inicio = (paginaAtualCI - 1) * itensPorPaginaCI;
-        const fim = Math.min(inicio + itensPorPaginaCI, empregadosFiltradosCI.length);
+        const inicio      = (paginaAtualCI - 1) * itensPorPaginaCI;
+        const fim         = Math.min(inicio + itensPorPaginaCI, empregadosFiltradosCI.length);
         const dadosPagina = empregadosFiltradosCI.slice(inicio, fim);
-        
+
         const tbody = document.getElementById('empregadosTableBody');
         if (tbody) {
-            // Remove previous listener to avoid duplicates
             const newTbody = tbody.cloneNode(false);
             tbody.parentNode.replaceChild(newTbody, tbody);
             const freshTbody = document.getElementById('empregadosTableBody');
+
             freshTbody.innerHTML = dadosPagina.map(s => {
-                const matriculaEscaped = (s.matricula || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
-                const empresaDisplay = s.empresa ? (s.empresa.length > 30 ? s.empresa.substring(0,30)+'...' : s.empresa) : '-';
-                const cnpjDisplay = s.cnpj_empresa ? s.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-';
-                return `<tr data-matricula="${matriculaEscaped}" style="cursor:pointer;">
-                <td>${s.matricula || '-'}</td>
-                <td>
-    <a href="#" class="nome-link" data-matricula="${matriculaEscaped}">
-        ${s.nome || '-'}
-    </a>
-</td>
-                <td>${s.orgao_sigla || '-'}</td>
-                <td>${s.cargo_descricao || '-'}</td>
-                <td>${empresaDisplay}</td>
-                <td>${cnpjDisplay}</td>
-                <td class="text-center"><button class="btn-action" data-matricula="${matriculaEscaped}"><i class="material-icons">visibility</i></button></td>
-            </tr>`;
+                const matriculaEscaped = (s.matricula || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+                const empresaDisplay   = s.empresa ? (s.empresa.length > 30 ? s.empresa.substring(0, 30) + '...' : s.empresa) : '-';
+                const cnpjDisplay      = s.cnpj_empresa
+                    ? s.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5')
+                    : '-';
+
+                return `
+                    <tr data-matricula="${matriculaEscaped}" style="cursor:pointer;">
+                        <td>${s.matricula || '-'}</td>
+                        <td>
+                            <a href="#" class="nome-link" data-matricula="${matriculaEscaped}">
+                                ${s.nome || '-'}
+                            </a>
+                        </td>
+                        <td>${s.orgao || s.orgao_sigla || '-'}</td>
+                        <td>${s.cargo_descricao || '-'}</td>
+                        <td>${empresaDisplay}</td>
+                        <td>${cnpjDisplay}</td>
+                        <td class="text-center">
+                            <button class="btn-action" data-matricula="${matriculaEscaped}">
+                                <i class="material-icons">visibility</i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
             }).join('');
 
-            // Event delegation - handles clicks on name links, action buttons and rows
-            freshTbody.addEventListener('click', function(e) {
+            freshTbody.addEventListener('click', function (e) {
                 const target = e.target.closest('[data-matricula]');
                 if (target) {
                     e.preventDefault();
@@ -2611,214 +2587,142 @@ setupCombobox('filtroCargoCI', 'sugestoesCargo', 'cargo', opcoesCache.cargos);
                 }
             });
         }
-        
-        
+
         document.getElementById('totalServidoresBadge').innerText = empregadosFiltradosCI.length + ' empregados';
-        
+
         const tabelaContainer = document.getElementById('tabelaContainer');
         if (tabelaContainer) {
             tabelaContainer.classList.remove('showing-25', 'showing-50', 'showing-100', 'showing-all');
-            if (itensPorPaginaCI === 25) {
-                tabelaContainer.classList.add('showing-25');
-            } else if (itensPorPaginaCI === 50) {
-                tabelaContainer.classList.add('showing-50');
-            } else if (itensPorPaginaCI === 100) {
-                tabelaContainer.classList.add('showing-100');
-            } else {
-                tabelaContainer.classList.add('showing-all');
-            }
+            if      (itensPorPaginaCI === 25)  tabelaContainer.classList.add('showing-25');
+            else if (itensPorPaginaCI === 50)  tabelaContainer.classList.add('showing-50');
+            else if (itensPorPaginaCI === 100) tabelaContainer.classList.add('showing-100');
+            else                               tabelaContainer.classList.add('showing-all');
         }
-        
+
         const totalPaginas = Math.ceil(empregadosFiltradosCI.length / itensPorPaginaCI);
         renderizarPaginacaoCI(totalPaginas);
-        
         setTimeout(iframeUpdateHeight, 100);
     }
 
-   function renderizarPaginacaoCI(totalPaginas) {
-    const container = document.getElementById('paginacaoContainerCI');
-    if (!container) return;
+    function renderizarPaginacaoCI(totalPaginas) {
+        const container = document.getElementById('paginacaoContainerCI');
+        if (!container) return;
 
-    if (empregadosFiltradosCI.length === 0) {
-        container.innerHTML = '<div class="pagination-info">Nenhum registro encontrado</div>';
-        return;
-    }
+        if (empregadosFiltradosCI.length === 0) {
+            container.innerHTML = '<div class="pagination-info">Nenhum registro encontrado</div>';
+            return;
+        }
 
-    const inicio = (paginaAtualCI - 1) * itensPorPaginaCI + 1;
-    const fim = Math.min(paginaAtualCI * itensPorPaginaCI, empregadosFiltradosCI.length);
+        const inicio = (paginaAtualCI - 1) * itensPorPaginaCI + 1;
+        const fim    = Math.min(paginaAtualCI * itensPorPaginaCI, empregadosFiltradosCI.length);
 
-    let html = `
-        <div class="d-flex align-items-center justify-content-center gap-3 w-100">
+        let html = `
+            <div class="d-flex align-items-center justify-content-center gap-3 w-100">
+                <div class="pagination-info">
+                    ${inicio}-${fim} de ${empregadosFiltradosCI.length.toLocaleString('pt-BR')} resultados
+                </div>
+                <nav>
+                    <ul class="pagination mb-0">
+                        <li class="page-item ${paginaAtualCI === 1 ? 'disabled' : ''}">
+                            <a class="page-link" href="#"
+                                onclick="mudarPaginaCI(${paginaAtualCI - 1}); return false;">«</a>
+                        </li>
+        `;
 
-            <div class="pagination-info">
-                ${inicio}-${fim} de ${empregadosFiltradosCI.length.toLocaleString('pt-BR')} resultados
+        let inicioPaginas = Math.max(1, paginaAtualCI - 2);
+        let fimPaginas    = Math.min(totalPaginas, inicioPaginas + 4);
+
+        if (inicioPaginas > 1) {
+            html += `<li class="page-item"><a class="page-link" href="#" onclick="mudarPaginaCI(1); return false;">1</a></li>`;
+            if (inicioPaginas > 2) html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+        }
+
+        for (let i = inicioPaginas; i <= fimPaginas; i++) {
+            html += `
+                <li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
+                    <a class="page-link" href="#"
+                        onclick="mudarPaginaCI(${i}); return false;">${i}</a>
+                </li>
+            `;
+        }
+
+        if (fimPaginas < totalPaginas) {
+            if (fimPaginas < totalPaginas - 1) {
+                html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+            }
+            html += `
+                <li class="page-item">
+                    <a class="page-link" href="#"
+                        onclick="mudarPaginaCI(${totalPaginas}); return false;">${totalPaginas}</a>
+                </li>
+            `;
+        }
+
+        html += `
+                        <li class="page-item ${paginaAtualCI === totalPaginas ? 'disabled' : ''}">
+                            <a class="page-link" href="#"
+                                onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">»</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div>
+                    <select class="items-per-page" onchange="alterarItensPorPaginaCI()" id="itensPorPaginaCI">
+                        <option value="100" ${itensPorPaginaCI == 100 ? 'selected' : ''}>100</option>
+                        <option value="150" ${itensPorPaginaCI == 150 ? 'selected' : ''}>150</option>
+                        <option value="200" ${itensPorPaginaCI == 200 ? 'selected' : ''}>200</option>
+                        <option value="300" ${itensPorPaginaCI == 300 ? 'selected' : ''}>300</option>
+                        <option value="500" ${itensPorPaginaCI == 500 ? 'selected' : ''}>500</option>
+                    </select>
+                </div>
             </div>
+        `;
 
-            <nav>
-                <ul class="pagination mb-0">
-    `;
-
-    // Botão anterior
-    html += `
-        <li class="page-item ${paginaAtualCI === 1 ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI - 1}); return false;">«</a>
-        </li>
-    `;
-
-    let inicioPaginas = Math.max(1, paginaAtualCI - 2);
-    let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
-
-   // PRIMEIRA PÁGINA
-if (inicioPaginas > 1) {
-    html += `
-        <li class="page-item">
-            <a class="page-link" href="#" onclick="mudarPaginaCI(1); return false;">1</a>
-        </li>
-    `;
-
-    if (inicioPaginas > 2) {
-        html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-    }
-}
-
-// PÁGINAS DO MEIO
-for (let i = inicioPaginas; i <= fimPaginas; i++) {
-    html += `
-        <li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaCI(${i}); return false;">${i}</a>
-        </li>
-    `;
-}
-
-// ÚLTIMA PÁGINA
-if (fimPaginas < totalPaginas) {
-    if (fimPaginas < totalPaginas - 1) {
-        html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+        container.innerHTML = html;
     }
 
-    html += `
-        <li class="page-item">
-            <a class="page-link" href="#" onclick="mudarPaginaCI(${totalPaginas}); return false;">
-                ${totalPaginas}
-            </a>
-        </li>
-    `;
-}
-
-    // Botão próximo
-    html += `
-        <li class="page-item ${paginaAtualCI === totalPaginas ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">»</a>
-        </li>
-    `;
-
-    // 🔥 FECHAMENTOS CORRETOS
-    html += `
-                </ul>
-            </nav>
-        <div>
-            <select class="items-per-page" onchange="alterarItensPorPaginaCI()" id="itensPorPaginaCI">
-               <option value="100" ${itensPorPaginaCI == 100 ? 'selected' : ''}>100</option>
-<option value="150" ${itensPorPaginaCI == 150 ? 'selected' : ''}>150</option>
-<option value="200" ${itensPorPaginaCI == 200 ? 'selected' : ''}>200</option>
-<option value="300" ${itensPorPaginaCI == 300 ? 'selected' : ''}>300</option>
-<option value="500" ${itensPorPaginaCI == 500 ? 'selected' : ''}>500</option>
-            </select>
-        </div>
-
-    </div>
-`;
-     
-
-    container.innerHTML = html;
-}
-    window.mudarPaginaCI = function(pagina) {
+    window.mudarPaginaCI = function (pagina) {
         const totalPaginas = Math.ceil(empregadosFiltradosCI.length / itensPorPaginaCI);
         if (pagina < 1 || pagina > totalPaginas) return;
         paginaAtualCI = pagina;
         atualizarTabelaConsulta();
     };
-  function renderizarPaginacaoVG() {
-    const container = document.getElementById('paginacaoContainerVG');
-    if (!container) return;
 
-    const totalPaginas = Math.ceil(dadosOrgaoGlobal.length / itensPorPaginaVG);
-
-    const inicio = (paginaAtualVG - 1) * itensPorPaginaVG + 1;
-    const fim = Math.min(paginaAtualVG * itensPorPaginaVG, dadosOrgaoGlobal.length);
-
- let html = `
-    <div class="d-flex align-items-center justify-content-center gap-3 w-100">
-
-        <div class="pagination-info">
-            ${inicio}-${fim} de ${dadosOrgaoGlobal.length} resultados
-        </div>
-
-        <nav>
-            <ul class="pagination mb-0">
-`;
-
-// botão anterior
-html += `
-    <li class="page-item ${paginaAtualVG === 1 ? 'disabled' : ''}">
-        <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG - 1}); return false;">«</a>
-    </li>
-`;
-
-let inicioPaginas = Math.max(1, paginaAtualVG - 2);
-let fimPaginas = Math.min(totalPaginas, inicioPaginas + 4);
-
-// páginas
-for (let i = inicioPaginas; i <= fimPaginas; i++) {
-    html += `
-        <li class="page-item ${i === paginaAtualVG ? 'active' : ''}">
-            <a class="page-link" href="#" onclick="mudarPaginaVG(${i}); return false;">${i}</a>
-        </li>
-    `;
-}
-
-// próximo
-html += `
-    <li class="page-item ${paginaAtualVG === totalPaginas ? 'disabled' : ''}">
-        <a class="page-link" href="#" onclick="mudarPaginaVG(${paginaAtualVG + 1}); return false;">»</a>
-    </li>
-`;
-
-// fechamento + select
-html += `
-            </ul>
-        </nav>
-
-        <select class="items-per-page" onchange="alterarItensPorPaginaVG(this.value)">
-            <option value="100" ${itensPorPaginaVG == 100 ? 'selected' : ''}>100</option>
-            <option value="150" ${itensPorPaginaVG == 150 ? 'selected' : ''}>150</option>
-            <option value="200" ${itensPorPaginaVG == 200 ? 'selected' : ''}>200</option>
-            <option value="300" ${itensPorPaginaVG == 300 ? 'selected' : ''}>300</option>
-            <option value="500" ${itensPorPaginaVG == 500 ? 'selected' : ''}>500</option>
-        </select>
-
-    </div>
-`;
-
-container.innerHTML = html;
-
-    window.alterarItensPorPaginaVG = function(valor) {
-    itensPorPaginaVG = parseInt(valor);
-    paginaAtualVG = 1;
-    renderizarVisaoGeral();
-};
+    window.alterarItensPorPaginaCI = function () {
+        const select = document.getElementById('itensPorPaginaCI');
+        if (select) itensPorPaginaCI = parseInt(select.value);
+        paginaAtualCI = 1;
+        atualizarTabelaConsulta();
     };
 
-    window.verDetalhes = async function(matricula) {
-        // 1. Abre o modal IMEDIATAMENTE com spinner
+
+    // ============================================================
+    // 18. NAVEGAÇÃO ENTRE ABAS
+    // ============================================================
+
+    window.irParaConsulta = function (sigla) {
+        document.getElementById('consulta-tab').click();
+        setTimeout(() => {
+            empregadosFiltradosCI = currentDisplayData.empregadosUnicos.filter(e => e.orgao_sigla === sigla);
+            paginaAtualCI         = 1;
+            atualizarTabelaConsulta();
+            const badge = document.getElementById('totalServidoresBadge');
+            if (badge) badge.innerText = empregadosFiltradosCI.length + ' empregados';
+        }, 300);
+    };
+
+
+    // ============================================================
+    // 19. MODAL — DETALHES E HISTÓRICO DO EMPREGADO
+    // ============================================================
+
+    window.verDetalhes = async function (matricula) {
         const modalEl = document.getElementById('detailModal');
         document.getElementById('modalContent').innerHTML = `
             <div class="d-flex justify-content-center align-items-center py-5">
                 <div class="spinner-border text-secondary me-3" role="status"></div>
                 <span style="color:#1a3a5c;font-weight:600;">Carregando histórico...</span>
             </div>`;
-        
-        // Garante que qualquer instância anterior seja destruída antes de criar nova
+
         const existingModal = bootstrap.Modal.getInstance(modalEl);
         if (existingModal) existingModal.dispose();
         const modalInstance = new bootstrap.Modal(modalEl);
@@ -2826,170 +2730,228 @@ container.innerHTML = html;
 
         try {
             let historico = [];
-            
+
             for (const ano of Object.keys(CSV_FILES_BY_YEAR)) {
+                if (!dataCache[ano]) await carregarMes(ano, '12');
 
-            // garante que o ano foi carregado
-            if (!dataCache[ano]) {
-                await carregarMes(ano, '12'); // força carregar o ano
-            }
-
-            // percorre todos os meses do ano
-            if (dataCache[ano]) {
-                for (const mes in dataCache[ano]) {
-
-                    const dadosMes = dataCache[ano][mes]
-                        .filter(i => i.matricula === matricula);
-
-                    historico = [...historico, ...dadosMes];
+                if (dataCache[ano]) {
+                    for (const mes in dataCache[ano]) {
+                        const dadosMes = dataCache[ano][mes].filter(i => i.matricula === matricula);
+                        historico = [...historico, ...dadosMes];
+                    }
                 }
             }
-        }
 
-        if (historico.length === 0) {
+            if (historico.length === 0) {
+                document.getElementById('modalContent').innerHTML = `
+                    <div class="alert alert-warning m-3">
+                        <i class="material-icons me-2" style="vertical-align:middle;">warning</i>
+                        Histórico não encontrado para esta matrícula.
+                    </div>`;
+                return;
+            }
+
+            historico.sort((a, b) => (b.ano_mes || '').localeCompare(a.ano_mes || ''));
+            const emp = historico[0];
+
             document.getElementById('modalContent').innerHTML = `
-                <div class="alert alert-warning m-3">
-                    <i class="material-icons me-2" style="vertical-align:middle;">warning</i>
-                    Histórico não encontrado para esta matrícula.
-                </div>`;
-            return;
-        }
-
-        // 🔥 ORDENA DO MAIS RECENTE PARA O MAIS ANTIGO
-        historico.sort((a, b) =>
-            (b.ano_mes || '').localeCompare(a.ano_mes || '')
-        );
-
-        const emp = historico[0];
-
-        document.getElementById('modalContent').innerHTML = `
-            <div class="mb-3">
-                <div style="font-size:18px;font-weight:600;">
-                    ${emp.nome}
+                <div class="mb-3">
+                    <div style="font-size:14px;font-weight:600;">${emp.nome}</div>
                 </div>
-            </div>
-
-            <div class="row g-2 mb-3">
-                <div class="col-md-4">
-                    <div class="info-card primary">
-                        <div class="info-label">Matrícula</div>
-                        <div class="info-value">${emp.matricula}</div>
+                <div class="row g-2 mb-3">
+                    <div class="col-md-3">
+                        <div class="info-card primary">
+                            <div class="info-label">Matrícula</div>
+                            <div class="info-value">${emp.matricula}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="info-card primary">
+                            <div class="info-label">Órgão</div>
+                            <div class="info-value">${emp.orgao || emp.orgao_sigla}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="info-card primary">
+                            <div class="info-label">Sigla</div>
+                            <div class="info-value">${emp.orgao_sigla || '-'}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="info-card primary">
+                            <div class="info-label">Cargo</div>
+                            <div class="info-value">${emp.cargo_descricao}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-card">
+                            <div class="info-label">Empresa</div>
+                            <div class="info-value">${emp.empresa}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-card">
+                            <div class="info-label">CNPJ</div>
+                            <div class="info-value">${emp.cnpj_empresa}</div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-md-4">
-                    <div class="info-card primary">
-                        <div class="info-label">Órgão</div>
-                        <div class="info-value">${emp.orgao_sigla}</div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="info-card primary">
-                        <div class="info-label">Cargo</div>
-                        <div class="info-value">${emp.cargo_descricao}</div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="info-card">
-                        <div class="info-label">Empresa</div>
-                        <div class="info-value">${emp.empresa}</div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="info-card">
-                        <div class="info-label">CNPJ</div>
-                        <div class="info-value">${emp.cnpj_empresa}</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="table-fixed-header-container">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>MÊS/ANO</th>
-                            <th>ÓRGÃO</th>
-                            <th>CARGO</th>
-                            <th>EMPRESA</th>
-                            <th>CNPJ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${historico.map(h => `
+                <div class="table-fixed-header-container">
+                    <table class="table" id="modalHistoricoTabela">
+                        <thead>
                             <tr>
-                                <td>${formatarData(h.ano_mes)}</td>
-                                <td>${h.orgao_sigla}</td>
-                                <td>${h.cargo_descricao}</td>
-                                <td>${h.empresa}</td>
-                                <td>${h.cnpj_empresa}</td>
+                                <th>MÊS/ANO</th>
+                                <th>ÓRGÃO</th>
+                                <th>SIGLA</th>
+                                <th>CARGO</th>
+                                <th>EMPRESA</th>
+                                <th>CNPJ</th>
                             </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            </div>
-        `;
+                        </thead>
+                        <tbody>
+                            ${historico.map(h => `
+                                <tr>
+                                    <td>${formatarData(h.ano_mes)}</td>
+                                    <td>${h.orgao || h.orgao_sigla}</td>
+                                    <td>${h.orgao_sigla}</td>
+                                    <td>${h.cargo_descricao}</td>
+                                    <td>${h.empresa}</td>
+                                    <td>${h.cnpj_empresa}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
 
-        // Modal já está aberto — apenas atualiza o conteúdo
+            window._modalHistorico = historico;
+            window._modalEmp       = emp;
 
-    } catch(err) {
-        document.getElementById('modalContent').innerHTML = `
-            <div class="alert alert-danger m-3">
-                <i class="material-icons me-2" style="vertical-align:middle;">error</i>
-                Erro ao carregar dados. Tente novamente.
-            </div>`;
-    } finally {
-        showLoading(false);
-    }
-};
+        } catch (err) {
+            document.getElementById('modalContent').innerHTML = `
+                <div class="alert alert-danger m-3">
+                    <i class="material-icons me-2" style="vertical-align:middle;">error</i>
+                    Erro ao carregar dados. Tente novamente.
+                </div>`;
+        } finally {
+            showLoading(false);
+        }
+    };
 
-    // ============================================
-    // EXPORTAÇÕES
-    // ============================================
-    window.exportarTabelaVisaoGeralCSV = function() {
-        const dados = agruparPorOrgao(currentDisplayData.dados);
-        const linhas = dados.map(i => [i.orgao, i.sigla, i.total]).map(l => l.map(c => `"${String(c).replace(/"/g,'""')}"`).join(';'));
-        const csv = ['Órgão;Sigla;Empregados', ...linhas].join('\n');
-        const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+
+    // ============================================================
+    // 20. EXPORTAÇÃO — MODAL (PDF e CSV)
+    // ============================================================
+
+    window.exportarModalPDF = function (matricula, nome) {
+        const historico = window._modalHistorico;
+        if (!historico || historico.length === 0) return;
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: 'landscape' });
+        doc.setFontSize(11);
+        doc.text(`Histórico do Empregado: ${nome} (Matrícula: ${matricula})`, 14, 10);
+
+        doc.autoTable({
+            startY: 18,
+            head: [['Mês/Ano', 'Órgão', 'Sigla', 'Cargo', 'Empresa', 'CNPJ']],
+            body: historico.map(h => [
+                formatarData(h.ano_mes),
+                h.orgao || h.orgao_sigla,
+                h.orgao_sigla,
+                h.cargo_descricao,
+                h.empresa,
+                h.cnpj_empresa
+            ]),
+            didDrawPage: (data) => {
+                doc.setFontSize(9);
+                doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
+            }
+        });
+
+        doc.save(`historico_${matricula}.pdf`);
+    };
+
+    window.exportarModalCSV = function (matricula, nome) {
+        const historico = window._modalHistorico;
+        if (!historico || historico.length === 0) return;
+
+        const cab   = ['mes_ano', 'orgao', 'sigla', 'cargo', 'empresa', 'cnpj_empresa'];
+        const linhas = historico.map(h =>
+            [formatarData(h.ano_mes), h.orgao || h.orgao_sigla, h.orgao_sigla, h.cargo_descricao, h.empresa, h.cnpj_empresa]
+                .map(c => `"${String(c || '').replace(/"/g, '""')}"`)
+                .join(';')
+        );
+        const csv  = [cab.join(';'), ...linhas].join('\n');
+        const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
+        link.href  = URL.createObjectURL(blob);
+        link.download = `historico_${matricula}.csv`;
+        link.click();
+    };
+
+
+    // ============================================================
+    // 21. EXPORTAÇÃO — VISÃO GERAL (CSV e PDF)
+    // ============================================================
+
+    window.exportarTabelaVisaoGeralCSV = function () {
+        const dados  = agruparPorOrgao(currentDisplayData.dados);
+        const linhas = dados.map(i => [i.orgao, i.sigla, i.total].map(c => `"${String(c).replace(/"/g, '""')}"`).join(';'));
+        const csv    = ['Órgão;Sigla;Empregados', ...linhas].join('\n');
+        const blob   = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+        const link   = document.createElement('a');
+        link.href     = URL.createObjectURL(blob);
         link.download = `visao_geral_orgaos_${currentDisplayData.ano}_${currentDisplayData.mes}.csv`;
         link.click();
     };
 
-    window.exportarTabelaVisaoGeralPDF = function() {
+    window.exportarTabelaVisaoGeralPDF = function () {
         const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ orientation: 'landscape' });
+        const doc   = new jsPDF({ orientation: 'landscape' });
         const dados = agruparPorOrgao(currentDisplayData.dados).map(i => [i.orgao, i.sigla, i.total.toLocaleString('pt-BR')]);
+
         doc.autoTable({
             head: [['Órgão', 'Sigla', 'Empregados']],
             body: dados,
-            foot: [['Total Geral', '', dados.reduce((a,i)=>a+parseInt(i[2].replace(/\./g,'')),0).toLocaleString('pt-BR')]],
+            foot: [['Total Geral', '', dados.reduce((a, i) => a + parseInt(i[2].replace(/\./g, '')), 0).toLocaleString('pt-BR')]],
             didDrawPage: (data) => {
                 doc.setFontSize(10);
                 doc.text('Visão Geral - Empregados Terceirizados', 14, 10);
                 doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
             }
         });
+
         doc.save(`visao_geral_orgaos_${currentDisplayData.ano}_${currentDisplayData.mes}.pdf`);
     };
 
-    window.exportarTabelaConsultaCSV = function() {
-        const linhas = empregadosFiltradosCI.map(s => [s.matricula, s.nome, s.orgao_sigla, s.cargo_descricao||'', s.empresa||'', s.cnpj_empresa||''].map(c => `"${String(c).replace(/"/g,'""')}"`).join(';'));
-        const csv = ['Matrícula;Nome;Órgão;Cargo;Empresa;CNPJ', ...linhas].join('\n');
-        const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+
+    // ============================================================
+    // 22. EXPORTAÇÃO — CONSULTA INDIVIDUAL (CSV e PDF)
+    // ============================================================
+
+    window.exportarTabelaConsultaCSV = function () {
+        const linhas = empregadosFiltradosCI.map(s =>
+            [s.matricula, s.nome, s.orgao_sigla, s.cargo_descricao || '', s.empresa || '', s.cnpj_empresa || '']
+                .map(c => `"${String(c).replace(/"/g, '""')}"`)
+                .join(';')
+        );
+        const csv  = ['Matrícula;Nome;Órgão;Cargo;Empresa;CNPJ', ...linhas].join('\n');
+        const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
+        link.href  = URL.createObjectURL(blob);
         link.download = `consulta_empregados_${currentDisplayData.ano}_${currentDisplayData.mes}.csv`;
         link.click();
     };
 
-    window.exportarTabelaConsultaPDF = function() {
+    window.exportarTabelaConsultaPDF = function () {
         const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ orientation: 'landscape' });
-        const dados = empregadosFiltradosCI.map(s => [s.matricula||'-', s.nome||'-', s.orgao_sigla||'-', s.cargo_descricao||'-', s.empresa||'-', s.cnpj_empresa||'-']);
+        const doc   = new jsPDF({ orientation: 'landscape' });
+        const dados = empregadosFiltradosCI.map(s => [
+            s.matricula || '-', s.nome || '-', s.orgao_sigla || '-',
+            s.cargo_descricao || '-', s.empresa || '-', s.cnpj_empresa || '-'
+        ]);
+
         doc.autoTable({
             head: [['Matrícula', 'Nome', 'Órgão', 'Cargo', 'Empresa', 'CNPJ']],
             body: dados,
@@ -2999,230 +2961,131 @@ container.innerHTML = html;
                 doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
             }
         });
+
         doc.save(`consulta_empregados_${currentDisplayData.ano}_${currentDisplayData.mes}.pdf`);
     };
 
-    // ============================================
-    // COMPARTILHAMENTO
-    // ============================================
-    window.toggleShare = function(id) {
-        document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
-        document.getElementById(`shareOptions${id}`).classList.toggle('show');
-    };
 
-    window.copiarLink = function(e, id) {
-        e.preventDefault();
-        navigator.clipboard.writeText(window.location.href).then(() => alert('Sucesso! Link copiado para a área de transferência'));
-        document.getElementById(`shareOptions${id}`).classList.remove('show');
-    };
-   function mostrarToast() {
-    const toast = document.getElementById('toastSucesso');
+    // ============================================================
+    // 23. DOWNLOADS — RENDERIZAÇÃO E EXPORTAÇÃO EM MASSA
+    // ============================================================
 
-    toast.style.display = 'flex';
-
-    // 🔥 força reinício da animação
-    toast.style.animation = 'none';
-    toast.offsetHeight;
-    toast.style.animation = 'fadeInUp 0.3s ease';
-
-    setTimeout(() => {
-        toast.style.display = 'none';
-    }, 3000);
-}
-
-function fecharToast() {
-    document.getElementById('toastSucesso').style.display = 'none';
-}
-    function copiarLinkDireto() {
-    navigator.clipboard.writeText(window.location.href)
-        .then(() => {
-            mostrarToast();
-        })
-        .catch(() => {
-            alert('Erro ao copiar o link');
-        });
-
-}
-
-    // ============================================
-    // DOWNLOADS
-    // ============================================
     function renderizarDownloads() {
-        const anos = Object.keys(CSV_FILES_BY_YEAR).sort((a,b) => b - a);
-        
+        const anos = Object.keys(CSV_FILES_BY_YEAR).sort((a, b) => b - a);
+
         document.getElementById('downloads-content').innerHTML = `
-           <div class="filter-container">
-
-    <div class="filters-row">
-
-        <div class="filter-group">
-            <label class="filter-label">ANO</label>
-            <select class="form-select modern-select" id="anoDownload">
-                <option value="">Selecione</option>
-                ${anos.map(a => `<option value="${a}">${a}</option>`).join('')}
-            </select>
-        </div>
-
-        <div class="filter-group">
-            <label class="filter-label">MÊS</label>
-            <select class="form-select modern-select" id="mesDownload">
-                <option value="01">Janeiro</option>
-                <option value="02">Fevereiro</option>
-                <option value="03">Março</option>
-                <option value="04">Abril</option>
-                <option value="05">Maio</option>
-                <option value="06">Junho</option>
-                <option value="07">Julho</option>
-                <option value="08">Agosto</option>
-                <option value="09">Setembro</option>
-                <option value="10">Outubro</option>
-                <option value="11">Novembro</option>
-                <option value="12">Dezembro</option>
-            </select>
-        </div>
-
-        <div class="filter-group">
-            <label class="filter-label">FORMATO</label>
-            <select class="form-select modern-select" id="formatoDownload">
-                <option value="csv">CSV</option>
-                <option value="pdf">PDF</option>
-            </select>
-        </div>
-
-    </div>
-
-    <!-- 🔥 BOTÕES PADRÃO IGUAL IMAGEM 1 -->
-    <div class="botoes-abaixo">
-
-        <button class="btn-pesquisa" onclick="baixarCSVAno()">
-            <i class="material-icons">download</i>
-            Baixar Dados
-        </button>
-
-        <a href="https://dados.mg.gov.br/dataset/empregados_terceirizados"
-           target="_blank"
-           class="btn-secondary-custom">
-            <i class="material-icons">open_in_new</i>
-            Acessar Portal de Dados Abertos
-        </a>
-                         </div>
+            <div class="filter-container">
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label class="filter-label">ANO</label>
+                        <select class="form-select modern-select" id="anoDownload">
+                            <option value="">Selecione</option>
+                            ${anos.map(a => `<option value="${a}">${a}</option>`).join('')}
+                        </select>
                     </div>
+                    <div class="filter-group">
+                        <label class="filter-label">MÊS</label>
+                        <select class="form-select modern-select" id="mesDownload">
+                            <option value="01">Janeiro</option>
+                            <option value="02">Fevereiro</option>
+                            <option value="03">Março</option>
+                            <option value="04">Abril</option>
+                            <option value="05">Maio</option>
+                            <option value="06">Junho</option>
+                            <option value="07">Julho</option>
+                            <option value="08">Agosto</option>
+                            <option value="09">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">FORMATO</label>
+                        <select class="form-select modern-select" id="formatoDownload">
+                            <option value="csv">CSV</option>
+                            <option value="pdf">PDF</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="botoes-abaixo">
+                    <button class="btn-pesquisa" onclick="baixarCSVAno()">
+                        <i class="material-icons">download</i>Baixar Dados
+                    </button>
+                    <a href="https://dados.mg.gov.br/dataset/empregados_terceirizados"
+                        target="_blank" class="btn-secondary-custom">
+                        <i class="material-icons">open_in_new</i>Acessar Portal de Dados Abertos
+                    </a>
                 </div>
             </div>
 
             <div class="mt-4">
-          
-
-    <div class="mb-3">
-
-    <h5 style="border:none; margin-bottom:8px;">
-        Dicionário de Dados
-    </h5>
-
-    <div class="d-flex gap-2">
-    <button class="btn-export" onclick="baixarDicionarioCSV()">
-        <i class="material-icons">description</i> CSV
-    </button>
-
-    <button class="btn-export" onclick="baixarDicionarioPDF()">
-        <i class="material-icons">print</i> PDF
-    </button>
-
-    <button class="btn-export" onclick="copiarLinkDireto()">
-        <i class="material-icons">link</i> Copiar Link
-    </button>
-</div>
-</div>
-
-<div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Campo</th>
-                                <th>Descrição</th>
-                                <th>Tipo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>matricula</td>
-                                <td>Matrícula do empregado terceirizado</td>
-                                <td>Texto/Número</td>
-                            </tr>
-                            <tr>
-                                <td>nome</td>
-                                <td>Nome completo do empregado</td>
-                                <td>Texto</td>
-                            </tr>
-                            <tr>
-                                <td>orgao</td>
-                                <td>Nome por extenso do órgão de trabalho</td>
-                                <td>Texto</td>
-                            </tr>
-                            <tr>
-                                <td>sigla</td>
-                                <td>Sigla do órgão de trabalho</td>
-                                <td>Texto</td>
-                            </tr>
-                            <tr>
-                                <td>cargo</td>
-                                <td>Cargo exercido</td>
-                                <td>Texto</td>
-                            </tr>
-                            <tr>
-                                <td>empresa</td>
-                                <td>Nome da empresa terceirizada</td>
-                                <td>Texto</td>
-                            </tr>
-                            <tr>
-                                <td>cnpj_empresa</td>
-                                <td>CNPJ da empresa</td>
-                                <td>Texto/Número</td>
-                            </tr>
-                            <tr>
-                                <td>mes_referencia</td>
-                                <td>Mês de referência</td>
-                                <td>Texto/Data</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="mb-3">
+                    <h5 style="border:none; margin-bottom:8px;">Dicionário de Dados</h5>
+                    <div class="d-flex gap-2">
+                        <button class="btn-export" onclick="baixarDicionarioCSV()">
+                            <i class="material-icons">description</i> CSV
+                        </button>
+                        <button class="btn-export" onclick="baixarDicionarioPDF()">
+                            <i class="material-icons">print</i> PDF
+                        </button>
+                        <button class="btn-export" onclick="copiarLinkDireto()">
+                            <i class="material-icons">link</i> Copiar Link
+                        </button>
+                    </div>
                 </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Campo</th>
+                            <th>Descrição</th>
+                            <th>Tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>matricula</td>      <td>Matrícula do empregado terceirizado</td>      <td>Texto/Número</td></tr>
+                        <tr><td>nome</td>           <td>Nome completo do empregado</td>               <td>Texto</td></tr>
+                        <tr><td>orgao</td>          <td>Nome por extenso do órgão de trabalho</td>    <td>Texto</td></tr>
+                        <tr><td>sigla</td>          <td>Sigla do órgão de trabalho</td>               <td>Texto</td></tr>
+                        <tr><td>cargo</td>          <td>Cargo exercido</td>                           <td>Texto</td></tr>
+                        <tr><td>empresa</td>        <td>Nome da empresa terceirizada</td>             <td>Texto</td></tr>
+                        <tr><td>cnpj_empresa</td>   <td>CNPJ da empresa</td>                          <td>Texto/Número</td></tr>
+                        <tr><td>mes_referencia</td> <td>Mês de referência</td>                        <td>Texto/Data</td></tr>
+                    </tbody>
+                </table>
             </div>
         `;
     }
 
-    window.baixarCSVAno = async function() {
+    window.baixarCSVAno = async function () {
         const ano = document.getElementById('anoDownload')?.value;
-        if (!ano) {
-            alert('Selecione um ano para baixar.');
-            return;
-        }
-        
+        if (!ano) { alert('Selecione um ano para baixar.'); return; }
+
         showLoading(true, `Preparando download de ${ano}...`);
-        
+
         try {
-            if (!dataCache[ano]) {
-                await carregarMes(ano, '12');
-            }
-            
+            if (!dataCache[ano]) await carregarMes(ano, '12');
+
             let todosDados = [];
             if (dataCache[ano]) {
                 for (const mes in dataCache[ano]) {
                     todosDados = todosDados.concat(dataCache[ano][mes]);
                 }
             }
-            
-            if (todosDados.length === 0) {
-                alert('Dados não encontrados para o ano selecionado.');
-                return;
-            }
-            
-            const cabecalhos = ['matricula','nome','orgao','cargo','empresa','cnpj_empresa','mes_referencia'];
-            const linhas = todosDados.map(item => cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';'));
-            const csv = [cabecalhos.join(';'), ...linhas].join('\n');
-            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+
+            if (todosDados.length === 0) { alert('Dados não encontrados para o ano selecionado.'); return; }
+
+            const cabecalhos = ['matricula', 'nome', 'orgao', 'cargo', 'empresa', 'cnpj_empresa', 'mes_referencia'];
+            const linhas     = todosDados.map(item =>
+                cabecalhos.map(cab => `"${(item[cab] || '').toString().replace(/"/g, '""')}"`).join(';')
+            );
+            const csv  = [cabecalhos.join(';'), ...linhas].join('\n');
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
+            link.href  = URL.createObjectURL(blob);
             link.download = `terceirizados_${ano}.csv`;
             link.click();
         } finally {
@@ -3230,132 +3093,155 @@ function fecharToast() {
         }
     };
 
-    window.baixarTodosCSV = async function() {
+    window.baixarTodosCSV = async function () {
         showLoading(true, 'Preparando download completo...');
-        
+
         try {
             let todosDados = [];
-            
             for (const ano of Object.keys(CSV_FILES_BY_YEAR)) {
-                if (!dataCache[ano]) {
-                    await carregarMes(ano, '12');
-                }
-                
+                if (!dataCache[ano]) await carregarMes(ano, '12');
                 if (dataCache[ano]) {
                     for (const mes in dataCache[ano]) {
                         todosDados = todosDados.concat(dataCache[ano][mes]);
                     }
                 }
             }
-            
-            if (todosDados.length === 0) {
-                alert('Nenhum dado carregado.');
-                return;
-            }
-            
-            const cabecalhos = ['matricula','nome','orgao','cargo','empresa','cnpj_empresa','mes_referencia'];
-            const linhas = todosDados.map(item => cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';'));
-            const csv = [cabecalhos.join(';'), ...linhas].join('\n');
-            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+
+            if (todosDados.length === 0) { alert('Nenhum dado carregado.'); return; }
+
+            const cabecalhos = ['matricula', 'nome', 'orgao', 'cargo', 'empresa', 'cnpj_empresa', 'mes_referencia'];
+            const linhas     = todosDados.map(item =>
+                cabecalhos.map(cab => `"${(item[cab] || '').toString().replace(/"/g, '""')}"`).join(';')
+            );
+            const csv  = [cabecalhos.join(';'), ...linhas].join('\n');
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
+            link.href  = URL.createObjectURL(blob);
             link.download = 'terceirizados_completo.csv';
             link.click();
         } finally {
             showLoading(false);
         }
     };
-    function filtrarTabelaVG(valor) {
-    valor = valor.toLowerCase();
 
-    const linhas = document.querySelectorAll('.table tbody tr');
 
-    linhas.forEach(tr => {
-        const texto = tr.innerText.toLowerCase();
-        tr.style.display = texto.includes(valor) ? '' : 'none';
-    });
-}
-    function limparBusca(el) {
-    const input = el.parentElement.querySelector('input');
-    input.value = '';
-    el.style.display = 'none';
-    filtrarTabelaVG('');
-}
+    // ============================================================
+    // 24. DICIONÁRIO DE DADOS — EXPORTAÇÃO (CSV e PDF)
+    // ============================================================
 
-function toggleClear(input) {
-    const clear = input.parentElement.querySelector('.clear-icon');
-    clear.style.display = input.value ? 'block' : 'none';
-}
- window.voltarAoTopo = function() {
-    if (window.parent && window.parent !== window) {
-        window.parent.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    window.baixarDicionarioCSV = function () {
+        const linhas = [
+            ['Campo', 'Descrição', 'Tipo'],
+            ['matricula',      'Matrícula do empregado terceirizado',   'Texto/Número'],
+            ['nome',           'Nome completo do empregado',            'Texto'],
+            ['orgao',          'Nome por extenso do órgão de trabalho', 'Texto'],
+            ['sigla',          'Sigla do órgão de trabalho',            'Texto'],
+            ['cargo',          'Cargo exercido',                        'Texto'],
+            ['empresa',        'Nome da empresa terceirizada',          'Texto'],
+            ['cnpj_empresa',   'CNPJ da empresa',                       'Texto/Número'],
+            ['mes_referencia', 'Mês de referência',                     'Texto/Data']
+        ];
+
+        const csv  = linhas.map(l => l.join(';')).join('\n');
+        const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href  = URL.createObjectURL(blob);
+        link.download = 'dicionario_de_dados.csv';
+        link.click();
+    };
+
+    window.baixarDicionarioPDF = function () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(14);
+        doc.text('Dicionário de Dados', 14, 15);
+
+        doc.autoTable({
+            startY: 25,
+            head: [['Campo', 'Descrição', 'Tipo']],
+            body: [
+                ['matricula',      'Matrícula do empregado terceirizado',   'Texto/Número'],
+                ['nome',           'Nome completo do empregado',            'Texto'],
+                ['orgao',          'Nome por extenso do órgão de trabalho', 'Texto'],
+                ['sigla',          'Sigla do órgão de trabalho',            'Texto'],
+                ['cargo',          'Cargo exercido',                        'Texto'],
+                ['empresa',        'Nome da empresa terceirizada',          'Texto'],
+                ['cnpj_empresa',   'CNPJ da empresa',                       'Texto/Número'],
+                ['mes_referencia', 'Mês de referência',                     'Texto/Data']
+            ]
         });
-    } else {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+
+        doc.save('dicionario_de_dados.pdf');
+    };
+
+
+    // ============================================================
+    // 25. COMPARTILHAMENTO E TOAST
+    // ============================================================
+
+    window.toggleShare = function (id) {
+        document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
+        document.getElementById(`shareOptions${id}`).classList.toggle('show');
+    };
+
+    window.copiarLink = function (e, id) {
+        e.preventDefault();
+        navigator.clipboard.writeText(window.location.href)
+            .then(() => alert('Sucesso! Link copiado para a área de transferência'));
+        document.getElementById(`shareOptions${id}`).classList.remove('show');
+    };
+
+    function copiarLinkDireto() {
+        navigator.clipboard.writeText(window.location.href)
+            .then(() => { mostrarToast(); })
+            .catch(() => { alert('Erro ao copiar o link'); });
+    }
+
+    function mostrarToast() {
+        const toast = document.getElementById('toastSucesso');
+        toast.style.display   = 'flex';
+        toast.style.animation = 'none';
+        toast.offsetHeight;  // força reflow
+        toast.style.animation = 'fadeInUp 0.3s ease';
+        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+
+    function fecharToast() {
+        document.getElementById('toastSucesso').style.display = 'none';
+    }
+
+
+    // ============================================================
+    // 26. UTILITÁRIOS DE TABELA
+    // ============================================================
+
+    function filtrarTabelaVG(valor) {
+        valor = valor.toLowerCase();
+        document.querySelectorAll('.table tbody tr').forEach(tr => {
+            tr.style.display = tr.innerText.toLowerCase().includes(valor) ? '' : 'none';
         });
     }
-}
-window.baixarDicionarioCSV = function () {
-    const linhas = [
-        ['Campo', 'Descrição', 'Tipo'],
-        ['matricula', 'Matrícula do empregado terceirizado', 'Texto/Número'],
-        ['nome', 'Nome completo do empregado', 'Texto'],
-        ['orgao', 'Nome por extenso do órgão de trabalho', 'Texto'],
-        ['sigla', 'Sigla do órgão de trabalho', 'Texto'],
-        ['cargo', 'Cargo exercido', 'Texto'],
-        ['empresa', 'Nome da empresa terceirizada', 'Texto'],
-        ['cnpj_empresa', 'CNPJ da empresa', 'Texto/Número'],
-        ['mes_referencia', 'Mês de referência', 'Texto/Data']
-    ];
 
-    const csv = linhas.map(l => l.join(';')).join('\n');
+    function limparBusca(el) {
+        const input = el.parentElement.querySelector('input');
+        input.value = '';
+        el.style.display = 'none';
+        filtrarTabelaVG('');
+    }
 
-    const blob = new Blob(['\uFEFF' + csv], {
-        type: 'text/csv;charset=utf-8;'
-    });
+    function toggleClear(input) {
+        const clear = input.parentElement.querySelector('.clear-icon');
+        clear.style.display = input.value ? 'block' : 'none';
+    }
 
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'dicionario_de_dados.csv';
-    link.click();
-};
+    window.voltarAoTopo = function () {
+        if (window.parent && window.parent !== window) {
+            window.parent.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
 
-window.baixarDicionarioPDF = function () {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    doc.setFontSize(14);
-    doc.text('Dicionário de Dados', 14, 15);
-
-    doc.autoTable({
-        startY: 25,
-        head: [['Campo', 'Descrição', 'Tipo']],
-        body: [
-            ['matricula', 'Matrícula do empregado terceirizado', 'Texto/Número'],
-            ['nome', 'Nome completo do empregado', 'Texto'],
-            ['orgao', 'Nome por extenso do órgão de trabalho', 'Texto'],
-            ['sigla', 'Sigla do órgão de trabalho', 'Texto'],
-            ['cargo', 'Cargo exercido', 'Texto'],
-            ['empresa', 'Nome da empresa terceirizada', 'Texto'],
-            ['cnpj_empresa', 'CNPJ da empresa', 'Texto/Número'],
-            ['mes_referencia', 'Mês de referência', 'Texto/Data']
-        ]
-    });
-
-    doc.save('dicionario_de_dados.pdf');
-};
- </script>
-
-<div id="toastSucesso" class="toast-sucesso">
-    <div class="toast-content">
-        <i class="material-icons">check_circle</i>
-        <span>Sucesso!<br>Link copiado para área de transferência</span>
-    </div>
-    <span class="toast-close" onclick="fecharToast()">✖</span>
-</div>
+</script>
 </body>
 </html>

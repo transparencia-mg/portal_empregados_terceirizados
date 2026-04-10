@@ -2577,20 +2577,41 @@ setupCombobox('filtroCargoCI', 'sugestoesCargo', 'cargo', opcoesCache.cargos);
         
         const tbody = document.getElementById('empregadosTableBody');
         if (tbody) {
-            tbody.innerHTML = dadosPagina.map(s => `<tr>
+            // Remove previous listener to avoid duplicates
+            const newTbody = tbody.cloneNode(false);
+            tbody.parentNode.replaceChild(newTbody, tbody);
+            const freshTbody = document.getElementById('empregadosTableBody');
+            freshTbody.innerHTML = dadosPagina.map(s => {
+                const matriculaEscaped = (s.matricula || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+                const empresaDisplay = s.empresa ? (s.empresa.length > 30 ? s.empresa.substring(0,30)+'...' : s.empresa) : '-';
+                const cnpjDisplay = s.cnpj_empresa ? s.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-';
+                return `<tr data-matricula="${matriculaEscaped}" style="cursor:pointer;">
                 <td>${s.matricula || '-'}</td>
                 <td>
-    <a href="#" class="nome-link" onclick="verDetalhes('${s.matricula}'); return false;">
+    <a href="#" class="nome-link" data-matricula="${matriculaEscaped}">
         ${s.nome || '-'}
     </a>
 </td>
                 <td>${s.orgao_sigla || '-'}</td>
                 <td>${s.cargo_descricao || '-'}</td>
-                <td>${s.empresa ? (s.empresa.length > 30 ? s.empresa.substring(0,30)+'...' : s.empresa) : '-'}</td>
-                <td>${s.cnpj_empresa ? s.cnpj_empresa.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5') : '-'}</td>
-                <td class="text-center"><button class="btn-action" onclick="verDetalhes('${s.matricula}')"><i class="material-icons">visibility</i></button></td>
-            </tr>`).join('');
+                <td>${empresaDisplay}</td>
+                <td>${cnpjDisplay}</td>
+                <td class="text-center"><button class="btn-action" data-matricula="${matriculaEscaped}"><i class="material-icons">visibility</i></button></td>
+            </tr>`;
+            }).join('');
+
+            // Event delegation - handles clicks on name links, action buttons and rows
+            freshTbody.addEventListener('click', function(e) {
+                const target = e.target.closest('[data-matricula]');
+                if (target) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const mat = target.dataset.matricula;
+                    if (mat) verDetalhes(mat);
+                }
+            });
         }
+        
         
         document.getElementById('totalServidoresBadge').innerText = empregadosFiltradosCI.length + ' empregados';
         
@@ -2789,8 +2810,20 @@ container.innerHTML = html;
     };
 
     window.verDetalhes = async function(matricula) {
-        showLoading(true, 'Carregando histórico completo...');
+        // 1. Abre o modal IMEDIATAMENTE com spinner
+        const modalEl = document.getElementById('detailModal');
+        document.getElementById('modalContent').innerHTML = `
+            <div class="d-flex justify-content-center align-items-center py-5">
+                <div class="spinner-border text-secondary me-3" role="status"></div>
+                <span style="color:#1a3a5c;font-weight:600;">Carregando histórico...</span>
+            </div>`;
         
+        // Garante que qualquer instância anterior seja destruída antes de criar nova
+        const existingModal = bootstrap.Modal.getInstance(modalEl);
+        if (existingModal) existingModal.dispose();
+        const modalInstance = new bootstrap.Modal(modalEl);
+        modalInstance.show();
+
         try {
             let historico = [];
             
@@ -2814,7 +2847,11 @@ container.innerHTML = html;
         }
 
         if (historico.length === 0) {
-            showError('Histórico não encontrado');
+            document.getElementById('modalContent').innerHTML = `
+                <div class="alert alert-warning m-3">
+                    <i class="material-icons me-2" style="vertical-align:middle;">warning</i>
+                    Histórico não encontrado para esta matrícula.
+                </div>`;
             return;
         }
 
@@ -2895,8 +2932,14 @@ container.innerHTML = html;
             </div>
         `;
 
-        new bootstrap.Modal(document.getElementById('detailModal')).show();
+        // Modal já está aberto — apenas atualiza o conteúdo
 
+    } catch(err) {
+        document.getElementById('modalContent').innerHTML = `
+            <div class="alert alert-danger m-3">
+                <i class="material-icons me-2" style="vertical-align:middle;">error</i>
+                Erro ao carregar dados. Tente novamente.
+            </div>`;
     } finally {
         showLoading(false);
     }

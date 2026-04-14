@@ -1209,7 +1209,9 @@
                 width: 100% !important;
             }
         }
-
+.orgao-maiusculo {
+    text-transform: uppercase;
+}
     </style>
 </head>
 <body class="iframe-mode">
@@ -2085,11 +2087,11 @@
                             ${dadosPagina.map(item => `
                                 <tr>
                                     <td>
-                                        <a href="#" class="orgao-link"
-                                            onclick="irParaConsulta('${item.sigla}'); return false;">
-                                            ${item.orgao}
-                                        </a>
-                                    </td>
+    <a href="#" class="orgao-link orgao-maiusculo"
+        onclick="irParaConsulta('${item.sigla}'); return false;">
+        ${item.orgao}
+    </a>
+</td>
                                     <td>${item.sigla}</td>
                                     <td class="text-center">${item.total.toLocaleString()}</td>
                                 </tr>

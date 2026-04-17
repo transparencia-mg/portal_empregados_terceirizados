@@ -14,205 +14,73 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
-
+          python-version: '3.10'    
       - name: Install packages
         run: |
           python -m pip install --upgrade pip
           pip uninstall numpy -y
           pip install numpy==1.23.5 --no-cache-dir
-          pip install "urllib3<2" "charset-normalizer<4"
           pip install -r requirements.txt
-          pip install requests
-
       - name: Convert CSV
         run: task csv
-
       - name: Commit CSV
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Converte Excel para CSV via script.
-
       - name: Create datapackage.yaml
         env:
           DATASET_NAME: ${{ github.event.repository.name }}
           OWNER_ORG: ${{ secrets.OWNER_ORG }}
         run: task yaml
-
       - name: Commit new datapackage.yaml
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Cria datapackage.yaml caso não exista via script.
-
       - name: Create datapackage.json
         run: task json
-
       - name: Commit new datapackage.json
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Cria datapackage.json via script.
-
+      # - name: Create dynamic documentation
+      #   run: task documentation
+      # - name: Commit markdown files
+      #   uses: stefanzweifel/git-auto-commit-action@v4
+      #   with:
+      #     commit_message: Cria arquivos markdown via script.
       - name: Local dataset validation
         run: task validate
-
       - name: Commit new datapackage_validation.json
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Cria datapackage_validation.json via script.
-
       - name: Create Report
         continue-on-error: true
         run: task report
-
-      - name: Commit new index.html report file
+      - name: Commit new index.html report file.
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Cria arquivo index.html de validação.
-
+        # - name: Frictionless validation
+        #   continue-on-error: true
+        #   uses: frictionlessdata/repository@v2
       - id: string
         uses: ASzc/change-string-case-action@v1
         with:
           string: ${{ github.actor }}
-
-      - name: Sync resources with CKAN
+      - name: Create dataset in CKAN with not exist
+        continue-on-error: true
         env:
           CKAN_HOST: ${{ secrets.CKAN_HOST }}
           CKAN_KEY: ${{ secrets[format('CKAN_KEY_{0}', steps.string.outputs.uppercase)] }}
-        run: |
-          python - <<'EOF'
-          import json
-          import subprocess
-          import os
-          import sys
-          import requests
-          
-          host = os.environ["CKAN_HOST"]
-          key = os.environ["CKAN_KEY"]
-          
-          with open("dataset/datapackage.json") as f:
-              dp = json.load(f)
-          
-          dataset = dp["name"]
-          
-          print(f"Checking dataset: {dataset}")
-          print(f"Using CKAN host: {host}")
-          
-          # Get existing resources from CKAN via direct API
-          headers = {"Authorization": key}
-          response = requests.get(
-              f"{host.rstrip('/')}/api/3/action/package_show", 
-              params={"id": dataset},
-              headers=headers
-          )
-          
-          existing_resources_by_id = {}
-          existing_resources_by_name = {}
-          
-          if response.status_code == 200:
-              data = response.json()
-              if data["success"]:
-                  for r in data["result"]["resources"]:
-                      existing_resources_by_id[r["id"]] = r
-                      existing_resources_by_name[r["name"]] = r
-                  print(f"Found {len(existing_resources_by_id)} existing resources via direct API")
-              else:
-                  print("API call succeeded but success=False")
-          else:
-              print(f"API call failed with status {response.status_code}: {response.text}")
-          
-          print(f"\nExisting resources in CKAN (by name): {list(existing_resources_by_name.keys())}")
-          print(f"Existing resources in CKAN (by ID): {list(existing_resources_by_id.keys())}")
-          print(f"Resources in datapackage.json: {[r['name'] for r in dp['resources']]}")
-          
-          # Sync each resource
-          for r in dp["resources"]:
-              name = r["name"]
-              
-              # Check if resource exists by name
-              if name in existing_resources_by_name:
-                  resource_id = existing_resources_by_name[name]["id"]
-                  print(f"\n🔄 Resource '{name}' exists with ID: {resource_id}. Updating...")
-                  
-                  update_result = subprocess.run([
-                      "dpckan",
-                      "--datastore",
-                      "--datapackage", "dataset/datapackage.json",
-                      "--ckan-host", host,
-                      "--ckan-key", key,
-                      "resource", resource_id, "update"
-                  ], capture_output=True, text=True)
-                  
-                  if update_result.returncode == 0:
-                      print(f"  ✓ Successfully updated '{name}' (ID: {resource_id})")
-                  else:
-                      print(f"  ✗ Failed to update '{name}': {update_result.stderr}")
-              
-              # Check if resource exists by ID (in case name changed)
-              elif "id" in r and r["id"] in existing_resources_by_id:
-                  resource_id = r["id"]
-                  print(f"\n🔄 Resource '{name}' matches existing ID: {resource_id}. Updating...")
-                  
-                  update_result = subprocess.run([
-                      "dpckan",
-                      "--datastore",
-                      "--datapackage", "dataset/datapackage.json",
-                      "--ckan-host", host,
-                      "--ckan-key", key,
-                      "resource", resource_id, "update"
-                  ], capture_output=True, text=True)
-                  
-                  if update_result.returncode == 0:
-                      print(f"  ✓ Successfully updated '{name}' (ID: {resource_id})")
-                  else:
-                      print(f"  ✗ Failed to update '{name}': {update_result.stderr}")
-              
-              else:
-                  print(f"\n🆕 Resource '{name}' does not exist. Creating...")
-                  create_result = subprocess.run([
-                      "dpckan",
-                      "--datastore",
-                      "--datapackage", "dataset/datapackage.json",
-                      "--ckan-host", host,
-                      "--ckan-key", key,
-                      "resource", name, "create"
-                  ], capture_output=True, text=True)
-                  
-                  if create_result.returncode == 0:
-                      print(f"  ✓ Successfully created '{name}'")
-                      
-                      # Capture the ID of the newly created resource
-                      try:
-                          response = requests.get(
-                              f"{host.rstrip('/')}/api/3/action/package_show", 
-                              params={"id": dataset},
-                              headers=headers
-                          )
-                          if response.status_code == 200:
-                              data = response.json()
-                              if data["success"]:
-                                  for new_r in data["result"]["resources"]:
-                                      if new_r["name"] == name:
-                                          r["id"] = new_r["id"]
-                                          print(f"  ✓ Captured ID for '{name}': {new_r['id']}")
-                                          
-                                          # Save the ID to datapackage.json
-                                          with open("dataset/datapackage.json", "w") as f:
-                                              json.dump(dp, f, indent=2)
-                                          print(f"  ✓ Saved ID to datapackage.json")
-                                          break
-                      except Exception as e:
-                          print(f"  ⚠ Could not capture ID: {e}")
-                  else:
-                      print(f"  ✗ Failed to create '{name}': {create_result.stderr}")
-          
-          print("\n✅ Sync completed!")
-          EOF
+        run: dpckan --datastore --datapackage dataset/datapackage.json --ckan-host "$CKAN_HOST" --ckan-key "$CKAN_KEY" dataset create
+      - name: Update dataset in CKAN with dpckan with exist
+        if: ${{ ! cancelled() }}
+        env:
+          CKAN_HOST: ${{ secrets.CKAN_HOST }}
+          CKAN_KEY: ${{ secrets[format('CKAN_KEY_{0}', steps.string.outputs.uppercase)] }}
+        run: dpckan --datastore --datapackage dataset/datapackage.json --ckan-host "$CKAN_HOST" --ckan-key "$CKAN_KEY" dataset update
 
-      - name: Commit updated datapackage.json with resource IDs
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Atualiza datapackage.json com IDs dos recursos CKAN
